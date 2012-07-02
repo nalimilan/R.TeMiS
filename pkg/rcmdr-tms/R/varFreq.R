@@ -169,21 +169,23 @@ varCrossTableDlg <- function() {
         }
         else if(plotType == "pie") {
             if(what == "col") {
-                doItAndPrint(paste("par(mfrow=c(2, ", ceiling(ncol(varFreq)/2), "))", sep=""))
+                doItAndPrint(paste("opar <- par(mfrow=c(2, ", ceiling(ncol(varFreq)/2), "))", sep=""))
                 for(i in 1:ncol(varFreq)) {
                     doItAndPrint(paste("pie(varFreq[,", i, "])", sep=""))
                     if(title != "")
                         doItAndPrint(paste("title(main=\"", names(dimnames(varFreq))[2], " ",
                                            colnames(varFreq)[i], "\")", sep=""))
                 }
+                 doItAndPrint("par(opar)")
             }
             else {
-                doItAndPrint(paste("par(mfrow=c(2, ", ceiling(nrow(varFreq)/2), "))", sep=""))
+                doItAndPrint(paste("opar <- par(mfrow=c(2, ", ceiling(nrow(varFreq)/2), "))", sep=""))
                 for(i in 1:nrow(varFreq)) {
                     doItAndPrint(paste("pie(varFreq[", i, ",])", sep=""))
                     doItAndPrint(paste("title(main=\"", names(dimnames(varFreq))[1], " ",
                                        rownames(varFreq)[i], "\")", sep=""))
                 }
+                doItAndPrint("par(opar)")
             }
         }
 
