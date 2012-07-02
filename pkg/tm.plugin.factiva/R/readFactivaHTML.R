@@ -22,7 +22,7 @@ readFactivaHTML <- tm::FunctionGenerator(function(elem, language, id) {
 
         # Encoding is passed explicitly to work around a bug in XML: htmlParse() and xmlParse() do not set it
         # as they should when asText=TRUE for now
-        if(Encoding(data) == "unknown")
+        if(any(Encoding(data) == "unknown"))
             Encoding(data) <- Encoding(elem$content)
 
         date <- strptime(data[["PD"]], "%d %B %Y")
