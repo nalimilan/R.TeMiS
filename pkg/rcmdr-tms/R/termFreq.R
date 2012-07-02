@@ -12,17 +12,22 @@ docTermFreqDlg <- function() {
                  title=gettext_("Measure:"),
                  right=FALSE)
 
+    displayFrame <- tkframe(top)
+
     tclPlotVar <- tclVar(1)
-    plotFrame <- tkframe(top)
-    plotButton <- tkcheckbutton(plotFrame, text=gettext_("Draw plot"), variable=tclPlotVar)
+    plotButton <- tkcheckbutton(displayFrame, text=gettext_("Draw plot"), variable=tclPlotVar)
 
     tclTitle <- tclVar(gettext_("Occurrences of term %T"))
-    titleEntry <- ttkentry(top, width="20", textvariable=tclTitle)
+    titleEntry <- ttkentry(displayFrame, width="20", textvariable=tclTitle)
+
+    tclTransVar <- tclVar(0)
+    transButton <- tkcheckbutton(displayFrame, text=gettext_("Transpose table"), variable=tclTransVar)
 
     onOK <- function() {
         termsList <- strsplit(tclvalue(tclTerms), " ")[[1]]
         title <- tclvalue(tclTitle)
         plot <- tclvalue(tclPlotVar)
+        trans <- tclvalue(tclTransVar)
 
         if(length(termsList) == 0) {
             errorCondition(recall=docTermFreqDlg,
@@ -92,6 +97,9 @@ docTermFreqDlg <- function() {
             }
         }
 
+        if(trans == 1 && is.matrix(termFreqs))
+            doItAndPrint("termFreqs <- t(termFreqs)")
+
         # We need more precision for row percents, which are usually small
         if(what == "row")
             doItAndPrint("round(termFreqs, d=2)")
@@ -108,12 +116,13 @@ docTermFreqDlg <- function() {
     tkgrid(labelRcmdr(top, text=gettext_("Terms to show (space-separated):")), sticky="w")
     tkgrid(entryTerms, sticky="w", columnspan=2, pady=6)
     tkgrid(whatFrame, sticky="w", columnspan=2, pady=6)
-    tkgrid(labelRcmdr(plotFrame, text=gettext_("Plot:"), foreground="blue"), sticky="w", columnspan=2)
+    tkgrid(labelRcmdr(displayFrame, text=gettext_("Display:"), foreground="blue"), sticky="w", columnspan=2)
+    tkgrid(transButton, sticky="w", columnspan=2)
     tkgrid(plotButton, sticky="w", columnspan=2)
-    tkgrid(labelRcmdr(plotFrame, text=gettext_("Title:")), titleEntry, sticky="w", padx=6)
-    tkgrid(plotFrame, sticky="w", pady=6, columnspan=2)
+    tkgrid(labelRcmdr(displayFrame, text=gettext_("Title:")), titleEntry, sticky="w", padx=6)
+    tkgrid(displayFrame, sticky="w", pady=6, columnspan=2)
     tkgrid(buttonsFrame, sticky="w", columnspan=2, pady=6)
-    dialogSuffix(rows=4, columns=2, focus=entryTerms)
+    dialogSuffix(rows=5, columns=2, focus=entryTerms)
 }
 
 varTermFreqDlg <- function() {
@@ -141,18 +150,22 @@ varTermFreqDlg <- function() {
                  title=gettext_("Measure:"),
                  right=FALSE)
 
+    displayFrame <- tkframe(top)
     tclPlotVar <- tclVar(1)
-    plotFrame <- tkframe(top)
-    plotButton <- tkcheckbutton(plotFrame, text=gettext_("Draw plot"), variable=tclPlotVar)
+    plotButton <- tkcheckbutton(displayFrame, text=gettext_("Draw plot"), variable=tclPlotVar)
 
     tclTitle <- tclVar(gettext_("Occurrences of term %T"))
-    titleEntry <- ttkentry(top, width="20", textvariable=tclTitle)
+    titleEntry <- ttkentry(displayFrame, width="20", textvariable=tclTitle)
+
+    tclTransVar <- tclVar(0)
+    transButton <- tkcheckbutton(displayFrame, text=gettext_("Transpose table"), variable=tclTransVar)
 
     onOK <- function() {
         termsList <- strsplit(tclvalue(tclTerms), " ")[[1]]
         var <- getSelection(varBox)
         title <- tclvalue(tclTitle)
         plot <- tclvalue(tclPlotVar)
+        trans <- tclvalue(tclTransVar)
 
         if(length(termsList) == 0) {
             errorCondition(recall=varTermFreqDlg,
@@ -228,6 +241,9 @@ varTermFreqDlg <- function() {
             }
         }
 
+        if(trans == 1 && is.matrix(termFreqs))
+            doItAndPrint("termFreqs <- t(termFreqs)")
+
         # We need more precision for row percents, which are usually small
         if(what == "row")
             doItAndPrint("round(termFreqs, d=2)")
@@ -245,12 +261,13 @@ varTermFreqDlg <- function() {
     tkgrid(entryTerms, sticky="w", columnspan=2)
     tkgrid(getFrame(varBox), sticky="w", columnspan=2, pady=6)
     tkgrid(whatFrame, sticky="w", columnspan=2, pady=6)
-    tkgrid(labelRcmdr(plotFrame, text=gettext_("Plot:"), foreground="blue"), sticky="w", columnspan=2)
+    tkgrid(labelRcmdr(displayFrame, text=gettext_("Display:"), foreground="blue"), sticky="w", columnspan=2)
+    tkgrid(transButton, sticky="w", columnspan=2)
     tkgrid(plotButton, sticky="w", columnspan=2)
-    tkgrid(labelRcmdr(plotFrame, text=gettext_("Title:")), titleEntry, sticky="w", padx=6)
-    tkgrid(plotFrame, sticky="w", pady=6, columnspan=2)
+    tkgrid(labelRcmdr(displayFrame, text=gettext_("Title:")), titleEntry, sticky="w", padx=6)
+    tkgrid(displayFrame, sticky="w", pady=6, columnspan=2)
     tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=2)
-    dialogSuffix(rows=4, columns=2, focus=entryTerms)
+    dialogSuffix(rows=5, columns=2, focus=entryTerms)
 }
 
 copyTermFreq <- function() {
