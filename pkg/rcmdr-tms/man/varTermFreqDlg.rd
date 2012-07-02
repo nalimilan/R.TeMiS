@@ -26,5 +26,5 @@
          the string '%T' in the plot title will be replaced with the name of the term.
 }
 
-\seealso{\code{\link{setCorpusMetadata}}, \code{\link{meta}}, \code{\link{DocumentTermMatrix}},
+\seealso{\code{\link{setCorpusVariables}}, \code{\link{meta}}, \code{\link{DocumentTermMatrix}},
          \code{\link{table}}, \code{\link{barplot}}, \code{\link{pie}} }

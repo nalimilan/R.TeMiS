@@ -8,5 +8,5 @@
          the Statistics and Plot menus, but operating on the corpus meta-data instead of the active
          data set.}
 
-\seealso{\code{\link{setCorpusMetadata}}, \code{\link{meta}}, \code{\link{table}},
+\seealso{\code{\link{setCorpusVariables}}, \code{\link{meta}}, \code{\link{table}},
          \code{\link{barplot}}, \code{\link{pie}} }

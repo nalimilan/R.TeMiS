@@ -13,5 +13,5 @@
          are plotted. Thus, one can tweak grouping by changing either the order of the variables, or
          the type of computed percent.}
 
-\seealso{\code{\link{setCorpusMetadata}}, \code{\link{meta}}, \code{\link{table}},
+\seealso{\code{\link{setCorpusVariables}}, \code{\link{meta}}, \code{\link{table}},
          \code{\link{barplot}}, \code{\link{pie}} }

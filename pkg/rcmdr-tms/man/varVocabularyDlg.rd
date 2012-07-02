@@ -25,5 +25,5 @@
          since it would always exceed by far the values for separate categories.
 }
 
-\seealso{\code{\link{setCorpusMetadata}}, \code{\link{meta}}, \code{\link{DocumentTermMatrix}},
+\seealso{\code{\link{setCorpusVariables}}, \code{\link{meta}}, \code{\link{DocumentTermMatrix}},
          \code{\link{table}}, \code{\link{barplot}}, \code{\link{docVocabularyDlg}} }
