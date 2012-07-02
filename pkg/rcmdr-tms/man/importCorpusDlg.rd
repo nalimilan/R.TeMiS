@@ -1,5 +1,8 @@
 \name{importCorpusDlg}
 \alias{importCorpusDlg}
+\alias{importCorpusFromDir}
+\alias{importCorpusFromFile}
+\alias{importCorpusFromFactiva}
 \title{Import a corpus and process it}
 \description{Import a corpus, process it and extract a document-term matrix.}
 \details{This dialog allows creating a \pkg{tm} corpus from various sources. Once the
