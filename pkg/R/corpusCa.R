@@ -9,8 +9,8 @@ corpusCa <- function(corpus, sparsity=0.9, dtm=NULL, ...) {
         corpus<-corpus[-invalid]
         msg<-sprintf(ngettext(length(invalid),
                      "Document %s has been skipped because it does not include any occurrence of the terms retained in the final document-term matrix.\nRaise the value of the 'sparsity' parameter to fix this warning.",
-                     "Documents %s have been skipped because they do not include any occurrence of the terms retained in the final document-term matrix.\nRaise the value of the 'sparsity' parameter to fix this warning.",
-                    paste(names(invalid), collapse=", ")))
+                     "Documents %s have been skipped because they do not include any occurrence of the terms retained in the final document-term matrix.\nRaise the value of the 'sparsity' parameter to fix this warning."),
+                    paste(names(invalid), collapse=", "))
         Message(msg, type="warning")
     }
 
