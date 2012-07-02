@@ -3,6 +3,9 @@
     menu        tmMenu          topMenu           ""                                 ""                          ""                    "" 
     item        topMenu	        cascade           "Text mining"                      tmMenu                      ""                    ""
 
+    item        tmMenu          command           "Import corpus..."                 importCorpusDlg             ""                    ""
+
+
 ### Manage corpus menu ###
     menu        corpusMenu      tmMenu            ""                                 ""                          ""                    ""
     item        tmMenu          cascade           "Manage corpus"                    corpusMenu                    ""                    ""
@@ -14,7 +17,6 @@
     item        subsetMenu      command           "Restore saved corpus"             restoreCorpus               "exists('origCorpus') && 'Corpus' %in% class(origCorpus)"                    ""
 
     # Main items
-    item        corpusMenu      command           "Import corpus..."                 importCorpusDlg             ""                    ""
     item        corpusMenu      command           "Show current corpus..."           inspectCorpus               ""                    ""
     item        corpusMenu      command           "Set corpus variables"             setCorpusVariables          "exists('corpus') && 'Corpus' %in% class(corpus) && activeDataSetP() && checkVariables()"          ""
     item        corpusMenu      cascade           "Subset corpus"                    subsetMenu                    ""                    ""
