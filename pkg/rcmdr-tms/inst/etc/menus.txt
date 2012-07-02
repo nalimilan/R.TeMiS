@@ -25,13 +25,11 @@
     menu        anaCorpusMenu   tmMenu            ""                                 ""                          ""                    ""
     item        tmMenu	        cascade           "Analyse corpus"                   anaCorpusMenu               ""                    ""
 
-    # Crosstabs of variables menus
-    menu        varFreqMenu     tmMenu            ""                                 ""                          ""                    ""
-    item        varFreqMenu     command           "One-way table..."                 varTableDlg                 "exists('corpus') && 'Corpus' %in% class(corpus)"                    ""
-    item        varFreqMenu     command           "Two-way table..."                 varCrossTableDlg            "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
-
-    item        anaCorpusMenu	cascade           "Analyse corpus variables"         varFreqMenu                 ""                    ""
+    item        anaCorpusMenu   command           "One-way table..."                 varTableDlg                 "exists('corpus') && 'Corpus' %in% class(corpus)"                    ""
+    item        anaCorpusMenu   command           "Two-way table..."                 varCrossTableDlg            "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
+    item        anaCorpusMenu   command           "Temporal evolution..."            varTimeSeriesDlg            "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
     item        anaCorpusMenu   command           "Dissimilarity table..."           dissimilarityTableDlg       "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+
 
 
 ### Analyse term occurrences menu ###

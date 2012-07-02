@@ -50,7 +50,11 @@ copyTableToOutput <- function() {
     if(length(title) > 0)
         doItAndPrint(sprintf('HTML.title("%s", 3)', title))
 
-    doItAndPrint(sprintf('HTML(%s, Border=NULL, align="left")', last.table))
+    # zoo objects are printed as plain text by default
+    if(inherits(get(last.table), "zoo"))
+        doItAndPrint(sprintf('HTML(as.matrix(%s), Border=NULL, align="left")', last.table))
+    else
+        doItAndPrint(sprintf('HTML(%s, Border=NULL, align="left")', last.table))
 
     # Open file in browser when creating it
     if(!html.on)
