@@ -1,5 +1,5 @@
-\name{showCorpusCa}
-\alias{showCorpusCa}
+\name{showCorpusCaDlg}
+\alias{showCorpusCaDlg}
 \title{Show a correspondence analysis from a tm corpus}
 \description{Displays a correspondence analysis previously computed from a tm corpus.}
 \details{This dialog allows plotting and showing most contributive terms and documents from a
