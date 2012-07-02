@@ -1,0 +1,14 @@
+Package: RcmdrPlugin.TextMiningSuite
+Type: Package
+Title: Rcmdr Text Mining Plug-In
+Version: 0.1
+Date: 2011-08-01
+Author@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr"),
+            person("Gilles", "Bastin", email="gilles.bastin@sciencespo-grenoble.fr"))
+Author: Milan Bouchet-Valat <nalimilan@club.fr> and Gilles Bastin <gilles.bastin@sciencespo-grenoble.fr>.
+Maintainer: Milan Bouchet-Valat <nalimilan@club.fr>
+Depends: Rcmdr (>= 1.4-0), tm, Snowball, ca, slam, R2HTML
+Description: This package provides an Rcommander plug-in to facilitate
+    common text mining tasks such as importing and cleaning a corpus, and analyses like
+    simple vocabulary tables, terms correlations, correspondence analysis and hierarchical clustering.
+License: GPL (>= 2)
