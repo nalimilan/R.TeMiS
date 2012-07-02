@@ -3,7 +3,8 @@ Type: Package
 Title: A plug-in for the tm text mining framework to import articles from Factiva
 Version: 1.0
 Date: 2012-02-03
-Author@R: person("Milan", "Bouchet-Valat", email="nalimilan@club.fr")
+Author@R: person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
+                 role=c("aut", "cre"))
 Author: Milan Bouchet-Valat <nalimilan@club.fr>
 Maintainer: Milan Bouchet-Valat <nalimilan@club.fr>
 Enhances: tm (>= 0.5)
