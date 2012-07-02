@@ -197,7 +197,7 @@ plotCorpusCaDlg <- function() {
         if (GrabFocus() && .Platform$OS.type != "windows") tkgrab.release(window)
         print(help("plotCorpusCaDlg"))
     }
-    helpButton <- buttonRcmdr(buttonsFrame, text=gettext_Rcmdr("Help"), width="12",
+    helpButton <- buttonRcmdr(buttonsFrame, text=gettextRcmdr("Help"), width="12",
                               command=onHelp, borderwidth=3)
     tkgrid(plotButton, labelRcmdr(buttonsFrame, text="  "),
            closeButton, labelRcmdr(buttonsFrame, text="            "),
