@@ -123,8 +123,10 @@ docVocabularyDlg <- function() {
 
     measureVariable <- tclVar("percent")
     measureFrame <- tkframe(top)
-    measure1 <- ttkradiobutton(measureFrame, variable=measureVariable, value="percent", text=gettext_("Percent"))
-    measure2 <- ttkradiobutton(measureFrame, variable=measureVariable, value="count", text=gettext_("Absolute counts"))
+    measure1 <- ttkradiobutton(measureFrame, variable=measureVariable, value="percent",
+                               text=gettext_("Percent"))
+    measure2 <- ttkradiobutton(measureFrame, variable=measureVariable, value="count",
+                               text=gettext_("Number of occurrences"))
 
     radioButtons(name="corpusMeasure",
                  title=gettext_("Plot global corpus value:"),
@@ -136,8 +138,8 @@ docVocabularyDlg <- function() {
                  right.buttons=FALSE)
 
     titleFrame <- tkframe(top)
-    tclTitle <- tclVar("")
-    titleEntry <- ttkentry(top, width="20", textvariable=tclTitle)
+    tclTitle <- tclVar(gettext_("Vocabulary table by document"))
+    titleEntry <- ttkentry(top, width="40", textvariable=tclTitle)
 
     onOK <- function() {
         title <- tclvalue(tclTitle)
@@ -196,6 +198,10 @@ docVocabularyDlg <- function() {
 
         doItAndPrint("print(round(voc, digits=1))")
 
+        # Used by saveTableToOutput()
+        last.table <<- "voc"
+        attr(voc, "title") <<- title
+
         activateMenus()
         tkfocus(CommanderWindow())
     }
@@ -252,15 +258,15 @@ varVocabularyDlg <- function() {
     measure1 <- ttkradiobutton(measureFrame, variable=measureVariable, value="percent",
                                text=gettext_("Percent"))
     measure2 <- ttkradiobutton(measureFrame, variable=measureVariable, value="count",
-                               text=gettext_("Absolute counts"))
+                               text=gettext_("Number of occurrences"))
 
     corpusMeasureVar <- tclVar("0")
     checkCorpusMeasure <- tkcheckbutton(top, text=gettext_("Plot global corpus value"),
                                         variable=corpusMeasureVar)
 
     titleFrame <- tkframe(top)
-    tclTitle <- tclVar("")
-    titleEntry <- ttkentry(top, width="20", textvariable=tclTitle)
+    tclTitle <- tclVar(gettext_("Vocabulary table by %V"))
+    titleEntry <- ttkentry(top, width="40", textvariable=tclTitle)
 
     onOK <- function() {
         var <- getSelection(varBox)
@@ -277,6 +283,8 @@ varVocabularyDlg <- function() {
         corpusMeasure <- tclvalue(corpusMeasureVar) == 1
 
         closeDialog()
+
+        title <- gsub("%V", var, title)
 
         # Only compute the dtm the first time this operation is run
         if(!exists("wordsDtm")) {
@@ -320,6 +328,10 @@ varVocabularyDlg <- function() {
 
         doItAndPrint("print(round(voc, digits=1))")
 
+        # Used by saveTableToOutput()
+        last.table <<- "voc"
+        attr(voc, "title") <<- title
+
         activateMenus()
         tkfocus(CommanderWindow())
     }
@@ -336,9 +348,5 @@ varVocabularyDlg <- function() {
     tkgrid(titleFrame, sticky="w", pady=6, columnspan=3)
     tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=3)
     dialogSuffix(rows=7, columns=3)
-}
-
-copyVocabularyTable <- function() {
-    R2HTML::HTML2clip(round(voc, digits=1))
 }
 

@@ -20,6 +20,9 @@ varTableDlg <- function() {
                  title=gettext_("Measure:"),
                  right.buttons=FALSE)
 
+    tclTitle <- tclVar(gettext_("Distribution of documents by %V"))
+    titleEntry <- ttkentry(top, width="40", textvariable=tclTitle)
+
     tclPlotType <- tclVar("barplot")
     plotFrame <- tkframe(top)
     noneButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
@@ -29,9 +32,6 @@ varTableDlg <- function() {
     pieButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
                                 value="pie", text=gettext_("Pie chart"))
 
-    tclTitle <- tclVar(gettext_("Distribution of documents"))
-    titleEntry <- ttkentry(top, width="20", textvariable=tclTitle)
-
     onOK <- function() {
         var <- getSelection(varBox)
         what <- tclvalue(whatVariable)
@@ -40,7 +40,9 @@ varTableDlg <- function() {
 
         closeDialog()
 
-        doItAndPrint(paste("absVarFreqs <- table(meta(corpus, tag=\"", var, "\"))", sep=""))
+        title <- gsub("%V", var, title)
+
+        doItAndPrint(sprintf('absVarFreqs <- table(meta(corpus, "%s"), dnn="%s")', var, var))
 
         if(what == "percent") {
             doItAndPrint("varFreqs <- prop.table(absVarFreqs) * 100")
@@ -64,8 +66,15 @@ varTableDlg <- function() {
 
         if(what == "percent")
             doItAndPrint("round(varFreqs, digits=1)")
-         else
+        else
             doItAndPrint("print(varFreqs)")
+
+        # Used by saveTableToOutput()
+        last.table <<- "varFreqs"
+        if(what == "percent")
+            attr(varFreqs, "title") <<- paste(title, "(%)")
+        else
+            attr(varFreqs, "title") <<- title
 
         activateMenus()
         tkfocus(CommanderWindow())
@@ -74,14 +83,14 @@ varTableDlg <- function() {
     OKCancelHelp(helpSubject="varTableDlg")
     tkgrid(getFrame(varBox), sticky="w", pady=6, columnspan=3)
     tkgrid(whatFrame, sticky="w", pady=6, columnspan=3)
+    tkgrid(labelRcmdr(top, text=gettext_("Title:"), foreground="blue"), sticky="w")
+    tkgrid(titleEntry, sticky="w")
     tkgrid(labelRcmdr(plotFrame, text=gettext_("Plot:"), foreground="blue"),
            sticky="w", columnspan=3)
     tkgrid(plotFrame, sticky="w", pady=6, columnspan=3)
     tkgrid(noneButton, sticky="w", padx=3, column=1, row=4)
     tkgrid(barplotButton, sticky="w", padx=3, column=2, row=4)
     tkgrid(pieButton, sticky="w", padx=3, column=3, row=4)
-    tkgrid(labelRcmdr(top, text=gettext_("Title:")), sticky="w", column=1, row=4)
-    tkgrid(titleEntry, sticky="w", column=2, row=4, columnspan=2)
     tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=3)
     dialogSuffix(rows=5, columns=3, focus=varBox$listbox)
 }
@@ -118,6 +127,9 @@ varCrossTableDlg <- function() {
                  title=gettext_("Measure:"),
                  right.buttons=FALSE)
 
+    tclTitle <- tclVar(gettext_("Distribution of documents by %V1 and %V2"))
+    titleEntry <- ttkentry(top, width="20", textvariable=tclTitle)
+
     tclPlotType <- tclVar("barplot")
     plotFrame <- tkframe(top)
     noneButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
@@ -127,9 +139,6 @@ varCrossTableDlg <- function() {
     pieButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
                                 value="pie", text=gettext_("Pie chart"))
 
-    tclTitle <- tclVar(gettext_("Distribution of documents"))
-    titleEntry <- ttkentry(top, width="20", textvariable=tclTitle)
-
     onOK <- function() {
         var1 <- getSelection(varBox1)
         var2 <- getSelection(varBox2)
@@ -138,6 +147,8 @@ varCrossTableDlg <- function() {
         plotType <- tclvalue(tclPlotType)
 
         closeDialog()
+
+        title <- gsub("%V2", var2, gsub("%V1", var1, title))
 
         doItAndPrint(paste("absVarFreqs <- table(cbind(meta(corpus, tag=\"", var1,
                            "\"), meta(corpus, tag=\"", var2, "\")))", sep=""))
@@ -190,6 +201,15 @@ varCrossTableDlg <- function() {
          else
             doItAndPrint("print(varFreqs)")
 
+        # Used by saveTableToOutput()
+        last.table <<- "varFreqs"
+        if(what == "row")
+            attr(varFreqs, "title") <<- paste(title, gettext_("(row %)"))
+        else if(what == "col")
+            attr(varFreqs, "title") <<- paste(title, gettext_("(column %)"))
+        else
+            attr(varFreqs, "title") <<- title
+
         activateMenus()
         tkfocus(CommanderWindow())
     }
@@ -207,9 +227,5 @@ varCrossTableDlg <- function() {
     tkgrid(labelRcmdr(top, text=gettext_("Title:")), titleEntry, sticky="w")
     tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=3)
     dialogSuffix(rows=6, columns=3, focus=varBox1$listbox)
-}
-
-copyVarFreq <- function() {
-  R2HTML::HTML2clip(round(varFreqs, digits=2))
 }
 

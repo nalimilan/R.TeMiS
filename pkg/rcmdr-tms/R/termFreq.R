@@ -14,11 +14,11 @@ docTermFreqDlg <- function() {
 
     displayFrame <- tkframe(top)
 
+    tclTitle <- tclVar(gettext_("Occurrences of term %T by document"))
+    titleEntry <- ttkentry(displayFrame, width="40", textvariable=tclTitle)
+
     tclPlotVar <- tclVar(1)
     plotButton <- tkcheckbutton(displayFrame, text=gettext_("Draw plot"), variable=tclPlotVar)
-
-    tclTitle <- tclVar(gettext_("Occurrences of term %T"))
-    titleEntry <- ttkentry(displayFrame, width="20", textvariable=tclTitle)
 
     tclTransVar <- tclVar(0)
     transButton <- tkcheckbutton(displayFrame, text=gettext_("Transpose table"), variable=tclTransVar)
@@ -75,24 +75,28 @@ docTermFreqDlg <- function() {
            if(what == "col") {
                 if(!is.matrix(termFreqs)) {
                     doItAndPrint(paste("pie(termFreqs)", sep=""))
+
+                    title <- gsub("%T", termsList[1], title)
                     if(title != "")
-                        doItAndPrint(paste("title(main=\"", gsub("%T", termsList[1], title),
+                        doItAndPrint(paste("title(main=\"", title,
                                            "\")", sep=""))
                 }
                 else {
                     doItAndPrint(paste("opar <- par(mfrow=c(2, ", ceiling(ncol(termFreqs)/2), "))", sep=""))
                     for(i in 1:ncol(termFreqs)) {
                         doItAndPrint(paste("pie(termFreqs[,", i, "])", sep=""))
+
+                        title <- gsub("%T", colnames(termFreqs)[i], title)
                         if(title != "")
-                            doItAndPrint(paste("title(main=\"", gsub("%T", colnames(termFreqs)[i], title),
-                                               "\")", sep=""))
+                            doItAndPrint(paste("title(main=\"", title, "\")", sep=""))
                     }
                     doItAndPrint("par(opar)")
                 }
             }
             else {
+                title <- gsub("%T", if(length(termsList) == 1) termsList[1] else "", title)
                 doItAndPrint(sprintf('barchart(termFreqs, stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
-                                     ylab, gsub("%T", if(length(termsList) == 1) termsList[1] else "", title)))
+                                     ylab, title))
             }
         }
 
@@ -107,6 +111,15 @@ docTermFreqDlg <- function() {
          else
             doItAndPrint("print(termFreqs)")
 
+        # Used by saveTableToOutput()
+        last.table <<- "termFreqs"
+        if(what == "row")
+            attr(termFreqs, "title") <<- paste(title, gettext_("(% of all terms)"))
+        else if(what == "col")
+            attr(termFreqs, "title") <<- paste(title, gettext_("(% of occurrences)"))
+        else
+            attr(termFreqs, "title") <<- title
+
         activateMenus()
         tkfocus(CommanderWindow())
     }
@@ -116,9 +129,9 @@ docTermFreqDlg <- function() {
     tkgrid(entryTerms, sticky="w", columnspan=2, pady=6)
     tkgrid(whatFrame, sticky="w", columnspan=2, pady=6)
     tkgrid(labelRcmdr(displayFrame, text=gettext_("Display:"), foreground="blue"), sticky="w", columnspan=2)
+    tkgrid(labelRcmdr(displayFrame, text=gettext_("Title:")), titleEntry, sticky="w", padx=6)
     tkgrid(transButton, sticky="w", columnspan=2)
     tkgrid(plotButton, sticky="w", columnspan=2)
-    tkgrid(labelRcmdr(displayFrame, text=gettext_("Title:")), titleEntry, sticky="w", padx=6)
     tkgrid(displayFrame, sticky="w", pady=6, columnspan=2)
     tkgrid(buttonsFrame, sticky="w", columnspan=2, pady=6)
     dialogSuffix(rows=5, columns=2, focus=entryTerms)
@@ -150,11 +163,12 @@ varTermFreqDlg <- function() {
                  right.buttons=FALSE)
 
     displayFrame <- tkframe(top)
+
+    tclTitle <- tclVar(gettext_("Occurrences of term %T by %V"))
+    titleEntry <- ttkentry(displayFrame, width="40", textvariable=tclTitle)
+
     tclPlotVar <- tclVar(1)
     plotButton <- tkcheckbutton(displayFrame, text=gettext_("Draw plot"), variable=tclPlotVar)
-
-    tclTitle <- tclVar(gettext_("Occurrences of term %T"))
-    titleEntry <- ttkentry(displayFrame, width="20", textvariable=tclTitle)
 
     tclTransVar <- tclVar(0)
     transButton <- tkcheckbutton(displayFrame, text=gettext_("Transpose table"), variable=tclTransVar)
@@ -217,24 +231,27 @@ varTermFreqDlg <- function() {
            if(what == "col") {
                 if(!is.matrix(termFreqs)) {
                     doItAndPrint(paste("pie(termFreqs)", sep=""))
+
+                    title <- gsub("%V", var, gsub("%T", termsList[1], title))
                     if(title != "")
-                        doItAndPrint(paste("title(main=\"", gsub("%T", termsList[1], title),
-                                           "\")", sep=""))
+                        doItAndPrint(paste("title(main=\"", title, "\")", sep=""))
                 }
                 else {
                     doItAndPrint(paste("opar <- par(mfrow=c(2, ", ceiling(ncol(termFreqs)/2), "))", sep=""))
                     for(i in 1:ncol(termFreqs)) {
                         doItAndPrint(paste("pie(termFreqs[,", i, "])", sep=""))
+
+                        title <- gsub("%V", var, gsub("%T", colnames(termFreqs)[i], title))
                         if(title != "")
-                            doItAndPrint(paste("title(main=\"", gsub("%T", colnames(termFreqs)[i], title),
-                                               "\")", sep=""))
+                            doItAndPrint(paste("title(main=\"", title, "\")", sep=""))
                     }
                     doItAndPrint("par(opar)")
                 }
             }
             else {
+                title <- gsub("%V", var, gsub("%T", if(length(termsList) == 1) termsList[1] else "", title))
                 doItAndPrint(sprintf('barchart(termFreqs, stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
-                                     ylab, gsub("%T", if(length(termsList) == 1) termsList[1] else "", title)))
+                                     ylab, title))
             }
         }
 
@@ -249,6 +266,15 @@ varTermFreqDlg <- function() {
          else
             doItAndPrint("print(termFreqs)")
 
+        # Used by saveTableToOutput()
+        last.table <<- "termFreqs"
+        if(what == "row")
+            attr(termFreqs, "title") <<- paste(title, gettext_("(% of all terms)"))
+        else if(what == "col")
+            attr(termFreqs, "title") <<- paste(title, gettext_("(% of occurrences)"))
+        else
+            attr(termFreqs, "title") <<- title
+
         activateMenus()
         tkfocus(CommanderWindow())
     }
@@ -259,15 +285,11 @@ varTermFreqDlg <- function() {
     tkgrid(getFrame(varBox), sticky="w", columnspan=2, pady=6)
     tkgrid(whatFrame, sticky="w", columnspan=2, pady=6)
     tkgrid(labelRcmdr(displayFrame, text=gettext_("Display:"), foreground="blue"), sticky="w", columnspan=2)
+    tkgrid(labelRcmdr(displayFrame, text=gettext_("Title:")), titleEntry, sticky="w", padx=6)
     tkgrid(transButton, sticky="w", columnspan=2)
     tkgrid(plotButton, sticky="w", columnspan=2)
-    tkgrid(labelRcmdr(displayFrame, text=gettext_("Title:")), titleEntry, sticky="w", padx=6)
     tkgrid(displayFrame, sticky="w", pady=6, columnspan=2)
     tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=2)
     dialogSuffix(rows=5, columns=2, focus=entryTerms)
-}
-
-copyTermFreq <- function() {
-  R2HTML::HTML2clip(round(termFreqs, digits=2))
 }
 

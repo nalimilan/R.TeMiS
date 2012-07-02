@@ -29,7 +29,6 @@
     menu        varFreqMenu     tmMenu            ""                                 ""                          ""                    ""
     item        varFreqMenu     command           "One-way table..."                 varTableDlg                 "exists('corpus') && 'Corpus' %in% class(corpus)"                    ""
     item        varFreqMenu     command           "Two-way table..."                 varCrossTableDlg            "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
-    item        varFreqMenu     command           "Copy table"                       copyVarFreq                 "exists('varFreqs') && is.table(varFreqs)"                             ""
 
     item        anaCorpusMenu	cascade           "Analyse corpus variables"         varFreqMenu                 ""                    ""
     item        anaCorpusMenu   command           "Dissimilarity table..."           dissimilarityTableDlg       "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
@@ -43,7 +42,6 @@
     menu        vocabularyMenu  termMenu          ""                                 ""                          ""                    ""
     item        vocabularyMenu  command           "Per document..."                  docVocabularyDlg            "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"             ""
     item        vocabularyMenu  command           "Per variable..."                  varVocabularyDlg            "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"             ""
-    item        vocabularyMenu  command           "Copy table"                       copyVocabularyTable         "exists('voc') && is.table(voc)"                            ""
 
     # Dictionary sub-menu
     menu        dictMenu        termMenu          ""                                 ""                          ""                    ""
@@ -54,8 +52,6 @@
     menu        termFreqMenu    tmMenu            ""                                 ""                          ""                    ""
     item        termFreqMenu    command           "Per document..."                  docTermFreqDlg              "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        termFreqMenu    command           "Per variable..."                  varTermFreqDlg              "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""          ""
-    item        termFreqMenu    command           "Copy table"                       copyTermFreq                "exists('termFreqs') && is.table(termFreqs)"                            ""
-
     # Main items
     item        termMenu        cascade           "Vocabulary summary"               vocabularyMenu              ""                    ""
     item        termMenu        cascade           "Terms dictionary"                 dictMenu                    ""                    ""
@@ -70,11 +66,19 @@
     item        clustMenu       command           "Create clusters..."               createClustersDlg           "exists('corpus') && 'Corpus' %in% class(corpus) && exists('corpusClust') && class(corpusClust) == 'hclust'"         ""
     item        tmMenu	        cascade           "Hierarchical clustering"          clustMenu                   ""                    ""
 
-    menu        caMenu          tmMenu            ""                                 ""                          ""                    ""
-
 
 ### Correspondence analysis menu ###
+    menu        caMenu          tmMenu            ""                                 ""                          ""                    ""
     item        caMenu          command           "Run correspondence analysis..."   corpusCaDlg                 "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
     item        caMenu          command           "Show correspondence analysis..."  showCorpusCaDlg             "exists('corpusCa') && class(corpusCa) == 'ca'"                    ""
     item        tmMenu	        cascade           "Correspondence analysis"          caMenu                      ""                    ""
+
+
+### Output menu ###
+    menu        outputMenu      tmMenu            ""                                 ""                          ""                    ""
+    item        outputMenu      command           "Copy last table to report"        copyTableToOutput           "exists('last.table') && exists(last.table)"                   ""
+    item        outputMenu      command           "Copy current plot to report"      copyPlotToOutput            "length(dev.list()) > 0"                   ""
+    item        outputMenu      command           "Open report file"                 openOutputFile              "exists('.HTML.file') && file.exists(.HTML.file)"                   ""
+    item        outputMenu      command           "Select a new report file..."      setOutputFile               ""                   ""
+    item        tmMenu	        cascade           "Export results to report"         outputMenu                  ""                   ""
 
