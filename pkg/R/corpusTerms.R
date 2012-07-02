@@ -4,12 +4,12 @@ listTerms <- function() {
 
 freqTermsDlg <- function() {
     if(!(exists("dtm") && class(dtm) == "DocumentTermMatrix")) {
-        Message(message=gettext("Please import a corpus and create the document-term matrix first."),
+        Message(message=gettext_("Please import a corpus and create the document-term matrix first."),
                 type="error")
         return()
     }
 
-    initializeDialog(title=gettext("Show Most Frequent Terms"))
+    initializeDialog(title=gettext_("Show Most Frequent Terms"))
     tclN <- tclVar(10)
     sliderN <- tkscale(top, from=1, to=100,
                        showvalue=TRUE, variable=tclN,
@@ -26,7 +26,7 @@ freqTermsDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="freqTermsDlg")
-    tkgrid(labelRcmdr(top, text=gettext("Number of terms to show:")), sliderN,
+    tkgrid(labelRcmdr(top, text=gettext_("Number of terms to show:")), sliderN,
            sticky="sw", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
     dialogSuffix(rows=2, columns=2)
@@ -34,12 +34,12 @@ freqTermsDlg <- function() {
 
 termsAssocDlg <- function() {
     if(!(exists("dtm") && class(dtm) == "DocumentTermMatrix")) {
-        Message(message=gettext("Please import a corpus and create the document-term matrix first."),
+        Message(message=gettext_("Please import a corpus and create the document-term matrix first."),
                 type="error")
         return()
     }
 
-    initializeDialog(title=gettext("Show Associated Terms"))
+    initializeDialog(title=gettext_("Show Associated Terms"))
 
     tclTerms <- tclVar("")
     entryTerms <- ttkentry(top,  width="35", textvariable=tclTerms)
@@ -62,20 +62,20 @@ termsAssocDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="termsAssocDlg")
-    tkgrid(labelRcmdr(top, text=gettext("Reference terms (space-separated):")), sticky="w")
+    tkgrid(labelRcmdr(top, text=gettext_("Reference terms (space-separated):")), sticky="w")
     tkgrid(entryTerms, sticky="w", columnspan=2)
-    tkgrid(labelRcmdr(top, text=gettext("Correlation coefficient (%):")), sliderN, sticky="sw")
+    tkgrid(labelRcmdr(top, text=gettext_("Correlation coefficient (%):")), sliderN, sticky="sw")
     tkgrid(buttonsFrame, columnspan=2, sticky="w", pady=6)
     dialogSuffix(rows=4, columns=2, focus=entryTerms)
 }
 
 restrictTermsDlg <- function() {
-    initializeDialog(title=gettext("Select or Exclude Terms"))
+    initializeDialog(title=gettext_("Select or Exclude Terms"))
 
     radioButtons(name="what",
                  buttons=c("retain", "exclude"),
-                 labels=c(gettext("Retain only these terms"),
-                          gettext("Exclude these terms")),
+                 labels=c(gettext_("Retain only these terms"),
+                          gettext_("Exclude these terms")),
                  right=FALSE)
 
     tclTerms <- tclVar("")
@@ -86,17 +86,17 @@ restrictTermsDlg <- function() {
 
         if(length(termsList) == 0) {
             errorCondition(recall=restrictTermsDlg,
-                           message=gettext("Please enter at least one term."))
+                           message=gettext_("Please enter at least one term."))
             return()
         }
         else if(!all(termsList %in% colnames(dtm))) {
             wrongTerms <- termsList[!termsList %in% colnames(dtm)]
             errorCondition(recall=restrictTermsDlg,
-                           message=sprintf(ngettext(length(wrongTerms),
+                           message=sprintf(ngettext_(length(wrongTerms),
                                                     "Term \'%s\' does not exist in the corpus.",
                                                     "Terms \'%s\' do not exist in the corpus."),
                                                      # TRANSLATORS: this should be opening quote, comma, closing quote
-                                                     paste(wrongTerms, collapse=gettext("\', \'"))))
+                                                     paste(wrongTerms, collapse=gettext_("\', \'"))))
             return()
         }
 
@@ -116,7 +116,7 @@ restrictTermsDlg <- function() {
 
     OKCancelHelp(helpSubject="excludeTermsDlg")
     tkgrid(whatFrame, sticky="w", columnspan=2, pady=6)
-    tkgrid(labelRcmdr(top, text=gettext("Terms (space-separated):")),
+    tkgrid(labelRcmdr(top, text=gettext_("Terms (space-separated):")),
            columnspan=2, sticky="w")
     tkgrid(entryTerms, columnspan=2, sticky="w")
     tkgrid(buttonsFrame, sticky="w", pady=6)

@@ -52,15 +52,15 @@ colSubsetCa <- function(ca, indices) {
 
 plotCorpusCaDlg <- function() {
     if(!exists("corpusCa") || !class(corpusCa) == "ca") {
-        Message(message=gettext("Please run a correspondence analysis on the corpus first."),
+        Message(message=gettext_("Please run a correspondence analysis on the corpus first."),
                 type="error")
         return()
     }
 
-    initializeDialog(title=gettext("Plot Correspondence Analysis"))
+    initializeDialog(title=gettext_("Plot Correspondence Analysis"))
 
     dimFrame <- tkframe(top)
-    tkgrid(labelRcmdr(dimFrame, text=gettext("Dimensions to plot:"), fg="blue"), sticky="s")
+    tkgrid(labelRcmdr(dimFrame, text=gettext_("Dimensions to plot:"), fg="blue"), sticky="s")
     tclXDim <- tclVar(1)
     tclYDim <- tclVar(2)
     xSlider <- tkscale(dimFrame, from=1, to=corpusCa$nd,
@@ -73,11 +73,11 @@ plotCorpusCaDlg <- function() {
     vars <- colnames(meta(corpus))
     varBox <- variableListBox(top, vars,
                               selectmode="multiple",
-                              title=gettext("Variables to plot:"),
+                              title=gettext_("Variables to plot:"),
                               initialSelection=(1:length(vars))-1)
 
     nFrame <- tkframe(top)
-    tkgrid(labelRcmdr(nFrame, text=gettext("Number of items to plot:"), fg="blue"), sticky="s")
+    tkgrid(labelRcmdr(nFrame, text=gettext_("Number of items to plot:"), fg="blue"), sticky="s")
     tclNDocs <- tclVar(25)
     tclNTerms <- tclVar(25)
     docsSlider <- tkscale(nFrame, from=1, to=nrow(corpusCa$rowcoord)-length(corpusCa$rowsup),
@@ -88,13 +88,13 @@ plotCorpusCaDlg <- function() {
 		           resolution=1, orient="horizontal")
     radioButtons(name="ctrDim",
                  buttons=c("xDim", "yDim"),
-                 labels=c(gettext("Horizontal axis"), gettext("Vertical axis")))
+                 labels=c(gettext_("Horizontal axis"), gettext_("Vertical axis")))
 
     checkBoxes(frame="pointsFrame",
                boxes=c("documentsPoints", "termsPoints"),
                initialValues=c(0, 1),
-               labels=c(gettext("Documents"), gettext("Terms")),
-               title=gettext("Draw point symbols for:"))
+               labels=c(gettext_("Documents"), gettext_("Terms")),
+               title=gettext_("Draw point symbols for:"))
 
     onPlot <- function() {
         x <- tclvalue(tclXDim)
@@ -111,7 +111,7 @@ plotCorpusCaDlg <- function() {
 
         if(!(documents || terms || variables) || (variables && length(vars) == 0)) {
             errorCondition(recall=plotCorpusCaDlg,
-                           message=gettext("Please select something to plot."))
+                           message=gettext_("Please select something to plot."))
             return()
         }
 
@@ -172,47 +172,47 @@ plotCorpusCaDlg <- function() {
         checkBoxes(frame="whatFrame",
                    boxes=c("documents", "terms"),
                    initialValues=c(0, 1),
-                   labels=c(gettext("Documents"), gettext("Terms")),
-                   title=gettext("Items to represent:"))
+                   labels=c(gettext_("Documents"), gettext_("Terms")),
+                   title=gettext_("Items to represent:"))
     }
     else {
         checkBoxes(frame="whatFrame",
                    boxes=c("variables", "documents", "terms"),
                    initialValues=c(0, 0, 1),
-                   labels=c(gettext("Variables"), gettext("Documents"), gettext("Terms")),
-                   title=gettext("Items to represent:"))
+                   labels=c(gettext_("Variables"), gettext_("Documents"), gettext_("Terms")),
+                   title=gettext_("Items to represent:"))
     }
 
     # Custom buttons, adapted from OKCancelHelp()
     buttonsFrame <- tkframe(top, borderwidth=5)
-    plotButton <- buttonRcmdr(buttonsFrame, text=gettext("Plot"), foreground="darkgreen",
+    plotButton <- buttonRcmdr(buttonsFrame, text=gettext_("Plot"), foreground="darkgreen",
                               command=onPlot, default="active", borderwidth=3)
     onClose <- function() {
         closeDialog()
         tkfocus(CommanderWindow())
     }
-    closeButton <- buttonRcmdr(buttonsFrame, text=gettext("Close"), foreground="red",
+    closeButton <- buttonRcmdr(buttonsFrame, text=gettext_("Close"), foreground="red",
                                command=onClose, borderwidth=3)
     onHelp <- function() {
         if (GrabFocus() && .Platform$OS.type != "windows") tkgrab.release(window)
         print(help("plotCorpusCaDlg"))
     }
-    helpButton <- buttonRcmdr(buttonsFrame, text=gettextRcmdr("Help"), width="12",
+    helpButton <- buttonRcmdr(buttonsFrame, text=gettext_Rcmdr("Help"), width="12",
                               command=onHelp, borderwidth=3)
     tkgrid(plotButton, labelRcmdr(buttonsFrame, text="  "),
            closeButton, labelRcmdr(buttonsFrame, text="            "),
            helpButton, sticky="w")
 
-    tkgrid(labelRcmdr(dimFrame, text=gettext("Horizontal axis:")), xSlider, sticky="sw")
-    tkgrid(labelRcmdr(dimFrame, text=gettext("Vertical axis:")), ySlider, sticky="sw")
+    tkgrid(labelRcmdr(dimFrame, text=gettext_("Horizontal axis:")), xSlider, sticky="sw")
+    tkgrid(labelRcmdr(dimFrame, text=gettext_("Vertical axis:")), ySlider, sticky="sw")
     tkgrid(dimFrame, columnspan="2", sticky="w", pady=6)
     tkgrid(whatFrame, columnspan="2", sticky="w", pady=6)
     if(length(corpusCa$rowsup) > 0)
         tkgrid(getFrame(varBox), sticky="w", pady=6)
-    tkgrid(labelRcmdr(nFrame, text=gettext("Documents:")), docsSlider, sticky="sw")
-    tkgrid(labelRcmdr(nFrame, text=gettext("Terms:")), termsSlider, sticky="sw")
+    tkgrid(labelRcmdr(nFrame, text=gettext_("Documents:")), docsSlider, sticky="sw")
+    tkgrid(labelRcmdr(nFrame, text=gettext_("Terms:")), termsSlider, sticky="sw")
     tkgrid(nFrame, columnspan="2", sticky="w", pady=6)
-    tkgrid(labelRcmdr(nFrame, text=gettext("Most contributive to:")),
+    tkgrid(labelRcmdr(nFrame, text=gettext_("Most contributive to:")),
            ctrDimFrame, sticky="w", pady=6)
     tkgrid(pointsFrame, columnspan="2", sticky="w", pady=6)
     tkgrid(buttonsFrame, sticky="w", columnspan=2, pady=6)

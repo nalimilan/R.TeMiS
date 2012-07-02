@@ -15,15 +15,15 @@ importCorpusFromDir <- function() {
 # Choose a CSV file to load texts and variables from
 importCorpusFromFile <- function() {
     file <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.csv .CSV}} {{%s} {.tsv .TSV}} {{%s} {.dbf .DBF}} {{%s} {.ods .ODS}} {{%s} {.xls .XLS}} {{%s} {.xlsx .XLSX}} {{%s} {.mdb .MDB}} {{%s} {.accdb .ACCDB}} {{%s} {.csv .CSV .tsv .TSV .dbf .DBF .ods .ODS .xls .XLS .xlsx .XLSX .mdb .MDB .accdb .ACCDB}}",
-                                                     gettext("CSV file"),
-                                                     gettext("TSV file"),
-                                                     gettext("dBase file"),
-                                                     gettext("ODS file"),
-                                                     gettext("Excel file"),
-                                                     gettext("Excel 2007 file"),
-                                                     gettext("Access database"),
-                                                     gettext("Access 2007 database"),
-                                                     gettext("All supported types")),
+                                                     gettext_("CSV file"),
+                                                     gettext_("TSV file"),
+                                                     gettext_("dBase file"),
+                                                     gettext_("ODS file"),
+                                                     gettext_("Excel file"),
+                                                     gettext_("Excel 2007 file"),
+                                                     gettext_("Access database"),
+                                                     gettext_("Access 2007 database"),
+                                                     gettext_("All supported types")),
                                    parent=CommanderWindow()))
 
     if (file == "") return()
@@ -48,12 +48,12 @@ importCorpusFromFile <- function() {
     else if(ext == "ods") {
         # ROpenOffice is not available as binary, thus most likely to fail on Windows and Mac OS
         if(!"ROpenOffice" %in% rownames(available.packages(contrib.url("http://www.omegahat.org/R/")))) {
-	    Message(gettext("Loading OpenDocument spreadsheets (.ods) is not supported on your system.\nYou should save your data set as a CSV file or as an Excel spreadsheet (.xls)."),
+	    Message(gettext_("Loading OpenDocument spreadsheets (.ods) is not supported on your system.\nYou should save your data set as a CSV file or as an Excel spreadsheet (.xls)."),
                     type="error")
             return()
         }
 	else if(!require(ROpenOffice)) {
-            response <- tkmessageBox(message=gettext("Loading OpenDocument spreadsheets (.ods) requires the ROpenOffice package.\nDo you want to install it?"),
+            response <- tkmessageBox(message=gettext_("Loading OpenDocument spreadsheets (.ods) requires the ROpenOffice package.\nDo you want to install it?"),
                                      icon="question", type="yesno")
 
             if (tclvalue(response) == "yes")
@@ -66,12 +66,12 @@ importCorpusFromFile <- function() {
     }
     else {
         if(.Platform$OS.type != "windows") {
-	    Message(gettext("Loading Excel and Access files is only supported on Windows.\nYou should save your data set as a CSV file or as an OpenDocument spreadsheet (.ods)."),
+	    Message(gettext_("Loading Excel and Access files is only supported on Windows.\nYou should save your data set as a CSV file or as an OpenDocument spreadsheet (.ods)."),
                     type="error")
             return()
         }
 	else if(!require(RODBC)) {
-            response <- tkmessageBox(message=gettext("The RODBC package is needed to read Excel and Access files.\nDo you want to install it?"),
+            response <- tkmessageBox(message=gettext_("The RODBC package is needed to read Excel and Access files.\nDo you want to install it?"),
                                      icon="question", type="yesno")
 
             if (tclvalue(response) == "yes")
@@ -80,7 +80,7 @@ importCorpusFromFile <- function() {
                 return()
         }
         else if(!any(grepl(ext, odbcDataSources()))) {
-	    Message(gettext("No ODBC driver for this file type was found.\nYou probably need to install Excel or Access, or separate ODBC drivers."),
+	    Message(gettext_("No ODBC driver for this file type was found.\nYou probably need to install Excel or Access, or separate ODBC drivers."),
                     type="error")
             return()
         }
@@ -108,12 +108,12 @@ importCorpusFromFile <- function() {
 
         # If there are several tables
         if(length(tabdat) > 1)
-            fil <- tk_select.list(sort(tabdat), title=gettextRcmdr("Select one table"))
+            fil <- tk_select.list(sort(tabdat), title=gettext_Rcmdr("Select one table"))
         else
             fil <- tabdat
 
         if(fil == "") {
-            Message(gettextRcmdr("No table selected"), type="error")
+            Message(gettext_Rcmdr("No table selected"), type="error")
             return()
         }
 
@@ -141,17 +141,17 @@ importCorpusFromFile <- function() {
 
 processCorpusDlg <- function() {
     # Let the user select processing options
-    initializeDialog(title=gettext("Import Corpus"))
+    initializeDialog(title=gettext_("Import Corpus"))
     # TRANSLATORS: replace 'english' with your language's ISO 639-1 English name
-    tclLang <- tclVar(gettext("english"))
+    tclLang <- tclVar(gettext_("english"))
     entryLang <- ttkentry(top, width="12", textvariable=tclLang)
     checkBoxes(frame="checkBoxFrame",
                boxes=c("lowercase", "punctuation", "numbers", "stopwords", "stemming"),
                initialValues=rep(1, 5),
-               labels=c(gettext("Ignore case"), gettext("Remove punctuation"),
-                        gettext("Remove numbers"), gettext("Remove stopwords"),
-                        gettext("Stem words")),
-               title=gettext("Text processing:"))
+               labels=c(gettext_("Ignore case"), gettext_("Remove punctuation"),
+                        gettext_("Remove numbers"), gettext_("Remove stopwords"),
+                        gettext_("Stem words")),
+               title=gettext_("Text processing:"))
 
     onOK <- function() {
         closeDialog()
@@ -159,7 +159,7 @@ processCorpusDlg <- function() {
         # Set language
         lang <- tclvalue(tclLang)
         if(lang == "")
-            Message(message=gettext("No language has been chosen, using English."),
+            Message(message=gettext_("No language has been chosen, using English."),
                     type="warning")
 
         # Process texts
@@ -194,7 +194,7 @@ processCorpusDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="processCorpusDlg")
-    tkgrid(labelRcmdr(top, text=gettext("Language of texts in the corpus:")), entryLang, sticky="w")
+    tkgrid(labelRcmdr(top, text=gettext_("Language of texts in the corpus:")), entryLang, sticky="w")
     tkgrid(checkBoxFrame, columnspan="2", sticky="w", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
     dialogSuffix(rows=3, columns=2, focus=entryLang)
