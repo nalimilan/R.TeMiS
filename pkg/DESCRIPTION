@@ -10,6 +10,6 @@ Maintainer: Milan Bouchet-Valat <nalimilan@club.fr>
 Depends: Rcmdr (>= 1.4-0), tm, Snowball, ca, slam, R2HTML
 Suggests: ROpenOffice, RODBC
 Description: This package provides an Rcommander plug-in to facilitate
-    common text mining tasks such as importing and cleaning a corpus, and analyses like
-    simple vocabulary tables, terms correlations, correspondence analysis and hierarchical clustering.
+    common text mining tasks such as importing and cleaning a corpus, and analyses like term counts,
+    vocabulary tables, terms correlations, correspondence analysis and hierarchical clustering.
 License: GPL (>= 2)
