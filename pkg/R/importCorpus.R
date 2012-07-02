@@ -14,14 +14,124 @@ importCorpusFromDir <- function() {
 
 # Choose a CSV file to load texts and variables from
 importCorpusFromFile <- function() {
-    file <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.csv .CSV}}",
-                                                     gettext_("CSV file")),
+    file <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.csv .CSV}} {{%s} {.tsv .TSV}} {{%s} {.dbf .DBF}} {{%s} {.ods .ODS}} {{%s} {.xls .XLS}} {{%s} {.xlsx .XLSX}} {{%s} {.mdb .MDB}} {{%s} {.accdb .ACCDB}} {{%s} {.csv .CSV .tsv .TSV .dbf .DBF .ods .ODS .xls .XLS .xlsx .XLSX .mdb .MDB .accdb .ACCDB}}",
+                                                     gettext_("CSV file"),
+                                                     gettext_("TSV file"),
+                                                     gettext_("dBase file"),
+                                                     gettext_("ODS file"),
+                                                     gettext_("MS Excel file"),
+                                                     gettext_("MS Excel 2007 file"),
+                                                     gettext_("MS Access database"),
+                                                     gettext_("MS Access 2007 database"),
+                                                     gettext_("All supported types")),
                                    parent=CommanderWindow()))
+
     if (file == "") return()
 
-    doItAndPrint(paste("corpusDataset <- read.csv(\"", file, "\")", sep=""))
-    doItAndPrint("corpus <- Corpus(DataframeSource(corpusDataset[1]))")
+    # Code adapted from Rcommander's data-menu.R file
+    # The following function was contributed by Matthieu Lesnoff
+    # (added with small changes by J. Fox, 20 July 06 & 30 July 08)
+    # Licensed under GNU GPL (version ≥ 2) 
+    sop <- match(".", rev(strsplit(file, NULL)[[1]]))[1]
+    ext <- tolower(substring(file, nchar(file) - sop + 2, nchar(file)))
 
+    if(ext == "csv") {
+        doItAndPrint(paste("corpusDataset <- read.csv(\"", file, "\")", sep=""))
+    }
+    else if(ext == "tsv") {
+        doItAndPrint(paste("corpusDataset <- read.tsv(\"", file, "\")", sep=""))
+    }
+    else if(ext == "dbf") {
+        Library(foreign)
+        doItAndPrint(paste("corpusDataset <- read.dbf(\"", file, "\")", sep=""))
+    }
+    else if(ext == "ods") {
+        # ROpenOffice is not available as binary, thus most likely to fail on Windows and Mac OS
+        if(!"ROpenOffice" %in% rownames(available.packages(contrib.url("http://www.omegahat.org/R/")))) {
+	    Message(gettext_("Loading OpenDocument spreadsheets (.ods) is not supported on your system.\nYou should save your data set as a CSV file or as an Excel spreadsheet (.xls)."),
+                    type="error")
+            return()
+        }
+	else if(!require(ROpenOffice)) {
+            response <- tkmessageBox(message=gettext_("Loading OpenDocument spreadsheets (.ods) requires the ROpenOffice package.\nDo you want to install it?"),
+                                     icon="question", type="yesno")
+
+            if (tclvalue(response) == "yes")
+	        install.packages("ROpenOffice", repos="http://www.omegahat.org/R", type="source")
+            else
+                return()
+        }
+
+        doItAndPrint(paste("corpusDataset <- read.ods(\"", file, "\")", sep=""))
+    }
+    else {
+        if(.Platform$OS.type != "windows") {
+	    Message(gettext_("Loading Microsoft Excel and Access files is only supported on Windows.\nYou should save your data set as a CSV file or as an OpenDocument spreadsheet (.ods)."),
+                    type="error")
+            return()
+        }
+	else if(!require(RODBC)) {
+            response <- tkmessageBox(message=gettext_("The RODBC package is needed to read Microsoft Excel and Access files.\nDo you want to install it?"),
+                                     icon="question", type="yesno")
+
+            if (tclvalue(response) == "yes")
+	        install.packages("RODBC")
+            else
+                return()
+        }
+        else if(!any(grepl(ext, odbcDataSources()))) {
+	    Message(gettext_("No ODBC driver for this file type was found.\nYou probably need to install Microsoft Excel or Access, or separate ODBC drivers."),
+                    type="error")
+            return()
+        }
+
+        channelStr <- switch(EXPR = ext,
+        	             xls = "odbcConnectExcel",
+        	             xlsx = "odbcConnectExcel2007",
+        	             mdb = "odbcConnectAccess",
+        	             accdb = "odbcConnectAccess2007")
+        doItAndPrint(paste("channel <- ", channelStr, "(\"", file, "\")", sep=""))
+
+        # For Excel and Access, need to select a particular sheet or table
+        tabdat <- sqlTables(channel)
+        names(tabdat) <- tolower(names(tabdat))
+
+        if(ext == "mdb" || ext == "accdb")
+            tabdat <- tabdat[tabdat$table_type == "TABLE", 3]
+
+        if(ext == "xls" || ext == "xlsx") {
+            tabname <- tabdat$table_name
+            tabdat <- ifelse(tabdat$table_type == "TABLE",
+                             substring(tabname, 2, nchar(tabname) - 2),
+                             substring(tabname, 1, nchar(tabname) - 1))
+        }
+
+        # If there are several tables
+        if(length(tabdat) > 1)
+            fil <- tk_select.list(sort(tabdat), title=gettextRcmdr("Select one table"))
+        else
+            fil <- tabdat
+
+        if(fil == "") {
+            Message(gettextRcmdr("No table selected"), type="error")
+            return()
+        }
+
+        if(ext == "xls" || ext == "xlsx")
+            fil <- paste("[", fil, "$]", sep = "")
+
+        # Retrieve the data
+        command <- paste("sqlQuery(channel=channel, select * from ", fil,")",
+        	         sep = "")
+        doItAndPrint(paste("corpusDataset <- ", command, sep = ""))
+        doItAndPrint("odbcCloseAll()")
+    }
+
+    # In case something went wrong, no point in continuing
+    if(is.null(corpusDataset))
+        return()
+
+    doItAndPrint("corpus <- Corpus(DataframeSource(corpusDataset[1]))")
     doItAndPrint("corpusVars <- corpusDataset[-1]")
     doItAndPrint("activeDataSet(\"corpusVars\")")
     doItAndPrint("setCorpusVariables()")
