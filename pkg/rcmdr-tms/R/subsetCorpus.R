@@ -135,7 +135,7 @@ subsetCorpusByTermsDlg <- function() {
                                                      paste(wrongTerms, collapse=.gettext("\', \'"))))
             return()
         }
-        else if(!any(row_sums(dtm[,keepList]) > 0 && row_sums(dtm[,excludeList]) == 0)) {
+        else if(!any(row_sums(dtm[,keepList]) > 0 & row_sums(dtm[,excludeList]) == 0)) {
             errorCondition(recall=subsetCorpusByTermsDlg,
                            message=gettext("Specified conditions would exclude all documents from the corpus."))
             return()
