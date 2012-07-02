@@ -49,8 +49,8 @@ readFactivaHTML <- tm::FunctionGenerator(function(elem, language, id) {
         # Remove useless escape sequences
         content <- gsub("\\r", "", content)
 
-        # Extract useful information: origin, date, and two last characters to avoid collisions
-        m <- regmatches(data[["AN"]], regexec("^([A-Za-z]+)0*[1-9][0-9]([0-9][0-9][0-3][0-9][0-3][0-9]).*([A-Za-z0-9]{2})$",
+        # Extract useful information: origin, date, and three last characters to avoid collisions
+        m <- regmatches(data[["AN"]], regexec("^([A-Za-z]+)0*[1-9][0-9]([0-9][0-9][0-3][0-9][0-3][0-9]).*([A-Za-z0-9]{3})$",
                                               data[["AN"]]))[[1]]
         # If extraction failed for some reason, make sure we return a unique identifier
         if(length(m) == 4)
