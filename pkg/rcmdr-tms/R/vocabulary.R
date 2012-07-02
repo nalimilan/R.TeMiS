@@ -110,10 +110,10 @@ docVocabularyDlg <- function() {
                         gettext_("Average word length")))
 
     radioButtons(name="corpusMeasure",
-                 title=gettext_("Plot global measure:"),
+                 title=gettext_("Plot global value:"),
                  buttons=c("none", "mean", "total"),
                  initialValue="mean",
-                 labels=c(gettext_("None"),
+                 labels=c(gettext_("Nothing"),
                           gettext_("Corpus mean"),
                           gettext_("Corpus total")),
                  right=FALSE)
@@ -223,7 +223,7 @@ varVocabularyDlg <- function() {
                         gettext_("Number of very long words"),
                         gettext_("Percent of very long words"),
                         gettext_("Average word length"),
-                        gettext_("Corpus global measure")))
+                        gettext_("Corpus global value")))
 
     titleFrame <- tkframe(top)
     tclTitle <- tclVar("")

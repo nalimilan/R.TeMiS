@@ -1,7 +1,7 @@
 # RcmdrPlugin.TextMiningSuite French translation.
-# Copyright (C) 2001 Milan Bouchet-Valat
+# Copyright (C) 2012 Milan Bouchet-Valat
 # This file is distributed under the same license as the RcmdrPlugin.TextMiningSuite package.
-# Milan Bouchet-Valat <nalimilan@club.fr>, 2011.
+# Milan Bouchet-Valat <nalimilan@club.fr>, 2012.
 #
 # Merge with .pot from the package base dir with:
 # msgmerge -U po/R-fr.po po/R-RcmdrPlugin.TextMiningSuite.pot
@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.TextMiningSuite 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-12 18:29+0100\n"
-"PO-Revision-Date: 2011-12-23 20:29+0100\n"
+"POT-Creation-Date: 2012-03-05 20:57+0100\n"
+"PO-Revision-Date: 2012-03-05 20:57+0100\n"
 "Last-Translator: Milan Bouchet-Valat <nalimilan@club.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr ""
 
 # ## MENUS: added by hand
 msgid "Text mining"
-msgstr "Analyse lexicale"
+msgstr "Analyse textuelle"
 
 msgid "Import corpus..."
 msgstr "Importer un corpus..."
@@ -47,8 +47,8 @@ msgstr "Afficher les associations de termes..."
 msgid "Exclude terms from analysis..."
 msgstr "Exclure des termes de l'analyse..."
 
-msgid "Vocabulary"
-msgstr "Vocabulaire"
+msgid "Vocabulary summary"
+msgstr "Bilan du vocabulaire"
 
 msgid "Per document..."
 msgstr "Par document..."
@@ -203,7 +203,7 @@ msgid "No language has been chosen, using English."
 msgstr "Aucune langue choisie, utilisation de l'anglais."
 
 #: R/importCorpus.R:81 R/importCorpus.R:84 R/importCorpus.R:197
-#: R/importCorpus.R:76
+#: R/importCorpus.R:76 R/importCorpus.R:97
 msgid "Language of texts in the corpus:"
 msgstr "Langue des textes du corpus :"
 
@@ -342,11 +342,11 @@ msgstr "Variable de méta-données :"
 msgid "Variable Cross Table"
 msgstr "Tri croisé de variables"
 
-#: R/varFreq.R:13 R/termFreq.R:155 R/vocabulary.R:84
+#: R/varFreq.R:13 R/termFreq.R:155 R/vocabulary.R:84 R/vocabulary.R:202
 msgid "Variable:"
 msgstr "Variable :"
 
-#: R/varFreq.R:26 R/varFreq.R:119 R/varFreq.R:120
+#: R/varFreq.R:26 R/varFreq.R:119 R/varFreq.R:120 R/vocabulary.R:116
 msgid "None"
 msgstr "Aucun"
 
@@ -502,7 +502,7 @@ msgstr ""
 "variables."
 
 #: R/corpusCa.R:78 R/termFreq.R:143 R/varFreq.R:4 R/varFreq.R:88
-#: R/vocabulary.R:75
+#: R/vocabulary.R:75 R/vocabulary.R:193
 msgid ""
 "No corpus variables have been set. Use Text mining->Set corpus variables to "
 "add them."
@@ -514,43 +514,43 @@ msgstr ""
 msgid "Remove terms missing from more than (% of documents):"
 msgstr "Supprimer les termes absents de plus de (en % des documents) :"
 
-#: R/importCorpus.R:18 R/importCorpus.R:102
+#: R/importCorpus.R:18 R/importCorpus.R:102 R/importCorpus.R:123
 msgid "CSV file"
 msgstr "Fichier CSV"
 
-#: R/importCorpus.R:19 R/importCorpus.R:103
+#: R/importCorpus.R:19 R/importCorpus.R:103 R/importCorpus.R:124
 msgid "TSV file"
 msgstr "Fichier TSV"
 
-#: R/importCorpus.R:20 R/importCorpus.R:104
+#: R/importCorpus.R:20 R/importCorpus.R:104 R/importCorpus.R:125
 msgid "dBase file"
 msgstr "Fichier dBase"
 
-#: R/importCorpus.R:21 R/importCorpus.R:105
+#: R/importCorpus.R:21 R/importCorpus.R:105 R/importCorpus.R:126
 msgid "ODS file"
 msgstr "Fichier ODS"
 
-#: R/importCorpus.R:22 R/importCorpus.R:106
+#: R/importCorpus.R:22 R/importCorpus.R:106 R/importCorpus.R:127
 msgid "Excel file"
 msgstr "Fichier Excel"
 
-#: R/importCorpus.R:23 R/importCorpus.R:107
+#: R/importCorpus.R:23 R/importCorpus.R:107 R/importCorpus.R:128
 msgid "Excel 2007 file"
 msgstr "Fichier Excel 2007"
 
-#: R/importCorpus.R:24 R/importCorpus.R:108
+#: R/importCorpus.R:24 R/importCorpus.R:108 R/importCorpus.R:129
 msgid "Access database"
 msgstr "Base de données Access"
 
-#: R/importCorpus.R:25 R/importCorpus.R:109
+#: R/importCorpus.R:25 R/importCorpus.R:109 R/importCorpus.R:130
 msgid "Access 2007 database"
 msgstr "Base de données Access 2007"
 
-#: R/importCorpus.R:26 R/importCorpus.R:110
+#: R/importCorpus.R:26 R/importCorpus.R:110 R/importCorpus.R:131
 msgid "All supported types"
 msgstr "Tous les types pris en charge"
 
-#: R/importCorpus.R:51 R/importCorpus.R:135
+#: R/importCorpus.R:51 R/importCorpus.R:135 R/importCorpus.R:156
 msgid ""
 "Loading OpenDocument spreadsheets (.ods) is not supported on your system.\n"
 "You should save your data set as a CSV file or as an Excel spreadsheet (."
@@ -561,7 +561,7 @@ msgstr ""
 "Vous devriez enregistrer votre jeu de données dans un fichier CSV ou dans "
 "une feuille de calcul Excel (.xls)."
 
-#: R/importCorpus.R:56 R/importCorpus.R:140
+#: R/importCorpus.R:56 R/importCorpus.R:140 R/importCorpus.R:161
 msgid ""
 "Loading OpenDocument spreadsheets (.ods) requires the ROpenOffice package.\n"
 "Do you want to install it?"
@@ -570,7 +570,7 @@ msgstr ""
 "OpenDocument (.ods).\n"
 "Voulez-vous l'installer ?"
 
-#: R/importCorpus.R:69 R/importCorpus.R:153
+#: R/importCorpus.R:69 R/importCorpus.R:153 R/importCorpus.R:174
 msgid ""
 "Loading Excel and Access files is only supported on Windows.\n"
 "You should save your data set as a CSV file or as an OpenDocument "
@@ -581,7 +581,7 @@ msgstr ""
 "Vous devriez enregistrer votre jeu de données dans un fichier CSV ou dans "
 "une feuille de calcul OpenDocument (.ods)."
 
-#: R/importCorpus.R:74 R/importCorpus.R:158
+#: R/importCorpus.R:74 R/importCorpus.R:158 R/importCorpus.R:179
 msgid ""
 "The RODBC package is needed to read Excel and Access files.\n"
 "Do you want to install it?"
@@ -589,7 +589,7 @@ msgstr ""
 "Le paquet RODBC est nécessaire pour charger des fichiers Excel et Access.\n"
 "Voulez-vous l'installer ?"
 
-#: R/importCorpus.R:83 R/importCorpus.R:167
+#: R/importCorpus.R:83 R/importCorpus.R:167 R/importCorpus.R:188
 msgid ""
 "No ODBC driver for this file type was found.\n"
 "You probably need to install Excel or Access, or separate ODBC drivers."
@@ -598,12 +598,15 @@ msgstr ""
 "Vous devez probablement installer Excel ou Access, ou des pilotes ODBC "
 "séparés."
 
-#: R/importCorpus.R:240
+#: R/importCorpus.R:240 R/importCorpus.R:261
 msgid ""
-"The tm.plugin.factiva package is needed to import corpora from "
-"Factiva XML files.\nDo you want to install it?"
-msgstr "Le paquet tm.plugin.factiva est nécessaire pour importer des corpus "
-"a partir d'un fichier XML Factiva.\nVoulez-vous l'installer ?"
+"The tm.plugin.factiva package is needed to import corpora from Factiva XML "
+"files.\n"
+"Do you want to install it?"
+msgstr ""
+"Le paquet tm.plugin.factiva est nécessaire pour importer des corpus a partir "
+"d'un fichier XML Factiva.\n"
+"Voulez-vous l'installer ?"
 
 #: R/plotCorpusCa.R:76
 msgid "Variables to plot:"
@@ -642,10 +645,12 @@ msgid "Vocabulary per Document"
 msgstr "Vocabulaire par document"
 
 #: R/vocabulary.R:14 R/vocabulary.R:34 R/vocabulary.R:104 R/vocabulary.R:145
+#: R/vocabulary.R:80 R/vocabulary.R:102 R/vocabulary.R:217
 msgid "Number of terms"
 msgstr "Nombre de termes"
 
 #: R/vocabulary.R:15 R/vocabulary.R:35 R/vocabulary.R:105 R/vocabulary.R:146
+#: R/vocabulary.R:81 R/vocabulary.R:103 R/vocabulary.R:218
 msgid "Number of unique terms"
 msgstr "Nombre de termes distincts"
 
@@ -653,11 +658,11 @@ msgstr "Nombre de termes distincts"
 msgid "Terms diversity"
 msgstr "Diversité des termes"
 
-#: R/vocabulary.R:28
+#: R/vocabulary.R:28 R/vocabulary.R:34 R/vocabulary.R:117
 msgid "Corpus mean"
 msgstr "Moyenne du corpus"
 
-#: R/vocabulary.R:30
+#: R/vocabulary.R:30 R/vocabulary.R:34 R/vocabulary.R:118
 msgid "Corpus total"
 msgstr "Total du corpus"
 
@@ -665,27 +670,27 @@ msgstr "Total du corpus"
 msgid "Vocabulary per Variable"
 msgstr "Vocabulaire par variable"
 
-#: R/vocabulary.R:89
+#: R/vocabulary.R:89 R/vocabulary.R:207
 msgid "Document (mean)"
 msgstr "Document (moyenne)"
 
-#: R/vocabulary.R:90
+#: R/vocabulary.R:90 R/vocabulary.R:208
 msgid "Category (sum)"
 msgstr "Catégorie (somme)"
 
-#: R/vocabulary.R:91
+#: R/vocabulary.R:91 R/vocabulary.R:209
 msgid "Unit:"
 msgstr "Unité d'analyse :"
 
-#: R/vocabulary.R:129 R/vocabulary.R:138
+#: R/vocabulary.R:129 R/vocabulary.R:138 R/vocabulary.R:56 R/vocabulary.R:74
 msgid "Corpus"
 msgstr "Corpus"
 
-#: R/vocabulary.R:131
+#: R/vocabulary.R:131 R/vocabulary.R:57
 msgid "Per document mean:"
 msgstr "Moyenne par document :"
 
-#: R/vocabulary.R:140
+#: R/vocabulary.R:140 R/vocabulary.R:75
 msgid "Per category total:"
 msgstr "Total par catégorie :"
 
@@ -697,7 +702,7 @@ msgstr "Répertoire contenant des fichiers textes bruts"
 msgid "Spreadsheet file (CSV, XLS, ODS...)"
 msgstr "Tableur (CSV, XLS, ODS...)"
 
-#: R/importCorpus.R:9 R/importCorpus.R:250
+#: R/importCorpus.R:9 R/importCorpus.R:250 R/importCorpus.R:271
 msgid "Factiva XML file"
 msgstr "Fichier XML Factiva"
 
@@ -705,43 +710,98 @@ msgstr "Fichier XML Factiva"
 msgid "Load corpus from:"
 msgstr "Importer un corpus à partir d'un :"
 
-#: R/importCorpus.R:281
+#: R/importCorpus.R:281 R/importCorpus.R:305
 msgid "Date"
 msgstr "Date"
 
-#: R/importCorpus.R:281
+#: R/importCorpus.R:281 R/importCorpus.R:305
 msgid "Origin"
 msgstr "Origine"
 
-#: R/importCorpus.R:281
+#: R/importCorpus.R:281 R/importCorpus.R:305
 msgid "Author"
 msgstr "Auteur"
 
-#: R/importCorpus.R:281
+#: R/importCorpus.R:281 R/importCorpus.R:305
 msgid "Heading"
 msgstr "Titre"
 
-#: R/importCorpus.R:282
+#: R/importCorpus.R:282 R/importCorpus.R:306
 msgid "Language"
 msgstr "Langue"
 
-#: R/importCorpus.R:282
+#: R/importCorpus.R:282 R/importCorpus.R:306
 msgid "WordCount"
 msgstr "NombreDeMots"
 
-#: R/importCorpus.R:282
+#: R/importCorpus.R:282 R/importCorpus.R:306
 msgid "Pages"
 msgstr "Pages"
 
-#: R/importCorpus.R:283
+#: R/importCorpus.R:283 R/importCorpus.R:307
 msgid "Section"
 msgstr "Section"
 
-#: R/importCorpus.R:283
+#: R/importCorpus.R:283 R/importCorpus.R:307
 msgid "Edition"
 msgstr "Edition"
 
-#: R/importCorpus.R:283
+#: R/importCorpus.R:283 R/importCorpus.R:307
 msgid "Publisher"
 msgstr "Editeur"
 
+#: R/vocabulary.R:82 R/vocabulary.R:104 R/vocabulary.R:219
+msgid "Percent of unique terms"
+msgstr "Pourcentage de termes distincts"
+
+#: R/vocabulary.R:83 R/vocabulary.R:105 R/vocabulary.R:220
+msgid "Number of words"
+msgstr "Nombre de mots"
+
+#: R/vocabulary.R:84 R/vocabulary.R:106 R/vocabulary.R:221
+msgid "Number of long words"
+msgstr "Nombre de mots longs"
+
+#: R/vocabulary.R:85 R/vocabulary.R:107 R/vocabulary.R:222
+msgid "Percent of long words"
+msgstr "Pourcentage de mots longs"
+
+#: R/vocabulary.R:86 R/vocabulary.R:108 R/vocabulary.R:223
+msgid "Number of very long words"
+msgstr "Nombre de mots très longs"
+
+#: R/vocabulary.R:87 R/vocabulary.R:109 R/vocabulary.R:224
+msgid "Percent of very long words"
+msgstr "Pourcentage de mots très longs"
+
+#: R/vocabulary.R:88 R/vocabulary.R:110 R/vocabulary.R:225
+msgid "Average word length"
+msgstr "Longueur moyenne des mots"
+
+#: R/vocabulary.R:95
+msgid "Vocabulary Summary per Document"
+msgstr "Bilan du vocabulaire par document"
+
+#: R/vocabulary.R:98 R/vocabulary.R:213
+msgid "Draw plot for:"
+msgstr "Créer un graphique avec:"
+
+#: R/vocabulary.R:113
+msgid "Plot global corpus value:"
+msgstr "Représenter la valeur globale du corpus:"
+
+#: R/vocabulary.R:116
+msgid "Nothing"
+msgstr "Rien"
+
+#: R/vocabulary.R:185 R/vocabulary.R:293
+msgid "Plot title:"
+msgstr "Titre du graphique :"
+
+#: R/vocabulary.R:198
+msgid "Vocabulary Summary per Variable"
+msgstr "Bilan du vocabulaire par variable"
+
+#: R/vocabulary.R:226
+msgid "Corpus global value"
+msgstr "Valeur pour l'ensemble du corpus"
