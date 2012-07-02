@@ -2,6 +2,9 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
     if(!exists("dtm"))
         dtm<-DocumentTermMatrix(corpus)
 
+    # Save old meta-data now to check what is lost when skipping documents
+    oldMeta<-meta(corpus)[colnames(meta(corpus)) != "MetaID"]
+
     dtm<-as.matrix(removeSparseTerms(dtm, sparsity))
     invalid<-which(apply(dtm,1,sum)==0)
     if(length(invalid) > 0) {
@@ -24,23 +27,21 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
     }
 
     meta<-meta(corpus)[colnames(meta(corpus)) != "MetaID"]
+    skippedVars<-character()
+    skippedLevs<-character()
 
     # Create mean dummy variables as rows
     if(ncol(meta) > 0) {
         for(i in 1:ncol(meta)) {
             levels<-levels(factor(meta[,i]))
-            totNLevels<-nlevels(factor(meta(corpus)[colnames(meta(corpus)) != "MetaID"][,i]))
+            totNLevels<-nlevels(oldMeta[,i])
 
             if(length(levels) == 0) {
-                Message(sprintf(gettext_("Variable %s has been skipped since it contains only missing values for retained documents."),
-                                colnames(meta)[i]),
-                        type="note")
+                skippedVars <- c(skippedVars, colnames(meta)[i])
                 next
             }
             else if(length(levels) < totNLevels) {
-                Message(sprintf(gettext_("Some levels of variable %s has been skipped since they contain only missing values for retained documents."),
-                                colnames(meta)[i]),
-                        type="note")
+                skippedLevs <- c(skippedLevs, colnames(meta)[i])
             }
 
             mat<-aggregate(dtm[1:ndocs, , drop=FALSE], meta[i], sum)[,-1, drop=FALSE]
@@ -57,9 +58,20 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
         }
     }
 
+
     Message(sprintf(gettext_("Running correspondence analysis using %i documents, %i terms and %i variables."),
                     ndocs, nterms, ncol(meta)),
             type="note")
+
+    if(length(skippedVars) > 0)
+        Message(sprintf(gettext_("Variable(s) %s have been skipped since it contains only missing values for retained documents."),
+                        paste(skippedVars, collapse=", ")),
+                type="note")
+
+    if(length(skippedLevs) > 0)
+        Message(sprintf(gettext_("Some levels of variable(s) %s have been skipped since they contain only missing values for retained documents."),
+                        paste(skippedLevs, collapse=", ")),
+                type="note")
 
     if(nrow(dtm) - ndocs > 0)
         ca(dtm, suprow=(ndocs+1):nrow(dtm), ...)
