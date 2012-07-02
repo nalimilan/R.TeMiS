@@ -1,5 +1,5 @@
-corpusCa <- function(corpus, sparsity=0.9, dtm=NULL, ...) {
-    if(is.null(dtm))
+corpusCa <- function(corpus, sparsity=0.9, ...) {
+    if(!exists("dtm"))
         dtm<-DocumentTermMatrix(corpus)
 
     dtm<-as.matrix(removeSparseTerms(dtm, sparsity))
