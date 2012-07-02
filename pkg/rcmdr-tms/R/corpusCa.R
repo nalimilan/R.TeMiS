@@ -5,17 +5,24 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
     dtm<-as.matrix(removeSparseTerms(dtm, sparsity))
     invalid<-which(apply(dtm,1,sum)==0)
     if(length(invalid) > 0) {
-        dtm<-dtm[-invalid,]
+        dtm<-dtm[-invalid, , drop=FALSE]
         corpus<-corpus[-invalid]
         msg<-sprintf(ngettext_(length(invalid),
-                     "Document %s has been skipped because it does not include any occurrence of the terms retained in the final document-term matrix.\nLower the value of the 'sparsity' parameter to fix this warning.",
-                     "Documents %s have been skipped because they do not include any occurrence of the terms retained in the final document-term matrix.\nLower the value of the 'sparsity' parameter to fix this warning."),
+                     "Document %s has been skipped because it does not include any occurrence of the terms retained in the final document-term matrix.\nIncrease the value of the 'sparsity' parameter to fix this warning.",
+                     "Documents %s have been skipped because they do not include any occurrence of the terms retained in the final document-term matrix.\nIncrease the value of the 'sparsity' parameter to fix this warning."),
                      paste(names(invalid), collapse=", "))
         Message(msg, type="warning")
     }
 
     ndocs<-nrow(dtm)
     nterms<-ncol(dtm)
+
+    if(ndocs <= 1 || nterms <= 1) {
+        Message(gettext_("Please increase the value of the 'sparsity' parameter so that at least two documents and two terms are retained."),
+                type="error")
+        return()
+    }
+
     meta<-meta(corpus)[colnames(meta(corpus)) != "MetaID"]
 
     # Create mean dummy variables as rows
@@ -37,7 +44,7 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
                 break
             }
 
-            mat<-aggregate(dtm[1:ndocs,], meta[i], sum)[,-1]
+            mat<-aggregate(dtm[1:ndocs, , drop=FALSE], meta[i], sum)[,-1, drop=FALSE]
 
             # If only one level is present, don't add the level name
             # (probably something like TRUE or YES)
@@ -52,7 +59,7 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
     }
 
     Message(sprintf(gettext_("Running correspondence analysis using %i documents, %i terms and %i variables."),
-                            ndocs, nterms, ncol(meta)),
+                    ndocs, nterms, ncol(meta)),
             type="note")
 
     if(ncol(meta) > 0)
@@ -83,7 +90,9 @@ corpusCaDlg <- function() {
         dim <- as.numeric(tclvalue(tclDim))
 
         doItAndPrint(paste("corpusCa <- runCorpusCa(corpus, sparsity=", sparsity/100, ", nd=", dim, ")", sep=""))
-        doItAndPrint("print(corpusCa)")
+
+        if(!is.null(corpusCa))
+            doItAndPrint("print(corpusCa)")
 
         activateMenus()
 

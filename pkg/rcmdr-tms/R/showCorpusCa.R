@@ -3,7 +3,8 @@
 # Get rows contributions to the dimensions of a CA
 rowCtr <- function(obj, dim) {
     I <- dim(obj$rowcoord)[1]
-    K <- obj$nd
+    # nd can be lower than actual number of dimensions if matrix does not require them
+    K <- min(obj$nd, ncol(obj$rowcoord))
     svF <- matrix(rep(obj$sv[1:K], I), I, K, byrow=TRUE)
     rpc <- obj$rowcoord[,1:K] * svF
     obj$rowmass * rpc[,dim]^2 / obj$sv[dim]^2
@@ -12,7 +13,8 @@ rowCtr <- function(obj, dim) {
 # Get columns contributions to the dimensions of a CA
 colCtr <- function(obj, dim) {
     J <- dim(obj$colcoord)[1]
-    K <- obj$nd
+    # nd can be lower than actual number of dimensions if matrix does not require them
+    K <- min(obj$nd, ncol(obj$colcoord))
     svG <- matrix(rep(obj$sv[1:K], J), J, K, byrow=TRUE)
     cpc <- obj$colcoord[,1:K] * svG
     obj$colmass * cpc[,dim]^2 / obj$sv[dim]^2
