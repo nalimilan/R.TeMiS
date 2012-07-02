@@ -16,8 +16,12 @@ readFactiva <- tm::readXML(
               str <- gsub("^distdoc:archive/ArchiveDoc::Article/", "",
                            sapply(XML::getNodeSet(node, "/article/reference"), xmlValue))
               # Extract useful information: origin, date, and two last characters to avoid collisions
-              m <- regmatches(str, regexec("^([A-Za-z]+)0*[1-9][0-9]([0-9][0-9][01][1-9][01][0-9]).*([A-Za-z0-9]{2})$", str))[[1]]
-              paste(m[2], "-", m[3], "-", m[4], sep="")
+              m <- regmatches(str, regexec("^([A-Za-z]+)0*[1-9][0-9]([0-9][0-9][0-3][0-9][0-3][0-9]).*([A-Za-z0-9]{2})$", str))[[1]]
+              # If extraction failed for some reason, make sure we return a unique identifier
+              if(length(m) == 4)
+                  paste(toupper(m[2]), "-", m[3], "-", m[4], sep="")
+              else
+                  paste(sample(LETTERS, 10), collapse="")
     }),
     Origin = list("node", "/article/sourceName"),
     Language = list("function", function(node)
