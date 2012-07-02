@@ -30,7 +30,8 @@ setCorpusMetadata <- function() {
         return()
     }
 
-    doItAndPrint("meta(corpus) <- NULL")
+    for(var in colnames(meta(corpus)))
+        doItAndPrint(paste("meta(corpus, tag=\"", var, "\") <- NULL")
 
     for(i in 1:ncol(dset)) {
         doItAndPrint(paste("meta(corpus, tag=\"", colnames(dset)[i], "\") <- ", ActiveDataSet(), "[", i, "]", sep=""))
