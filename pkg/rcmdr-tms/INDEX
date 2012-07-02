@@ -11,7 +11,7 @@ freqTermsDlg		Find most frequent terms from the document-term matrix
 importCorpusFromDir	Import a corpus from a directory and show a dialog to process it
 importCorpusFromFile	Import a corpus from a file and show a dialog to process it
 listTerms		List all terms present in the document-term matrix
-plotCorpusCaDlg		Plot a correspondence analysis previously run on the corpus
+showCorpusCaDlg		Show a correspondence analysis previously run on the corpus
 plotTermFreqDlg		Plot a previously created terms-documents frequency table
 plotVarFreqDlg		Plot a previously created terms-variable frequency table
 processCorpusDlg	Process a corpus and extract its document-term matrix
