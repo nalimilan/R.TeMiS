@@ -21,33 +21,33 @@ colCtr <- function(obj, dim) {
 }
 
 # Restrain CA to a subset of rows (only for plotting!)
-rowSubsetCa <- function(ca, indices) {
-    ret <- ca
+rowSubsetCa <- function(obj, indices) {
+    ret <- obj
     for (i in 4:7) {
         ret[[i]] <- list()
-        ret[[i]] <- ca[[i]][indices]
+        ret[[i]] <- obj[[i]][indices]
     }
-    del <- which(!(1:nrow(ca$rowcoord) %in% indices))
-    ret$rowsup <- as.numeric(sapply(ca$rowsup[ca$rowsup %in% indices],
+    del <- which(!(1:nrow(obj$rowcoord) %in% indices))
+    ret$rowsup <- as.numeric(sapply(obj$rowsup[obj$rowsup %in% indices],
                                     function(x) x - sum(del < x)))
     ret$rowcoord <- matrix()
-    ret$rowcoord <- ca$rowcoord[indices,,drop=FALSE]
-    ret$rownames <- ca$rownames[indices]
+    ret$rowcoord <- obj$rowcoord[indices,,drop=FALSE]
+    ret$rownames <- obj$rownames[indices]
     ret
 }
 
 # Restrain CA to a subset of columns (only for plotting!)
-colSubsetCa <- function(ca, indices) {
-    ret <- ca
+colSubsetCa <- function(obj, indices) {
+    ret <- obj
     for (i in 9:12) {
         ret[[i]] <- list()
-        ret[[i]] <- ca[[i]][indices]
+        ret[[i]] <- obj[[i]][indices]
     }
     ret$colsup <- ret$colsup[ret$colsup %in% indices]
-    ret$colsup <- as.numeric(lapply(ca$colsup, function(x) x - sum(indices < x)))
+    ret$colsup <- as.numeric(lapply(obj$colsup, function(x) x - sum(indices < x)))
     ret$colcoord <- matrix()
-    ret$colcoord <- ca$colcoord[indices,,drop=FALSE]
-    ret$colnames <- ca$colnames[indices]
+    ret$colcoord <- obj$colcoord[indices,,drop=FALSE]
+    ret$colnames <- obj$colnames[indices]
     ret
 }
 
