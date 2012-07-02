@@ -252,11 +252,14 @@ createClustersDlg <- function() {
         doItAndPrint(sprintf("clusters <- cutree(corpusClust, h=%s)", height))
 
         # If some documents were skipped, we need to skip them and put NA
-        if(length(clusters) == length(corpus))
+        if(length(clusters) == length(corpus)) {
             doItAndPrint(paste("meta(corpus, \"", gettext_("Cluster"), "\") <- clusters", sep=""))
-        else
+        }
+        else {
+            doItAndPrint(paste("meta(corpus, \"", gettext_("Cluster"), "\") <- NA", sep=""))
             doItAndPrint(paste("meta(corpus, \"", gettext_("Cluster"),
                                "\")[match(names(corpus), names(clusters), nomatch=0),] <- clusters", sep=""))
+        }
 
         # If corpus was split, we cannot add cluster back into corpusVars
         if(exists("corpusVars")) {
