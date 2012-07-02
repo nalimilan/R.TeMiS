@@ -49,7 +49,14 @@ readFactivaHTML <- tm::FunctionGenerator(function(elem, language, id) {
         wc <- as.integer(regmatches(data[["WC"]], regexpr("^[[:digit:]]+", data[["WC"]])))[[1]]
 
         # Merge article header and body, splitting vector into paragraphs
-        content <- c(strsplit(data[["LP"]], "\\n")[[1]], strsplit(data[["TD"]], "\\n")[[1]])
+        if(!is.na(data[["LP"]]) && !is.na(data[["TD"]]))
+            content <- c(strsplit(data[["LP"]], "\\n")[[1]], strsplit(data[["TD"]], "\\n")[[1]])
+        else if(!is.na(data[["LP"]]))
+            content <- strsplit(data[["LP"]], "\\n")[[1]]
+        else if(!is.na(data[["TD"]]))
+            content <- strsplit(data[["TD"]], "\\n")[[1]]
+        else
+            content <- character(0)
 
         # Remove useless escape sequences
         content <- gsub("\\r", "", content)
