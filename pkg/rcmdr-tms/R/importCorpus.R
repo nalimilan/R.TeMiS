@@ -10,8 +10,8 @@ importCorpusDlg <- function() {
                  title=gettext_("Load corpus from:"),
                  right=FALSE)
 
-    # TRANSLATORS: replace 'english' with your language's ISO 639-1 English name
-    tclLang <- tclVar(gettext_("english"))
+    # TRANSLATORS: replace 'en' with your language's ISO 639 two-letter code
+    tclLang <- tclVar(gettext_("en"))
     entryLang <- ttkentry(top, width="12", textvariable=tclLang)
     checkBoxes(frame="processingFrame",
                boxes=c("lowercase", "punctuation", "numbers", "stopwords", "stemming"),
@@ -62,7 +62,7 @@ importCorpusDlg <- function() {
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, tolower)")
         if(punctuation) {
             # Workaround to avoid French articles from getting concatenated with their noun
-            if(lang == "french")
+            if(lang == "fr")
                 doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, function(x) gsub(\"[\'\U2019]\", \" \", x))")
 
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removePunctuation)")
@@ -73,8 +73,7 @@ importCorpusDlg <- function() {
             doItAndPrint(paste("dtmCorpus <- tm_map(dtmCorpus, removeWords, stopwords(\"",
                                lang, "\"))", sep=""))
         if(stemming)
-            doItAndPrint(paste("dtmCorpus <- tm_map(dtmCorpus, stemDocument, language=\"",
-                               lang, "\")", sep=""))
+            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, stemDocument)")
 
         if(lowercase || punctuation || numbers || stopwords || stemming) {
             doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus)")

@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.TextMiningSuite 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-05 20:57+0100\n"
+"POT-Creation-Date: 2012-03-11 20:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -188,8 +188,9 @@ msgstr ""
 
 #: R/importCorpus.R:32 R/importCorpus.R:33 R/importCorpus.R:146
 #: R/importCorpus.R:14
-msgid "english"
-msgstr ""
+#: TRANSLATORS: replace 'en' with your language's ISO 639 two-letter code
+msgid "en"
+msgstr "fr"
 
 #: R/importCorpus.R:38 R/importCorpus.R:41 R/importCorpus.R:154
 #: R/importCorpus.R:22

@@ -141,7 +141,7 @@ docVocabularyDlg <- function() {
         if(!exists("wordsDtm")) {
             doItAndPrint("dtmCorpus <- corpus")
 
-            if(meta(corpus, type="corpus", tag="language") == "french")
+            if(meta(corpus, type="corpus", tag="language") == "fr")
                 doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, function(x) gsub(\"[\'\U2019-]\", \" \", x))")
 
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removePunctuation)")

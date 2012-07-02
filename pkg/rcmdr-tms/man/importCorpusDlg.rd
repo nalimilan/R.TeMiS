@@ -42,12 +42,12 @@
 
          The dialog also provides a few processing options that will most likely be
          all run in order to get a meaningful set of terms from a text corpus.
-         Among them, stopwords removal and stemming equire you to select the
+         Among them, stopwords removal and stemming require you to select the
          language used in the corpus: at the moment supported languages are
-         \sQuote{danish}, \sQuote{dutch}, \sQuote{english}, \sQuote{finnish},
-         \sQuote{french}, \sQuote{german}, \sQuote{hungarian}, \sQuote{italian},
-         \sQuote{norwegian}, \sQuote{portuguese}, \sQuote{russian}, \sQuote{spanish},
-         and \sQuote{swedish} (to specify via their English name).
+         Danish (\sQuote{da}), Dutch (\sQuote{nl}), English (\sQuote{en}), Finnish (\sQuote{fi}),
+         French (\sQuote{fr}), German (\sQuote{de}), Hungarian (\sQuote{hu}), Italian (\sQuote{it}),
+         Norwegian (\sQuote{no}), Portuguese (\sQuote{pt}), Russian (\sQuote{ru}), Spanish (\sQuote{es}),
+         and Swedish (\sQuote{sv}) - to specifify via their ISO 639 two-letter code.
 
          Once the corpus has been imported, its document-term matrix is extracted.
 }
