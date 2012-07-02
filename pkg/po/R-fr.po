@@ -7,7 +7,7 @@
 # msgmerge -U po/R-fr.po po/R-RcmdrPlugin.TextMiningSuite.pot
 #
 # Compile from the package base dir with:
-# msgfmt -c --statistics -o inst/po/fr/LC_MESSAGES/RcmdrPlugin.TextMiningSuite.mo po/R-fr.po
+# msgfmt -c --statistics -o inst/po/fr/LC_MESSAGES/R-RcmdrPlugin.TextMiningSuite.mo po/R-fr.po
 #
 msgid ""
 msgstr ""
