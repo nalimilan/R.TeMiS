@@ -385,7 +385,7 @@ showCorpusCaDlg <- function() {
 
         doItAndPrint(paste("plot(plottingCa, dim=c(", x, ", ", y, "), what=c(\"", rowWhat, "\", \"",
                            colWhat, "\"), labels=c(", documentsPoints, ", ", termsPoints,
-                           "), contrib=\"relative\", mass=TRUE)", sep=""))
+                           "), mass=TRUE)", sep=""))
     }
 
     if(length(corpusCa$rowsup) == 0) {
