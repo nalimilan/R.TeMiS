@@ -95,7 +95,7 @@ plotCorpusCaDlg <- function() {
                labels=gettext(c("Documents", "Terms")),
                title=gettext("Draw point symbols for:"))
 
-    onOK <- function() {
+    onPlot <- function() {
         x <- tclvalue(tclXDim)
         y <- tclvalue(tclYDim)
         documents <- tclvalue(documentsVariable) == 1
@@ -113,8 +113,6 @@ plotCorpusCaDlg <- function() {
                            message=gettext("Please select something to plot."))
             return()
         }
-
-        closeDialog()
 
         if(documents && metadata) {
             rowWhat <- "all"
@@ -167,8 +165,6 @@ plotCorpusCaDlg <- function() {
         doItAndPrint(paste("plot(plottingCa, dim=c(", x, ", ", y, "), what=c(\"", rowWhat, "\", \"",
                            colWhat, "\"), labels=c(", documentsPoints, ", ", termsPoints,
                            "), contrib=\"relative\", mass=TRUE)", sep=""))
-
-        tkfocus(CommanderWindow())
     }
 
     if(length(corpusCa$rowsup) == 0) {
@@ -186,7 +182,27 @@ plotCorpusCaDlg <- function() {
                    title=gettext("Items to represent:"))
     }
 
-    OKCancelHelp(helpSubject="plotCorpusCaDlg")
+    # Custom buttons, adapted from OKCancelHelp()
+    buttonsFrame <- tkframe(top, borderwidth=5)
+    plotButton <- buttonRcmdr(buttonsFrame, text=gettext("Plot"), foreground="darkgreen",
+                              width="12", command=onPlot, default="active", borderwidth=3)
+    onClose <- function() {
+        closeDialog()
+        tkfocus(CommanderWindow())
+    }
+    closeButton <- buttonRcmdr(buttonsFrame, text=gettext("Close"), foreground="red",
+                               width="12", command=onClose, borderwidth=3)
+    onHelp <- function() {
+        if (GrabFocus() && .Platform$OS.type != "windows") tkgrab.release(window)
+        if (as.numeric(R.Version()$major) >= 2) print(help(helpSubject))
+        else help("plotCorpusCaDlg")
+    }
+    helpButton <- buttonRcmdr(buttonsFrame, text=gettextRcmdr("Help"), width="12",
+                              command=onHelp, borderwidth=3)
+    tkgrid(plotButton, labelRcmdr(buttonsFrame, text="  "),
+           closeButton, labelRcmdr(buttonsFrame, text="            "),
+           helpButton, sticky="w")
+
     tkgrid(labelRcmdr(dimFrame, text=gettext("Horizontal axis:")), xSlider, sticky="sw")
     tkgrid(labelRcmdr(dimFrame, text=gettext("Vertical axis:")), ySlider, sticky="sw")
     tkgrid(dimFrame, columnspan="2", sticky="w", pady=6)
@@ -199,8 +215,8 @@ plotCorpusCaDlg <- function() {
     tkgrid(labelRcmdr(nFrame, text=gettext("Most contributive to:")),
            ctrDimFrame, sticky="w", pady=6)
     tkgrid(pointsFrame, columnspan="2", sticky="w", pady=6)
-    tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
+    tkgrid(buttonsFrame, sticky="w", columnspan=2, pady=6)
     nrows <- if(length(corpusCa$rowsup) == 0) 5 else 6
-    dialogSuffix(rows=nrows, columns=2)
+    dialogSuffix(rows=nrows, columns=2, onOK=onPlot, onCancel=onClose)
 }
 
