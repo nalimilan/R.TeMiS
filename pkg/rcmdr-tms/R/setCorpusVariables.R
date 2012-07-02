@@ -63,10 +63,13 @@ setCorpusVariables <- function() {
             doItAndPrint(sprintf('names(corpus) <- row.names(%s)',
                                  ActiveDataSet()))
         }
-    }
 
-    # Update the names of the dtm since it affects all operations and cannot be done manually
-    # We assume the dtm corresponds to the current corpus if names were identical
-    if(identical(corpusNames, rownames(dtm)))
-        doItAndPrint("rownames(dtm) <- names(corpus)")
+        # Update the names of the dtm since it affects all operations and cannot be done manually
+        # We assume the dtm corresponds to the current corpus if names were identical
+        if(identical(corpusNames, rownames(dtm)))
+            doItAndPrint("rownames(dtm) <- names(corpus)")
+
+        if(exists("wordsDtm") && identical(corpusNames, rownames(wordsDtm)))
+            doItAndPrint("rownames(wordsDtm) <- names(corpus)")
+    }
 }
