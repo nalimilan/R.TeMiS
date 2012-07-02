@@ -118,7 +118,14 @@ plotCorpusCaDlg <- function() {
 
         if(documents && metadata) {
             rowWhat <- "all"
-            varIndexes <- which(corpusCa$rownames %in% unlist(lapply(vars, function(var) paste(var, unique(meta(corpus, tag=var))[,1]))))
+            varLevels <- unlist(lapply(vars, function(var) {
+                levels <- levels(factor(meta(corpus, tag=var)[,1]))
+                if(length(levels) == 1)
+                    var
+                else if(length(levels) > 0)
+                    paste(var, levels)
+            }))
+            varIndexes <- which(corpusCa$rownames %in% varLevels)
             doItAndPrint(paste("plottingCa <- rowSubsetCa(corpusCa, c(order(rowCtr(corpusCa, ", ctrDim,
                                "), decreasing=TRUE)[1:", nDocs, "], ", paste(varIndexes, collapse=", "), "))", sep=""))
         }
@@ -129,7 +136,14 @@ plotCorpusCaDlg <- function() {
         }
         else if(metadata) {
             rowWhat <- "passive"
-            varIndexes <- which(corpusCa$rownames %in% unlist(lapply(vars, function(var) paste(var, unique(meta(corpus, tag=var))[,1]))))
+            varLevels <- unlist(lapply(vars, function(var) {
+                levels <- levels(factor(meta(corpus, tag=var)[,1]))
+                if(length(levels) == 1)
+                    var
+                else if(length(levels) > 0)
+                    paste(var, levels)
+            }))
+            varIndexes <- which(corpusCa$rownames %in% varLevels)
             doItAndPrint(paste("plottingCa <- rowSubsetCa(corpusCa, c(",
                                paste(varIndexes, collapse=", "), "))", sep=""))
         }

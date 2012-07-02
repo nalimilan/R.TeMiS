@@ -22,20 +22,30 @@ corpusCa <- function(corpus, sparsity=0.9, ...) {
     if(ncol(meta) > 0) {
         for(i in 1:ncol(meta)) {
             levels<-levels(factor(meta[,i]))
+            totNLevels<-nlevels(factor(meta(corpus)[,colnames(meta(corpus)) != "MetaID"][,i]))
+
             if(length(levels) == 0) {
                 Message(sprintf(gettext("Variable %s has been skipped since it contains only missing values for retained documents."),
                                 colnames(meta)[i]),
                         type="note")
                 break
             }
-            else if(length(levels) < nlevels(factor(meta(corpus)[,colnames(meta(corpus)) != "MetaID"][,i]))) {
+            else if(length(levels) < totNLevels) {
                 Message(sprintf(gettext("Some levels of variable %s has been skipped since they contain only missing values for retained documents."),
                                 colnames(meta)[i]),
                         type="note")
                 break
             }
+
             mat<-aggregate(dtm[1:ndocs,], meta[i], sum)[,-1]
-            rownames(mat)<-paste(colnames(meta)[i], levels)
+
+            # If only one level is present, don't add the level name
+            # (probably something like TRUE or YES)
+            if(totNLevels == 1)
+                rownames(mat)<-colnames(meta)[i]
+            else
+                rownames(mat)<-paste(colnames(meta)[i], levels)
+
             dtm<-rbind(dtm, mat)
         }
     }
