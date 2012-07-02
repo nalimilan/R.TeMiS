@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.TextMiningSuite 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-10 16:37+0200\n"
+"POT-Creation-Date: 2011-10-30 19:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-
 
 # ## MENUS: added by hand
 msgid "Text mining"
@@ -41,6 +40,9 @@ msgid "Set corpus meta-data"
 msgstr ""
 
 msgid "List terms"
+msgstr ""
+
+msgid "Select or exclude terms..."
 msgstr ""
 
 msgid "Show most frequent terms..."
@@ -92,7 +94,6 @@ msgid "Correspondence analysis"
 msgstr ""
 
 # ## END OF MENUS
-
 
 #: R/corpusCa.R:28
 #, c-format
@@ -290,7 +291,7 @@ msgstr ""
 msgid "Occurrences of term %T"
 msgstr ""
 
-#: R/termFreq.R:29 R/termFreq.R:179 R/termFreq.R:181
+#: R/termFreq.R:29 R/termFreq.R:179 R/termFreq.R:181 R/corpusTerms.R:89
 msgid "Please enter at least one term."
 msgstr ""
 
@@ -555,8 +556,7 @@ msgstr ""
 #: R/importCorpus.R:83
 msgid ""
 "No ODBC driver for this file type was found.\n"
-"You probably need to install Excel or Access, or separate ODBC "
-"drivers."
+"You probably need to install Excel or Access, or separate ODBC drivers."
 msgstr ""
 
 #: R/plotCorpusCa.R:76
@@ -567,10 +567,26 @@ msgstr ""
 msgid "Variables"
 msgstr ""
 
-#: R/termFreq.R:39 R/termFreq.R:191
+#: R/termFreq.R:39 R/termFreq.R:191 R/corpusTerms.R:99
 msgid "', '"
 msgstr ""
 
 #: R/varFreq.R:93
 msgid "Corpus has only one variable."
+msgstr ""
+
+#: R/corpusTerms.R:73
+msgid "Select or Exclude Terms"
+msgstr ""
+
+#: R/corpusTerms.R:77
+msgid "Retain only these terms"
+msgstr ""
+
+#: R/corpusTerms.R:78
+msgid "Exclude these terms"
+msgstr ""
+
+#: R/corpusTerms.R:119
+msgid "Terms (space-separated):"
 msgstr ""

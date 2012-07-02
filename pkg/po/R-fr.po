@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.TextMiningSuite 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-10 16:37+0200\n"
+"POT-Creation-Date: 2011-10-30 19:11+0100\n"
 "PO-Revision-Date: 2011-10-10 17:35+0200\n"
 "Last-Translator: Milan Bouchet-Valat <nalimilan@club.fr>\n"
 "Language: fr\n"
@@ -37,6 +37,9 @@ msgstr "Définir les méta-données du corpus"
 
 msgid "List terms"
 msgstr "Afficher la liste des termes"
+
+msgid "Select or exclude terms..."
+msgstr "Sélectionner ou exclure des termes..."
 
 msgid "Show most frequent terms..."
 msgstr "Afficher les termes les plus fréquents..."
@@ -292,7 +295,7 @@ msgstr "Fréquence des termes par document"
 msgid "Occurrences of term %T"
 msgstr "Occurrences du terme %T"
 
-#: R/termFreq.R:29 R/termFreq.R:179 R/termFreq.R:181
+#: R/termFreq.R:29 R/termFreq.R:179 R/termFreq.R:181 R/corpusTerms.R:89
 msgid "Please enter at least one term."
 msgstr "Vous devez entrer au moins un terme."
 
@@ -502,10 +505,10 @@ msgstr ""
 
 #: R/corpusCa.R:93 R/corpusClustering.R:23
 msgid "Remove terms missing from more than (% of documents):"
-msgstr ""
-"Supprimer les termes absents de plus de (en % des documents) :"
+msgstr "Supprimer les termes absents de plus de (en % des documents) :"
 
 #: R/importCorpus.R:18
+#, c-format
 msgid "CSV file"
 msgstr "Fichier CSV"
 
@@ -549,8 +552,8 @@ msgid ""
 msgstr ""
 "Le chargement des feuilles de calcul OpenDocument (.ods) n'est pas pris en "
 "charge sur votre système.\n"
-"Vous devriez enregistrer votre jeu de données dans un fichier CSV ou dans une "
-"feuille de calcul Excel (.xls)."
+"Vous devriez enregistrer votre jeu de données dans un fichier CSV ou dans "
+"une feuille de calcul Excel (.xls)."
 
 #: R/importCorpus.R:56
 msgid ""
@@ -567,9 +570,10 @@ msgid ""
 "You should save your data set as a CSV file or as an OpenDocument "
 "spreadsheet (.ods)."
 msgstr ""
-"Le chargement des fichiers Excel et Access n'est pris en charge que sous Windows.\n"
-"Vous devriez enregistrer votre jeu de données dans un fichier CSV ou dans une "
-"feuille de calcul OpenDocument (.ods)."
+"Le chargement des fichiers Excel et Access n'est pris en charge que sous "
+"Windows.\n"
+"Vous devriez enregistrer votre jeu de données dans un fichier CSV ou dans "
+"une feuille de calcul OpenDocument (.ods)."
 
 #: R/importCorpus.R:74
 msgid ""
@@ -582,12 +586,11 @@ msgstr ""
 #: R/importCorpus.R:83
 msgid ""
 "No ODBC driver for this file type was found.\n"
-"You probably need to install Excel or Access, or separate ODBC "
-"drivers."
+"You probably need to install Excel or Access, or separate ODBC drivers."
 msgstr ""
 "Aucun pilote ODBC n'a été trouvé pour ce type de fichier.\n"
-"Vous devez probablement installer Excel ou Access, ou des pilotes "
-"ODBC séparés."
+"Vous devez probablement installer Excel ou Access, ou des pilotes ODBC "
+"séparés."
 
 #: R/plotCorpusCa.R:76
 msgid "Variables to plot:"
@@ -597,10 +600,26 @@ msgstr "Variables à afficher :"
 msgid "Variables"
 msgstr "Variables :"
 
-#: R/termFreq.R:39 R/termFreq.R:191
+#: R/termFreq.R:39 R/termFreq.R:191 R/corpusTerms.R:99
 msgid "', '"
 msgstr " », « "
 
 #: R/varFreq.R:93
 msgid "Corpus has only one variable."
 msgstr "Le corpus n'a qu'une variable."
+
+#: R/corpusTerms.R:73
+msgid "Select or Exclude Terms"
+msgstr "Sélectionner ou exclure des termes"
+
+#: R/corpusTerms.R:77
+msgid "Retain only these terms"
+msgstr "Ne retenir que ces termes"
+
+#: R/corpusTerms.R:78
+msgid "Exclude these terms"
+msgstr "Exclure ces termes"
+
+#: R/corpusTerms.R:119
+msgid "Terms (space-separated):"
+msgstr "Termes (séparés par une espace) :"
