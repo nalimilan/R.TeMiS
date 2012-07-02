@@ -12,5 +12,5 @@ Description: This package provides a tm Source to create corpora from
   XML or HTML files. It is able to read both text content and meta-data
   information.
 License: GPL (>= 2)
-URL: https://r-forge.r-project.org/projects/rcmdr-tms/
-BugReports: https://r-forge.r-project.org/tracker/?group_id=1179
+URL: https://r-forge.r-project.org/projects/r-temis/
+BugReports: https://r-forge.r-project.org/tracker/?group_id=1437

@@ -2,7 +2,7 @@ Package: RcmdrPlugin.temis
 Type: Package
 Title: Graphical user interface providing an integrated text mining solution
 Version: 0.5
-Date: 2012-06-02
+Date: 2012-07-02
 Authors@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr", role=c("aut", "cre")),
              person("Gilles", "Bastin", email="gilles.bastin@sciencespo-grenoble.fr", role=c("aut")))
 Depends: Rcmdr (>= 1.4-0), tm, Snowball, ca, slam, R2HTML, lattice, latticeExtra, zoo
@@ -13,5 +13,5 @@ Description: An Rcommander plug-in providing an integrated solution to perform
     co-occurrences and documents similarity measures, time series analysis,
     correspondence analysis and hierarchical clustering.
 License: GPL (>= 2)
-URL: https://r-forge.r-project.org/projects/rcmdr-tms/
-BugReports: https://r-forge.r-project.org/tracker/?group_id=1179
+URL: https://r-forge.r-project.org/projects/r-temis/
+BugReports: https://r-forge.r-project.org/tracker/?group_id=1437
