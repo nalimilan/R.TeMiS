@@ -19,7 +19,7 @@ setCorpusVariables <- function() {
 
     dset <- get(.activeDataSet)
     if(nrow(dset) != length(corpus)) {
-        Message(message=sprintf(gettext_("Active data set must contain exactly %d rows.", length(corpus))),
+        Message(message=sprintf(gettext_("Active data set must contain exactly %d rows."), length(corpus)),
                 type="error")
         return()
     }
