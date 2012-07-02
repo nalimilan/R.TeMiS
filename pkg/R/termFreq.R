@@ -25,13 +25,13 @@ docTermFreqDlg <- function() {
         plot <- tclvalue(tclPlotVar)
 
         if(length(termsList) == 0) {
-            errorCondition(recall=varTermFreqDlg,
+            errorCondition(recall=docTermFreqDlg,
                            message=gettext_("Please enter at least one term."))
             return()
         }
         else if(!all(termsList %in% colnames(dtm))) {
             wrongTerms <- termsList[!(termsList %in% colnames(dtm))]
-            errorCondition(recall=varTermFreqDlg,
+            errorCondition(recall=docTermFreqDlg,
                            message=sprintf(ngettext_(length(wrongTerms),
                                                     "Term \'%s\' does not exist in the corpus.",
                                                     "Terms \'%s\' do not exist in the corpus."),
