@@ -38,4 +38,14 @@ setCorpusVariables <- function() {
     for(i in indices) {
         doItAndPrint(paste("meta(corpus, tag=\"", colnames(dset)[i], "\") <- ", ActiveDataSet(), "[", i, "]", sep=""))
     }
+
+    if(any(row.names(dset) != names(corpus))) {
+        # Update the names of the dtm since it affects all operations and cannot be done manually
+        # We assume the dtm corresponds to the current corpus if names are identical
+        if(all(rownames(dtm) == names(corpus)))
+            doItAndPrint(paste("rownames(dtm) <- row.names(", ActiveDataSet(), ")", sep=""))
+
+        doItAndPrint(paste("names(corpus) <- row.names(", ActiveDataSet(), ")", sep=""))
+        doItAndPrint('for(i in 1:length(corpus)) meta(corpus[[i]], "ID") <- names(corpus)[i]')
+    }
 }
