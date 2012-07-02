@@ -2,12 +2,12 @@
 \alias{plotCorpusCa}
 \title{Plotting 2D maps in correspondence analysis of corpus}
 \description{Graphical display of correspondence analysis of a corpus in two dimensions}
-\usage{\method{plotCorpusCa}(x, dim = c(1,2), map = "symmetric", what = c("all", "all"), 
-               mass = c(FALSE, FALSE), contrib = c("none", "none"), 
-               col = c("blue", "red"),
-               col.text = c("black", "blue", "black", "red"),
-               font = c(1, 5, 1, 5), pch = c(16, 1, 17, 24), 
-               labels = c(2, 2), arrows = c(FALSE, FALSE), ...) }
+\usage{plotCorpusCa(x, dim = c(1,2), map = "symmetric", what = c("all", "all"), 
+             mass = c(FALSE, FALSE), contrib = c("none", "none"), 
+             col = c("blue", "red"),
+             col.text = c("black", "blue", "black", "red"),
+             font = c(1, 5, 1, 5), pch = c(16, 1, 17, 24), 
+             labels = c(2, 2), arrows = c(FALSE, FALSE), ...) }
 \arguments{
   \item{x}{Simple correspondence analysis object returned by \code{\link{runCorpusCa}}}
   \item{dim}{Numerical vector of length 2 indicating the dimensions to plot on horizontal and vertical axes respectively; default is first dimension horizontal and second dimension vertical.}
