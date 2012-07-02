@@ -136,16 +136,16 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
         tkitemconfigure(listbox, mark, background="grey")
         mark <- mark + 1
 
-        negterms <- terms[corpusCa$colcoord[terms] < 0]
+        negterms <- terms[corpusCa$colcoord[terms, dim[j]] < 0]
         if(length(negterms) == 0) {
             tkinsert(txt, "end",
                      sprintf(gettext_("None among the %i most contributive terms."), nterms))
         }
         else {
             df <- data.frame(row.names=corpusCa$colnames[negterms],
-                             round(corpusCa$colcoord[negterms] * corpusCa$sv[dim[j]], d=2),
+                             round(corpusCa$colcoord[negterms, dim[j]] * corpusCa$sv[dim[j]], d=2),
                              round(termsCtr[negterms] * 1000),
-                             round((corpusCa$colcoord[negterms] * corpusCa$sv[dim[j]] / corpusCa$coldist[negterms])^2 * 1000))
+                             round((corpusCa$colcoord[negterms, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$coldist[negterms])^2 * 1000))
             colnames(df) <- cols
 
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
@@ -155,16 +155,16 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
         tkinsert(txt, "end",
                  paste("\n\n", sprintf(gettext_("Most contributive documents on negative side of axis %i:"), dim[j]), "\n", sep=""),
                  "heading")
-        posdocs <- docs[corpusCa$rowcoord[docs] < 0]
+        posdocs <- docs[corpusCa$rowcoord[docs, dim[j]] < 0]
         if(length(posdocs) == 0) {
             tkinsert(txt, "end",
                      sprintf(gettext_("None among the %i most contributive documents."), nterms))
         }
         else {
             df <- data.frame(row.names=corpusCa$rownames[posdocs],
-                             round(corpusCa$rowcoord[posdocs] * corpusCa$sv[dim[j]], d=2),
+                             round(corpusCa$rowcoord[posdocs, dim[j]] * corpusCa$sv[dim[j]], d=2),
                              round(docsCtr[posdocs] * 1000),
-                             round((corpusCa$rowcoord[posdocs] * corpusCa$sv[dim[j]] / corpusCa$rowdist[posdocs])^2 * 1000))
+                             round((corpusCa$rowcoord[posdocs, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[posdocs])^2 * 1000))
             colnames(df) <- cols
 
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
@@ -200,16 +200,16 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
         tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
         mark <- mark + 1
 
-        posterms <- terms[corpusCa$colcoord[terms] >= 0]
+        posterms <- terms[corpusCa$colcoord[terms, dim[j]] >= 0]
         if(length(posterms) == 0) {
             tkinsert(txt, "end",
                      sprintf(gettext_("None among the %i most contributive terms."), nterms))
         }
         else {
             df <- data.frame(row.names=corpusCa$colnames[posterms],
-                             round(corpusCa$colcoord[posterms] * corpusCa$sv[dim[j]], d=2),
+                             round(corpusCa$colcoord[posterms, dim[j]] * corpusCa$sv[dim[j]], d=2),
                              round(termsCtr[posterms] * 1000),
-                             round((corpusCa$colcoord[posterms] * corpusCa$sv[dim[j]] / corpusCa$coldist[posterms])^2 * 1000))
+                             round((corpusCa$colcoord[posterms, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$coldist[posterms])^2 * 1000))
             colnames(df) <- cols
 
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
@@ -220,16 +220,16 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
                  paste("\n\n", sprintf(gettext_("Most contributive documents on positive side of axis %i:"),
                                        dim[j]), "\n", sep=""),
                  "heading")
-        posdocs <- docs[corpusCa$rowcoord[docs] >= 0]
+        posdocs <- docs[corpusCa$rowcoord[docs, dim[j]] >= 0]
         if(length(posdocs) == 0) {
             tkinsert(txt, "end",
                      sprintf(gettext_("None among the %i most contributive documents."), ndocs))
         }
         else {
             df <- data.frame(row.names=corpusCa$rownames[posdocs],
-                             round(corpusCa$rowcoord[posdocs] * corpusCa$sv[dim[j]], d=2),
+                             round(corpusCa$rowcoord[posdocs, dim[j]] * corpusCa$sv[dim[j]], d=2),
                              round(docsCtr[posdocs] * 1000),
-                             round((corpusCa$rowcoord[posdocs] * corpusCa$sv[dim[j]] / corpusCa$rowdist[posdocs])^2 * 1000))
+                             round((corpusCa$rowcoord[posdocs, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[posdocs])^2 * 1000))
             colnames(df) <- cols
 
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
@@ -267,8 +267,8 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 
             supdocs <- corpusCa$rowsup
             df <- data.frame(row.names=corpusCa$rownames[supdocs],
-                             round(corpusCa$rowcoord[supdocs] * corpusCa$sv[dim[j]], d=2),
-                             round((corpusCa$rowcoord[supdocs] * corpusCa$sv[dim[j]] / corpusCa$rowdist[supdocs])^2 * 1000))
+                             round(corpusCa$rowcoord[supdocs, dim[j]] * corpusCa$sv[dim[j]], d=2),
+                             round((corpusCa$rowcoord[supdocs, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[supdocs])^2 * 1000))
             colnames(df) <- cols[-2]
 
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
