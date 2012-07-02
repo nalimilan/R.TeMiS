@@ -19,6 +19,12 @@
     item        termFreqMenu   command           "Copy table"                       copyTermFreq                "exists('termFreq') && is.table(termFreq)"                            ""
     item        tmMenu	       cascade           "Term frequencies"                 termFreqMenu                ""                    ""
 
+    menu        vocabularyMenu tmMenu            ""                                 ""                          ""                    ""
+    item        vocabularyMenu command           "Per document..."                  docVocabularyDlg            "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"             ""
+    item        vocabularyMenu command           "Per variable..."                  varVocabularyDlg            "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"             ""
+    item        vocabularyMenu command           "Copy table"                       copyVocabulary              "exists('voc') && is.table(voc)"                            ""
+    item        tmMenu	       cascade           "Vocabulary"                       vocabularyMenu              ""                    ""
+
     menu        varFreqMenu    tmMenu            ""                                 ""                          ""                    ""
     item        varFreqMenu    command           "One-way table..."                 varTableDlg                 "exists('corpus') && 'Corpus' %in% class(corpus)"                    ""
     item        varFreqMenu    command           "Two-way table..."                 varCrossTableDlg            "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""

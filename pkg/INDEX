@@ -1,9 +1,11 @@
 copyVarFreq		Copy variable frequency table to clipboard as HTML
+copyVocabulary          Copy vocabulary table to clipboard as HTML
 corpusCa		Run a correspondence analysis adding corpus variables as passive rows
 corpusCaDlg		Run a correspondence analysis on a document-term matrix
 corpusClustDlg		Run a hierarchical clustering on a document-term matrix
 createClassesDlg	Create classes of documents from a hierarchical clustering previously run on the corpus
 docTermFreqDlg		Create frequency a table crossing terms and documents
+docVocabularyDlg        Create a table crossing vocabulary and documents
 excludeTermsDlg		Exclude terms from the document-term matrix
 freqTermsDlg		Find most frequent terms from the document-term matrix
 importCorpusFromDir	Import a corpus from a directory and show a dialog to process it
@@ -19,3 +21,4 @@ termsAssocDlg		Print most terms most correlated with a given term
 varCrossTableDlg	Create a frequency table crossing two corpus variables
 varTermFreqDlg		Create a frequency table crossing terms and corpus variables
 varTableDlg		Create a frequency table from one corpus variable
+varVocabularyDlg        Create a table crossing vocabulary and corpus variables
