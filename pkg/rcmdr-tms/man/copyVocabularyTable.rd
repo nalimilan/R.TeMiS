@@ -1,5 +1,5 @@
-\name{copyVocabulary}
-\alias{copyVocabulary}
+\name{copyVocabularyTable}
+\alias{copyVocabularyTable}
 \title{Copy vocabulary table to clipboard}
 \description{Copy a vocabulary table to the clipboard.}
 \details{This command copies a HTML version of a previously computed vocabulary
