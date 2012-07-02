@@ -8,6 +8,8 @@ corpusClustDlg <- function() {
     onOK <- function() {
         closeDialog()
 
+        setBusyCursor()
+
         sparsity <- as.numeric(tclvalue(tclSparsity))
 
         doItAndPrint(paste("corpusClust <- hclust(dist(removeSparseTerms(dtm, ",
@@ -16,6 +18,7 @@ corpusClustDlg <- function() {
         # For the Create classes item
         activateMenus()
 
+        setIdleCursor()
         tkfocus(CommanderWindow())
     }
 

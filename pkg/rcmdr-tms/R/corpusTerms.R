@@ -62,12 +62,15 @@ termsAssocDlg <- function() {
     onOK <- function() {
         closeDialog()
 
+        setBusyCursor()
+
         n <- as.numeric(tclvalue(tclN))
         termsList <- strsplit(tclvalue(tclTerms), " ")
 
         for(term in termsList[[1]])
             doItAndPrint(paste("findAssocs(dtm, \"", term, "\", ", n/100, ")", sep=""))
 
+        setIdleCursor()
         tkfocus(CommanderWindow())
     }
 

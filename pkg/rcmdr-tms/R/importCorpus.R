@@ -89,6 +89,7 @@ importCorpusDlg <- function() {
 
         activateMenus()
 
+        setIdleCursor()
         tkfocus(CommanderWindow())
     }
 
@@ -105,6 +106,8 @@ importCorpusFromDir <- function(language=NA) {
     dir <- tclvalue(tkchooseDirectory(initialdir=getwd(),
                                       parent=CommanderWindow()))
     if (dir == "") return()
+
+    setBusyCursor()
 
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
@@ -236,6 +239,8 @@ importCorpusFromFile <- function(language=NA) {
     if(is.null(corpusDataset))
         return(FALSE)
 
+    setBusyCursor()
+
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
 
@@ -273,6 +278,8 @@ importCorpusFromFactiva <- function(language=NA) {
                                       parent=CommanderWindow()))
 
     if (filestr == "") return(FALSE)
+
+    setBusyCursor()
 
     files <- gsub("\\{|\\}", "", strsplit(filestr, "\\} \\{")[[1]])
 
