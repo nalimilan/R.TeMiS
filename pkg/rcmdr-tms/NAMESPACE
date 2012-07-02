@@ -1,2 +1,3 @@
 import(tcltk, stats, tm, Snowball, ca, slam)
+importFrom(Rcmdr, getRcmdr)
 exportPattern("^[^\\.]")
