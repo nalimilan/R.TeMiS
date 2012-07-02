@@ -9,8 +9,8 @@ Maintainer: Milan Bouchet-Valat <nalimilan@club.fr>
 Enhances: tm (>= 0.5)
 Imports: tm (>= 0.5), XML
 Description: This package provides a tm Source to create corpora from
-  articles exported from Dow Jones's Factiva content provider as
-  \acronym{XML} files.
+  articles exported from the Dow Jones Factiva content provider as
+  XML files.
 License: GPL (>= 2)
 URL: https://r-forge.r-project.org/projects/rcmdr-tms/
 BugReports: https://r-forge.r-project.org/tracker/?group_id=1179

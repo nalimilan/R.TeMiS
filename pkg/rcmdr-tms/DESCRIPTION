@@ -13,3 +13,5 @@ Description: This package provides an Rcommander plug-in to facilitate
     common text mining tasks such as importing and cleaning a corpus, and analyses like term counts,
     vocabulary tables, terms correlations, correspondence analysis and hierarchical clustering.
 License: GPL (>= 2)
+URL: https://r-forge.r-project.org/projects/rcmdr-tms/
+BugReports: https://r-forge.r-project.org/tracker/?group_id=1179
