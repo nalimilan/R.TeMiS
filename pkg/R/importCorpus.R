@@ -19,10 +19,10 @@ importCorpusFromFile <- function() {
                                                      gettext("TSV file"),
                                                      gettext("dBase file"),
                                                      gettext("ODS file"),
-                                                     gettext("MS Excel file"),
-                                                     gettext("MS Excel 2007 file"),
-                                                     gettext("MS Access database"),
-                                                     gettext("MS Access 2007 database"),
+                                                     gettext("Excel file"),
+                                                     gettext("Excel 2007 file"),
+                                                     gettext("Access database"),
+                                                     gettext("Access 2007 database"),
                                                      gettext("All supported types")),
                                    parent=CommanderWindow()))
 
@@ -66,12 +66,12 @@ importCorpusFromFile <- function() {
     }
     else {
         if(.Platform$OS.type != "windows") {
-	    Message(gettext("Loading Microsoft Excel and Access files is only supported on Windows.\nYou should save your data set as a CSV file or as an OpenDocument spreadsheet (.ods)."),
+	    Message(gettext("Loading Excel and Access files is only supported on Windows.\nYou should save your data set as a CSV file or as an OpenDocument spreadsheet (.ods)."),
                     type="error")
             return()
         }
 	else if(!require(RODBC)) {
-            response <- tkmessageBox(message=gettext("The RODBC package is needed to read Microsoft Excel and Access files.\nDo you want to install it?"),
+            response <- tkmessageBox(message=gettext("The RODBC package is needed to read Excel and Access files.\nDo you want to install it?"),
                                      icon="question", type="yesno")
 
             if (tclvalue(response) == "yes")
@@ -80,7 +80,7 @@ importCorpusFromFile <- function() {
                 return()
         }
         else if(!any(grepl(ext, odbcDataSources()))) {
-	    Message(gettext("No ODBC driver for this file type was found.\nYou probably need to install Microsoft Excel or Access, or separate ODBC drivers."),
+	    Message(gettext("No ODBC driver for this file type was found.\nYou probably need to install Excel or Access, or separate ODBC drivers."),
                     type="error")
             return()
         }

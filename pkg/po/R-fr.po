@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.TextMiningSuite 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-10 13:19+0200\n"
-"PO-Revision-Date: 2011-09-09 17:35+0200\n"
+"POT-Creation-Date: 2011-10-10 16:37+0200\n"
+"PO-Revision-Date: 2011-10-10 17:35+0200\n"
 "Last-Translator: Milan Bouchet-Valat <nalimilan@club.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -120,11 +120,11 @@ msgstr "Réaliser une analyse des correspondances"
 #: R/corpusCa.R:93 R/corpusClustering.R:23
 msgid "Only keep terms present in more than (% of documents):"
 msgstr ""
-"Conserver uniquement les termes présents dans plus de (en % des documents) :"
+"Conserver uniquement les termes présents dans plus de (en % des documents) :"
 
 #: R/corpusCa.R:95
 msgid "Number of dimensions to retain:"
-msgstr "Nombre de dimensions à retenir :"
+msgstr "Nombre de dimensions à retenir :"
 
 #: R/corpusClustering.R:2
 msgid "Run Hierarchical Clustering"
@@ -146,7 +146,7 @@ msgstr "classe"
 
 #: R/corpusClustering.R:69
 msgid "Cut height:"
-msgstr "Hauteur où couper:"
+msgstr "Hauteur où couper :"
 
 #: R/corpusTerms.R:7 R/corpusTerms.R:37
 msgid "Please import a corpus and create the document-term matrix first."
@@ -159,7 +159,7 @@ msgstr "Afficher les termes les plus fréquents"
 
 #: R/corpusTerms.R:29
 msgid "Number of terms to show:"
-msgstr "Nombre de termes à afficher :"
+msgstr "Nombre de termes à afficher :"
 
 #: R/corpusTerms.R:42
 msgid "Show Associated Terms"
@@ -167,11 +167,11 @@ msgstr "Afficher les associations de termes"
 
 #: R/corpusTerms.R:65
 msgid "Reference terms (space-separated):"
-msgstr "Termes de référence (séparés par une espace) :"
+msgstr "Termes de référence (séparés par une espace) :"
 
 #: R/corpusTerms.R:67
 msgid "Correlation coefficient (%):"
-msgstr "Coefficient de corrélation (en %) :"
+msgstr "Coefficient de corrélation (en %) :"
 
 #: R/corpusTerms.R:73
 msgid "Exclude Terms From Analysis"
@@ -179,27 +179,27 @@ msgstr "Exclure des termes de l'analyse"
 
 #: R/corpusTerms.R:89
 msgid "Terms to exclude (space-separated):"
-msgstr "Termes à exclure (séparés par une espace) :"
+msgstr "Termes à exclure (séparés par une espace) :"
 
-#: R/importCorpus.R:31
+#: R/importCorpus.R:31 R/importCorpus.R:144
 msgid "Import Corpus"
 msgstr "Importer un corpus"
 
-#: R/importCorpus.R:32 R/importCorpus.R:33
+#: R/importCorpus.R:32 R/importCorpus.R:33 R/importCorpus.R:146
 msgid "english"
 msgstr "french"
 
-#: R/importCorpus.R:38 R/importCorpus.R:41
+#: R/importCorpus.R:38 R/importCorpus.R:41 R/importCorpus.R:154
 msgid "Text processing:"
-msgstr "Traitement des textes :"
+msgstr "Traitement des textes :"
 
-#: R/importCorpus.R:46 R/importCorpus.R:49
+#: R/importCorpus.R:46 R/importCorpus.R:49 R/importCorpus.R:162
 msgid "No language has been chosen, using English."
 msgstr "Aucune langue choisie, utilisation de l'anglais."
 
-#: R/importCorpus.R:81 R/importCorpus.R:84
+#: R/importCorpus.R:81 R/importCorpus.R:84 R/importCorpus.R:197
 msgid "Language of texts in the corpus:"
-msgstr "Langue des textes du corpus :"
+msgstr "Langue des textes du corpus :"
 
 #: R/plotCorpusCa.R:55
 msgid "Please run a correspondence analysis on the corpus first."
@@ -212,19 +212,19 @@ msgstr "Représenter l'analyse des correspondances"
 
 #: R/plotCorpusCa.R:63
 msgid "Dimensions to plot:"
-msgstr "Dimensions à représenter :"
+msgstr "Dimensions à représenter :"
 
 #: R/plotCorpusCa.R:76
 msgid "Meta-data variables to plot:"
-msgstr "Variables de méta-données à afficher :"
+msgstr "Variables de méta-données à afficher :"
 
 #: R/plotCorpusCa.R:80
 msgid "Number of items to plot:"
-msgstr "Nombre d'éléments à afficher :"
+msgstr "Nombre d'éléments à afficher :"
 
 #: R/plotCorpusCa.R:96 R/plotCorpusCa.R:97
 msgid "Draw point symbols for:"
-msgstr "Dessiner des points pour :"
+msgstr "Dessiner des points pour :"
 
 #: R/plotCorpusCa.R:113 R/plotCorpusCa.R:114
 msgid "Please select something to plot."
@@ -233,7 +233,7 @@ msgstr "Vous devez sélectionner quelque chose à afficher."
 #: R/plotCorpusCa.R:175 R/plotCorpusCa.R:182 R/plotCorpusCa.R:176
 #: R/plotCorpusCa.R:183
 msgid "Items to represent:"
-msgstr "Éléments à afficher :"
+msgstr "Éléments à afficher :"
 
 #: R/plotCorpusCa.R:187 R/plotCorpusCa.R:188
 msgid "Plot"
@@ -245,23 +245,23 @@ msgstr "Fermer"
 
 #: R/plotCorpusCa.R:206 R/plotCorpusCa.R:207
 msgid "Horizontal axis:"
-msgstr "Axe horizontal :"
+msgstr "Axe horizontal :"
 
 #: R/plotCorpusCa.R:207 R/plotCorpusCa.R:208
 msgid "Vertical axis:"
-msgstr "Axe vertical :"
+msgstr "Axe vertical :"
 
 #: R/plotCorpusCa.R:212 R/plotCorpusCa.R:213
 msgid "Documents:"
-msgstr "Documents :"
+msgstr "Documents :"
 
 #: R/plotCorpusCa.R:213 R/plotCorpusCa.R:214
 msgid "Terms:"
-msgstr "Termes :"
+msgstr "Termes :"
 
 #: R/plotCorpusCa.R:215 R/plotCorpusCa.R:216
 msgid "Most contributive to:"
-msgstr "Les plus contributifs à :"
+msgstr "Les plus contributifs à :"
 
 #: R/setCorpusMetadata.R:3
 msgid "Please import a corpus first."
@@ -288,75 +288,78 @@ msgstr "Le jeu de données actif est vide."
 msgid "Terms Frequencies per Document"
 msgstr "Fréquence des termes par document"
 
-#: R/termFreq.R:19 R/termFreq.R:168
+#: R/termFreq.R:19 R/termFreq.R:168 R/termFreq.R:170
 msgid "Occurrences of term %T"
 msgstr "Occurrences du terme %T"
 
-#: R/termFreq.R:29 R/termFreq.R:179
+#: R/termFreq.R:29 R/termFreq.R:179 R/termFreq.R:181
 msgid "Please enter at least one term."
 msgstr "Vous devez entrer au moins un terme."
 
-#: R/termFreq.R:53 R/termFreq.R:210
+#: R/termFreq.R:53 R/termFreq.R:210 R/termFreq.R:54 R/termFreq.R:213
 msgid "% of all terms"
 msgstr "En % de tous les termes"
 
-#: R/termFreq.R:62 R/termFreq.R:219
+#: R/termFreq.R:62 R/termFreq.R:219 R/termFreq.R:63 R/termFreq.R:222
 msgid "% of occurrences"
 msgstr "En % des occurrences"
 
-#: R/termFreq.R:66 R/termFreq.R:223
+#: R/termFreq.R:66 R/termFreq.R:223 R/termFreq.R:67 R/termFreq.R:226
 msgid "Number of occurrences"
 msgstr "Nombre d'occurrences"
 
-#: R/termFreq.R:128 R/termFreq.R:285
+#: R/termFreq.R:128 R/termFreq.R:285 R/termFreq.R:130 R/termFreq.R:289
 msgid "Terms to show (space-separated):"
-msgstr "Termes à afficher (séparés par une espace) :"
+msgstr "Termes à afficher (séparés par une espace) :"
 
 #: R/termFreq.R:131 R/termFreq.R:289 R/varFreq.R:72 R/varFreq.R:198
+#: R/termFreq.R:133 R/termFreq.R:293 R/varFreq.R:73 R/varFreq.R:200
 msgid "Plot:"
-msgstr "Graphique :"
+msgstr "Graphique :"
 
 #: R/termFreq.R:133 R/termFreq.R:291 R/varFreq.R:78 R/varFreq.R:204
+#: R/termFreq.R:135 R/termFreq.R:295 R/varFreq.R:79 R/varFreq.R:206
 msgid "Title:"
-msgstr "Titre :"
+msgstr "Titre :"
 
-#: R/termFreq.R:146
+#: R/termFreq.R:146 R/termFreq.R:148
 msgid "Terms Frequencies per Variable"
 msgstr "Fréquence des termes par variable"
 
 #: R/termFreq.R:153
 msgid "Meta-data variable:"
-msgstr "Variable de méta-données :"
+msgstr "Variable de méta-données :"
 
-#: R/varFreq.R:9 R/varFreq.R:97
+#: R/varFreq.R:9 R/varFreq.R:97 R/varFreq.R:98
 msgid "Variable Cross Table"
 msgstr "Tri croisé de variables"
 
-#: R/varFreq.R:13
+#: R/varFreq.R:13 R/termFreq.R:155
 msgid "Variable:"
-msgstr "Variable :"
+msgstr "Variable :"
 
-#: R/varFreq.R:26 R/varFreq.R:119
+#: R/varFreq.R:26 R/varFreq.R:119 R/varFreq.R:120
 msgid "None"
 msgstr "Aucun"
 
-#: R/varFreq.R:28 R/varFreq.R:121
+#: R/varFreq.R:28 R/varFreq.R:121 R/varFreq.R:122
 msgid "Bar plot"
 msgstr "Barres"
 
-#: R/varFreq.R:30 R/varFreq.R:123
+#: R/varFreq.R:30 R/varFreq.R:123 R/varFreq.R:124
 msgid "Pie chart"
 msgstr "Camembert"
 
-#: R/varFreq.R:32 R/varFreq.R:125
+#: R/varFreq.R:32 R/varFreq.R:125 R/varFreq.R:126
 msgid "Distribution of documents"
 msgstr "Distribution des documents"
 
-#: R/varFreq.R:48 R/varFreq.R:143 R/varFreq.R:148
+#: R/varFreq.R:48 R/varFreq.R:143 R/varFreq.R:148 R/varFreq.R:144
+#: R/varFreq.R:149
 msgid "% of documents"
 msgstr "En % des documents"
 
-#: R/varFreq.R:52 R/varFreq.R:152
+#: R/varFreq.R:52 R/varFreq.R:152 R/varFreq.R:153
 msgid "Number of documents"
 msgstr "Nombre de documents"
 
@@ -364,31 +367,33 @@ msgstr "Nombre de documents"
 msgid "Corpus has only one meta-data variable."
 msgstr "Le corpus n'a qu'une variable de méta-données"
 
-#: R/varFreq.R:101
+#: R/varFreq.R:101 R/varFreq.R:102
 msgid "First variable:"
-msgstr "Première variable :"
+msgstr "Première variable :"
 
-#: R/varFreq.R:105
+#: R/varFreq.R:105 R/varFreq.R:106
 msgid "Second variable:"
-msgstr "Seconde variable :"
+msgstr "Seconde variable :"
 
-#: R/termFreq.R:9 R/termFreq.R:158
+#: R/termFreq.R:9 R/termFreq.R:158 R/termFreq.R:160
 msgid "Row % (term prevalence in category)"
 msgstr "% en ligne (prévalence du terme dans la catégorie)"
 
-#: R/termFreq.R:10 R/termFreq.R:159
+#: R/termFreq.R:10 R/termFreq.R:159 R/termFreq.R:161
 msgid "Column % (distribution of occurrences)"
 msgstr "% en colonne (distribution des occurrences)"
 
 #: R/termFreq.R:11 R/termFreq.R:160 R/varFreq.R:19 R/varFreq.R:112
+#: R/termFreq.R:162 R/varFreq.R:113
 msgid "Absolute counts"
 msgstr "Effectifs absolus"
 
 #: R/termFreq.R:12 R/termFreq.R:161 R/varFreq.R:20 R/varFreq.R:113
+#: R/termFreq.R:163 R/varFreq.R:114
 msgid "Measure:"
-msgstr "Mesure :"
+msgstr "Mesure :"
 
-#: R/termFreq.R:17 R/termFreq.R:166
+#: R/termFreq.R:17 R/termFreq.R:166 R/termFreq.R:168
 msgid "Draw plot"
 msgstr "Créer un graphique"
 
@@ -396,11 +401,11 @@ msgstr "Créer un graphique"
 msgid "Percent"
 msgstr "Pourcentages"
 
-#: R/varFreq.R:110
+#: R/varFreq.R:110 R/varFreq.R:111
 msgid "Row %"
 msgstr "% en ligne"
 
-#: R/varFreq.R:111
+#: R/varFreq.R:111 R/varFreq.R:112
 msgid "Column %"
 msgstr "% en colonne"
 
@@ -425,15 +430,15 @@ msgstr[1] ""
 
 #: R/plotCorpusCa.R:91
 msgid "Horizontal axis"
-msgstr "Axe horizontal :"
+msgstr "Axe horizontal :"
 
 #: R/plotCorpusCa.R:91
 msgid "Vertical axis"
-msgstr "Axe vertical :"
+msgstr "Axe vertical :"
 
 #: R/plotCorpusCa.R:96 R/plotCorpusCa.R:175 R/plotCorpusCa.R:182
 msgid "Documents"
-msgstr "Documents :"
+msgstr "Documents :"
 
 #: R/plotCorpusCa.R:96 R/plotCorpusCa.R:175 R/plotCorpusCa.R:182
 msgid "Terms"
@@ -441,32 +446,32 @@ msgstr "Termes"
 
 #: R/plotCorpusCa.R:182
 msgid "Documents meta-data"
-msgstr "Méta-données des documents :"
+msgstr "Méta-données des documents :"
 
 #: R/termFreq.R:36 R/termFreq.R:186
 #, c-format
 msgid "Term '%s' does not exist in the corpus."
 msgid_plural "Terms '%s' do not exist in the corpus."
-msgstr[0] "Le terme « %s » n'existe pas dans le corpus."
-msgstr[1] "Les termes « %s » n'existent pas dans le corpus."
+msgstr[0] "Le terme « %s » n'existe pas dans le corpus."
+msgstr[1] "Les termes « %s » n'existent pas dans le corpus."
 
-#: R/importCorpus.R:38
+#: R/importCorpus.R:38 R/importCorpus.R:151
 msgid "Ignore case"
 msgstr "Ignorer la casse"
 
-#: R/importCorpus.R:38
+#: R/importCorpus.R:38 R/importCorpus.R:151
 msgid "Remove punctuation"
 msgstr "Supprimer la ponctuation"
 
-#: R/importCorpus.R:39
+#: R/importCorpus.R:39 R/importCorpus.R:152
 msgid "Remove numbers"
 msgstr "Supprimer les nombres"
 
-#: R/importCorpus.R:39
+#: R/importCorpus.R:39 R/importCorpus.R:152
 msgid "Remove stopwords"
 msgstr "Supprimer les mots vides"
 
-#: R/importCorpus.R:40
+#: R/importCorpus.R:40 R/importCorpus.R:153
 msgid "Stem words"
 msgstr "Extraire les radicaux"
 
@@ -478,3 +483,124 @@ msgstr ""
 "Le corpus n'a pas de méta-données. Utilisez le menu Analyse lexicale-"
 ">Définir les méta-données du corpus pour ajouter des variables."
 
+#: R/corpusCa.R:53
+#, c-format
+msgid ""
+"Running correspondence analysis using %i documents, %i terms and %i "
+"variables."
+msgstr ""
+"Calcul d'une analyse des correspondances sur %i documents, %i termes et %i "
+"variables."
+
+#: R/corpusCa.R:78 R/termFreq.R:143 R/varFreq.R:4 R/varFreq.R:88
+msgid ""
+"No corpus variables have been set. Use Text mining->Set corpus variables to "
+"add them."
+msgstr ""
+"Il n'y a pas de variables dans le corpus. Utilisez le menu Analyse lexicale-"
+">Définir les variables du corpus pour en ajouter."
+
+#: R/corpusCa.R:93 R/corpusClustering.R:23
+msgid "Remove terms missing from more than (% of documents):"
+msgstr ""
+"Supprimer les termes absents de plus de (en % des documents) :"
+
+#: R/importCorpus.R:18
+msgid "CSV file"
+msgstr "Fichier CSV"
+
+#: R/importCorpus.R:19
+msgid "TSV file"
+msgstr "Fichier TSV"
+
+#: R/importCorpus.R:20
+msgid "dBase file"
+msgstr "Fichier dBase"
+
+#: R/importCorpus.R:21
+msgid "ODS file"
+msgstr "Fichier ODS"
+
+#: R/importCorpus.R:22
+msgid "Excel file"
+msgstr "Fichier Excel"
+
+#: R/importCorpus.R:23
+msgid "Excel 2007 file"
+msgstr "Fichier Excel 2007"
+
+#: R/importCorpus.R:24
+msgid "Access database"
+msgstr "Base de données Access"
+
+#: R/importCorpus.R:25
+msgid "Access 2007 database"
+msgstr "Base de données Access 2007"
+
+#: R/importCorpus.R:26
+msgid "All supported types"
+msgstr "Tous les types pris en charge"
+
+#: R/importCorpus.R:51
+msgid ""
+"Loading OpenDocument spreadsheets (.ods) is not supported on your system.\n"
+"You should save your data set as a CSV file or as an Excel spreadsheet (."
+"xls)."
+msgstr ""
+"Le chargement des feuilles de calcul OpenDocument (.ods) n'est pas pris en "
+"charge sur votre système.\n"
+"Vous devriez enregistrer votre jeu de données dans un fichier CSV ou dans une "
+"feuille de calcul Excel (.xls)."
+
+#: R/importCorpus.R:56
+msgid ""
+"Loading OpenDocument spreadsheets (.ods) requires the ROpenOffice package.\n"
+"Do you want to install it?"
+msgstr ""
+"Le paquet ROpenOffice est nécessaire pour charger des feuilles de calcul "
+"OpenDocument (.ods).\n"
+"Voulez-vous l'installer ?"
+
+#: R/importCorpus.R:69
+msgid ""
+"Loading Excel and Access files is only supported on Windows.\n"
+"You should save your data set as a CSV file or as an OpenDocument "
+"spreadsheet (.ods)."
+msgstr ""
+"Le chargement des fichiers Excel et Access n'est pris en charge que sous Windows.\n"
+"Vous devriez enregistrer votre jeu de données dans un fichier CSV ou dans une "
+"feuille de calcul OpenDocument (.ods)."
+
+#: R/importCorpus.R:74
+msgid ""
+"The RODBC package is needed to read Excel and Access files.\n"
+"Do you want to install it?"
+msgstr ""
+"Le paquet RODBC est nécessaire pour charger des fichiers Excel et Access.\n"
+"Voulez-vous l'installer ?"
+
+#: R/importCorpus.R:83
+msgid ""
+"No ODBC driver for this file type was found.\n"
+"You probably need to install Excel or Access, or separate ODBC "
+"drivers."
+msgstr ""
+"Aucun pilote ODBC n'a été trouvé pour ce type de fichier.\n"
+"Vous devez probablement installer Excel ou Access, ou des pilotes "
+"ODBC séparés."
+
+#: R/plotCorpusCa.R:76
+msgid "Variables to plot:"
+msgstr "Variables à afficher :"
+
+#: R/plotCorpusCa.R:182
+msgid "Variables"
+msgstr "Variables :"
+
+#: R/termFreq.R:39 R/termFreq.R:191
+msgid "', '"
+msgstr " », « "
+
+#: R/varFreq.R:93
+msgid "Corpus has only one variable."
+msgstr "Le corpus n'a qu'une variable."
