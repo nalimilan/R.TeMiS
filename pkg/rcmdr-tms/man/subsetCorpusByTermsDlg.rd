@@ -1,5 +1,6 @@
 \name{subsetCorpusByTermsDlg}
 \alias{subsetCorpusByTermsDlg}
+\alias{restoreCorpus}
 \title{Subset Corpus by Terms}
 \description{Create a subset of the corpus by retaining only the documents which contain (or not)
              specified terms.}

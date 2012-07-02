@@ -1,8 +1,8 @@
 \name{createClustersDlg}
 \alias{createClustersDlg}
+\alias{showCorpusClustering}
 \title{Cut hierarchical clustering tree into clusters}
 \description{Cut a hierarchical clustering tree into clusters of documents.}
-
 \details{This dialog allows grouping the documents present in a \pkg{tm} corpus
          according to a previously computed hierarchical clustering tree (see
          \code{\link{corpusClustDlg}}). It adds a new meta-data variable to the corpus,
