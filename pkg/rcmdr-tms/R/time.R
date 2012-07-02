@@ -91,12 +91,12 @@ varTimeSeriesDlg <- function() {
         time <- meta(corpus, timeVar)[[1]]
         time <- strptime(unique(time[!is.na(time)]), format)
         if(all(is.na(time))) {
-            Message(message=sprintf(.gettext('Incorrect time format: no values of "%s" could be converted to a time index.'), timeVar),
+            Message(message=sprintf(.gettext("Incorrect time format: no values of \"%s\" could be converted to a time index."), timeVar),
                     type="error")
             return()
         }
         else if(any(is.na(time))) {
-            Message(message=sprintf(.gettext('Some values of "%s" could be converted to a time index and will be missing.'), timeVar),
+            Message(message=sprintf(.gettext("Some values of \"%s\" could not be converted to a time index and will be missing."), timeVar),
                     type="warning")
         }
 
@@ -172,7 +172,7 @@ varTimeSeriesDlg <- function() {
     }
 
     buttonsFrame <- tkframe(top, borderwidth=5)
-    plotButton <- buttonRcmdr(buttonsFrame, text=.gettext("Plot"), foreground="darkgreen",
+    plotButton <- buttonRcmdr(buttonsFrame, text=.gettext("Draw plot"), foreground="darkgreen",
                               command=onOK, default="active", borderwidth=3)
     onClose <- function() {
         closeDialog()
@@ -193,7 +193,7 @@ varTimeSeriesDlg <- function() {
     tkgrid(getFrame(timeVarBox), sticky="ewns", pady=6, row=0, rowspan=3)
     tkgrid(labelRcmdr(top, text=.gettext("Time format:")), pady=c(6, 0), sticky="w", row=0, column=1)
     tkgrid(formatEntry, sticky="w", row=1, column=1)
-    tkgrid(labelRcmdr(top, text=.gettext('%Y: year - %m: month - %d: day\nClick the "Help" button for more codes.')),
+    tkgrid(labelRcmdr(top, text=.gettext("%Y: year - %m: month - %d: day\nClick the \"Help\" button for more codes.")),
            sticky="w", row=2, column=1, pady=6)
     tkgrid(labelRcmdr(varsFrame, text=.gettext("Group by variable:"), foreground="blue"), sticky="w", pady=c(12, 0))
     tkgrid(varsBox, varsScrollbar, sticky="ewns", pady=6)

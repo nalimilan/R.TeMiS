@@ -24,7 +24,7 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
     val <- rbind(sapply(corpusSubClust$lower, attr, "members"),
                  sapply(corpusSubClust$lower, attr, "members")/sum(!is.na(meta(corpus, .gettext("Cluster")))) * 100,
                  sapply(corpusSubClust$lower, attr, "height"))
-    rownames(val) <- c(.gettext("Number of documents"), .gettext("% of documents"), .gettext("Intra-class inertia"))
+    rownames(val) <- c(.gettext("Number of documents"), .gettext("% of documents"), .gettext("Within-cluster variance"))
     colnames(val) <- seq.int(ncol(val))
     names(dimnames(val)) <- c("", .gettext("Cluster"))
     tkinsert(txt, "end", paste(capture.output(format(as.data.frame(val), nsmall=1, digits=2, width=6)),

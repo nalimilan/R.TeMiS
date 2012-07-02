@@ -202,7 +202,7 @@ subsetCorpusByTermsDlg <- function() {
 
 restoreCorpus <- function() {
     if(!exists("origCorpus"))
-        Message(message=.gettext("No original corpus to restore was found."), type="error")
+        Message(message=.gettext("No saved corpus to restore was found."), type="error")
 
     doItAndPrint("corpus <- origCorpus")
 

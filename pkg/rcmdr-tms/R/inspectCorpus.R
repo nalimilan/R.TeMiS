@@ -16,8 +16,8 @@ inspectCorpus <- function() {
     tktag.configure(txt, "small", font="sans 5")
     tktag.configure(txt, "fixed", font="courier 11")
 
-    tkinsert(txt, "end", sprintf(.gettext("Current corpus contains %i documents and %i terms.\n\n"),
-                                 nrow(dtm), ncol(dtm)))
+    tkinsert(txt, "end", paste(sprintf(.gettext("Current corpus contains %i documents and %i terms."),
+                                       nrow(dtm), ncol(dtm)), "\n\n", sep=""))
 
     for(i in seq_along(corpus)) {
         id <- names(corpus)[i]

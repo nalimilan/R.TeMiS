@@ -107,10 +107,10 @@ termsAssocDlg <- function() {
         # Used by saveTableToOutput()
         last.table <<- "termsAssoc"
         title <- sprintf(.ngettext(length(termsList),
-                                   'Terms associated with term "%s" at more than %s%%',
-                                   'Terms associated with terms "%s" at more than %s%%'),
+                                   "Terms associated with term \"%s\" at more than %s%%",
+                                   "Terms associated with terms \"%s\" at more than %s%%"),
                          # TRANSLATORS: this should be opening quote, comma, closing quote
-                         paste(termsList, collapse=.gettext('", "')), n)
+                         paste(termsList, collapse=.gettext("\", \"")), n)
 
        if(var != .gettext("None (whole corpus)"))
            attr(termsAssoc, "title") <<- paste(title, sprintf(.gettext("(for %s)"),

@@ -138,7 +138,7 @@ docVocabularyDlg <- function() {
                  right.buttons=FALSE)
 
     titleFrame <- tkframe(top)
-    tclTitle <- tclVar(.gettext("Vocabulary table by document"))
+    tclTitle <- tclVar(.gettext("Vocabulary summary by document"))
     titleEntry <- ttkentry(top, width="40", textvariable=tclTitle)
 
     onOK <- function() {
@@ -265,7 +265,7 @@ varVocabularyDlg <- function() {
                                         variable=corpusMeasureVar)
 
     titleFrame <- tkframe(top)
-    tclTitle <- tclVar(.gettext("Vocabulary table by %V"))
+    tclTitle <- tclVar(.gettext("Vocabulary summary by %V"))
     titleEntry <- ttkentry(top, width="40", textvariable=tclTitle)
 
     onOK <- function() {
