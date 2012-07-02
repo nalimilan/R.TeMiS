@@ -5,10 +5,10 @@ importCorpusFromDir <- function() {
 
     doItAndPrint(paste("corpus <- Corpus(DirSource(\"", dir, "\"))", sep=""))
 
-    processCorpusDlg()
-
     assign("corpusMetaData", data.frame(var1=rep(NA, length(corpus)), row.names=names(corpus)), envir=.GlobalEnv)
     activeDataSet("corpusMetaData")
+
+    processCorpusDlg()
 }
 
 # Choose a CSV file to load texts and meta-data from
@@ -19,11 +19,11 @@ importCorpusFromFile <- function() {
     doItAndPrint(paste("corpusDataset <- read.csv(\"", file, "\")", sep=""))
     doItAndPrint("corpus <- Corpus(DataframeSource(corpusDataset[1]))")
 
-    processCorpusDlg()
-
     doItAndPrint("corpusMetadata <- corpusDataset[-1]")
     doItAndPrint("activeDataSet(\"corpusMetadata\")")
     doItAndPrint("setCorpusMetadata()")
+
+    processCorpusDlg()
 }
 
 processCorpusDlg <- function() {
