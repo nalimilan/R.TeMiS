@@ -13,7 +13,7 @@ importCorpusFromDir <- function() {
 
 # Choose a CSV file to load texts and meta-data from
 importCorpusFromFile <- function() {
-    file <- tclvalue(tkgetOpenFile(filetypes=gettext('{"CSV file" {".csv" ".CSV"}}')))
+    file <- tclvalue(tkgetOpenFile(filetypes=gettext_('{"CSV file" {".csv" ".CSV"}}')))
     if (file == "") return()
 
     doItAndPrint(paste("corpusDataset <- read.csv(\"", file, "\")", sep=""))
@@ -28,14 +28,17 @@ importCorpusFromFile <- function() {
 
 processCorpusDlg <- function() {
     # Let the user select processing options
-    initializeDialog(title=gettext("Import Corpus"))
-    tclLang <- tclVar(gettext("english"))
+    initializeDialog(title=gettext_("Import Corpus"))
+    # TRANSLATORS: replace 'english' with your language's ISO 639-1 English name
+    tclLang <- tclVar(gettext_("english"))
     entryLang <- ttkentry(top, width="12", textvariable=tclLang)
     checkBoxes(frame="checkBoxFrame",
                boxes=c("lowercase", "punctuation", "numbers", "stopwords", "stemming"),
                initialValues=rep(1, 5),
-               labels=gettext(c("Ignore case", "Remove punctuation", "Remove numbers", "Remove stopwords", "Stem words")),
-               title=gettext("Text processing:"))
+               labels=c(gettext_("Ignore case"), gettext_("Remove punctuation"),
+                        gettext_("Remove numbers"), gettext_("Remove stopwords"),
+                        gettext_("Stem words")),
+               title=gettext_("Text processing:"))
 
     onOK <- function() {
         closeDialog()
@@ -43,7 +46,7 @@ processCorpusDlg <- function() {
         # Set language
         lang <- tclvalue(tclLang)
         if(lang == "")
-            Message(message=gettext("No language has been chosen, using English."),
+            Message(message=gettext_("No language has been chosen, using English."),
                     type="warning")
 
         # Process texts
@@ -78,7 +81,7 @@ processCorpusDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="processCorpusDlg")
-    tkgrid(labelRcmdr(top, text=gettext("Language of texts in the corpus:")), entryLang, sticky="w")
+    tkgrid(labelRcmdr(top, text=gettext_("Language of texts in the corpus:")), entryLang, sticky="w")
     tkgrid(checkBoxFrame, columnspan="2", sticky="w", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
     dialogSuffix(rows=3, columns=2, focus=entryLang)

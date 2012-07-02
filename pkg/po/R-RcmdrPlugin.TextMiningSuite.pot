@@ -1,0 +1,468 @@
+# RcmdrPlugin.TextMiningSuite translations template.
+# Copyright (C) 2011 Milan Bouchet-Valat
+# This file is distributed under the same license as the RcmdrPlugin.TextMiningSuite package.
+#
+# Update the .pot from the package base dir with:
+# xgettext R/*.R -kgettext_ -kngettext_:2,3 -jo po/R-RcmdrPlugin.TextMiningSuite.pot
+# 
+#
+# Merge .po with .pot from the package base dir with (replacing LANG):
+# msgmerge po/R-LANG.po po/R-RcmdrPlugin.TextMiningSuite.pot -U
+#
+# Compile .po from the package base dir with (replacing LANG):
+# msgfmt -c --statistics -o inst/po/LANG/LC_MESSAGES/RcmdrPlugin.TextMiningSuite.mo po/R-LANG.po
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: RcmdrPlugin.TextMiningSuite 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-09-10 13:19+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+
+# ## MENUS: added by hand
+msgid "Text mining"
+msgstr ""
+
+msgid "Import corpus from folder..."
+msgstr ""
+
+msgid "Import corpus from file..."
+msgstr ""
+
+msgid "Set corpus meta-data"
+msgstr ""
+
+msgid "List terms"
+msgstr ""
+
+msgid "Show most frequent terms..."
+msgstr ""
+
+msgid "Show associated terms..."
+msgstr ""
+
+msgid "Exclude terms from analysis..."
+msgstr ""
+
+msgid "Per document..."
+msgstr ""
+
+msgid "Per variable..."
+msgstr ""
+
+msgid "Copy table"
+msgstr ""
+
+msgid "Term frequencies"
+msgstr ""
+
+msgid "One-way table..."
+msgstr ""
+
+msgid "Two-way table..."
+msgstr ""
+
+msgid "Variable frequencies"
+msgstr ""
+
+msgid "Run clustering..."
+msgstr ""
+
+msgid "Create classes..."
+msgstr ""
+
+msgid "Hierarchical clustering"
+msgstr ""
+
+msgid "Run correspondence analysis..."
+msgstr ""
+
+msgid "Plot correspondence analysis..."
+msgstr ""
+
+msgid "Correspondence analysis"
+msgstr ""
+
+# ## END OF MENUS
+
+#: R/corpusCa.R:28
+#, c-format
+msgid ""
+"Variable %s has been skipped since it contains only missing values for "
+"retained documents."
+msgstr ""
+
+#: R/corpusCa.R:34
+#, c-format
+msgid ""
+"Some levels of variable %s has been skipped since they contain only missing "
+"values for retained documents."
+msgstr ""
+
+#: R/corpusCa.R:53
+#, c-format
+msgid ""
+"Running correspondence analysis using %i documents, %i terms and %i meta-"
+"data variables."
+msgstr ""
+
+#: R/corpusCa.R:64
+msgid "Run Correspondence Analysis"
+msgstr "Lancer une analyse des correspondances"
+
+#: R/corpusCa.R:93 R/corpusClustering.R:23
+msgid "Only keep terms present in more than (% of documents):"
+msgstr ""
+
+#: R/corpusCa.R:95
+msgid "Number of dimensions to retain:"
+msgstr ""
+
+#: R/corpusClustering.R:2
+msgid "Run Hierarchical Clustering"
+msgstr ""
+
+#: R/corpusClustering.R:31
+msgid "Please run a hierarchical clustering on the corpus first."
+msgstr ""
+
+#: R/corpusClustering.R:36
+msgid "Create Classes"
+msgstr ""
+
+#: R/corpusClustering.R:49 R/corpusClustering.R:53 R/corpusClustering.R:54
+#: R/corpusClustering.R:56 R/corpusClustering.R:57 R/corpusClustering.R:62
+msgid "class"
+msgstr ""
+
+#: R/corpusClustering.R:69
+msgid "Cut height:"
+msgstr ""
+
+#: R/corpusTerms.R:7 R/corpusTerms.R:37
+msgid "Please import a corpus and create the document-term matrix first."
+msgstr ""
+
+#: R/corpusTerms.R:12
+msgid "Show Most Frequent Terms"
+msgstr ""
+
+#: R/corpusTerms.R:29
+msgid "Number of terms to show:"
+msgstr ""
+
+#: R/corpusTerms.R:42
+msgid "Show Associated Terms"
+msgstr ""
+
+#: R/corpusTerms.R:65
+msgid "Reference terms (space-separated):"
+msgstr ""
+
+#: R/corpusTerms.R:67
+msgid "Correlation coefficient (%):"
+msgstr ""
+
+#: R/corpusTerms.R:73
+msgid "Exclude Terms From Analysis"
+msgstr ""
+
+#: R/corpusTerms.R:89
+msgid "Terms to exclude (space-separated):"
+msgstr ""
+
+#: R/importCorpus.R:31
+msgid "Import Corpus"
+msgstr ""
+
+#: R/importCorpus.R:32 R/importCorpus.R:33
+msgid "english"
+msgstr ""
+
+#: R/importCorpus.R:38 R/importCorpus.R:41
+msgid "Text processing:"
+msgstr ""
+
+#: R/importCorpus.R:46 R/importCorpus.R:49
+msgid "No language has been chosen, using English."
+msgstr ""
+
+#: R/importCorpus.R:81 R/importCorpus.R:84
+msgid "Language of texts in the corpus:"
+msgstr ""
+
+#: R/plotCorpusCa.R:55
+msgid "Please run a correspondence analysis on the corpus first."
+msgstr ""
+
+#: R/plotCorpusCa.R:60
+msgid "Plot Correspondence Analysis"
+msgstr ""
+
+#: R/plotCorpusCa.R:63
+msgid "Dimensions to plot:"
+msgstr ""
+
+#: R/plotCorpusCa.R:76
+msgid "Meta-data variables to plot:"
+msgstr ""
+
+#: R/plotCorpusCa.R:80
+msgid "Number of items to plot:"
+msgstr ""
+
+#: R/plotCorpusCa.R:96 R/plotCorpusCa.R:97
+msgid "Draw point symbols for:"
+msgstr ""
+
+#: R/plotCorpusCa.R:113 R/plotCorpusCa.R:114
+msgid "Please select something to plot."
+msgstr ""
+
+#: R/plotCorpusCa.R:175 R/plotCorpusCa.R:182 R/plotCorpusCa.R:176
+#: R/plotCorpusCa.R:183
+msgid "Items to represent:"
+msgstr ""
+
+#: R/plotCorpusCa.R:187 R/plotCorpusCa.R:188
+msgid "Plot"
+msgstr ""
+
+#: R/plotCorpusCa.R:193 R/plotCorpusCa.R:194
+msgid "Close"
+msgstr ""
+
+#: R/plotCorpusCa.R:206 R/plotCorpusCa.R:207
+msgid "Horizontal axis:"
+msgstr ""
+
+#: R/plotCorpusCa.R:207 R/plotCorpusCa.R:208
+msgid "Vertical axis:"
+msgstr ""
+
+#: R/plotCorpusCa.R:212 R/plotCorpusCa.R:213
+msgid "Documents:"
+msgstr ""
+
+#: R/plotCorpusCa.R:213 R/plotCorpusCa.R:214
+msgid "Terms:"
+msgstr ""
+
+#: R/plotCorpusCa.R:215 R/plotCorpusCa.R:216
+msgid "Most contributive to:"
+msgstr ""
+
+#: R/setCorpusMetadata.R:3
+msgid "Please import a corpus first."
+msgstr ""
+
+#: R/setCorpusMetadata.R:9
+msgid "Please create or import a data set first."
+msgstr ""
+
+#: R/setCorpusMetadata.R:15
+msgid "Please create at least one variable (column)."
+msgstr ""
+
+#: R/setCorpusMetadata.R:22
+#, c-format
+msgid "Active data set must contain exactly %d rows."
+msgstr ""
+
+#: R/setCorpusMetadata.R:28
+msgid "Active data set is empty."
+msgstr ""
+
+#: R/termFreq.R:2
+msgid "Terms Frequencies per Document"
+msgstr ""
+
+#: R/termFreq.R:19 R/termFreq.R:168
+msgid "Occurrences of term %T"
+msgstr ""
+
+#: R/termFreq.R:29 R/termFreq.R:179
+msgid "Please enter at least one term."
+msgstr ""
+
+#: R/termFreq.R:53 R/termFreq.R:210
+msgid "% of all terms"
+msgstr ""
+
+#: R/termFreq.R:62 R/termFreq.R:219
+msgid "% of occurrences"
+msgstr ""
+
+#: R/termFreq.R:66 R/termFreq.R:223
+msgid "Number of occurrences"
+msgstr ""
+
+#: R/termFreq.R:128 R/termFreq.R:285
+msgid "Terms to show (space-separated):"
+msgstr ""
+
+#: R/termFreq.R:131 R/termFreq.R:289 R/varFreq.R:72 R/varFreq.R:198
+msgid "Plot:"
+msgstr ""
+
+#: R/termFreq.R:133 R/termFreq.R:291 R/varFreq.R:78 R/varFreq.R:204
+msgid "Title:"
+msgstr ""
+
+#: R/termFreq.R:146
+msgid "Terms Frequencies per Variable"
+msgstr ""
+
+#: R/termFreq.R:153
+msgid "Meta-data variable:"
+msgstr ""
+
+#: R/varFreq.R:9 R/varFreq.R:97
+msgid "Variable Cross Table"
+msgstr ""
+
+#: R/varFreq.R:13
+msgid "Variable:"
+msgstr ""
+
+#: R/varFreq.R:26 R/varFreq.R:119
+msgid "None"
+msgstr ""
+
+#: R/varFreq.R:28 R/varFreq.R:121
+msgid "Bar plot"
+msgstr ""
+
+#: R/varFreq.R:30 R/varFreq.R:123
+msgid "Pie chart"
+msgstr ""
+
+#: R/varFreq.R:32 R/varFreq.R:125
+msgid "Distribution of documents"
+msgstr ""
+
+#: R/varFreq.R:48 R/varFreq.R:143 R/varFreq.R:148
+msgid "% of documents"
+msgstr ""
+
+#: R/varFreq.R:52 R/varFreq.R:152
+msgid "Number of documents"
+msgstr ""
+
+#: R/varFreq.R:92
+msgid "Corpus has only one meta-data variable."
+msgstr ""
+
+#: R/varFreq.R:101
+msgid "First variable:"
+msgstr ""
+
+#: R/varFreq.R:105
+msgid "Second variable:"
+msgstr ""
+
+#: R/termFreq.R:9 R/termFreq.R:158
+msgid "Row % (term prevalence in category)"
+msgstr ""
+
+#: R/termFreq.R:10 R/termFreq.R:159
+msgid "Column % (distribution of occurrences)"
+msgstr ""
+
+#: R/termFreq.R:11 R/termFreq.R:160 R/varFreq.R:19 R/varFreq.R:112
+msgid "Absolute counts"
+msgstr ""
+
+#: R/termFreq.R:12 R/termFreq.R:161 R/varFreq.R:20 R/varFreq.R:113
+msgid "Measure:"
+msgstr ""
+
+#: R/termFreq.R:17 R/termFreq.R:166
+msgid "Draw plot"
+msgstr ""
+
+#: R/varFreq.R:18
+msgid "Percent"
+msgstr ""
+
+#: R/varFreq.R:110
+msgid "Row %"
+msgstr ""
+
+#: R/varFreq.R:111
+msgid "Column %"
+msgstr ""
+
+#: R/corpusCa.R:11
+#, c-format
+msgid ""
+"Document %s has been skipped because it does not include any occurrence of "
+"the terms retained in the final document-term matrix.\n"
+"Lower the value of the 'sparsity' parameter to fix this warning."
+msgid_plural ""
+"Documents %s have been skipped because they do not include any occurrence of "
+"the terms retained in the final document-term matrix.\n"
+"Lower the value of the 'sparsity' parameter to fix this warning."
+msgstr[0] ""
+msgstr[1] ""
+
+#: R/plotCorpusCa.R:91
+msgid "Horizontal axis"
+msgstr ""
+
+#: R/plotCorpusCa.R:91
+msgid "Vertical axis"
+msgstr ""
+
+#: R/plotCorpusCa.R:96 R/plotCorpusCa.R:175 R/plotCorpusCa.R:182
+msgid "Documents"
+msgstr ""
+
+#: R/plotCorpusCa.R:96 R/plotCorpusCa.R:175 R/plotCorpusCa.R:182
+msgid "Terms"
+msgstr ""
+
+#: R/plotCorpusCa.R:182
+msgid "Documents meta-data"
+msgstr ""
+
+#: R/termFreq.R:36 R/termFreq.R:186
+#, c-format
+msgid "Term '%s' does not exist in the corpus."
+msgid_plural "Terms '%s' do not exist in the corpus."
+msgstr[0] ""
+msgstr[1] ""
+
+#: R/importCorpus.R:38
+msgid "Ignore case"
+msgstr ""
+
+#: R/importCorpus.R:38
+msgid "Remove punctuation"
+msgstr ""
+
+#: R/importCorpus.R:39
+msgid "Remove numbers"
+msgstr ""
+
+#: R/importCorpus.R:39
+msgid "Remove stopwords"
+msgstr ""
+
+#: R/importCorpus.R:40
+msgid "Stem words"
+msgstr ""
+
+#: R/corpusCa.R:78 R/termFreq.R:141 R/varFreq.R:4 R/varFreq.R:87
+msgid ""
+"Corpus has no meta-data. Use Text mining->Set corpus meta-data to add "
+"variables."
+msgstr ""

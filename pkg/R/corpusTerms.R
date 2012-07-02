@@ -4,12 +4,12 @@ listTerms <- function() {
 
 freqTermsDlg <- function() {
     if(!(exists("dtm") && class(dtm) == "DocumentTermMatrix")) {
-        Message(message=gettext("Please import a corpus and create the document-term matrix first."),
+        Message(message=gettext_("Please import a corpus and create the document-term matrix first."),
                 type="error")
         return()
     }
 
-    initializeDialog(title=gettext("Show Most Frequent Terms"))
+    initializeDialog(title=gettext_("Show Most Frequent Terms"))
     tclN <- tclVar(10)
     sliderN <- tkscale(top, from=1, to=100,
                        showvalue=TRUE, variable=tclN,
@@ -26,7 +26,7 @@ freqTermsDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="freqTermsDlg")
-    tkgrid(labelRcmdr(top, text=gettext("Number of terms to show:")), sliderN,
+    tkgrid(labelRcmdr(top, text=gettext_("Number of terms to show:")), sliderN,
            sticky="sw", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
     dialogSuffix(rows=2, columns=2)
@@ -34,12 +34,12 @@ freqTermsDlg <- function() {
 
 termsAssocDlg <- function() {
     if(!(exists("dtm") && class(dtm) == "DocumentTermMatrix")) {
-        Message(message=gettext("Please import a corpus and create the document-term matrix first."),
+        Message(message=gettext_("Please import a corpus and create the document-term matrix first."),
                 type="error")
         return()
     }
 
-    initializeDialog(title=gettext("Show Associated Terms"))
+    initializeDialog(title=gettext_("Show Associated Terms"))
 
     tclTerms <- tclVar("")
     entryTerms <- ttkentry(top,  width="35", textvariable=tclTerms)
@@ -62,15 +62,15 @@ termsAssocDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="termsAssocDlg")
-    tkgrid(labelRcmdr(top, text=gettext("Reference terms (space-separated):")), sticky="w")
+    tkgrid(labelRcmdr(top, text=gettext_("Reference terms (space-separated):")), sticky="w")
     tkgrid(entryTerms, sticky="w", columnspan=2)
-    tkgrid(labelRcmdr(top, text=gettext("Correlation coefficient (%):")), sliderN, sticky="sw")
+    tkgrid(labelRcmdr(top, text=gettext_("Correlation coefficient (%):")), sliderN, sticky="sw")
     tkgrid(buttonsFrame, columnspan=2, sticky="w", pady=6)
     dialogSuffix(rows=4, columns=2, focus=entryTerms)
 }
 
 excludeTermsDlg <- function() {
-    initializeDialog(title=gettext("Exclude Terms From Analysis"))
+    initializeDialog(title=gettext_("Exclude Terms From Analysis"))
 
     tclTerms <- tclVar("")
     entryTerms <- ttkentry(top, width="30", textvariable=tclTerms)
@@ -86,7 +86,7 @@ excludeTermsDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="excludeTermsDlg")
-    tkgrid(labelRcmdr(top, text=gettext("Terms to exclude (space-separated):")),
+    tkgrid(labelRcmdr(top, text=gettext_("Terms to exclude (space-separated):")),
            columnspan=2, sticky="w")
     tkgrid(entryTerms, columnspan=2, sticky="w")
     tkgrid(buttonsFrame, sticky="w", pady=6)
