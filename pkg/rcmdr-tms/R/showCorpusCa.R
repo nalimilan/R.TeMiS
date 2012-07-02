@@ -306,11 +306,20 @@ showCorpusCaDlg <- function() {
     ctrDim2 <- ttkradiobutton(ctrDimFrame, variable=ctrDimVariable, value="xDim", text=gettext_("Horizontal axis"))
     ctrDim3 <- ttkradiobutton(ctrDimFrame, variable=ctrDimVariable, value="yDim", text=gettext_("Vertical axis"))
 
-    checkBoxes(frame="pointsFrame",
-               boxes=c("documentsPoints", "termsPoints"),
-               initialValues=c(0, 1),
-               labels=c(gettext_("Documents"), gettext_("Terms")),
-               title=gettext_("Draw point symbols for:"))
+    if(length(corpusCa$rowsup) == 0) {
+        checkBoxes(frame="pointsFrame",
+                   boxes=c("documentsPoints", "termsPoints"),
+                   initialValues=c(0, 1),
+                   labels=c(gettext_("Documents"), gettext_("Terms")),
+                   title=gettext_("Draw point symbols for:"))
+     }
+     else {
+        checkBoxes(frame="pointsFrame",
+                   boxes=c("variablesPoints", "documentsPoints", "termsPoints"),
+                   initialValues=c(0, 0, 1),
+                   labels=c(gettext_("Variables"), gettext_("Documents"), gettext_("Terms")),
+                   title=gettext_("Draw point symbols for:"))
+    }
 
     onShow <- function() {
         x <- tclvalue(tclXDim)
@@ -322,8 +331,9 @@ showCorpusCaDlg <- function() {
         nDocs <- tclvalue(tclNDocs)
         nTerms <- tclvalue(tclNTerms)
         ctrDim <- switch(tclvalue(ctrDimVariable), xyDim=paste("c(", x, ", ", y, ")", sep=""), xDim=x, yDim=y)
-        documentsPoints <- if(tclvalue(documentsPointsVariable) == 1) 2 else 1
-        termsPoints <- if(tclvalue(termsPointsVariable) == 1) 2 else 1
+        variablesPoints <- if(length(corpusCa$rowsup) == 0) FALSE else tclvalue(variablesPointsVariable) == 1
+        documentsPoints <- tclvalue(documentsPointsVariable) == 1
+        termsPoints <- tclvalue(termsPointsVariable) == 1
 
         if(!(documents || terms || variables) || (variables && length(vars) == 0)) {
             errorCondition(recall=showCorpusCaDlg,
@@ -367,8 +377,9 @@ showCorpusCaDlg <- function() {
             colWhat <- "none"
         }
 
-        doItAndPrint(sprintf('plotCorpusCa(plottingCa, dim=c(%s, %s), what=c("%s", "%s"), labels=c(%s, %s), mass=TRUE, xlab="%s", ylab="%s")',
-                              x, y, rowWhat, colWhat, documentsPoints, termsPoints,
+        doItAndPrint(sprintf('plotCorpusCa(plottingCa, dim=c(%s, %s), what=c("%s", "%s"), labels=c(2, 2), pch=c(%s, %s, 17, %s), mass=TRUE, xlab="%s", ylab="%s")',
+                              x, y, rowWhat, colWhat,
+                              if(documentsPoints) 16 else NA, if(variablesPoints) 1 else NA, if(termsPoints) 24 else NA,
                               sprintf(gettext_("Dimension %s (%.1f%%)"), x, 100 * corpusCa$sv[as.integer(x)]^2/sum(corpusCa$sv^2)),
                               sprintf(gettext_("Dimension %s (%.1f%%)"), y, 100 * corpusCa$sv[as.integer(y)]^2/sum(corpusCa$sv^2))))
 

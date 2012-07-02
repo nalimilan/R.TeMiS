@@ -160,6 +160,11 @@ plotCorpusCa <- function (x, dim = c(1, 2), map = "symmetric",
     if (mass[2]) 
         cex.y <- 0.5 + obj$colmass^(1/3)/max(obj$colmass^(1/3))
     else cex.y <- 1
+
+    # For supplementary points with mass NA
+    cex.x[is.na(cex.x)] <- 1
+    cex.y[is.na(cex.y)] <- 1
+
     nc0 <- 50
     cst <- 230
     col.x <- col[1]
