@@ -181,7 +181,7 @@ plotCorpusCaDlg <- function() {
     else {
         checkBoxes(frame="whatFrame",
                    boxes=c("metadata", "documents", "terms"),
-                   initialValues=c(1, 0, 1),
+                   initialValues=c(0, 0, 1),
                    labels=gettext(c("Documents meta-data", "Documents", "Terms")),
                    title=gettext("Items to represent:"))
     }
