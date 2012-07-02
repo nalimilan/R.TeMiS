@@ -132,9 +132,16 @@ importCorpusFromFile <- function() {
         return()
 
     doItAndPrint("corpus <- Corpus(DataframeSource(corpusDataset[1]))")
-    doItAndPrint("corpusVars <- corpusDataset[-1]")
-    doItAndPrint("activeDataSet(\"corpusVars\")")
-    doItAndPrint("setCorpusVariables()")
+
+    if(ncol(corpusDataset) > 1) {
+        doItAndPrint("corpusVars <- corpusDataset[-1]")
+        doItAndPrint("activeDataSet(\"corpusVars\")")
+        doItAndPrint("setCorpusVariables()")
+    }
+    else {
+        assign("corpusVars", data.frame(var1=rep(NA, length(corpus)), row.names=names(corpus)), envir=.GlobalEnv)
+        activeDataSet("corpusVars")
+    }
 
     processCorpusDlg()
 }
