@@ -134,7 +134,9 @@ importCorpusFromDir <- function(language=NA) {
 
     doItAndPrint(sprintf("corpus <- Corpus(DirSource(\"%s\"), readerControl=list(language=%s))", dir, language))
 
-    assign("corpusVars", data.frame(var1=rep(NA, length(corpus)), row.names=names(corpus)), envir=.GlobalEnv)
+    # Because of a bug in Rcmdr, filling the first column with NAs prevents entering data in this columns:
+    # use "" instead
+    assign("corpusVars", data.frame(var1=rep("", length(corpus)), row.names=names(corpus)), envir=.GlobalEnv)
     activeDataSet("corpusVars")
 
     return(TRUE)
