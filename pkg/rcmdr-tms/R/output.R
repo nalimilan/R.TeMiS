@@ -19,6 +19,9 @@ setOutputFile <- function() {
     # Set options for good formatting
     options(R2HTML.format.decimal.mark=gettext_("."))
 
+    # The openOutputFile menu needs to notice the new file
+    activateMenus()
+
     return(TRUE)
 }
 
