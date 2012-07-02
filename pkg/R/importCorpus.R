@@ -13,7 +13,8 @@ importCorpusFromDir <- function() {
 
 # Choose a CSV file to load texts and variables from
 importCorpusFromFile <- function() {
-    file <- tclvalue(tkgetOpenFile(filetypes=gettext_('{"CSV file" {".csv" ".CSV"}}')))
+    file <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.csv .CSV}}",
+                                                     gettext_("CSV file"))))
     if (file == "") return()
 
     doItAndPrint(paste("corpusDataset <- read.csv(\"", file, "\")", sep=""))
