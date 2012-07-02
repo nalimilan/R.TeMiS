@@ -154,9 +154,9 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
         }
         else {
             df <- data.frame(row.names=corpusCa$colnames[negterms],
-                             round(corpusCa$colcoord[negterms, dim[j]] * corpusCa$sv[dim[j]], d=2),
-                             round(termsCtr[negterms] * 100, d=1),
-                             round((corpusCa$colcoord[negterms, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$coldist[negterms])^2 * 100, d=1))
+                             round(corpusCa$colcoord[negterms, dim[j]] * corpusCa$sv[dim[j]], digits=2),
+                             round(termsCtr[negterms] * 100, digits=1),
+                             round((corpusCa$colcoord[negterms, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$coldist[negterms])^2 * 100, digits=1))
             colnames(df) <- cols
 
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
@@ -173,9 +173,9 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
         }
         else {
             df <- data.frame(row.names=corpusCa$rownames[posdocs],
-                             round(corpusCa$rowcoord[posdocs, dim[j]] * corpusCa$sv[dim[j]], d=2),
-                             round(docsCtr[posdocs] * 100, d=1),
-                             round((corpusCa$rowcoord[posdocs, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[posdocs])^2 * 100, d=1))
+                             round(corpusCa$rowcoord[posdocs, dim[j]] * corpusCa$sv[dim[j]], digits=2),
+                             round(docsCtr[posdocs] * 100, digits=1),
+                             round((corpusCa$rowcoord[posdocs, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[posdocs])^2 * 100, digits=1))
             colnames(df) <- cols
 
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
@@ -223,9 +223,9 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
         }
         else {
             df <- data.frame(row.names=corpusCa$colnames[posterms],
-                             round(corpusCa$colcoord[posterms, dim[j]] * corpusCa$sv[dim[j]], d=2),
-                             round(termsCtr[posterms] * 100, d=1),
-                             round((corpusCa$colcoord[posterms, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$coldist[posterms])^2 * 100, d=1))
+                             round(corpusCa$colcoord[posterms, dim[j]] * corpusCa$sv[dim[j]], digits=2),
+                             round(termsCtr[posterms] * 100, digits=1),
+                             round((corpusCa$colcoord[posterms, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$coldist[posterms])^2 * 100, digits=1))
             colnames(df) <- cols
 
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
@@ -243,9 +243,9 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
         }
         else {
             df <- data.frame(row.names=corpusCa$rownames[posdocs],
-                             round(corpusCa$rowcoord[posdocs, dim[j]] * corpusCa$sv[dim[j]], d=2),
-                             round(docsCtr[posdocs] * 100, d=1),
-                             round((corpusCa$rowcoord[posdocs, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[posdocs])^2 * 100, d=1))
+                             round(corpusCa$rowcoord[posdocs, dim[j]] * corpusCa$sv[dim[j]], digits=2),
+                             round(docsCtr[posdocs] * 100, digits=1),
+                             round((corpusCa$rowcoord[posdocs, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[posdocs])^2 * 100, digits=1))
             colnames(df) <- cols
 
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
@@ -288,8 +288,8 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 
             supdocs <- corpusCa$rowsup
             df <- data.frame(row.names=corpusCa$rownames[supdocs],
-                             round(corpusCa$rowcoord[supdocs, dim[j]] * corpusCa$sv[dim[j]], d=2),
-                             round((corpusCa$rowcoord[supdocs, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[supdocs])^2 * 100, d=1))
+                             round(corpusCa$rowcoord[supdocs, dim[j]] * corpusCa$sv[dim[j]], digits=2),
+                             round((corpusCa$rowcoord[supdocs, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[supdocs])^2 * 100, digits=1))
             colnames(df) <- cols[-2]
 
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")

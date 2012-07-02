@@ -194,7 +194,7 @@ docVocabularyDlg <- function() {
                                      indexes, exclude, rownames(voc)[measures], title, indexes, exclude))
         }
 
-        doItAndPrint("print(round(voc, d=1))")
+        doItAndPrint("print(round(voc, digits=1))")
 
         activateMenus()
         tkfocus(CommanderWindow())
@@ -318,7 +318,7 @@ varVocabularyDlg <- function() {
 
         }
 
-        doItAndPrint("print(round(voc, d=1))")
+        doItAndPrint("print(round(voc, digits=1))")
 
         activateMenus()
         tkfocus(CommanderWindow())
@@ -339,6 +339,6 @@ varVocabularyDlg <- function() {
 }
 
 copyVocabularyTable <- function() {
-    R2HTML::HTML2clip(round(voc, d=1))
+    R2HTML::HTML2clip(round(voc, digits=1))
 }
 

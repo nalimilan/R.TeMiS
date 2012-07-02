@@ -63,7 +63,7 @@ varTableDlg <- function() {
         }
 
         if(what == "percent")
-            doItAndPrint("round(varFreqs, d=1)")
+            doItAndPrint("round(varFreqs, digits=1)")
          else
             doItAndPrint("print(varFreqs)")
 
@@ -186,7 +186,7 @@ varCrossTableDlg <- function() {
         }
 
         if(what %in% c("row", "col"))
-            doItAndPrint("round(varFreqs, d=1)")
+            doItAndPrint("round(varFreqs, digits=1)")
          else
             doItAndPrint("print(varFreqs)")
 
@@ -210,6 +210,6 @@ varCrossTableDlg <- function() {
 }
 
 copyVarFreq <- function() {
-  R2HTML::HTML2clip(round(varFreqs, d=2))
+  R2HTML::HTML2clip(round(varFreqs, digits=2))
 }
 
