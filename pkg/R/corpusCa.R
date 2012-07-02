@@ -7,7 +7,7 @@ corpusCa <- function(corpus, sparsity=0.9, ...) {
     if(length(invalid) > 0) {
         dtm<-dtm[-invalid,]
         corpus<-corpus[-invalid]
-        msg<-sprintf(ngettext_(length(invalid),
+        msg<-sprintf(ngettext(length(invalid),
                      "Document %s has been skipped because it does not include any occurrence of the terms retained in the final document-term matrix.\nLower the value of the 'sparsity' parameter to fix this warning.",
                      "Documents %s have been skipped because they do not include any occurrence of the terms retained in the final document-term matrix.\nLower the value of the 'sparsity' parameter to fix this warning."),
                      paste(names(invalid), collapse=", "))
@@ -25,13 +25,13 @@ corpusCa <- function(corpus, sparsity=0.9, ...) {
             totNLevels<-nlevels(factor(meta(corpus)[colnames(meta(corpus)) != "MetaID"][,i]))
 
             if(length(levels) == 0) {
-                Message(sprintf(gettext_("Variable %s has been skipped since it contains only missing values for retained documents."),
+                Message(sprintf(gettext("Variable %s has been skipped since it contains only missing values for retained documents."),
                                 colnames(meta)[i]),
                         type="note")
                 break
             }
             else if(length(levels) < totNLevels) {
-                Message(sprintf(gettext_("Some levels of variable %s has been skipped since they contain only missing values for retained documents."),
+                Message(sprintf(gettext("Some levels of variable %s has been skipped since they contain only missing values for retained documents."),
                                 colnames(meta)[i]),
                         type="note")
                 break
@@ -50,7 +50,7 @@ corpusCa <- function(corpus, sparsity=0.9, ...) {
         }
     }
 
-    Message(sprintf(gettext_("Running correspondence analysis using %i documents, %i terms and %i variables."),
+    Message(sprintf(gettext("Running correspondence analysis using %i documents, %i terms and %i variables."),
                             ndocs, nterms, ncol(meta)),
             type="note")
 
@@ -61,7 +61,7 @@ corpusCa <- function(corpus, sparsity=0.9, ...) {
 }
 
 corpusCaDlg <- function() {
-    initializeDialog(title=gettext_("Run Correspondence Analysis"))
+    initializeDialog(title=gettext("Run Correspondence Analysis"))
     tclSparsity <- tclVar(95)
     sliderSparsity <- tkscale(top, from=1, to=100,
                               showvalue=TRUE, variable=tclSparsity,
@@ -75,7 +75,7 @@ corpusCaDlg <- function() {
         closeDialog()
 
         if(ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"]) == 0)
-            Message(message=gettext_("No corpus variables have been set. Use Text mining->Set corpus variables to add them."),
+            Message(message=gettext("No corpus variables have been set. Use Text mining->Set corpus variables to add them."),
                     type="note")
 
         sparsity <- as.numeric(tclvalue(tclSparsity))
@@ -90,9 +90,9 @@ corpusCaDlg <- function() {
     }
 
     OKCancelHelp(helpSubject=corpusCaDlg)
-    tkgrid(labelRcmdr(top, text=gettext_("Remove terms missing from more than (% of documents):")),
+    tkgrid(labelRcmdr(top, text=gettext("Remove terms missing from more than (% of documents):")),
            sliderSparsity, sticky="sw", pady=6)
-    tkgrid(labelRcmdr(top, text=gettext_("Number of dimensions to retain:")),
+    tkgrid(labelRcmdr(top, text=gettext("Number of dimensions to retain:")),
            sliderDim, sticky="sw", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
     dialogSuffix(rows=3, columns=2)
