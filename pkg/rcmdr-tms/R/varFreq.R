@@ -103,11 +103,11 @@ varCrossTableDlg <- function() {
 
     vars <- colnames(meta(corpus))
     varBox1 <- variableListBox(top, vars,
-                               title=gettext_("First variable:"),
+                               title=gettext_("Row variable:"),
                                initialSelection=0)
 
     varBox2 <- variableListBox(top, vars,
-                               title=gettext_("Second variable:"),
+                               title=gettext_("Column variable:"),
                                initialSelection=1)
 
     radioButtons(name="what",

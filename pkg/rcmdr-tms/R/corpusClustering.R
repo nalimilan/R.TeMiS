@@ -73,9 +73,10 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
             # Remove terms that do not appear in the cluster
             keep <- as.matrix(clusterDtm[j,] > 0)
             docDtm <- dtm[clusters %in% j, keep]
+            clustDtm <- clusterDtm[j, keep]
             dev <- sweep(as.matrix(docDtm)/row_sums(docDtm), 2,
-                         as.matrix(clusterDtm[j, keep])/sum(clusterDtm[j, keep]), "-")
-            chisq <- rowSums(sweep(dev^2, 2, sum(dtm[,keep])/col_sums(dtm[,keep]), "*"))
+                         as.matrix(clustDtm)/sum(clustDtm), "-")
+            chisq <- rowSums(sweep(dev^2, 2, col_sums(dtm[,keep])/sum(dtm), "/"))
             chisq <- sort(chisq)[seq.int(1, min(length(chisq), ndocs))]
             docs <- names(chisq)
 
@@ -187,7 +188,7 @@ corpusClustDlg <- function() {
                 doItAndPrint('clustDtm <- clustDtm[row_sums(clustDtm) > 0,]')
             }
 
-            doItAndPrint('chisqDist <- dist(sweep(clustDtm/row_sums(clustDtm), 2, sqrt(sum(clustDtm)/col_sums(clustDtm)), "*"))')
+            doItAndPrint('chisqDist <- dist(sweep(clustDtm/row_sums(clustDtm), 2, sqrt(col_sums(clustDtm)/sum(clustDtm)), "/"))')
             doItAndPrint('corpusClust <- hclust(chisqDist, method="ward")')
             # Used by createClustersDialog() and showCorpusClust() to recreate the dtm
             doItAndPrint(sprintf('attr(corpusClust, "sparsity") <- %s', sparsity))
@@ -195,7 +196,7 @@ corpusClustDlg <- function() {
             gc()
         }
         else {
-            doItAndPrint('chisqDist <- dist(sweep(dtm/row_sums(dtm), 2, sqrt(sum(dtm)/col_sums(dtm)), "*"))')
+            doItAndPrint('chisqDist <- dist(sweep(dtm/row_sums(dtm), 2, sqrt(col_sums(dtm)/sum(dtm)), "/"))')
             doItAndPrint('corpusClust <- hclust(chisqDist, method="ward")')
             doItAndPrint("rm(chisqDist)")
         }

@@ -31,6 +31,7 @@
     item        varFreqMenu     command           "Copy table"                       copyVarFreq                 "exists('varFreqs') && is.table(varFreqs)"                             ""
 
     item        anaCorpusMenu	cascade           "Analyse corpus variables"         varFreqMenu                 ""                    ""
+    item        anaCorpusMenu   command           "Dissimilarity table..."           dissimilarityTableDlg       "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
 
 
 ### Analyse term occurrences menu ###
