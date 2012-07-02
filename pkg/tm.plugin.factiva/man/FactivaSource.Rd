@@ -1,21 +1,31 @@
 \name{FactivaSource}
 \alias{FactivaSource}
+\alias{getElem.FactivaSource}
+\alias{eoi.FactivaSource}
 \title{Factiva Source}
 \description{
   Construct a source for an input containing a set of articles
-  exported from Factiva in the \acronym{XML} format.
+  exported from Factiva in the \acronym{XML} or \acronym{HTML} formats.
 }
 \usage{
-  FactivaSource(x, encoding = "UTF-8")
+  FactivaSource(x, encoding = "UTF-8",
+                format = c("auto", "XML", "HTML"))
 }
 \arguments{
   \item{x}{Either a character identifying the file or a connection.}
   \item{encoding}{A character giving the encoding of \code{x}. It will
-    be ignored unless the \acronym{XML} input does not include this
-    information, which should normally not happen with files exported
+    be ignored unless the \acronym{XML} or \acronym{HTML} input does not include
+    this information, which should normally not happen with files exported
     from Factiva.}
+  \item{format}{The format of the file or connection identified by \code{x}
+    (see \dQuote{Details}).}
 }
 \details{
+  This function can be used to import both \acronym{XML} and \acronym{HTML} files.
+  If \code{format} is set to \dQuote{auto} (the default), the file extension is used
+  to guess the format: if the file name ends with \dQuote{.xml} or \dQuote{.XML}, 
+  \acronym{XML} is assumed; else, the file is assumed to be in the \acronym{HTML} format.
+
   This function imports the body of the articles, but also sets several
   meta-data variables on individual documents:
   \itemize{
@@ -27,17 +37,22 @@
     \item \code{Subject}: One or several keywords defining the subject.
     \item \code{Coverage}: One or several keywords identifying the covered regions.
     \item \code{WordCount}: The number of words in the article.
-    \item \code{Pages}: The number of pages of the article.
     \item \code{Publisher}: The publisher of the newspaper.
     \item \code{Rights}: The copyright information associated with the article.
   }
 
   \itemize{
     \item \code{Language}: This information is set automatically if
-      \code{readerControl=list(language=NA)} is passed (see the example below).
+      \code{readerControl = list(language = NA)} is passed (see the example below).
       Else, the language specified manually is set for all articles. If omitted,
       the default, "en", is used.
   }
+
+  It is advised to export articles from Factiva in the \acronym{XML} format rather
+  than in \acronym{HTML} when possible, since the latter does not provide completely
+  clean information. In particular, dates are not guaranteed to be parsed correctly
+  if the machine from which the \acronym{HTML} file was exported uses a locale different
+  from that of the machine where it is read.
 }
 \note{
   It has been found that some Factiva articles contain unescaped characters
@@ -65,7 +80,7 @@
     library(tm)
     file <- system.file("factiva_test.xml", package = "tm.plugin.factiva")
     source <- FactivaSource(file)
-    corpus <- Corpus(source, readerControl=list(language=NA))
+    corpus <- Corpus(source, readerControl = list(language = NA))
 
     # See the contents of the documents
     inspect(corpus)
@@ -74,7 +89,8 @@
     meta(corpus[[1]])
 }
 \seealso{
-  \code{\link{readFactiva}} for the function actually parsing individual articles.
+  \code{\link{readFactivaXML}} and \code{\link{readFactivaHTML}} for the functions
+  actually parsing individual articles.
 
   \code{\link{getSources}} to list available sources.
 }

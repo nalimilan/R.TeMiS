@@ -1,4 +1,4 @@
-readFactiva <- tm::readXML(
+readFactivaXML <- tm::readXML(
     spec = list(Author = list("function", function(node)
                 toupper(gsub("^\\s+|\\s+$", "",
                              gsub("\n|\\s+", " ",
@@ -31,8 +31,6 @@ readFactiva <- tm::readXML(
     Coverage = list("node", "/article/region/name"),
     WordCount = list("function", function(node)
                      as.numeric(sapply(XML::getNodeSet(node, "/article/wordCount"), xmlValue))),
-    Pages = list("function", function(node)
-                 as.numeric(sapply(XML::getNodeSet(node, "/article/pages"), xmlValue))),
     Publisher = list("node", "/article/publisherName"),
     Rights = list("function", function(node)
                   gsub("^\\s+|\\s+$", "",
