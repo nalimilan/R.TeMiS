@@ -48,13 +48,19 @@ createClassesDlg <- function() {
 
         doItAndPrint(paste("meta(corpus, tag=\"", gettext("class"),
                            "\") <- cutree(corpusClust, h=", height, ")", sep=""))
-        doItAndPrint(paste("corpusMetaData$",  gettext("class"),
-                           "<- meta(corpus, tag=\"", gettext("class"), "\")", sep=""))
+
+        if(exists("corpusMetaData"))
+            doItAndPrint(paste("corpusMetaData$",  gettext("class"),
+                               "<- meta(corpus, tag=\"", gettext("class"), "\")", sep=""))
+        else
+            doItAndPrint(paste("corpusMetaData <- data.frame(",  gettext("class"),
+                               "=meta(corpus, tag=\"", gettext("class"), "\"))", sep=""))
+
         doItAndPrint(paste("corpusSubClust <- cut(as.dendrogram(corpusClust), h=",
                            height, ")", sep=""))
         doItAndPrint("plot(corpusSubClust$upper)")
-        doItAndPrint(paste("tapply(names(meta(corpus, tag=\"", gettext("class"),
-                           "\"), ", "meta(corpus, tag=\"", gettext("class"), "\"))", sep=""))
+        doItAndPrint(paste("tapply(names(corpus), meta(corpus, tag=\"", gettext("class"),
+                           "\"), paste)", sep=""))
 
         tkfocus(CommanderWindow())
     }
