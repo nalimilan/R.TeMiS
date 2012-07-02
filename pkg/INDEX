@@ -6,11 +6,13 @@ createClassesDlg	Create classes of documents from a hierarchical clustering prev
 docTermFreqDlg		Create frequency a table crossing terms and documents
 excludeTermsDlg		Exclude terms from the document-term matrix
 freqTermsDlg		Find most frequent terms from the document-term matrix
-importCorpusDlg		Import a corpus from a directory and show a dialog to process it
+importCorpusFromDir	Import a corpus from a directory and show a dialog to process it
+importCorpusFromFile	Import a corpus from a file and show a dialog to process it
 listTerms		List all terms present in the document-term matrix
 plotCorpusCaDlg		Plot a correspondence analysis previously run on the corpus
 plotTermFreqDlg		Plot a previously created terms-documents frequency table
 plotVarFreqDlg		Plot a previously created terms-variable frequency table
+processCorpusDlg	Process a corpus and extract its document-term matrix
 runCorpusCa		Correspondance analysis from a tm corpus
 setCorpusMetadata	Set corpus meta-data variables from the active data set
 termsAssocDlg		Print most terms most correlated with a given term
