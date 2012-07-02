@@ -109,9 +109,10 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
     tkinsert(listbox, "end", gettext_("Axes information"))
     mark <- mark + 1
 
-    values <- 100 * (corpusCa$sv[1:corpusCa$nd]^2)/sum(corpusCa$sv^2)
+    nd <- min(length(corpusCa$sv), corpusCa$nd)
+    values <- 100 * (corpusCa$sv[1:nd]^2)/sum(corpusCa$sv^2)
     values2 <- cumsum(values)
-    val <- round(rbind(values[1:corpusCa$nd], values2), digits=1)
+    val <- round(rbind(values, values2), digits=1)
     rownames(val) <- c(gettext_("Inertia (%)"), gettext_("Cumulated inertia (%)"))
     colnames(val) <- seq.int(ncol(val))
     names(dimnames(val)) <- c("", "Axis")
@@ -297,10 +298,11 @@ showCorpusCaDlg <- function() {
     tkgrid(labelRcmdr(dimFrame, text=gettext_("Dimensions to plot:"), fg="blue"), sticky="s")
     tclXDim <- tclVar(1)
     tclYDim <- tclVar(2)
-    xSlider <- tkscale(dimFrame, from=1, to=corpusCa$nd,
+    nd <- min(length(corpusCa$sv), corpusCa$nd)
+    xSlider <- tkscale(dimFrame, from=1, to=nd,
                       showvalue=TRUE, variable=tclXDim,
 		      resolution=1, orient="horizontal")
-    ySlider <- tkscale(dimFrame, from=1, to=corpusCa$nd,
+    ySlider <- tkscale(dimFrame, from=1, to=nd,
                       showvalue=TRUE, variable=tclYDim,
 		      resolution=1, orient="horizontal")
 
