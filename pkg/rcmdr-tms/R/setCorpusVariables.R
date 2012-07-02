@@ -24,9 +24,9 @@ setCorpusVariables <- function() {
         return()
     }
 
-    dset <- dset[sapply(dset, function(x) !all(is.na(x) | x == "", na.rm=TRUE))]
+    indices <- which(sapply(dset, function(x) !all(is.na(x) | x == "", na.rm=TRUE)))
 
-    if(ncol(dset) == 0) {
+    if(length(indices) == 0) {
         Message(message=gettext_("Active data set is empty."),
                 type="error")
         return()
@@ -35,7 +35,7 @@ setCorpusVariables <- function() {
     for(var in colnames(meta(corpus)))
         doItAndPrint(paste("meta(corpus, tag=\"", var, "\") <- NULL", sep=""))
 
-    for(i in 1:ncol(dset)) {
+    for(i in indices) {
         doItAndPrint(paste("meta(corpus, tag=\"", colnames(dset)[i], "\") <- ", ActiveDataSet(), "[", i, "]", sep=""))
     }
 }
