@@ -33,6 +33,17 @@ importCorpusDlg <- function() {
     onOK <- function() {
         closeDialog()
 
+        # Remove objects left from a previous analysis to avoid confusion
+        # (we assume later existing objects match the current corpus)
+        objects <- c("corpus", "corpusVars", "dtm", "wordsDtm", "lengthsDtm", "voc", "lengths",
+                     "termFreqs", "absTermFreqs", "varTermFreqs",
+                     "corpusClust", "corpusSubClust", "corpusCa", "plottingCa")
+        if(any(sapply(objects, exists))) {
+            doItAndPrint(paste('rm(list=c("', paste(objects[sapply(objects, exists)], collapse='", "'), '"))', sep=""))
+            gc()
+        }
+
+
         # Set language
         lang <- tclvalue(tclLang)
 
@@ -46,16 +57,6 @@ importCorpusDlg <- function() {
         # If loading failed, do not add errors to errors
         if(!success || length(corpus) == 0)
             return()
-
-        # Remove objects left from a previous analysis to avoid confusion
-        # (we assume later existing objects match the current corpus)
-        objects <- c("corpus", "corpusVars", "dtm", "wordsDtm", "lengthsDtm", "voc", "lengths",
-                     "termFreqs", "absTermFreqs", "varTermFreqs",
-                     "corpusClust", "corpusSubClust", "corpusCa", "plottingCa")
-        if(any(sapply(objects, exists))) {
-            doItAndPrint(paste('rm(list=c("', paste(objects[sapply(objects, exists)], collapse='", "'), '"))', sep=""))
-            gc()
-        }
 
         # Language is used again when creating the dtm to analyse word lengths
         doItAndPrint(sprintf('meta(corpus, type="corpus", tag="language") <- "%s"', lang))
