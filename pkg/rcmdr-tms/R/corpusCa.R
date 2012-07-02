@@ -74,7 +74,7 @@ corpusCaDlg <- function() {
                               showvalue=TRUE, variable=tclSparsity,
 		              resolution=1, orient="horizontal")
     tclDim <- tclVar(8)
-    sliderDim <- tkscale(top, from=1, to=100,
+    sliderDim <- tkscale(top, from=1, to=30,
                          showvalue=TRUE, variable=tclDim,
 	                 resolution=1, orient="horizontal")
 
