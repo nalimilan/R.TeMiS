@@ -388,6 +388,8 @@ showCorpusCaDlg <- function() {
         doItAndPrint(paste("plotCorpusCa(plottingCa, dim=c(", x, ", ", y, "), what=c(\"", rowWhat, "\", \"",
                            colWhat, "\"), labels=c(", documentsPoints, ", ", termsPoints,
                            "), mass=TRUE)", sep=""))
+
+        activateMenus()
     }
 
     if(length(corpusCa$rowsup) == 0) {
