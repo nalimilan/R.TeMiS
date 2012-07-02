@@ -342,21 +342,29 @@ importCorpusFromFactiva <- function(language=NA) {
     return(TRUE)
 }
 
-# Adapted version of tm's makeChunks() remembering which chunk comes from which document
-# and preserving corpus meta-data.
+# Adapted version of tm's makeChunks() remembering which chunk comes from which document,
+# preserving corpus meta-data, and skipping empty chunks.
 # Copyright Ingo Feinerer, Licence: GPL (≥ 2).
 # http://tm.r-forge.r-project.org/
 splitTexts <- function (corpus, chunksize, preserveMetadata=TRUE) 
 {
     chunks <- list()
     origin <- numeric()
+
     for (k in seq_along(corpus)) {
         s <- c(seq(1, length(corpus[[k]]), chunksize), length(corpus[[k]]) + 1)
-        origin <- c(origin, rep(k, length(s) - 1))
+
         for (i in 1:(length(s) - 1)) {
-            chunks <- c(chunks, list(corpus[[k]][s[i]:(s[i + 1] - 1)]))
+            chunk <- corpus[[k]][s[i]:(s[i + 1] - 1)]
+
+            # If chunk is empty, skip it
+            if(nchar(gsub("[\n[:space:][:punct:]]+", "", paste(chunk, collapse=""))) > 0) {
+                chunks <- c(chunks, list(chunk))
+                origin <- c(origin, k)
+            }
         }
     }
+
     newCorpus <- Corpus(VectorSource(chunks))
 
     names1 <- names(corpus)
