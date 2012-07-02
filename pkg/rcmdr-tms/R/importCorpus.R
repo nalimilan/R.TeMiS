@@ -61,9 +61,10 @@ importCorpusDlg <- function() {
         if(lowercase)
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, tolower)")
         if(punctuation) {
-            # Workaround to avoid French articles and dash-linked words from getting concatenated with their noun
-            # Can likely be useful for many other languages, and does not hurt in general
-            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, function(x) gsub(\"([\'\U2019]|[[:punct:]])+\", \" \", x))")
+            # The default tokenizer does not get rid of punctuation *and of line breaks!*, which
+            # get concatenated with surrounding words
+            # This also avoids French articles and dash-linked words from getting concatenated with their noun
+            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, function(x) gsub(\"([\'\U2019\\n]|[[:punct:]])+\", \" \", x))")
         }
         if(numbers)
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removeNumbers)")
