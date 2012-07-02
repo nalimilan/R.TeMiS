@@ -316,6 +316,15 @@ importCorpusFromFactiva <- function(language=NA) {
         "corpus <- c(corpus, Corpus(FactivaSource(\"%s\"), readerControl=list(language=%s)), recursive=TRUE)",
                                                           file, language)))
 
+    if(!exists("corpus") || length(corpus) == 0) {
+        Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+                type="error")
+
+        .setIdleCursor()
+
+        return(FALSE)
+    }
+
     # Set document names from the IDs since it's not always done by sources (XMLSource...)
     # We rely on this later e.g. in showCorpusCa() because we cannot use indexes when documents are skipped
     # In rare cases, duplicated IDs can happen since Factiva plugin truncates them: ensure they are unique
