@@ -26,13 +26,13 @@
     menu        termFreqMenu    tmMenu            ""                                 ""                          ""                    ""
     item        termFreqMenu    command           "Per document..."                  docTermFreqDlg              "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        termFreqMenu    command           "Per variable..."                  varTermFreqDlg              "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""          ""
-    item        termFreqMenu    command           "Copy table"                       copyTermFreq                "exists('termFreq') && is.table(termFreq)"                            ""
+    item        termFreqMenu    command           "Copy table"                       copyTermFreq                "exists('termFreqs') && is.table(termFreqs)"                            ""
     item        tmMenu	        cascade           "Term frequencies"                 termFreqMenu                ""                    ""
 
     menu        varFreqMenu     tmMenu            ""                                 ""                          ""                    ""
     item        varFreqMenu     command           "One-way table..."                 varTableDlg                 "exists('corpus') && 'Corpus' %in% class(corpus)"                    ""
     item        varFreqMenu     command           "Two-way table..."                 varCrossTableDlg            "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
-    item        varFreqMenu     command           "Copy table"                       copyVarFreq                 "exists('varFreq') && is.table(varFreq)"                             ""
+    item        varFreqMenu     command           "Copy table"                       copyVarFreq                 "exists('varFreqs') && is.table(varFreqs)"                             ""
     item        tmMenu	        cascade           "Variable frequencies"             varFreqMenu                 ""                    ""
 
     menu        clustMenu       tmMenu            ""                                 ""                          ""                    ""
