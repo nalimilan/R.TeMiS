@@ -35,13 +35,12 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
                 Message(sprintf(gettext_("Variable %s has been skipped since it contains only missing values for retained documents."),
                                 colnames(meta)[i]),
                         type="note")
-                break
+                next
             }
             else if(length(levels) < totNLevels) {
                 Message(sprintf(gettext_("Some levels of variable %s has been skipped since they contain only missing values for retained documents."),
                                 colnames(meta)[i]),
                         type="note")
-                break
             }
 
             mat<-aggregate(dtm[1:ndocs, , drop=FALSE], meta[i], sum)[,-1, drop=FALSE]
@@ -62,7 +61,7 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
                     ndocs, nterms, ncol(meta)),
             type="note")
 
-    if(ncol(meta) > 0)
+    if(nrow(dtm) - ndocs > 0)
         ca(dtm, suprow=(ndocs+1):nrow(dtm), ...)
     else
         ca(dtm, ...)
