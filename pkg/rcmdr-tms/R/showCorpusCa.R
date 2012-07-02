@@ -312,7 +312,7 @@ showCorpusCaDlg <- function() {
                labels=c(gettext_("Documents"), gettext_("Terms")),
                title=gettext_("Draw point symbols for:"))
 
-    onPlot <- function() {
+    onShow <- function() {
         x <- tclvalue(tclXDim)
         y <- tclvalue(tclYDim)
         documents <- tclvalue(documentsVariable) == 1
@@ -393,7 +393,7 @@ showCorpusCaDlg <- function() {
     # Custom buttons, adapted from OKCancelHelp()
     buttonsFrame <- tkframe(top, borderwidth=5)
     plotButton <- buttonRcmdr(buttonsFrame, text=gettext_("Show"), foreground="darkgreen",
-                              command=onPlot, default="active", borderwidth=3)
+                              command=onShow, default="active", borderwidth=3)
     onClose <- function() {
         closeDialog()
         tkfocus(CommanderWindow())
