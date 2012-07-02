@@ -8,6 +8,7 @@
     menu        subsetMenu      tmMenu            ""                                 ""                          ""                    ""
     item        subsetMenu      command           "By terms..."                      subsetCorpusByTermsDlg      "exists('corpus') && 'Corpus' %in% class(corpus)"                    ""
     item        subsetMenu      command           "By variable..."                   subsetCorpusByVarDlg        "exists('corpus') && 'Corpus' %in% class(corpus)"                    ""
+    item        subsetMenu      command           "Restore original corpus"          restoreCorpus               "exists('origCorpus') && 'Corpus' %in% class(origCorpus)"                    ""
     item        tmMenu          cascade           "Subset corpus"                    subsetMenu                    ""                    ""
 
     menu        termMenu        tmMenu            ""                                 ""                          ""                    ""

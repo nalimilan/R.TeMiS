@@ -35,23 +35,37 @@ subsetCorpusByVarDlg <- function() {
 
     tkbind(varsBox, "<<ListboxSelect>>", onSelect)
 
+    tclSave <- tclVar("1")
+    checkSave <- tkcheckbutton(top, text=gettext_("Save original corpus to restore it later"),
+                               variable=tclSave)
+
     onOK <- function() {
         var <- vars[as.numeric(tkcurselection(varsBox))+1]
         levs <- unique(meta(corpus, var)[[1]])[as.numeric(tkcurselection(levelsBox))+1]
+        save <- tclvalue(tclSave) == "1"
 
         closeDialog()
 
         doItAndPrint(sprintf('keep <- meta(corpus, "%s")[[1]] %%in%% c("%s")',
                              var, paste(levs, collapse='", "')))
 
+        if(save)
+            doItAndPrint("origCorpus <- corpus")
+
         doItAndPrint("corpus <- corpus[keep]")
 
         if(exists("dtm")) {
+            if(save)
+                doItAndPrint("origDtm <- dtm")
+
             doItAndPrint("dtm <- dtm[keep,]")
             doItAndPrint("dtm <- dtm[,col_sums(dtm) > 0]")
         }
 
         if(exists("wordsDtm")) {
+            if(save)
+                doItAndPrint("origWordsDtm <- wordsDtm")
+
             doItAndPrint("wordsDtm <- wordsDtm[keep,]")
             doItAndPrint("wordsDtm <- wordsDtm[,col_sums(wordsDtm) > 0]")
         }
@@ -80,19 +94,14 @@ subsetCorpusByVarDlg <- function() {
     tkgrid(labelRcmdr(levelsFrame, text=gettext_("Levels:"), foreground="blue"), sticky="w")
     tkgrid(levelsBox, levelsScrollbar, sticky="ewns", pady=6)
     tkgrid(varsFrame, levelsFrame, sticky="wns", pady=6)
+    tkgrid(checkSave, sticky="w", pady=6)
     tkgrid(buttonsFrame, columnspan=2, sticky="w", pady=6)
-    dialogSuffix(rows=3, columns=2, focus=varsBox)
+    dialogSuffix(rows=4, columns=2, focus=varsBox)
 }
 
 
 subsetCorpusByTermsDlg <- function() {
     initializeDialog(title=gettext_("Subset Corpus by Terms"))
-
-    radioButtons(name="what",
-                 buttons=c("retain", "exclude"),
-                 labels=c(gettext_("Retain only these terms"),
-                          gettext_("Exclude these terms")),
-                 right=FALSE)
 
     tclKeep <- tclVar("")
     entryKeep <- ttkentry(top, width="40", textvariable=tclKeep)
@@ -100,9 +109,14 @@ subsetCorpusByTermsDlg <- function() {
     tclExclude <- tclVar("")
     entryExclude <- ttkentry(top, width="40", textvariable=tclExclude)
 
+    tclSave <- tclVar("1")
+    checkSave <- tkcheckbutton(top, text=gettext_("Save original corpus to restore it later"),
+                               variable=tclSave)
+
     onOK <- function() {
         keepList <- strsplit(tclvalue(tclKeep), " ")[[1]]
         excludeList <- strsplit(tclvalue(tclExclude), " ")[[1]]
+        save <- tclvalue(tclSave) == "1"
 
         if(length(keepList) == 0 && length(excludeList) == 0) {
             errorCondition(recall=subsetCorpusByTermsDlg,
@@ -135,14 +149,23 @@ subsetCorpusByTermsDlg <- function() {
         else
             doItAndPrint(sprintf('keep <- row_sums(dtm[,c("%s")]) == 0', paste(excludeList, collapse='", "')))
 
+        if(save)
+            doItAndPrint("origCorpus <- corpus")
+
         doItAndPrint("corpus <- corpus[keep]")
 
         if(exists("dtm")) {
+            if(save)
+                doItAndPrint("origDtm <- dtm")
+
             doItAndPrint("dtm <- dtm[keep,]")
             doItAndPrint("dtm <- dtm[,col_sums(dtm) > 0]")
         }
 
         if(exists("wordsDtm")) {
+            if(save)
+                doItAndPrint("origWordsDtm <- wordsDtm")
+
             doItAndPrint("wordsDtm <- wordsDtm[keep,]")
             doItAndPrint("wordsDtm <- wordsDtm[,col_sums(wordsDtm) > 0]")
         }
@@ -170,7 +193,34 @@ subsetCorpusByTermsDlg <- function() {
     tkgrid(labelRcmdr(top, text=gettext_("Exclude documents with terms (space-separated):")),
            sticky="w")
     tkgrid(entryExclude, sticky="w")
+    tkgrid(checkSave, sticky="w", pady=6)
     tkgrid(buttonsFrame, sticky="w", pady=6)
-    dialogSuffix(rows=5, focus=entryKeep)
+    dialogSuffix(rows=6, focus=entryKeep)
+}
+
+restoreCorpus <- function() {
+    if(!exists("origCorpus"))
+        Message(message=gettext_("No original corpus to restore was found."), type="error")
+
+    doItAndPrint("corpus <- origCorpus")
+
+    if(exists("origDtm"))
+        doItAndPrint("dtm <- origDtm")
+
+    if(exists("origWordsDtm"))
+        doItAndPrint("dtm <- origWordsDtm")
+
+
+    # Remove objects left from a previous analysis on the subset corpus to avoid confusion
+    # (we assume later existing objects match the current corpus)
+    objects <- c("keep", "voc", "lengths", "termFreqs", "absTermFreqs", "varTermFreqs",
+                 "corpusClust", "corpusSubClust", "corpusCa", "plottingCa",
+                 # Also remove backup objects
+                 "origCorpus", "origDtm", "origWordsDtm")
+    doItAndPrint(paste("rm(", paste(objects[sapply(objects, exists)], collapse=", "), ")", sep=""))
+
+    doItAndPrint("corpus")
+    doItAndPrint("dtm")
+    gc()
 }
 
