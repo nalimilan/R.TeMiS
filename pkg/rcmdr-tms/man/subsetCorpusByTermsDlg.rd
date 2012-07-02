@@ -13,6 +13,11 @@
          If you specify both terms that should and terms that should not be present, it is possible
          that no document matches this condition, in which case an error is produced before subsetting
          the corpus.
+
+        If you choose to save the original corpus, you will be able to restore it later from the
+        Text mining -> Subset corpus -> Restore original corpus menu. Warning: checking this option
+        will erase an existing backup if present. Like subsetting, restoring the original corpus
+        removes existing correspondence analysis and hierarchical clustering objects.
 }
 
 \seealso{\code{\link{setCorpusVariables}}, \code{\link{meta}}, \code{\link{DocumentTermMatrix}}}
