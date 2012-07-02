@@ -116,9 +116,9 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
     tkinsert(listbox, "end", gettext_("Axes information"))
     mark <- mark + 1
 
-    values <- 100 * (corpusCa$sv^2)/sum(corpusCa$sv^2)
+    values <- 100 * (corpusCa$sv[1:corpusCa$nd]^2)/sum(corpusCa$sv^2)
     values2 <- cumsum(values)
-    val <- round(rbind(values, values2))
+    val <- round(rbind(values[1:corpusCa$nd], values2))
     rownames(val) <- c(gettext_("Inertia (%)"), gettext_("Cumulated inertia (%)"))
     colnames(val) <- seq.int(ncol(val))
     names(dimnames(val)) <- c("", "Axis")
