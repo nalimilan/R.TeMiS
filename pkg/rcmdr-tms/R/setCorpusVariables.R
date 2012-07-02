@@ -24,7 +24,9 @@ setCorpusVariables <- function() {
         return()
     }
 
-    if(ncol(dset) == 1 && all(dset[1] == "", na.rm=TRUE)) {
+    dset <- dset[sapply(dset, function(x) !all(is.na(x) | x == "", na.rm=TRUE))]
+
+    if(ncol(dset) == 0) {
         Message(message=gettext_("Active data set is empty."),
                 type="error")
         return()
