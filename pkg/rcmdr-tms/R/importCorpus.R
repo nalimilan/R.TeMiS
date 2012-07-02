@@ -40,7 +40,7 @@ importCorpusDlg <- function() {
 
         # Remove objects left from a previous analysis to avoid confusion
         # (we assume later existing objects match the current corpus)
-        objects <- c("dtm", "wordsDtm", "lengthsDtm", "voc", "lengths", "absTermFreq", "varTermFreq",
+        objects <- c("dtm", "wordsDtm", "lengthsDtm", "voc", "lengths", "termFreqs", "absTermFreqs", "varTermFreqs",
                      "corpusClust", "corpusSubClust", "corpusCa", "plottingCa")
         doItAndPrint(paste('rm(list=c("', paste(objects[sapply(objects, exists)], collapse='", "'), '"))', sep=""))
         gc()
