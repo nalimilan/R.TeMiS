@@ -6,7 +6,7 @@ subsetCorpusByVarDlg <- function() {
         return()
     }
 
-    initializeDialog(title=gettext_("Subset Corpus by Levels of a Variable"))
+    initializeDialog(title=gettext_("Subset Corpus by Variable"))
 
     vars <- colnames(meta(corpus))
 
