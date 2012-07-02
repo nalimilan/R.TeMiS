@@ -182,7 +182,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
             else if(length(origin) > 0)
                 tkinsert(txt, "end", paste(date, "\n", sep=""))
 
-            tkinsert(txt, "end", paste(paste(corpus[[i]], collapse="\n"), "\n\n"))
+            tkinsert(txt, "end", paste(paste(corpus[[i]], collapse="\n"), "\n\n"), wrap="word")
         }
     }
 
@@ -244,7 +244,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
             else if(length(origin) > 0)
                 tkinsert(txt, "end", paste(date, "\n", sep=""))
 
-            tkinsert(txt, "end", paste(paste(corpus[[i]], collapse="\n"), "\n\n"))
+            tkinsert(txt, "end", paste(paste(corpus[[i]], collapse="\n"), "\n\n"), wrap="word")
         }
     }
 
