@@ -203,8 +203,8 @@ msgstr "Créer des classes"
 
 #: R/corpusClustering.R:58 R/corpusClustering.R:62 R/corpusClustering.R:63
 #: R/corpusClustering.R:65 R/corpusClustering.R:66 R/corpusClustering.R:71
-msgid "class"
-msgstr "classe"
+msgid "Class"
+msgstr "Classe"
 
 #: R/corpusClustering.R:78
 msgid "Cut height:"

@@ -55,20 +55,25 @@ createClassesDlg <- function() {
 
         height <- as.numeric(tclvalue(tclHeight))
 
-        doItAndPrint(paste("meta(corpus, tag=\"", gettext_("class"),
+        doItAndPrint(paste("meta(corpus, tag=\"", gettext_("Class"),
                            "\") <- cutree(corpusClust, h=", height, ")", sep=""))
 
-        if(exists("corpusVars"))
-            doItAndPrint(paste("corpusVars$",  gettext_("class"),
-                               " <- meta(corpus, tag=\"", gettext_("class"), "\")[[1]]", sep=""))
-        else
-            doItAndPrint(paste("corpusVars <- data.frame(",  gettext_("class"),
-                               "=meta(corpus, tag=\"", gettext_("class"), "\")[[1]])", sep=""))
+        # If corpus was split, we cannot add class back into corpusVars
+        if(exists("corpusVars")) {
+            # If corpus was split, we cannot add class back into corpusVars
+            if(nrow(corpusVars) == length(corpus))
+                doItAndPrint(paste("corpusVars$",  gettext_("Class"),
+                                   " <- meta(corpus, tag=\"", gettext_("Class"), "\")[[1]]", sep=""))
+        }
+        else {
+            doItAndPrint(paste("corpusVars <- data.frame(",  gettext_("Class"),
+                               "=meta(corpus, tag=\"", gettext_("Class"), "\")[[1]])", sep=""))
+        }
 
         doItAndPrint(paste("corpusSubClust <- cut(as.dendrogram(corpusClust), h=",
                            height, ")", sep=""))
         doItAndPrint("plot(corpusSubClust$upper)")
-        doItAndPrint(paste("tapply(names(corpus), meta(corpus, tag=\"", gettext_("class"),
+        doItAndPrint(paste("tapply(names(corpus), meta(corpus, tag=\"", gettext_("Class"),
                            "\"), paste)", sep=""))
 
         tkfocus(CommanderWindow())
