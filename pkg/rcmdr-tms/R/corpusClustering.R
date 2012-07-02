@@ -1,8 +1,12 @@
 showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
+    setBusyCursor()
+
     objects <- getCorpusWindow()
     window <- objects$window
     txt <- objects$txt
     listbox <- objects$listbox
+
+    tkwm.title(window, gettext_("Hierarchical Clustering"))
 
     mark <- 0
 
@@ -155,6 +159,8 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
         tkinsert(txt, "end", paste(capture.output(format(as.data.frame(tab), nsmall=1, digits=2, width=5)),
                                    collapse="\n"), "fixed")
     }
+
+    setIdleCursor()
 
     # Only raise the window when we're done, as filling it may take some time
     tkraise(window)

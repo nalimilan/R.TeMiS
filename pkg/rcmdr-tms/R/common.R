@@ -32,13 +32,11 @@ getCorpusWindow <- function() {
         window <- getRcmdr("corpusWindow")
         txt <- getRcmdr("corpusTxt")
         listbox <- getRcmdr("corpusList")
-        tkwm.title(window, gettext_("Hierarchical Clustering"))
         tkdelete(txt, "0.0", "end")
         tkdelete(listbox, 0, "end")
     }
     else {
         window <- tktoplevel(class="Rcommander")
-        tkwm.title(window, gettext_("Hierarchical Clustering"))
         tkwm.geometry(window, "-0+20")
         scr1 <- tkscrollbar(window, repeatinterval=5,
                            command=function(...) tkyview(txt,...))

@@ -57,6 +57,8 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
     txt <- objects$txt
     listbox <- objects$listbox
 
+    tkwm.title(window, gettext_("Correspondence Analysis"))
+
     mark <- 0
 
     tktag.configure(txt, "heading", font="sans 13 bold")

@@ -15,6 +15,7 @@
 
     # Main items
     item        corpusMenu      command           "Import corpus..."                 importCorpusDlg             ""                    ""
+    item        corpusMenu      command           "Show current corpus..."           inspectCorpus               ""                    ""
     item        corpusMenu      command           "Set corpus variables"             setCorpusVariables          "exists('corpus') && 'Corpus' %in% class(corpus) && activeDataSetP() && checkVariables()"          ""
     item        corpusMenu      cascade           "Subset corpus"                    subsetMenu                    ""                    ""
     item        corpusMenu      command           "Select or exclude terms..."       restrictTermsDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
