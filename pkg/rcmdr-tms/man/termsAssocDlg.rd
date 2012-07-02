@@ -7,8 +7,10 @@
          a within-document correlation. When a variable is selected, the operation is run separately
          on each sub-matrix constituted by the documents that are members of the variable level.
 
-         If no term is correlated with the reference term, no term will be shown, and \code{numeric(0)}
-         will be reported: run the operation with a lower correlation limit to get terms.
+         If no term is correlated enough with the reference term, no term will be shown, and
+         \code{numeric(0)} will be reported: run the operation with a lower correlation limit to get
+         terms. Note that when results are reported by levels of a variable, correlation cannot be computed
+         levels with only one document.
 
          When several terms are entered, the operation is run several times separately: the result
          does not correspond to the terms correlated with all of the reference terms taken together.
