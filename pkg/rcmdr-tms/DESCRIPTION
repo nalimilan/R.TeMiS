@@ -2,7 +2,7 @@ Package: RcmdrPlugin.TextMiningSuite
 Type: Package
 Title: Graphical user interface providing an integrated text mining solution
 Version: 0.5
-Date: 2012-05-16
+Date: 2012-06-17
 Author@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr"),
             person("Gilles", "Bastin", email="gilles.bastin@sciencespo-grenoble.fr"))
 Author: Milan Bouchet-Valat <nalimilan@club.fr> and Gilles Bastin <gilles.bastin@sciencespo-grenoble.fr>.
