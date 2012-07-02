@@ -28,7 +28,7 @@ docVocabularyDlg <- function() {
         doItAndPrint(paste("voc <- cbind(voc, \"", gettext_("Corpus mean"),
                            "\"=c(mean(voc[1,]), mean(voc[2,]), mean(voc[3,], na.rm=TRUE)))", sep=""))
         doItAndPrint(paste("voc <- cbind(voc, \"", gettext_("Corpus total"),
-                           "\"=c(sum(voc[1,]), sum(voc[2,]), sum(voc[2,])/sum(voc[1,])*100))", sep=""))
+                           "\"=c(sum(voc[1,-ncol(voc)]), sum(voc[2,-ncol(voc)]), sum(voc[2,-ncol(voc)])/sum(voc[1,-ncol(voc)])*100))", sep=""))
 
         doItAndPrint("voc <- as.table(round(voc, d=1))")
         doItAndPrint(paste("rownames(voc) <- c(\"", gettext_("Number of terms"), "\", \"",
