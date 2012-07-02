@@ -217,6 +217,6 @@ plotCorpusCaDlg <- function() {
     tkgrid(pointsFrame, columnspan="2", sticky="w", pady=6)
     tkgrid(buttonsFrame, sticky="w", columnspan=2, pady=6)
     nrows <- if(length(corpusCa$rowsup) == 0) 5 else 6
-    dialogSuffix(rows=nrows, columns=2, onOK=onPlot, onCancel=onClose)
+    dialogSuffix(rows=nrows, columns=2, onOK=onPlot)
 }
 
