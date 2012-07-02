@@ -49,9 +49,8 @@ docTermFreqDlg <- function() {
 
         closeDialog()
 
-        doItAndPrint(paste("absTermFreqs <- as.matrix(dtm[, c(\"", paste(termsList, collapse="\", \""), "\")])", sep=""))
-        doItAndPrint(paste("absTermFreqs <- xtabs(cbind(", paste(colnames(absTermFreqs), collapse=", "),
-                           ") ~ rownames(absTermFreqs), data=absTermFreqs)", sep=""))
+        doItAndPrint(paste("absTermFreqs <- as.table(dtm[, c(\"", paste(termsList, collapse="\", \""), "\")])", sep=""))
+
         doItAndPrint("names(dimnames(absTermFreqs)) <- NULL")
 
         if(what == "row") {
@@ -188,17 +187,15 @@ varTermFreqDlg <- function() {
         what <- tclvalue(whatVariable)
 
         # Count occurrences
-        doItAndPrint(paste("absTermFreqs <- aggregate(as.matrix(dtm[, c(\"",
-                           paste(termsList, collapse="\", \""), "\")]), ",
-                           "meta(corpus, tag=\"", var, "\"), sum)", sep=""))
+        doItAndPrint(sprintf('absTermFreqs <- as.table(rollup(dtm[, c("%s")], 1, meta(corpus, "%s")))',
+                             paste(termsList, collapse='", "'), var))
 
-        doItAndPrint(paste("absTermFreqs <- xtabs(cbind(", paste(colnames(absTermFreqs)[-1], collapse=", "),
-                           ") ~ ., data=absTermFreqs)", sep=""))
+        doItAndPrint("names(dimnames(absTermFreqs)) <- NULL")
 
         # Compute %
         if(what == "row") {
-            doItAndPrint(paste("termFreqs <- absTermFreqs/aggregate(row_sums(dtm), meta(corpus, tag=\"",
-                               var, "\"), sum)[,-1] * 100", sep=""))
+            doItAndPrint(sprintf('termFreqs <- absTermFreqs/c(tapply(row_sums(dtm), meta(corpus, "%s"), sum)) * 100',
+                                 var))
 
             ylab <- gettext_("% of all terms")
         }

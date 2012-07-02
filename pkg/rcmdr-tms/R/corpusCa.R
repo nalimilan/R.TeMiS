@@ -53,7 +53,7 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
                 skippedLevs<-c(skippedLevs, var)
             }
 
-            mat<-aggregate(dtm[1:ndocs, , drop=FALSE], meta[i], sum)[,-1, drop=FALSE]
+            mat<-rollup(dtm[1:ndocs, , drop=FALSE], 1, meta[i])
 
             # Also limit the length to 40 characters, beyond this things go out of control
             if(totNLevels == 1) # If only one level is present, don't add the level name (e.g. TRUE or YES)
