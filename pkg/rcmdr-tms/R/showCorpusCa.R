@@ -65,7 +65,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
         tkwm.geometry(window, "-0+20")
         scr1 <- tkscrollbar(window, repeatinterval=5,
                            command=function(...) tkyview(txt,...))
-        txt <- tktext(window, bg="white", font="times",
+        txt <- tktext(window, bg="white", font="times", wrap="word",
                       yscrollcommand=function(...) tkset(scr1, ...))
 
         tkpack(txt, side="left", fill="both", expand=TRUE)
@@ -182,7 +182,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
             else if(length(origin) > 0)
                 tkinsert(txt, "end", paste(date, "\n", sep=""))
 
-            tkinsert(txt, "end", paste(paste(corpus[[i]], collapse="\n"), "\n\n"), wrap="word")
+            tkinsert(txt, "end", paste(paste(corpus[[i]], collapse="\n"), "\n\n"))
         }
     }
 
@@ -244,7 +244,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
             else if(length(origin) > 0)
                 tkinsert(txt, "end", paste(date, "\n", sep=""))
 
-            tkinsert(txt, "end", paste(paste(corpus[[i]], collapse="\n"), "\n\n"), wrap="word")
+            tkinsert(txt, "end", paste(paste(corpus[[i]], collapse="\n"), "\n\n"))
         }
     }
 
