@@ -8,8 +8,8 @@ corpusCa <- function(corpus, sparsity=0.9, ...) {
         dtm<-dtm[-invalid,]
         corpus<-corpus[-invalid]
         msg<-sprintf(ngettext(length(invalid),
-                     "Document %s has been skipped because it does not include any occurrence of the terms retained in the final document-term matrix.\nRaise the value of the 'sparsity' parameter to fix this warning.",
-                     "Documents %s have been skipped because they do not include any occurrence of the terms retained in the final document-term matrix.\nRaise the value of the 'sparsity' parameter to fix this warning."),
+                     "Document %s has been skipped because it does not include any occurrence of the terms retained in the final document-term matrix.\nLower the value of the 'sparsity' parameter to fix this warning.",
+                     "Documents %s have been skipped because they do not include any occurrence of the terms retained in the final document-term matrix.\nLower the value of the 'sparsity' parameter to fix this warning."),
                     paste(names(invalid), collapse=", "))
         Message(msg, type="warning")
     }
@@ -62,7 +62,7 @@ corpusCa <- function(corpus, sparsity=0.9, ...) {
 
 corpusCaDlg <- function() {
     initializeDialog(title=gettext("Run Correspondence Analysis"))
-    tclSparsity <- tclVar(5)
+    tclSparsity <- tclVar(95)
     sliderSparsity <- tkscale(top, from=1, to=100,
                               showvalue=TRUE, variable=tclSparsity,
 		              resolution=1, orient="horizontal")
@@ -81,7 +81,7 @@ corpusCaDlg <- function() {
         sparsity <- as.numeric(tclvalue(tclSparsity))
         dim <- as.numeric(tclvalue(tclDim))
 
-        doItAndPrint(paste("corpusCa <- corpusCa(corpus, sparsity=", 1-(sparsity/100), ", nd=", dim, ")", sep=""))
+        doItAndPrint(paste("corpusCa <- corpusCa(corpus, sparsity=", sparsity/100, ", nd=", dim, ")", sep=""))
         doItAndPrint("print(corpusCa)")
 
         activateMenus()
@@ -90,7 +90,7 @@ corpusCaDlg <- function() {
     }
 
     OKCancelHelp(helpSubject=corpusCaDlg)
-    tkgrid(labelRcmdr(top, text=gettext("Skip terms present in less than (% of documents):")),
+    tkgrid(labelRcmdr(top, text=gettext("Only keep terms present in more than (% of documents):")),
            sliderSparsity, sticky="sw", pady=6)
     tkgrid(labelRcmdr(top, text=gettext("Number of dimensions to retain:")),
            sliderDim, sticky="sw", pady=6)

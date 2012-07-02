@@ -1,6 +1,6 @@
 corpusClustDlg <- function() {
     initializeDialog(title=gettext("Run Hierarchical Clustering"))
-    tclSparsity <- tclVar(5)
+    tclSparsity <- tclVar(95)
     sliderSparsity <- tkscale(top, from=1, to=100,
                               showvalue=TRUE, variable=tclSparsity,
 		              resolution=1, orient="horizontal")
@@ -11,7 +11,7 @@ corpusClustDlg <- function() {
         sparsity <- as.numeric(tclvalue(tclSparsity))
 
         doItAndPrint(paste("corpusClust <- hclust(dist(removeSparseTerms(dtm, ",
-                           1-(sparsity/100), ")), method = \"ward\")", sep=""))
+                           sparsity/100, ")), method = \"ward\")", sep=""))
 
         # For the Create classes item
         activateMenus()
@@ -20,7 +20,7 @@ corpusClustDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="corpusClustDlg")
-    tkgrid(labelRcmdr(top, text=gettext("Skip terms present in less than (% of documents):")),
+    tkgrid(labelRcmdr(top, text=gettext("Only keep terms present in more than (% of documents):")),
            sliderSparsity, sticky="sw", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
     dialogSuffix(rows=2, columns=2)
