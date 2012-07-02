@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PPSResponse>
+  <ppsArticleResponse xmlns="http://global.factiva.com/pps/2.0">
+    <ppsarticleResultSet count="3">
+      <ppsarticle>
+        <article>
+          <accessionNo>TEST0000020120109e51700030</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/TEST0000020120109e51700030</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>(c) 2012 Company   </copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">
+              <hlt>TEST</hlt> - first test article</paragraph>
+          </headline>
+          <leadParagraph>
+            <paragraph display="Proportional" truncation="None">This is the lead paragraph of the first test article.</paragraph>
+          </leadParagraph>
+          <pages>1</pages>
+          <publicationDate>
+            <dateTime>2012-01-09T01:35:58Z</dateTime>
+          </publicationDate>
+          <publisherName>Company</publisherName>
+          <sourceName>My Newspaper</sourceName>
+          <region code="usa">
+            <name>United States</name>
+          </region>
+          <region code="usmn">
+            <name>Minnesota</name>
+          </region>
+          <region code="chico">
+            <name>Chicago</name>
+          </region>
+          <region code="namz">
+            <name>North America</name>
+          </region>
+          <region code="usc">
+            <name>Midwest U.S.</name>
+          </region>
+          <region code="usil">
+            <name>Illinois</name>
+          </region>
+          <newsSubject code="c21" position="0">
+            <name>Output/Production</name>
+          </newsSubject>
+          <newsSubject code="gwea" position="0">
+            <name>Weather</name>
+          </newsSubject>
+          <newsSubject code="ccat" position="0">
+            <name>Corporate/Industrial News</name>
+          </newsSubject>
+          <newsSubject code="gcat" position="0">
+            <name>Political/General News</name>
+          </newsSubject>
+          <newsSubject code="gpir" position="0">
+            <name>Politics/International Relations</name>
+          </newsSubject>
+          <newsSubject code="gpol" position="0">
+            <name>Domestic Politics</name>
+          </newsSubject>
+          <newsSubject code="gvbod" position="0">
+            <name>Government Bodies</name>
+          </newsSubject>
+          <descField code="ipcre">EUROPE</descField>
+          <descField code="ipcre">US</descField>
+          <descField code="ipcre">LATAM</descField>
+          <sourceCode>TEST</sourceCode>
+          <tailParagraphs>
+            <paragraph display="Proportional" truncation="None">This is the body of the first test article.</paragraph>
+          </tailParagraphs>
+          <notes>A NOTE</notes>
+          <logo source="http://logos.factiva.com" image="lbaLogo.gif" />
+          <wordCount>942</wordCount>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>TEST0000020120109e51700031</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/TEST0000020120109e51700031</reference>
+          <baseLanguage>FR</baseLanguage>
+          <copyright>(c) 2012 Corporation   </copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">
+              <hlt>TEST</hlt> - second article de test</paragraph>
+          </headline>
+          <leadParagraph>
+            <paragraph display="Proportional" truncation="None">Voici le chapeau du premier article de test.</paragraph>
+          </leadParagraph>
+          <pages />
+          <publicationDate>
+            <dateTime>2012-01-06T01:05:06Z</dateTime>
+          </publicationDate>
+          <publisherName>Corporation</publisherName>
+          <sourceName>My Newspaper</sourceName>
+          <region code="austr">
+            <name>Australia</name>
+          </region>
+          <region code="usa">
+            <name>United States</name>
+          </region>
+          <region code="apacz">
+            <name>Asia Pacific</name>
+          </region>
+          <region code="ausnz">
+            <name>Australia/Oceania</name>
+          </region>
+          <region code="namz">
+            <name>North America</name>
+          </region>
+          <newsSubject code="m14" position="0">
+            <name>Commodity Markets</name>
+          </newsSubject>
+          <newsSubject code="m141" position="0">
+            <name>Agricultural Commodity Markets</name>
+          </newsSubject>
+          <newsSubject code="mcat" position="0">
+            <name>Commodity/Financial Market News</name>
+          </newsSubject>
+          <newsSubject code="mgrain" position="0">
+            <name>Grain Markets</name>
+          </newsSubject>
+          <newsSubject code="ncat" position="0">
+            <name>Content Types</name>
+          </newsSubject>
+          <newsSubject code="nfact" position="0">
+            <name>Factiva Filters</name>
+          </newsSubject>
+          <newsSubject code="nfce" position="0">
+            <name>FC&amp;E Exclusion Filter</name>
+          </newsSubject>
+          <descField code="ipc">MEAL</descField>
+          <descField code="ipc">GRA/</descField>
+          <descField code="ipc">LANGEN</descField>
+          <descField code="ipc">C</descField>
+          <descField code="ipc">D</descField>
+          <descField code="ipc">E</descField>
+          <descField code="ipc">M</descField>
+          <descField code="ipc">O</descField>
+          <descField code="ipc">U</descField>
+          <descField code="ipc">MTL</descField>
+          <descField code="ipc">GRO</descField>
+          <descField code="ipc">SOF</descField>
+          <sourceCode>TEST</sourceCode>
+          <tailParagraphs>
+            <paragraph display="Proportional" truncation="None">Voici le corps du second article de test. Et un mot accentué.</paragraph>
+          </tailParagraphs>
+          <notes>UNE AUTRE NOTE</notes>
+          <logo source="http://logos.factiva.com" image="lbaLogo.gif" />
+          <wordCount>780</wordCount>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>TEST0000020120109e51700032</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/TEST0000020120109e51700032</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>(c) 2012 Corporation   </copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">
+              <hlt>TEST</hlt> - third test article</paragraph>
+          </headline>
+          <leadParagraph>
+            <paragraph display="Proportional" truncation="None">This is the lead paragraph of the third test article.</paragraph>
+          </leadParagraph>
+          <pages />
+          <publicationDate>
+            <dateTime>2012-05-06T01:07:06Z</dateTime>
+          </publicationDate>
+          <publisherName>Corporation</publisherName>
+          <sourceName>My Newspaper</sourceName>
+          <region code="arg">
+            <name>Argentina</name>
+          </region>
+          <region code="devgcoz">
+            <name>Emerging Market Countries</name>
+          </region>
+          <region code="bueair">
+            <name>Buenos Aires</name>
+          </region>
+          <region code="dvpcoz">
+            <name>Developing Economies</name>
+          </region>
+          <region code="lamz">
+            <name>Latin America</name>
+          </region>
+          <region code="samz">
+            <name>South America</name>
+          </region>
+          <region code="vista">
+            <name>VISTA Countries</name>
+          </region>
+          <newsSubject code="c21" position="0">
+            <name>Output/Production</name>
+          </newsSubject>
+          <newsSubject code="c312" position="0">
+            <name>External Markets</name>
+          </newsSubject>
+          <newsSubject code="mgroil" position="0">
+            <name>Grains/Edible Oils Markets</name>
+          </newsSubject>
+          <newsSubject code="m141" position="0">
+            <name>Agricultural Commodity Markets</name>
+          </newsSubject>
+          <newsSubject code="mcat" position="0">
+            <name>Commodity/Financial Market News</name>
+          </newsSubject>
+          <newsSubject code="mgrain" position="0">
+            <name>Grain Markets</name>
+          </newsSubject>
+          <newsSubject code="ncat" position="0">
+            <name>Content Types</name>
+          </newsSubject>
+          <newsSubject code="nfact" position="0">
+            <name>Factiva Filters</name>
+          </newsSubject>
+          <newsSubject code="nfce" position="0">
+            <name>FC&amp;E Exclusion Filter</name>
+          </newsSubject>
+          <newsSubject code="nfcpin" position="0">
+            <name>FC&amp;E Industry News Filter</name>
+          </newsSubject>
+          <descField code="ipc">COM</descField>
+          <descField code="ipc">SHP</descField>
+          <descField code="ipc">TRD</descField>
+          <descField code="ipc">SOY1</descField>
+          <descField code="ipc">SOIL</descField>
+          <descField code="ipc">SOF</descField>
+          <descField code="ipcre">EMRG</descField>
+          <descField code="ipcre">AR</descField>
+          <descField code="ipcre">LATAM</descField>
+          <sourceCode>TEST</sourceCode>
+          <tailParagraphs>
+            <paragraph display="Proportional" truncation="None">This is the body of the third <hlt>test</hlt> article.</paragraph>
+          </tailParagraphs>
+          <wordCount>531</wordCount>
+        </article>
+      </ppsarticle>
+    </ppsarticleResultSet>
+  </ppsArticleResponse>
+</PPSResponse>

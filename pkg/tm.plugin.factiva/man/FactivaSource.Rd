@@ -62,12 +62,16 @@
   Milan Bouchet-Valat
 }
 \examples{
-  \dontrun{
-    # This assumes exported articles are saved in myFactivaArticles.xml
-    # in the working directory
-    source <- FactivaSource("myFactivaArticles.xml")
+    library(tm)
+    file <- system.file("factiva_test.xml", package = "tm.plugin.factiva")
+    source <- FactivaSource(file)
     corpus <- Corpus(source, readerControl=list(language=NA))
-  }
+
+    # See the contents of the documents
+    inspect(corpus)
+
+    # See meta-data associated with first article
+    meta(corpus[[1]])
 }
 \seealso{
   \code{\link{readFactiva}} for the function actually parsing individual articles.
