@@ -55,8 +55,13 @@ processCorpusDlg <- function() {
 
         if(lowercase)
             doItAndPrint("corpus <- tm_map(corpus, tolower)")
-        if(punctuation)
+        if(punctuation) {
+            # Workaround to avoid French articles from getting concatenated with their noun
+            if(lang == "french")
+                doItAndPrint("corpus <- tm_map(corpus, function(x) gsub(\"[\'\U2019]\", \" \", x))")
+
             doItAndPrint("corpus <- tm_map(corpus, removePunctuation)")
+        }
         if(numbers)
             doItAndPrint("corpus <- tm_map(corpus, removeNumbers)")
         if(stopwords)
