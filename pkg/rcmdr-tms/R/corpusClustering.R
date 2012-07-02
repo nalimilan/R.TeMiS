@@ -290,10 +290,17 @@ createClustersDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="createClustersDlg")
-    tkgrid(labelRcmdr(top, text=gettext_("Number of clusters to create:")), sliderNClust, sticky="sw", pady=6)
-    tkgrid(labelRcmdr(top, text=gettext_("Number of documents to show:")), sliderNDocs, sticky="sw", pady=6)
-    tkgrid(labelRcmdr(top, text=gettext_("Number of terms to show:")), sliderNTerms, sticky="sw", pady=6)
+    tkgrid(labelRcmdr(top, text=gettext_("Clusters creation:"), foreground="blue"),
+           sticky="sw", pady=0)
+    tkgrid(labelRcmdr(top, text=gettext_("Number of clusters to retain:")), sliderNClust,
+           sticky="sw", pady=c(0, 6), padx=c(6, 0))
+    tkgrid(labelRcmdr(top, text=gettext_("Number of items to show (for each cluster):"), foreground="blue"),
+           sticky="sw", pady=c(24, 0))
+    tkgrid(labelRcmdr(top, text=gettext_("Most typical documents:")), sliderNDocs,
+           sticky="sw", pady=c(0, 6), padx=c(6, 0))
+    tkgrid(labelRcmdr(top, text=gettext_("Most typical terms:")), sliderNTerms,
+           sticky="sw", pady=6, padx=c(6, 0))
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
-    dialogSuffix(rows=3, columns=2)
+    dialogSuffix(rows=5, columns=2)
 }
 
