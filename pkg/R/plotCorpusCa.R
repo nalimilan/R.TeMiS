@@ -91,7 +91,7 @@ plotCorpusCaDlg <- function() {
 
     checkBoxes(frame="pointsFrame",
                boxes=c("documentsPoints", "termsPoints"),
-               initialValues=c(0, 0),
+               initialValues=c(0, 1),
                labels=gettext(c("Documents", "Terms")),
                title=gettext("Draw point symbols for:"))
 
@@ -160,14 +160,14 @@ plotCorpusCaDlg <- function() {
     if(length(corpusCa$rowsup) == 0) {
         checkBoxes(frame="whatFrame",
                    boxes=c("documents", "terms"),
-                   initialValues=c(1, 0),
+                   initialValues=c(0, 1),
                    labels=gettext(c("Documents", "Terms")),
                    title=gettext("Items to represent:"))
     }
     else {
         checkBoxes(frame="whatFrame",
                    boxes=c("metadata", "documents", "terms"),
-                   initialValues=c(1, 0, 0),
+                   initialValues=c(1, 0, 1),
                    labels=gettext(c("Documents meta-data", "Documents", "Terms")),
                    title=gettext("Items to represent:"))
     }
