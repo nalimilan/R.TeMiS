@@ -1,6 +1,7 @@
 # Choose a directory to load texts from
 importCorpusFromDir <- function() {
-    dir <- tclvalue(tkchooseDirectory(initialdir=getwd()))
+    dir <- tclvalue(tkchooseDirectory(initialdir=getwd(),
+                                      parent=CommanderWindow()))
     if (dir == "") return()
 
     doItAndPrint(paste("corpus <- Corpus(DirSource(\"", dir, "\"))", sep=""))
@@ -14,7 +15,8 @@ importCorpusFromDir <- function() {
 # Choose a CSV file to load texts and variables from
 importCorpusFromFile <- function() {
     file <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.csv .CSV}}",
-                                                     gettext_("CSV file"))))
+                                                     gettext_("CSV file")),
+                                   parent=CommanderWindow()))
     if (file == "") return()
 
     doItAndPrint(paste("corpusDataset <- read.csv(\"", file, "\")", sep=""))
