@@ -437,7 +437,7 @@ msgstr "Documents :"
 
 #: R/plotCorpusCa.R:96 R/plotCorpusCa.R:175 R/plotCorpusCa.R:182
 msgid "Terms"
-msgstr "Termes :"
+msgstr "Termes"
 
 #: R/plotCorpusCa.R:182
 msgid "Documents meta-data"
