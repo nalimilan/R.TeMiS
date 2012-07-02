@@ -292,17 +292,14 @@ importCorpusFromFactiva <- function(language=NA) {
     dates <- sapply(dates, function(x) if(length(x) > 0) as.character(x) else NA)
     vars <- data.frame(Date=dates)
 
-    tags <- c("Origin", "Author", "Heading", "Language", "WordCount", "Pages",
-              "Section", "Edition", "Publisher")
+    tags <- c("Origin", "Author", "Section")
     for(tag in tags) {
         var <- lapply(corpus, meta, tag)
         var <- lapply(var, function(x) if(length(x) > 0) x else NA)
         vars <- cbind(vars, unlist(var))
     }
 
-    colnames(vars) <- c(gettext_("Date"), gettext_("Origin"), gettext_("Author"), gettext_("Heading"),
-                        gettext_("Language"), gettext_("WordCount"), gettext_("Pages"),
-                        gettext_("Section"), gettext_("Edition"), gettext_("Publisher"))
+    colnames(vars) <- c(gettext_("Date"), gettext_("Origin"), gettext_("Author"), gettext_("Section"))
     rownames(vars) <- names(corpus)
 
     assign("corpusVars", vars, envir=.GlobalEnv)
