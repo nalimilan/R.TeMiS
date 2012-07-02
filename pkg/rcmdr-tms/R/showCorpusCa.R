@@ -461,8 +461,17 @@ showCorpusCaDlg <- function() {
     tkgrid(pointsFrame, sticky="w", pady=6)
     tkgrid(buttonsFrame, sticky="w", pady=6)
     nrows <- if(length(corpusCa$rowsup) == 0) 6 else 7
-    dialogSuffix(rows=nrows, columns=1, onOK=onPlot, onCancel=onClose,
-                 # The grab prevents the user from scrolling the CA text window
-                 preventGrabFocus=TRUE)
+
+    # We don't use dialogSuffix() itself because the dialog should not close,
+    # and yet not call tkwait.window(): the plot does not draw correctly on Mac OS if we do.
+    # The grab has also been removed since it prevents the user from scrolling the CA text window.
+    .Tcl("update idletasks")
+    tkwm.resizable(top, 0, 0)
+    tkbind(top, "<Return>", onShow)
+    tkbind(top, "<Escape>", onClose)
+    if (getRcmdr("double.click") && (!preventDoubleClick)) tkbind(window, "<Double-ButtonPress-1>", onOK)
+    tkwm.deiconify(top)
+    tkfocus(top)
+    if (getRcmdr("crisp.dialogs")) tclServiceMode(on=TRUE)
 }
 
