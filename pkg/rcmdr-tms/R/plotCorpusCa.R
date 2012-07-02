@@ -4,7 +4,9 @@
 # http://cran.r-project.org/web/packages/ca/index.html
 plotCorpusCa <- function (x, dim = c(1, 2), map = "symmetric",
                           what = c("all", "all"), mass = c(FALSE, FALSE),
-                          contrib = c("none", "none"), col = c("#0000FF", "#FF0000"),
+                          contrib = c("none", "none"), col = c("blue", "red"),
+                          col.text = c("black", "blue", "black", "red"),
+                          font = c(1, 5, 1, 5),
                           pch = c(16, 1, 17, 24), labels = c(2, 2),
                           arrows = c(FALSE, FALSE), cex = 0.75,
                           xlab = paste("Dimension", dim[1]),
@@ -19,6 +21,10 @@ plotCorpusCa <- function (x, dim = c(1, 2), map = "symmetric",
         contrib <- rep(contrib, length = 2)
     if (length(col) != 2) 
         col <- rep(col, length = 2)
+    if (length(col.text) != 2) 
+        col.text <- rep(col.text, length = 4)
+    if (length(font) != 2) 
+        font <- rep(font, length = 4)
     if (length(labels) != 2) 
         labels <- rep(labels, length = 2)
     if (length(pch) != 4) 
@@ -71,6 +77,10 @@ plotCorpusCa <- function (x, dim = c(1, 2), map = "symmetric",
     indy <- dim(y)[1]
     pch.x <- rep(pch[1], dim(x)[1])
     pch.y <- rep(pch[3], dim(y)[1])
+    coltext.x <- rep(col.text[1], dim(x)[1])
+    coltext.y <- rep(col.text[3], dim(y)[1])
+    font.x <- rep(font[1], dim(x)[1])
+    font.y <- rep(font[3], dim(y)[1])
     pr <- c("none", "active", "passive", "all")
     pri <- 1:4
     if (is.na(obj$rowsup[1])) {
@@ -83,6 +93,8 @@ plotCorpusCa <- function (x, dim = c(1, 2), map = "symmetric",
         sup.x <- x[obj$rowsup, ]
         act.x <- x[-obj$rowsup, ]
         pch.x[obj$rowsup] <- pch[2]
+        coltext.x[obj$rowsup] <- col.text[2]
+        font.x[obj$rowsup] <- font[2]
         xn.sup <- x.names[obj$rowsup]
         xn.act <- x.names[-obj$rowsup]
     }
@@ -96,6 +108,8 @@ plotCorpusCa <- function (x, dim = c(1, 2), map = "symmetric",
         sup.y <- y[obj$colsup, ]
         act.y <- y[-obj$colsup, ]
         pch.y[obj$colsup] <- pch[4]
+        coltext.y[obj$colsup] <- col.text[4]
+        font.y[obj$colsup] <- font[4]
         yn.sup <- y.names[obj$colsup]
         yn.act <- y.names[-obj$colsup]
     }
@@ -110,12 +124,24 @@ plotCorpusCa <- function (x, dim = c(1, 2), map = "symmetric",
         dim(x)[1]), y.pch = rep(pch[3], dim(y)[1])), supplementary = list(x.pch = rep(pch[2], 
         dim(x)[1]), y.pch = rep(pch[4], dim(y)[1])), all = list(x.pch = pch.x, 
         y.pch = pch.y))
+    coltextlut <- list(none = list(x.coltext = NA, y.coltext = NA), active = list(x.coltext = rep(col.text[1], 
+        dim(x)[1]), y.coltext = rep(col.text[3], dim(y)[1])), supplementary = list(x.coltext = rep(col.text[2], 
+        dim(x)[1]), y.coltext = rep(col.text[4], dim(y)[1])), all = list(x.coltext = coltext.x, 
+        y.coltext = coltext.y))
+    fontlut <- list(none = list(x.font = NA, y.font = NA), active = list(x.font = rep(font[1], 
+        dim(x)[1]), y.font = rep(font[3], dim(y)[1])), supplementary = list(x.font = rep(font[2], 
+        dim(x)[1]), y.font = rep(font[4], dim(y)[1])), all = list(x.font = font.x, 
+        y.font = font.y))
     x <- prlut[[pri[pr == what[1]]]][[1]]
     y <- prlut[[pri[pr == what[2]]]][[2]]
     x.names <- nameslut[[pri[pr == what[1]]]][[1]]
     y.names <- nameslut[[pri[pr == what[2]]]][[2]]
     x.pch <- pchlut[[pri[pr == what[1]]]][[1]]
     y.pch <- pchlut[[pri[pr == what[2]]]][[2]]
+    x.coltext <- coltextlut[[pri[pr == what[1]]]][[1]]
+    y.coltext <- coltextlut[[pri[pr == what[2]]]][[2]]
+    x.font <- fontlut[[pri[pr == what[1]]]][[1]]
+    y.font <- fontlut[[pri[pr == what[2]]]][[2]]
     if (is.matrix(x)) {
         x <- x[, dim]
     }
@@ -227,11 +253,12 @@ plotCorpusCa <- function (x, dim = c(1, 2), map = "symmetric",
     }
     if (labels[1] > 0 && !is.na(x[1]) &&
         labels[2] > 0 && !is.na(y[1]))
-        pointLabel(rbind(x, y), c(x.names, y.names), cex = cex * par("cex"), xpd = TRUE)
+        pointLabel(rbind(x, y), c(x.names, y.names), cex = cex * par("cex"), xpd = TRUE,
+                   col=c(x.coltext, y.coltext), font=c(x.font, y.font))
     else if (labels[1] > 0 && !is.na(x[1]))
-        pointLabel(x, x.names, cex = cex * par("cex"), xpd = TRUE)
+        pointLabel(x, x.names, cex = cex * par("cex"), xpd = TRUE, col=x.coltext, font=x.font)
     else if (labels[2] > 0 && !is.na(y[1]))
-        pointLabel(y, y.names, cex = cex * par("cex"), xpd = TRUE)
+        pointLabel(y, y.names, cex = cex * par("cex"), xpd = TRUE, col=y.coltext, font=y.font)
 
     par(pty = pty.backup)
 }
