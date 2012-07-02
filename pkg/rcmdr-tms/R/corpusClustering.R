@@ -10,10 +10,14 @@ corpusClustDlg <- function() {
 
         setBusyCursor()
 
-        sparsity <- as.numeric(tclvalue(tclSparsity))
+        sparsity <- as.numeric(tclvalue(tclSparsity))/100
 
-        doItAndPrint(paste("corpusClust <- hclust(dist(removeSparseTerms(dtm, ",
-                           sparsity/100, ")), method = \"ward\")", sep=""))
+        # removeSparseTerms() does not accept 1
+        if(sparsity < 1)
+            doItAndPrint(paste("corpusClust <- hclust(dist(removeSparseTerms(dtm, ",
+                               sparsity, ")), method = \"ward\")", sep=""))
+        else
+            doItAndPrint("corpusClust <- hclust(dist(dtm), method = \"ward\")")
 
         # For the Create classes item
         activateMenus()

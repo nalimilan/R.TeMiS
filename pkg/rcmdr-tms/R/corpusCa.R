@@ -5,7 +5,10 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
     # Save old meta-data now to check what is lost when skipping documents
     oldMeta<-meta<-meta(corpus)[colnames(meta(corpus)) != "MetaID"]
 
-    dtm<-as.matrix(removeSparseTerms(dtm, sparsity))
+    # removeSparseTerms() does not accept 1
+    if(sparsity < 1)
+        dtm<-removeSparseTerms(dtm, sparsity)
+
     invalid<-which(apply(dtm,1,sum)==0)
     if(length(invalid) > 0) {
         dtm<-dtm[-invalid, , drop=FALSE]
@@ -32,6 +35,8 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
     origVars<-character()
 
     dupLevels<-any(duplicated(unlist(lapply(meta, function(x) substr(unique(as.character(x[!is.na(x)])), 0, 30)))))
+
+    dtm<-as.matrix(dtm)
 
     # Create mean dummy variables as rows
     if(ncol(meta) > 0) {
