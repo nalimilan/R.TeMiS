@@ -7,13 +7,26 @@
          according to a previously computed hierarchical clustering tree (see
          \code{\link{corpusClustDlg}}). It adds a new meta-data variable to the corpus,
          each number corresponding to a cluster; this variable is also added to the corpusMetaData
-         data set. If clusters were created before, they are simply replaced.
+         data set. If clusters were already created before, they are simply replaced.
 
-         The slider allows choosing the height at which the tree will be cut. This value must be
-         chosen according to the wanted number of clusters, which in turn depends on the aspect
-         of the tree. Since plotting the full (uncut) tree doesn't give a readable result, it is
-         advised to cut the tree at a low height first, and then raise the value after examining the
-         partial plot (note that height is reported on the vertical axis).
+         Clusters will be created by starting from the top of the dendrogram, and going through
+         the merge points with the highest position until the requested number of branches is reached.
+
+         A window opens to summarize created clusters, providing information about most typical documents
+         and terms for each cluster. Most typical terms are those with the highest Chi-squared statistic
+         in the document-term matrix collapsed so that the rows contain for each term the sum of its
+         occurrences in the cluster's documents. Thus, the Chi-squared value reflects the deviation of the
+         term from what would be expected if vocabulary was homogeneous accross all clusters. Terms that are
+         negatively associated with the cluster are signalled by a negative Chi-squared value: this is just a
+         printing convention, as by definition Chi-squared values can only be positive. Two statistics are also
+         provided: the prevalence of the term in the cluster, i.e. the ratio of the term's occurrences on the
+         total number of terms appearing in the cluster; the share of occurrences of the term that appear in
+         the considered cluster, rather than in others.
+
+         Most typical documents are selected using a different criterion than terms: documents with the smaller
+         Chi-squared distance to the average vocabulary of the cluster are shown. This is a euclidean distance,
+         but weighted by the inverse of the prevalence of each term in the whole corpus, and controlling for
+         the documents' different lengths.
 
          This dialog can only be used after having created a tree, which is done via the Text
          Mining->Hierarchical clustering->Create dendrogram... dialog.

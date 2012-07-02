@@ -55,11 +55,12 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
 
             mat<-rollup(dtm[1:ndocs, , drop=FALSE], 1, meta[i])
 
+            # Handle names like in showCorpusClustering()
             # Also limit the length to 40 characters, beyond this things go out of control
             if(totNLevels == 1) # If only one level is present, don't add the level name (e.g. TRUE or YES)
                 rownames(mat)<-substr(var, 0, 20)
             # In case of ambiguous levels of only numbers in levels, add variable names everywhere
-            else if(dupLevels || !any(is.na(as.numeric(levs))))
+            else if(dupLevels || !any(is.na(suppressWarnings(as.numeric(levs)))))
                 rownames(mat)<-make.unique(paste(substr(var, 0, 10), substr(levs, 0, 30)))
             else # Most general case: no need to waste space with variable names
                 rownames(mat)<-substr(levs, 0, 30)

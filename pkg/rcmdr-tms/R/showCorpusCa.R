@@ -52,49 +52,10 @@ colSubsetCa <- function(ca, indices) {
 }
 
 showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
-    if(exists("corpusCaTxt", "RcmdrEnv") &&
-       !is.null(get("corpusCaTxt", "RcmdrEnv"))) {
-        window <- getRcmdr("corpusCaWindow")
-        txt <- getRcmdr("corpusCaTxt")
-        listbox <- getRcmdr("corpusCaList")
-        tkdelete(txt, "0.0", "end")
-        tkdelete(listbox, 0, "end")
-        tkraise(window)
-    }
-    else {
-        window <- tktoplevel(class="Rcommander")
-        tkwm.title(window, gettext_("Correspondence Analysis"))
-        tkwm.geometry(window, "-0+20")
-        scr1 <- tkscrollbar(window, repeatinterval=5,
-                           command=function(...) tkyview(txt,...))
-        txt <- tktext(window, bg="white", font="times", wrap="word",
-                      yscrollcommand=function(...) tkset(scr1, ...))
-
-        tkpack(txt, side="left", fill="both", expand=TRUE)
-        tkpack(scr1, side="left", fill="y")
-
-        scr2 <- tkscrollbar(window, repeatinterval=5,
-                            command=function(...) tkyview(tl,...))
-        listbox <- tklistbox(window, selectmode="single",
-                             yscrollcommand=function(...) tkset(scr2,...))
-        tkpack(listbox, side="left", fill="y")
-        tkpack(scr2, side="left", fill="y")
-
-        tkbind(listbox, "<<ListboxSelect>>", function() {
-            tkyview(txt, paste("mark", tkcurselection(listbox), sep=""))
-        })
-
-        putRcmdr("corpusCaWindow", window)
-        putRcmdr("corpusCaTxt", txt)
-        putRcmdr("corpusCaList", listbox)
-
-	tkwm.protocol(window, "WM_DELETE_WINDOW", function() {
-            tkdestroy(getRcmdr("corpusCaWindow"))
-            putRcmdr("corpusCaWindow", NULL)
-            putRcmdr("corpusCaTxt", NULL)
-            putRcmdr("corpusCaList", NULL)
-        })
-    }
+    objects <- getCorpusWindow()
+    window <- objects$window
+    txt <- objects$txt
+    listbox <- objects$listbox
 
     mark <- 0
 
@@ -106,9 +67,9 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 
     cols <- c(gettext_("Position"), gettext_("Contribution (%)"), gettext_("Quality Repr. (%)"))
 
-    tkinsert(txt, "end", paste(gettext_("Axes information:"), "\n", sep=""), "heading")
+    tkinsert(txt, "end", paste(gettext_("Axes summary:"), "\n", sep=""), "heading")
     tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
-    tkinsert(listbox, "end", gettext_("Axes information"))
+    tkinsert(listbox, "end", gettext_("Axes summary"))
     mark <- mark + 1
 
     nd <- min(length(corpusCa$sv), corpusCa$nd)
@@ -295,6 +256,8 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
         }
     }
+
+    tkraise(window)
 }
 
 showCorpusCaDlg <- function() {
