@@ -7,6 +7,7 @@
          \itemize{
              \item{total number of terms}
              \item{number and percent of unique words, i.e. of words appearing at least once}
+             \item{number and percent of hapax legomena, i.e. terms appearing once and only once}
              \item{total number of words}
              \item{number and percent of long words (\dQuote{long} being defined as \dQuote{at
                    least 7 characters}}

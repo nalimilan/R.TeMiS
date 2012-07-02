@@ -19,6 +19,7 @@ vocabularyTable(termsDtm, wordsDtm, variable = NULL, unit = c("document", "globa
          \itemize{
              \item{total number of terms}
              \item{number and percent of unique terms (i.e. appearing at least once)}
+             \item{number and percent of hapax legomena (i.e. terms appearing once and only once)}
              \item{total number of words}
              \item{number and percent of long words (\dQuote{long} being defined as \dQuote{at
                    least seven characters}}
@@ -26,6 +27,10 @@ vocabularyTable(termsDtm, wordsDtm, variable = NULL, unit = c("document", "globa
                    \dQuote{at least ten characters}}
              \item{average word length}
          }
+
+         Please note that percentages for \emph{terms} and \emph{words} are computed with regard
+         respectively to the total number of terms and of words, so the denominators are not the
+         same for all measures. See \code{\link{docVocabularyDlg}}.
 
          When \code{variable} is not \code{NULL}, \code{unit} defines two different ways of
          aggregating per-document statistics into per-category measures:

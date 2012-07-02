@@ -2,30 +2,36 @@ vocabularyTable <- function(termsDtm, wordsDtm, variable=NULL, unit=c("document"
     unit <- match.arg(unit)
     var <- meta(corpus, tag=variable)
 
+    termsMat <- as.matrix(termsDtm)
     totaltPerDoc <- row_sums(termsDtm)
-    uniquePerDoc <- rowSums(as.matrix(termsDtm) > 0)
+    uniquePerDoc <- rowSums(termsMat > 0)
+    hapaxPerDoc <- rowSums(termsMat == 1)
     totalwPerDoc <- row_sums(wordsDtm)
     longPerDoc <- row_sums(wordsDtm[,nchar(colnames(wordsDtm)) >= 7])
     veryLongPerDoc <- row_sums(wordsDtm[,nchar(colnames(wordsDtm)) >= 10])
     weightedLengths <- rowSums(sweep(as.matrix(wordsDtm), 2, nchar(colnames(wordsDtm)), "*"))
+    rm(termsMat)
 
     # Per-document statistics
     if(is.null(variable)) {
         voc <- rbind(totaltPerDoc,
                      uniquePerDoc, uniquePerDoc/totaltPerDoc*100,
+                     hapaxPerDoc, hapaxPerDoc/totaltPerDoc*100,
                      totalwPerDoc,
                      longPerDoc, longPerDoc/totalwPerDoc*100,
                      veryLongPerDoc, veryLongPerDoc/totalwPerDoc*100,
                      weightedLengths/totalwPerDoc)
 
         voc <- cbind(voc, c(mean(totaltPerDoc),
-                            mean(uniquePerDoc), mean(uniquePerDoc/totalwPerDoc, na.rm=TRUE)*100,
+                            mean(uniquePerDoc), mean(uniquePerDoc/totaltPerDoc, na.rm=TRUE)*100,
+                            mean(hapaxPerDoc), mean(hapaxPerDoc/totaltPerDoc, na.rm=TRUE)*100,
                             mean(totalwPerDoc),
                             mean(longPerDoc), mean(longPerDoc/totalwPerDoc, na.rm=TRUE)*100,
                             mean(veryLongPerDoc), mean(veryLongPerDoc/totalwPerDoc, na.rm=TRUE)*100,
                             mean(weightedLengths/totalwPerDoc, na.rm=TRUE)),
                           c(sum(totaltPerDoc),
-                            sum(uniquePerDoc), sum(uniquePerDoc)/sum(totalwPerDoc)*100,
+                            sum(uniquePerDoc), sum(uniquePerDoc)/sum(totaltPerDoc)*100,
+                            sum(hapaxPerDoc), sum(hapaxPerDoc)/sum(totaltPerDoc)*100,
                             sum(totalwPerDoc),
                             sum(longPerDoc), sum(longPerDoc)/sum(totalwPerDoc)*100,
                             sum(veryLongPerDoc), sum(veryLongPerDoc)/sum(totalwPerDoc)*100,
@@ -38,17 +44,20 @@ vocabularyTable <- function(termsDtm, wordsDtm, variable=NULL, unit=c("document"
     else if(unit == "document") {
         totalt <- tapply(totaltPerDoc, var, mean)
         unique <- tapply(uniquePerDoc, var, mean)
+        hapax <- tapply(hapaxPerDoc, var, mean)
         totalw <- tapply(totalwPerDoc, var, mean)
         long <- tapply(longPerDoc, var, mean)
         veryLong <- tapply(veryLongPerDoc, var, mean)
         avgLengthPerDoc <- weightedLengths/totalwPerDoc
         avgLength <- tapply(avgLengthPerDoc, var, mean, na.rm=TRUE)
         voc <- rbind(totalt, unique, unique/totalt*100,
+                             hapax, hapax/totalt*100,
                      totalw, long, long/totalw*100,
                              veryLong, veryLong/totalw*100,
                              avgLength)
         voc <- cbind(voc, c(mean(totalt),
-                            mean(uniquePerDoc), mean(uniquePerDoc/totalwPerDoc, na.rm=TRUE)*100,
+                            mean(uniquePerDoc), mean(uniquePerDoc/totaltPerDoc, na.rm=TRUE)*100,
+                            mean(hapaxPerDoc), mean(hapaxPerDoc/totaltPerDoc, na.rm=TRUE)*100,
                             mean(totalw),
                             mean(longPerDoc), mean(longPerDoc/totalwPerDoc, na.rm=TRUE)*100,
                             mean(veryLongPerDoc), mean(veryLongPerDoc/totalwPerDoc, na.rm=TRUE)*100,
@@ -59,15 +68,18 @@ vocabularyTable <- function(termsDtm, wordsDtm, variable=NULL, unit=c("document"
     else {
         totalt <- tapply(totaltPerDoc, var, sum)
         unique <- tapply(uniquePerDoc, var, sum)
+        hapax <- tapply(hapaxPerDoc, var, sum)
         totalw <- tapply(totalwPerDoc, var, sum)
         long <- tapply(longPerDoc, var, sum)
         veryLong <- tapply(veryLongPerDoc, var, sum)
         avgLength <- tapply(weightedLengths, var, sum, na.rm=TRUE)/totalw
         voc <- rbind(totalt, unique, unique/totalt*100,
+                             hapax, hapax/totalt*100,
                      totalw, long, long/totalw*100,
                              veryLong, veryLong/totalw*100,
                              avgLength)
         voc <- cbind(voc, c(sum(totalt), sum(unique), sum(unique)/sum(totalt)*100,
+                                         sum(hapax), sum(hapax)/sum(totalt)*100,
                             sum(totalw), sum(long), sum(long)/sum(totalw)*100,
                                          sum(veryLong), sum(veryLong)/sum(totalw)*100,
                                          sum(weightedLengths)/sum(totalw)))
@@ -80,6 +92,8 @@ vocabularyTable <- function(termsDtm, wordsDtm, variable=NULL, unit=c("document"
     rownames(voc) <- c(gettext_("Number of terms"),
                        gettext_("Number of unique terms"),
                        gettext_("Percent of unique terms"),
+                       gettext_("Number of hapax legomena"),
+                       gettext_("Percent of hapax legomena"),
                        gettext_("Number of words"),
                        gettext_("Number of long words"),
                        gettext_("Percent of long words"),
@@ -96,12 +110,15 @@ docVocabularyDlg <- function() {
 
     checkBoxes(frame="whatFrame",
                title=gettext_("Draw plot for:"),
-               boxes=c("totalt", "uniquec", "uniquep", "totalw", "longc", "longp",
+               boxes=c("totalt", "uniquec", "uniquep", "hapaxc", "hapaxp",
+                       "totalw", "longc", "longp",
                        "vlongc", "vlongp", "longavg"),
-               initialValues=c(0, 0, 1, 0, 0, 0, 0, 0, 0),
+               initialValues=c(0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0),
                labels=c(gettext_("Number of terms"),
                         gettext_("Number of unique terms"),
                         gettext_("Percent of unique terms"),
+                        gettext_("Number of hapax legomena"),
+                        gettext_("Percent of hapax legomena"),
                         gettext_("Number of words"),
                         gettext_("Number of long words"),
                         gettext_("Percent of long words"),
@@ -127,6 +144,8 @@ docVocabularyDlg <- function() {
         totalt <- tclvalue(totaltVariable) == 1
         uniquec <- tclvalue(uniquecVariable) == 1
         uniquep <- tclvalue(uniquepVariable) == 1
+        hapaxc <- tclvalue(hapaxcVariable) == 1
+        hapaxp <- tclvalue(hapaxpVariable) == 1
         totalw <- tclvalue(totalwVariable) == 1
         longc <- tclvalue(longcVariable) == 1
         longp <- tclvalue(longpVariable) == 1
@@ -153,7 +172,8 @@ docVocabularyDlg <- function() {
         doItAndPrint("voc <- vocabularyTable(dtm, wordsDtm)")
 
         # Plot
-        measures <- c(totalt, uniquec, uniquep, totalw, longc, longp, vlongc, vlongp, longavg)
+        measures <- c(totalt, uniquec, uniquep, hapaxc, hapaxp, totalw,
+                      longc, longp, vlongc, vlongp, longavg)
         if(any(measures)) {
             indexes <- paste(which(measures), collapse=", ")
 
@@ -211,12 +231,15 @@ varVocabularyDlg <- function() {
 
     checkBoxes(frame="whatFrame",
                title=gettext_("Draw plot for:"),
-               boxes=c("totalt", "uniquec", "uniquep", "totalw", "longc", "longp",
+               boxes=c("totalt", "uniquec", "uniquep", "hapaxc", "hapaxp",
+                       "totalw", "longc", "longp",
                        "vlongc", "vlongp", "longavg", "corpus"),
-               initialValues=c(0, 0, 1, 0, 0, 0, 0, 0, 0, 1),
+               initialValues=c(0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1),
                labels=c(gettext_("Number of terms"),
                         gettext_("Number of unique terms"),
                         gettext_("Percent of unique terms"),
+                        gettext_("Number of hapax legomena"),
+                        gettext_("Percent of hapax legomena"),
                         gettext_("Number of words"),
                         gettext_("Number of long words"),
                         gettext_("Percent of long words"),
@@ -236,6 +259,8 @@ varVocabularyDlg <- function() {
         totalt <- tclvalue(totaltVariable) == 1
         uniquec <- tclvalue(uniquecVariable) == 1
         uniquep <- tclvalue(uniquepVariable) == 1
+        hapaxc <- tclvalue(hapaxcVariable) == 1
+        hapaxp <- tclvalue(hapaxpVariable) == 1
         totalw <- tclvalue(totalwVariable) == 1
         longc <- tclvalue(longcVariable) == 1
         longp <- tclvalue(longpVariable) == 1
@@ -262,7 +287,8 @@ varVocabularyDlg <- function() {
         doItAndPrint(sprintf('voc <- vocabularyTable(dtm, wordsDtm, "%s", "%s")', var, unit))
 
         # Plot
-        measures <- c(totalt, uniquec, uniquep, totalw, longc, longp, vlongc, vlongp, longavg)
+        measures <- c(totalt, uniquec, uniquep, hapaxc, hapaxp, totalw,
+                      longc, longp, vlongc, vlongp, longavg)
         if(any(measures)) {
             indexes <- paste(which(measures), collapse=", ")
 
