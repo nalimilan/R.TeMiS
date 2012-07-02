@@ -179,6 +179,8 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
 
             for(i in posdocs) {
+                # We need to use IDs rather than indexes to access documents in the corpus
+                # since some documents may have been skipped in the CA
                 id <- corpusCa$rownames[i]
                 tkinsert(txt, "end", paste("\n\n", id, "\n", sep=""),
                          "articlehead")
@@ -244,6 +246,8 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
 
             for(i in posdocs) {
+                # We need to use IDs rather than indexes to access documents in the corpus
+                # since some documents may have been skipped in the CA
                 id <- corpusCa$rownames[i]
                 tkinsert(txt, "end", paste("\n\n", id, "\n", sep=""),
                          "articlehead")
