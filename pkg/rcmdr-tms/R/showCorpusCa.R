@@ -7,7 +7,7 @@ rowCtr <- function(obj, dim) {
     K <- min(obj$nd, ncol(obj$rowcoord))
     svF <- matrix(rep(obj$sv[1:K], I), I, K, byrow=TRUE)
     rpc <- obj$rowcoord[,1:K] * svF
-    obj$rowmass * rpc[,dim]^2 / obj$sv[dim]^2
+    obj$rowmass * rowSums(rpc[,dim, drop=FALSE]^2) / sum(obj$sv[dim]^2)
 }
 
 # Get columns contributions to the dimensions of a CA
@@ -17,7 +17,7 @@ colCtr <- function(obj, dim) {
     K <- min(obj$nd, ncol(obj$colcoord))
     svG <- matrix(rep(obj$sv[1:K], J), J, K, byrow=TRUE)
     cpc <- obj$colcoord[,1:K] * svG
-    obj$colmass * cpc[,dim]^2 / obj$sv[dim]^2
+    obj$colmass * rowSums(cpc[,dim, drop=FALSE]^2) / sum(obj$sv[dim]^2)
 }
 
 # Restrain CA to a subset of rows (only for plotting!)
@@ -96,22 +96,13 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
         })
     }
 
-    docsCtr <- rowCtr(corpusCa, dim)
-    docs <- order(docsCtr, decreasing=TRUE)[1:ndocs]
-    docs <- docs[!docs %in% corpusCa$rowsup]
-
-    termsCtr <- colCtr(corpusCa, dim)
-    terms <- order(termsCtr, decreasing=TRUE)[1:nterms]
-    terms <- terms[!terms %in% corpusCa$colsup]
+    mark <- 0
 
     tktag.configure(txt, "heading", font="sans 13 bold")
     tktag.configure(txt, "articlehead", font="sans 12 bold")
     tktag.configure(txt, "fixed", font="courier 11")
 
     cols <- c(gettext_("Position"), gettext_("Abs. Contr."), gettext_("Rel. Contr."))
-
-    mark <- 0
-
 
     tkinsert(txt, "end", paste(gettext_("Axes information:"), "\n", sep=""), "heading")
     tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
@@ -127,146 +118,159 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
     tkinsert(txt, "end", paste(capture.output(val), collapse="\n"), "fixed")
 
 
-    tkinsert(txt, "end",
-             paste("\n\n", sprintf(gettext_("Most contributive terms on negative side of axis %i:"), dim), "\n", sep=""),
-             "heading")
-    tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
-    tkinsert(listbox, "end", gettext_("Negative Side:"))
-    tkitemconfigure(listbox, mark, background="grey")
-    mark <- mark + 1
+    for(j in 1:length(dim)) {
+        docsCtr <- rowCtr(corpusCa, dim[j])
+        docs <- order(docsCtr, decreasing=TRUE)[1:ndocs]
+        docs <- docs[!docs %in% corpusCa$rowsup]
 
-    negterms <- terms[corpusCa$colcoord[terms] < 0]
-    if(length(negterms) == 0) {
+        termsCtr <- colCtr(corpusCa, dim[j])
+        terms <- order(termsCtr, decreasing=TRUE)[1:nterms]
+    terms <- terms[!terms %in% corpusCa$colsup]
+
+
         tkinsert(txt, "end",
-                 sprintf(gettext_("None among the %i most contributive terms."), nterms))
-    }
-    else {
-        df <- data.frame(row.names=corpusCa$colnames[negterms],
-                         round(corpusCa$colcoord[negterms] * corpusCa$sv[dim], d=2),
-                         round(termsCtr[negterms] * 1000),
-                         round((corpusCa$colcoord[negterms] * corpusCa$sv[dim] / corpusCa$coldist[negterms])^2 * 1000))
-        colnames(df) <- cols
-
-        tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
-    }
-
-
-    tkinsert(txt, "end",
-             paste("\n\n", sprintf(gettext_("Most contributive documents on negative side of axis %i:"), dim), "\n", sep=""),
-             "heading")
-    posdocs <- docs[corpusCa$rowcoord[docs] < 0]
-    if(length(posdocs) == 0) {
-        tkinsert(txt, "end",
-                 sprintf(gettext_("None among the %i most contributive documents."), nterms))
-    }
-    else {
-        df <- data.frame(row.names=corpusCa$rownames[posdocs],
-                         round(corpusCa$rowcoord[posdocs] * corpusCa$sv[dim], d=2),
-                         round(docsCtr[posdocs] * 1000),
-                         round((corpusCa$rowcoord[posdocs] * corpusCa$sv[dim] / corpusCa$rowdist[posdocs])^2 * 1000))
-        colnames(df) <- cols
-
-        tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
-
-        for(i in posdocs) {
-            tkinsert(txt, "end", paste("\n\n", names(corpus)[i], "\n", sep=""),
-                     "articlehead")
-            tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
-            mark <- mark + 1
-            tkinsert(listbox, "end", names(corpus)[i])
-
-            origin <- meta(corpus[[i]], "Origin")
-            date <- meta(corpus[[i]], "DateTimeStamp")
-            if(length(origin) > 0 && length(date) > 0)
-                tkinsert(txt, "end", paste(origin, " - ", date, "\n", sep=""))
-            else if(length(origin) > 0)
-                tkinsert(txt, "end", paste(origin, "\n", sep=""))
-            else if(length(origin) > 0)
-                tkinsert(txt, "end", paste(date, "\n", sep=""))
-
-            tkinsert(txt, "end", paste(paste(corpus[[i]], collapse="\n"), "\n\n"))
-        }
-    }
-
-
-    tkinsert(txt, "end",
-             paste("\n\n", sprintf(gettext_("Most contributive terms on positive side of axis %i:"), dim), "\n", sep=""),
-             "heading")
-    tkinsert(listbox, "end", gettext_("Positive Side:"))
-    tkitemconfigure(listbox, mark, background="grey")
-    tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
-    mark <- mark + 1
-
-    posterms <- terms[corpusCa$colcoord[terms] >= 0]
-    if(length(posterms) == 0) {
-        tkinsert(txt, "end",
-                 sprintf(gettext_("None among the %i most contributive terms."), nterms))
-    }
-    else {
-        df <- data.frame(row.names=corpusCa$colnames[posterms],
-                         round(corpusCa$colcoord[posterms] * corpusCa$sv[dim], d=2),
-                         round(termsCtr[posterms] * 1000),
-                         round((corpusCa$colcoord[posterms] * corpusCa$sv[dim] / corpusCa$coldist[posterms])^2 * 1000))
-        colnames(df) <- cols
-
-        tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
-    }
-
-
-    tkinsert(txt, "end",
-             paste("\n\n", sprintf(gettext_("Most contributive documents on positive side axis %i:"), dim), "\n", sep=""),
-             "heading")
-    posdocs <- docs[corpusCa$rowcoord[docs] >= 0]
-    if(length(posdocs) == 0) {
-        tkinsert(txt, "end",
-                 sprintf(gettext_("None among the %i most contributive documents."), ndocs))
-    }
-    else {
-        df <- data.frame(row.names=corpusCa$rownames[posdocs],
-                         round(corpusCa$rowcoord[posdocs] * corpusCa$sv[dim], d=2),
-                         round(docsCtr[posdocs] * 1000),
-                         round((corpusCa$rowcoord[posdocs] * corpusCa$sv[dim] / corpusCa$rowdist[posdocs])^2 * 1000))
-        colnames(df) <- cols
-
-        tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
-
-        for(i in posdocs) {
-            tkinsert(txt, "end", paste("\n\n", names(corpus)[i], "\n", sep=""),
-                     "articlehead")
-            tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
-            mark <- mark + 1
-            tkinsert(listbox, "end", names(corpus)[i])
-
-            origin <- meta(corpus[[i]], "Origin")
-            date <- meta(corpus[[i]], "DateTimeStamp")
-            if(length(origin) > 0 && length(date) > 0)
-                tkinsert(txt, "end", paste(origin, " - ", date, "\n", sep=""))
-            else if(length(origin) > 0)
-                tkinsert(txt, "end", paste(origin, "\n", sep=""))
-            else if(length(origin) > 0)
-                tkinsert(txt, "end", paste(date, "\n", sep=""))
-
-            tkinsert(txt, "end", paste(paste(corpus[[i]], collapse="\n"), "\n\n"))
-        }
-    }
-
-
-    if(length(corpusCa$rowsup) > 0) {
-        tkinsert(txt, "end",
-                  paste("\n\n", gettext_("Variables:"), "\n", sep=""),
+                 paste("\n\n", sprintf(gettext_("Most contributive terms on negative side of axis %i:"), dim[j]), "\n", sep=""),
                  "heading")
-        tkinsert(listbox, "end", gettext_("Variables"))
+        tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
+        tkinsert(listbox, "end", sprintf(gettext_("Axis %i - Negative Side:"), dim[j]))
+        tkitemconfigure(listbox, mark, background="grey")
+        mark <- mark + 1
+
+        negterms <- terms[corpusCa$colcoord[terms] < 0]
+        if(length(negterms) == 0) {
+            tkinsert(txt, "end",
+                     sprintf(gettext_("None among the %i most contributive terms."), nterms))
+        }
+        else {
+            df <- data.frame(row.names=corpusCa$colnames[negterms],
+                             round(corpusCa$colcoord[negterms] * corpusCa$sv[dim[j]], d=2),
+                             round(termsCtr[negterms] * 1000),
+                             round((corpusCa$colcoord[negterms] * corpusCa$sv[dim[j]] / corpusCa$coldist[negterms])^2 * 1000))
+            colnames(df) <- cols
+
+            tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
+        }
+
+
+        tkinsert(txt, "end",
+                 paste("\n\n", sprintf(gettext_("Most contributive documents on negative side of axis %i:"), dim[j]), "\n", sep=""),
+                 "heading")
+        posdocs <- docs[corpusCa$rowcoord[docs] < 0]
+        if(length(posdocs) == 0) {
+            tkinsert(txt, "end",
+                     sprintf(gettext_("None among the %i most contributive documents."), nterms))
+        }
+        else {
+            df <- data.frame(row.names=corpusCa$rownames[posdocs],
+                             round(corpusCa$rowcoord[posdocs] * corpusCa$sv[dim[j]], d=2),
+                             round(docsCtr[posdocs] * 1000),
+                             round((corpusCa$rowcoord[posdocs] * corpusCa$sv[dim[j]] / corpusCa$rowdist[posdocs])^2 * 1000))
+            colnames(df) <- cols
+
+            tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
+
+            for(i in posdocs) {
+                tkinsert(txt, "end", paste("\n\n", names(corpus)[i], "\n", sep=""),
+                         "articlehead")
+                tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
+                mark <- mark + 1
+                tkinsert(listbox, "end", names(corpus)[i])
+
+                origin <- meta(corpus[[i]], "Origin")
+                date <- meta(corpus[[i]], "DateTimeStamp")
+                if(length(origin) > 0 && length(date) > 0)
+                    tkinsert(txt, "end", paste(origin, " - ", date, "\n", sep=""))
+                else if(length(origin) > 0)
+                    tkinsert(txt, "end", paste(origin, "\n", sep=""))
+                else if(length(origin) > 0)
+                    tkinsert(txt, "end", paste(date, "\n", sep=""))
+
+                tkinsert(txt, "end", paste(paste(corpus[[i]], collapse="\n"), "\n\n"))
+            }
+        }
+
+
+        tkinsert(txt, "end",
+                 paste("\n\n", sprintf(gettext_("Most contributive terms on positive side of axis %i:"),
+                                       dim[j]), "\n", sep=""),
+                 "heading")
+        tkinsert(listbox, "end", sprintf(gettext_("Axis %i - Positive Side:"), dim[j]))
         tkitemconfigure(listbox, mark, background="grey")
         tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
         mark <- mark + 1
 
-        supdocs <- corpusCa$rowsup
-        df <- data.frame(row.names=corpusCa$rownames[supdocs],
-                         round(corpusCa$rowcoord[supdocs] * corpusCa$sv[dim], d=2),
-                         round((corpusCa$rowcoord[supdocs] * corpusCa$sv[dim] / corpusCa$rowdist[supdocs])^2 * 1000))
-        colnames(df) <- cols[-2]
+        posterms <- terms[corpusCa$colcoord[terms] >= 0]
+        if(length(posterms) == 0) {
+            tkinsert(txt, "end",
+                     sprintf(gettext_("None among the %i most contributive terms."), nterms))
+        }
+        else {
+            df <- data.frame(row.names=corpusCa$colnames[posterms],
+                             round(corpusCa$colcoord[posterms] * corpusCa$sv[dim[j]], d=2),
+                             round(termsCtr[posterms] * 1000),
+                             round((corpusCa$colcoord[posterms] * corpusCa$sv[dim[j]] / corpusCa$coldist[posterms])^2 * 1000))
+            colnames(df) <- cols
 
-        tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
+            tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
+        }
+
+
+        tkinsert(txt, "end",
+                 paste("\n\n", sprintf(gettext_("Most contributive documents on positive side of axis %i:"),
+                                       dim[j]), "\n", sep=""),
+                 "heading")
+        posdocs <- docs[corpusCa$rowcoord[docs] >= 0]
+        if(length(posdocs) == 0) {
+            tkinsert(txt, "end",
+                     sprintf(gettext_("None among the %i most contributive documents."), ndocs))
+        }
+        else {
+            df <- data.frame(row.names=corpusCa$rownames[posdocs],
+                             round(corpusCa$rowcoord[posdocs] * corpusCa$sv[dim[j]], d=2),
+                             round(docsCtr[posdocs] * 1000),
+                             round((corpusCa$rowcoord[posdocs] * corpusCa$sv[dim[j]] / corpusCa$rowdist[posdocs])^2 * 1000))
+            colnames(df) <- cols
+
+            tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
+
+            for(i in posdocs) {
+                tkinsert(txt, "end", paste("\n\n", names(corpus)[i], "\n", sep=""),
+                         "articlehead")
+                tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
+                mark <- mark + 1
+                tkinsert(listbox, "end", names(corpus)[i])
+
+                origin <- meta(corpus[[i]], "Origin")
+                date <- meta(corpus[[i]], "DateTimeStamp")
+                if(length(origin) > 0 && length(date) > 0)
+                    tkinsert(txt, "end", paste(origin, " - ", date, "\n", sep=""))
+                else if(length(origin) > 0)
+                    tkinsert(txt, "end", paste(origin, "\n", sep=""))
+                else if(length(origin) > 0)
+                    tkinsert(txt, "end", paste(date, "\n", sep=""))
+
+                tkinsert(txt, "end", paste(paste(corpus[[i]], collapse="\n"), "\n\n"))
+            }
+        }
+
+
+        if(length(corpusCa$rowsup) > 0) {
+            tkinsert(txt, "end",
+                      paste("\n\n", sprintf(gettext_("Situation of variables on axis %i:"), dim[j]), "\n", sep=""),
+                     "heading")
+            tkinsert(listbox, "end", sprintf(gettext_("Axis %i - Variables"), dim[j]))
+            tkitemconfigure(listbox, mark, background="grey")
+            tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
+            mark <- mark + 1
+
+            supdocs <- corpusCa$rowsup
+            df <- data.frame(row.names=corpusCa$rownames[supdocs],
+                             round(corpusCa$rowcoord[supdocs] * corpusCa$sv[dim[j]], d=2),
+                             round((corpusCa$rowcoord[supdocs] * corpusCa$sv[dim[j]] / corpusCa$rowdist[supdocs])^2 * 1000))
+            colnames(df) <- cols[-2]
+
+            tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
+        }
     }
 }
 
@@ -306,9 +310,12 @@ showCorpusCaDlg <- function() {
     termsSlider <- tkscale(nFrame, from=1, to=min(200, nrow(corpusCa$colcoord)-length(corpusCa$colsup)),
                            showvalue=TRUE, variable=tclNTerms,
 		           resolution=1, orient="horizontal")
-    radioButtons(name="ctrDim",
-                 buttons=c("xDim", "yDim"),
-                 labels=c(gettext_("Horizontal axis"), gettext_("Vertical axis")))
+
+    ctrDimVariable <- tclVar("xyDim")
+    ctrDimFrame <- tkframe(top)
+    ctrDim1 <- ttkradiobutton(ctrDimFrame, variable=ctrDimVariable, value="xyDim", text=gettext_("Both axes"))
+    ctrDim2 <- ttkradiobutton(ctrDimFrame, variable=ctrDimVariable, value="xDim", text=gettext_("Horizontal axis"))
+    ctrDim3 <- ttkradiobutton(ctrDimFrame, variable=ctrDimVariable, value="yDim", text=gettext_("Vertical axis"))
 
     checkBoxes(frame="pointsFrame",
                boxes=c("documentsPoints", "termsPoints"),
@@ -325,7 +332,7 @@ showCorpusCaDlg <- function() {
         vars <- getSelection(varBox)
         nDocs <- tclvalue(tclNDocs)
         nTerms <- tclvalue(tclNTerms)
-        ctrDim <- if(tclvalue(ctrDimVariable) == "xDim") x else y
+        ctrDim <- switch(tclvalue(ctrDimVariable), xyDim=paste("c(", x, ", ", y, ")", sep=""), xDim=x, yDim=y)
         documentsPoints <- if(tclvalue(documentsPointsVariable) == 1) 2 else 1
         termsPoints <- if(tclvalue(termsPointsVariable) == 1) 2 else 1
 
@@ -427,21 +434,23 @@ showCorpusCaDlg <- function() {
            closeButton, labelRcmdr(buttonsFrame, text="            "),
            helpButton, sticky="w")
 
-    tkgrid(labelRcmdr(dimFrame, text=gettext_("Horizontal axis")), xSlider, sticky="sw")
-    tkgrid(labelRcmdr(dimFrame, text=gettext_("Vertical axis")), ySlider, sticky="sw")
-    tkgrid(dimFrame, columnspan="2", sticky="w", pady=6)
-    tkgrid(whatFrame, columnspan="2", sticky="w", pady=6)
+    tkgrid(labelRcmdr(dimFrame, text=gettext_("Horizontal axis:")), xSlider, sticky="w")
+    tkgrid(labelRcmdr(dimFrame, text=gettext_("Vertical axis:")), ySlider, sticky="w")
+    tkgrid(dimFrame, sticky="w", pady=6)
+    tkgrid(whatFrame, sticky="w", pady=6)
     if(length(corpusCa$rowsup) > 0)
-        tkgrid(getFrame(varBox), sticky="w", pady=6)
-    tkgrid(labelRcmdr(nFrame, text=gettext_("Documents:")), docsSlider, sticky="sw")
-    tkgrid(labelRcmdr(nFrame, text=gettext_("Terms:")), termsSlider, sticky="sw")
-    tkgrid(nFrame, columnspan="2", sticky="w", pady=6)
-    tkgrid(labelRcmdr(nFrame, text=gettext_("Most contributive to:")),
-           ctrDimFrame, sticky="w", pady=6)
-    tkgrid(pointsFrame, columnspan="2", sticky="w", pady=6)
-    tkgrid(buttonsFrame, sticky="w", columnspan=2, pady=6)
-    nrows <- if(length(corpusCa$rowsup) == 0) 5 else 6
-    dialogSuffix(rows=nrows, columns=2, onOK=onPlot, onCancel=onClose,
+        tkgrid(getFrame(varBox), columnspan=3, sticky="we", pady=6)
+    tkgrid(labelRcmdr(nFrame, text=gettext_("Documents:")), docsSlider, sticky="w")
+    tkgrid(labelRcmdr(nFrame, text=gettext_("Terms:")), termsSlider, sticky="w")
+    tkgrid(nFrame, sticky="w", pady=6)
+    tkgrid(labelRcmdr(ctrDimFrame, text=gettext_("Most contributive to:")), sticky="w", columnspan=3, pady=6)
+    tkgrid(ctrDim1, ctrDim2, ctrDim3, sticky="w", pady=6)
+    tkgrid(ctrDimFrame, sticky="w", pady=6)
+    tkgrid.columnconfigure(ctrDimFrame, "all", uniform="a")
+    tkgrid(pointsFrame, sticky="w", pady=6)
+    tkgrid(buttonsFrame, sticky="w", pady=6)
+    nrows <- if(length(corpusCa$rowsup) == 0) 6 else 7
+    dialogSuffix(rows=nrows, columns=1, onOK=onPlot, onCancel=onClose,
                  # The grab prevents the user from scrolling the CA text window
                  preventGrabFocus=TRUE)
 }
