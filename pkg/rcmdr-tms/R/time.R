@@ -106,18 +106,18 @@ varTimeSeriesDlg <- function() {
             doItAndPrint("docSeries <- zoo(tab, order.by=time)")
         }
         else {
-            if(length(groupLevs) < length(unique(meta(corpus, var)[[1]])))
-                doItAndPrint(sprintf('tab <- table(meta(corpus, c("%s", "%s")))[,c("%s")]',
-                                     timeVar, groupVar, paste(groupLevs, collapse='", "')))
-            else
-                doItAndPrint(sprintf('tab <- table(meta(corpus, c("%s", "%s")))', timeVar, groupVar))
+            doItAndPrint(sprintf('tab <- table(meta(corpus, c("%s", "%s")))', timeVar, groupVar))
+
+            if(what == "percent")
+                doItAndPrint("tab <- prop.table(tab, 1)*100")
 
             doItAndPrint(sprintf('time <- as.POSIXct(strptime(rownames(tab), "%s"))', format))
 
-            if(what == "number")
-                doItAndPrint("docSeries <- zoo(tab, order.by=time)")
+            if(length(groupLevs) < length(unique(meta(corpus, var)[[1]])))
+                doItAndPrint(sprintf('docSeries <- zoo(tab[,c("%s")], order.by=time)',
+                                     paste(groupLevs, collapse='", "')))
             else
-                doItAndPrint("docSeries <- zoo(prop.table(tab, 1)*100, order.by=time)")
+                doItAndPrint("docSeries <- zoo(tab, order.by=time)")
         }
 
 
@@ -208,6 +208,6 @@ varTimeSeriesDlg <- function() {
     tkgrid(labelRcmdr(top, text=.gettext("Title:"), foreground="blue"), sticky="w", pady=c(6, 0))
     tkgrid(titleEntry, sticky="w", padx=6, pady=c(0, 6), columnspan=2)
     tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=2)
-    dialogSuffix(rows=13, columns=2, focus=timeVarBox$listbox)
+    dialogSuffix(rows=13, columns=2, focus=timeVarBox$listbox, onCancel=onClose)
 }
 
