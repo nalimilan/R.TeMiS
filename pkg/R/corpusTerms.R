@@ -69,24 +69,54 @@ termsAssocDlg <- function() {
     dialogSuffix(rows=4, columns=2, focus=entryTerms)
 }
 
-excludeTermsDlg <- function() {
-    initializeDialog(title=gettext("Exclude Terms From Analysis"))
+restrictTermsDlg <- function() {
+    initializeDialog(title=gettext("Select or Exclude Terms"))
+
+    radioButtons(name="what",
+                 buttons=c("retain", "exclude"),
+                 labels=c(gettext("Retain only these terms"),
+                          gettext("Exclude these terms")),
+                 right=FALSE)
 
     tclTerms <- tclVar("")
     entryTerms <- ttkentry(top, width="30", textvariable=tclTerms)
 
     onOK <- function() {
+        termsList <- strsplit(tclvalue(tclTerms), " ")[[1]]
+
+        if(length(termsList) == 0) {
+            errorCondition(recall=restrictTermsDlg,
+                           message=gettext("Please enter at least one term."))
+            return()
+        }
+        else if(!all(termsList %in% colnames(dtm))) {
+            wrongTerms <- termsList[!termsList %in% colnames(dtm)]
+            errorCondition(recall=restrictTermsDlg,
+                           message=sprintf(ngettext(length(wrongTerms),
+                                                    "Term \'%s\' does not exist in the corpus.",
+                                                    "Terms \'%s\' do not exist in the corpus."),
+                                                     # TRANSLATORS: this should be opening quote, comma, closing quote
+                                                     paste(wrongTerms, collapse=gettext("\', \'"))))
+            return()
+        }
+
         closeDialog()
 
-        termsList <- strsplit(tclvalue(tclTerms), " ")
-        doItAndPrint(paste("dtm <- dtm[, !colnames(dtm) %in% c(\"",
-                           paste(termsList[[1]], collapse="\", \""), "\")]", sep=""))
+
+        what <- tclvalue(whatVariable)
+        if(what == "retain")
+            doItAndPrint(paste("dtm <- dtm[, colnames(dtm) %in% c(\"",
+                               paste(termsList, collapse="\", \""), "\")]", sep=""))
+        else
+            doItAndPrint(paste("dtm <- dtm[, !colnames(dtm) %in% c(\"",
+                               paste(termsList, collapse="\", \""), "\")]", sep=""))
 
         tkfocus(CommanderWindow())
     }
 
     OKCancelHelp(helpSubject="excludeTermsDlg")
-    tkgrid(labelRcmdr(top, text=gettext("Terms to exclude (space-separated):")),
+    tkgrid(whatFrame, sticky="w", columnspan=2, pady=6)
+    tkgrid(labelRcmdr(top, text=gettext("Terms (space-separated):")),
            columnspan=2, sticky="w")
     tkgrid(entryTerms, columnspan=2, sticky="w")
     tkgrid(buttonsFrame, sticky="w", pady=6)

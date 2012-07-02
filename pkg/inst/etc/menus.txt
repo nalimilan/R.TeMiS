@@ -8,9 +8,9 @@
 
     menu        termMenu       tmMenu            ""                                 ""                          ""                    ""
     item        termMenu       command           "List terms"                       listTerms                   "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        termMenu       command           "Select or exclude terms..."       restrictTermsDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        termMenu       command           "Show most frequent terms..."      freqTermsDlg                "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        termMenu       command           "Show associated terms..."         termsAssocDlg               "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu       command           "Exclude terms from analysis..."   excludeTermsDlg             "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        tmMenu         cascade           "Terms"                            termMenu                    ""                    ""
 
     menu        termFreqMenu   tmMenu            ""                                 ""                          ""                    ""
