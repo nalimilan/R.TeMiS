@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.TextMiningSuite 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-28 19:40+0100\n"
+"POT-Creation-Date: 2012-05-30 11:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -268,10 +268,6 @@ msgstr ""
 msgid "Spreadsheet file (CSV, XLS, ODS...)"
 msgstr ""
 
-#: R/importCorpus.R:9 R/importCorpus.R:269 R/importCorpus.R:296
-msgid "Factiva XML file"
-msgstr ""
-
 #: R/importCorpus.R:10
 msgid "Load corpus from:"
 msgstr ""
@@ -308,69 +304,69 @@ msgstr ""
 msgid "Language of texts in the corpus:"
 msgstr ""
 
-#: R/importCorpus.R:121 R/importCorpus.R:146
+#: R/importCorpus.R:121 R/importCorpus.R:146 R/importCorpus.R:148
 msgid "CSV file"
 msgstr ""
 
-#: R/importCorpus.R:122 R/importCorpus.R:147
+#: R/importCorpus.R:122 R/importCorpus.R:147 R/importCorpus.R:149
 msgid "TSV file"
 msgstr ""
 
-#: R/importCorpus.R:123 R/importCorpus.R:148
+#: R/importCorpus.R:123 R/importCorpus.R:148 R/importCorpus.R:150
 msgid "dBase file"
 msgstr ""
 
-#: R/importCorpus.R:124 R/importCorpus.R:149
+#: R/importCorpus.R:124 R/importCorpus.R:149 R/importCorpus.R:151
 msgid "ODS file"
 msgstr ""
 
-#: R/importCorpus.R:125 R/importCorpus.R:150
+#: R/importCorpus.R:125 R/importCorpus.R:150 R/importCorpus.R:152
 msgid "Excel file"
 msgstr ""
 
-#: R/importCorpus.R:126 R/importCorpus.R:151
+#: R/importCorpus.R:126 R/importCorpus.R:151 R/importCorpus.R:153
 msgid "Excel 2007 file"
 msgstr ""
 
-#: R/importCorpus.R:127 R/importCorpus.R:152
+#: R/importCorpus.R:127 R/importCorpus.R:152 R/importCorpus.R:154
 msgid "Access database"
 msgstr ""
 
-#: R/importCorpus.R:128 R/importCorpus.R:153
+#: R/importCorpus.R:128 R/importCorpus.R:153 R/importCorpus.R:155
 msgid "Access 2007 database"
 msgstr ""
 
-#: R/importCorpus.R:129 R/importCorpus.R:154
+#: R/importCorpus.R:129 R/importCorpus.R:154 R/importCorpus.R:156
 msgid "All supported types"
 msgstr ""
 
-#: R/importCorpus.R:154 R/importCorpus.R:179
+#: R/importCorpus.R:154 R/importCorpus.R:179 R/importCorpus.R:181
 msgid ""
 "Loading OpenDocument spreadsheets (.ods) is not supported on your system.\n"
 "You should save your data set as a CSV file or as an Excel spreadsheet (."
 "xls)."
 msgstr ""
 
-#: R/importCorpus.R:159 R/importCorpus.R:184
+#: R/importCorpus.R:159 R/importCorpus.R:184 R/importCorpus.R:186
 msgid ""
 "Loading OpenDocument spreadsheets (.ods) requires the ROpenOffice package.\n"
 "Do you want to install it?"
 msgstr ""
 
-#: R/importCorpus.R:172 R/importCorpus.R:197
+#: R/importCorpus.R:172 R/importCorpus.R:197 R/importCorpus.R:199
 msgid ""
 "Loading Excel and Access files is only supported on Windows.\n"
 "You should save your data set as a CSV file or as an OpenDocument "
 "spreadsheet (.ods)."
 msgstr ""
 
-#: R/importCorpus.R:177 R/importCorpus.R:202
+#: R/importCorpus.R:177 R/importCorpus.R:202 R/importCorpus.R:204
 msgid ""
 "The RODBC package is needed to read Excel and Access files.\n"
 "Do you want to install it?"
 msgstr ""
 
-#: R/importCorpus.R:186 R/importCorpus.R:211
+#: R/importCorpus.R:186 R/importCorpus.R:211 R/importCorpus.R:213
 msgid ""
 "No ODBC driver for this file type was found.\n"
 "You probably need to install Excel or Access, or separate ODBC drivers."
@@ -383,15 +379,15 @@ msgid ""
 "Do you want to install it?"
 msgstr ""
 
-#: R/importCorpus.R:303 R/importCorpus.R:331
+#: R/importCorpus.R:303 R/importCorpus.R:331 R/importCorpus.R:333
 msgid "Date"
 msgstr ""
 
-#: R/importCorpus.R:303 R/importCorpus.R:331
+#: R/importCorpus.R:303 R/importCorpus.R:331 R/importCorpus.R:333
 msgid "Origin"
 msgstr ""
 
-#: R/importCorpus.R:303 R/importCorpus.R:331
+#: R/importCorpus.R:303 R/importCorpus.R:331 R/importCorpus.R:333
 msgid "Author"
 msgstr ""
 
@@ -411,7 +407,7 @@ msgstr ""
 msgid "Pages"
 msgstr ""
 
-#: R/importCorpus.R:305 R/importCorpus.R:331
+#: R/importCorpus.R:305 R/importCorpus.R:331 R/importCorpus.R:333
 msgid "Section"
 msgstr ""
 
@@ -836,13 +832,13 @@ msgid "Size of new documents (in paragraphs):"
 msgstr ""
 
 #: R/importCorpus.R:384 R/setCorpusVariables.R:33 R/setCorpusVariables.R:53
-#: R/setCorpusVariables.R:60
+#: R/setCorpusVariables.R:60 R/importCorpus.R:386
 msgid "Doc ID"
 msgstr ""
 
 #: R/importCorpus.R:385 R/setCorpusVariables.R:24 R/setCorpusVariables.R:33
 #: R/setCorpusVariables.R:43 R/setCorpusVariables.R:58
-#: R/setCorpusVariables.R:60
+#: R/setCorpusVariables.R:60 R/importCorpus.R:387
 msgid "Doc N"
 msgstr ""
 
@@ -944,4 +940,27 @@ msgstr ""
 
 #: R/subsetCorpus.R:170
 msgid "Exclude documents with terms (space-separated):"
+msgstr ""
+
+#: R/importCorpus.R:9
+msgid "Factiva XML or HTML file(s)"
+msgstr ""
+
+#: R/importCorpus.R:288
+msgid ""
+"The tm.plugin.factiva package is needed to import corpora from Factiva "
+"files.\n"
+"Do you want to install it?"
+msgstr ""
+
+#: R/importCorpus.R:298
+msgid "Factiva XML and HTML files"
+msgstr ""
+
+#: R/showCorpusCa.R:105
+msgid "Contribution (%)"
+msgstr ""
+
+#: R/showCorpusCa.R:105
+msgid "Quality Repr. (%)"
 msgstr ""

@@ -23,21 +23,22 @@
          describing each document.
 
          The third source, \dQuote{Factiva XML file}, loads articles exported from
-         the Dow Jones Factiva website in the \acronym{XML} format. Various meta-data
-         describing the articles are automatically extracted. If the corpus is split into
-         several .xml files, you can put them in the same directory and select them by holding
-         the Ctrl key to concatenate them into a single corpus. Please note that some
-         articles from Factiva are known to contain invalid character that trigger an error
-         when loading. If this problem happens to you, please try to identify the problematic
-         article, for example by removing half of the documents and retrying, until only one
-         document is left in the corpus; then, report the problem to the Factiva Customer
-         Service, or ask for help to the maintainers of the present package.
+         the Dow Jones Factiva website in the \acronym{XML} or \acronym{HTML} formats (the former
+         being recommended if you can choose it). Various meta-data describing the articles are
+         automatically extracted. If the corpus is split into several .xml or .html files, you
+         can put them in the same directory and select them by holding the Ctrl key to concatenate
+         them into a single corpus. Please note that some rticles from Factiva are known to contain
+         invalid character that trigger an error when loading. If this problem happens to you,
+         please try to identify the problematic article, for example by removing half of the
+         documents and retrying, until only one document is left in the corpus; then, report
+         the problem to the Factiva Customer Service, or ask for help to the maintainers of the
+         present package.
 
          The original texts can optionally be split into smaller chunks, which will then be
          considered as the real unit (called \sQuote{documents}) for all analyses. In order
          to get meaningful chunks, texts are only splitted into paragraphs. These are defined
          by the import filter: when importing a directory of text files, a new paragraph
-         starts with a line break; when importing a Factiva XML file, paragraphs are defined
+         starts with a line break; when importing a Factiva files, paragraphs are defined
          by the content provider itself, so may vary in size (heading is always a separate
          paragraph); splitting has no effect when importing from a spreadsheet file. A corpus
          variable called \dQuote{Document} is created, which identifies the original text
