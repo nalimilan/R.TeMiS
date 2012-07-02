@@ -47,6 +47,7 @@ docTermFreqDlg <- function() {
         doItAndPrint(paste("absTermFreqs <- as.matrix(dtm[, c(\"", paste(termsList, collapse="\", \""), "\")])", sep=""))
         doItAndPrint(paste("absTermFreqs <- xtabs(cbind(", paste(colnames(absTermFreqs), collapse=", "),
                            ") ~ rownames(absTermFreqs), data=absTermFreqs)", sep=""))
+        doItAndPrint("names(dimnames(absTermFreqs)) <- NULL")
 
         if(what == "row") {
             doItAndPrint("termFreqs <- absTermFreqs/row_sums(dtm) * 100")
