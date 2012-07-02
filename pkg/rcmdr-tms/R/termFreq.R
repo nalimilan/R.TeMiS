@@ -186,9 +186,9 @@ varTermFreqDlg <- function() {
             return()
         }
         else if(!all(termsList %in% colnames(dtm))) {
-            wrongVars <- termsList[!(termsList %in% colnames(dtm))]
+            wrongTerms <- termsList[!(termsList %in% colnames(dtm))]
             errorCondition(recall=varTermFreqDlg,
-                           message=sprintf(ngettext_(length(wrongVars),
+                           message=sprintf(ngettext_(length(wrongTerms),
                                                     "Term \'%s\' does not exist in the corpus.",
                                                     "Terms \'%s\' do not exist in the corpus."),
                                                      # TRANSLATORS: this should be opening quote, comma, closing quote
