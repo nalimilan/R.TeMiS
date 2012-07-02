@@ -49,11 +49,11 @@ createClassesDlg <- function() {
         doItAndPrint(paste("meta(corpus, tag=\"", gettext_("class"),
                            "\") <- cutree(corpusClust, h=", height, ")", sep=""))
 
-        if(exists("corpusMetaData"))
-            doItAndPrint(paste("corpusMetaData$",  gettext_("class"),
-                               "<- meta(corpus, tag=\"", gettext_("class"), "\")", sep=""))
+        if(exists("corpusVars"))
+            doItAndPrint(paste("corpusVars$",  gettext_("class"),
+                               " <- meta(corpus, tag=\"", gettext_("class"), "\")", sep=""))
         else
-            doItAndPrint(paste("corpusMetaData <- data.frame(",  gettext_("class"),
+            doItAndPrint(paste("corpusVars <- data.frame(",  gettext_("class"),
                                "=meta(corpus, tag=\"", gettext_("class"), "\"))", sep=""))
 
         doItAndPrint(paste("corpusSubClust <- cut(as.dendrogram(corpusClust), h=",

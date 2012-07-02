@@ -50,7 +50,7 @@ corpusCa <- function(corpus, sparsity=0.9, ...) {
         }
     }
 
-    Message(sprintf(gettext_("Running correspondence analysis using %i documents, %i terms and %i meta-data variables."),
+    Message(sprintf(gettext_("Running correspondence analysis using %i documents, %i terms and %i variables."),
                             ndocs, nterms, ncol(meta)),
             type="note")
 
@@ -75,7 +75,7 @@ corpusCaDlg <- function() {
         closeDialog()
 
         if(ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"]) == 0)
-            Message(message=gettext_("Corpus has no meta-data. Use Text mining->Set corpus meta-data to add variables."),
+            Message(message=gettext_("No corpus variables have been set. Use Text mining->Set corpus variables to add them."),
                     type="note")
 
         sparsity <- as.numeric(tclvalue(tclSparsity))

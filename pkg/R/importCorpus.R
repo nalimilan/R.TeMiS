@@ -5,13 +5,13 @@ importCorpusFromDir <- function() {
 
     doItAndPrint(paste("corpus <- Corpus(DirSource(\"", dir, "\"))", sep=""))
 
-    assign("corpusMetaData", data.frame(var1=rep(NA, length(corpus)), row.names=names(corpus)), envir=.GlobalEnv)
-    activeDataSet("corpusMetaData")
+    assign("corpusVars", data.frame(var1=rep(NA, length(corpus)), row.names=names(corpus)), envir=.GlobalEnv)
+    activeDataSet("corpusVars")
 
     processCorpusDlg()
 }
 
-# Choose a CSV file to load texts and meta-data from
+# Choose a CSV file to load texts and variables from
 importCorpusFromFile <- function() {
     file <- tclvalue(tkgetOpenFile(filetypes=gettext_('{"CSV file" {".csv" ".CSV"}}')))
     if (file == "") return()
@@ -19,9 +19,9 @@ importCorpusFromFile <- function() {
     doItAndPrint(paste("corpusDataset <- read.csv(\"", file, "\")", sep=""))
     doItAndPrint("corpus <- Corpus(DataframeSource(corpusDataset[1]))")
 
-    doItAndPrint("corpusMetadata <- corpusDataset[-1]")
-    doItAndPrint("activeDataSet(\"corpusMetadata\")")
-    doItAndPrint("setCorpusMetadata()")
+    doItAndPrint("corpusVars <- corpusDataset[-1]")
+    doItAndPrint("activeDataSet(\"corpusVars\")")
+    doItAndPrint("setCorpusVariables()")
 
     processCorpusDlg()
 }

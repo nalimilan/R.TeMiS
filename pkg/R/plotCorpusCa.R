@@ -73,7 +73,7 @@ plotCorpusCaDlg <- function() {
     vars <- colnames(meta(corpus))
     varBox <- variableListBox(top, vars,
                               selectmode="multiple",
-                              title=gettext_("Meta-data variables to plot:"),
+                              title=gettext_("Variables to plot:"),
                               initialSelection=(1:length(vars))-1)
 
     nFrame <- tkframe(top)
@@ -101,7 +101,7 @@ plotCorpusCaDlg <- function() {
         y <- tclvalue(tclYDim)
         documents <- tclvalue(documentsVariable) == 1
         terms <- tclvalue(termsVariable) == 1
-        metadata <- if(length(corpusCa$rowsup) == 0) FALSE else tclvalue(metadataVariable) == 1
+        variables <- if(length(corpusCa$rowsup) == 0) FALSE else tclvalue(variablesVariable) == 1
         vars <- getSelection(varBox)
         nDocs <- tclvalue(tclNDocs)
         nTerms <- tclvalue(tclNTerms)
@@ -109,13 +109,13 @@ plotCorpusCaDlg <- function() {
         documentsPoints <- if(tclvalue(documentsPointsVariable) == 1) 2 else 1
         termsPoints <- if(tclvalue(termsPointsVariable) == 1) 2 else 1
 
-        if(!(documents || terms || metadata) || (metadata && length(vars) == 0)) {
+        if(!(documents || terms || variables) || (variables && length(vars) == 0)) {
             errorCondition(recall=plotCorpusCaDlg,
                            message=gettext_("Please select something to plot."))
             return()
         }
 
-        if(documents && metadata) {
+        if(documents && variables) {
             rowWhat <- "all"
             varLevels <- unlist(lapply(vars, function(var) {
                 levels <- levels(factor(meta(corpus, tag=var)[,1]))
@@ -133,7 +133,7 @@ plotCorpusCaDlg <- function() {
             doItAndPrint(paste("plottingCa <- rowSubsetCa(corpusCa, order(rowCtr(corpusCa, ", ctrDim,
                                "), decreasing=TRUE)[1:", nDocs, "])", sep=""))
         }
-        else if(metadata) {
+        else if(variables) {
             rowWhat <- "passive"
             varLevels <- unlist(lapply(vars, function(var) {
                 levels <- levels(factor(meta(corpus, tag=var)[,1]))
@@ -152,7 +152,7 @@ plotCorpusCaDlg <- function() {
 
         if(terms) {
             colWhat <- "all"
-            if(documents || metadata)
+            if(documents || variables)
                 doItAndPrint(paste("plottingCa <- colSubsetCa(plottingCa, order(colCtr(corpusCa, ", ctrDim,
                                    "), decreasing=TRUE)[1:", nTerms, "])", sep=""))
             else
@@ -177,9 +177,9 @@ plotCorpusCaDlg <- function() {
     }
     else {
         checkBoxes(frame="whatFrame",
-                   boxes=c("metadata", "documents", "terms"),
+                   boxes=c("variables", "documents", "terms"),
                    initialValues=c(0, 0, 1),
-                   labels=c(gettext_("Documents meta-data"), gettext_("Documents"), gettext_("Terms")),
+                   labels=c(gettext_("Variables"), gettext_("Documents"), gettext_("Terms")),
                    title=gettext_("Items to represent:"))
     }
 

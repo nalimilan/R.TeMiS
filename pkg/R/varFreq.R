@@ -1,7 +1,7 @@
 varTableDlg <- function() {
     nVars <- ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"])
     if(nVars == 0) {
-        Message(message=gettext_("Corpus has no meta-data. Use Text mining->Set corpus meta-data to add variables."),
+        Message(message=gettext_("No corpus variables have been set. Use Text mining->Set corpus variables to add them."),
                 type="error")
         return()
     }
@@ -84,12 +84,12 @@ varTableDlg <- function() {
 varCrossTableDlg <- function() {
     nVars <- ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"])
     if(nVars == 0) {
-        Message(message=gettext_("Corpus has no meta-data. Use Text mining->Set corpus meta-data to add variables."),
+        Message(message=gettext_("No corpus variables have been set. Use Text mining->Set corpus variables to add them."),
                 type="error")
         return()
     }
     else if(nVars == 1) {
-        Message(message=gettext_("Corpus has only one meta-data variable."),
+        Message(message=gettext_("Corpus has only one variable."),
                 type="error")
         return()
     }

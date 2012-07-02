@@ -1,4 +1,4 @@
-setCorpusMetadata <- function() {
+setCorpusVariables <- function() {
     if(!exists("corpus") || !("Corpus" %in% class(corpus))) {
         Message(message=gettext_("Please import a corpus first."),
                 type="error")

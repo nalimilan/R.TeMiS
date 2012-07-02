@@ -138,7 +138,7 @@ docTermFreqDlg <- function() {
 
 varTermFreqDlg <- function() {
     if(ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"]) == 0) {
-        Message(message=gettext_("Corpus has no meta-data. Use Text mining->Set corpus meta-data to add variables."),
+        Message(message=gettext_("No corpus variables have been set. Use Text mining->Set corpus variables to add them."),
                 type="error")
         return()
     }
@@ -150,7 +150,7 @@ varTermFreqDlg <- function() {
 
     vars <- colnames(meta(corpus))
     varBox <- variableListBox(top, vars,
-                              title=gettext_("Meta-data variable:"),
+                              title=gettext_("Variable:"),
                               initialSelection=0)
 
     radioButtons(name="what",
