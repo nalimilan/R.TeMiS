@@ -1,4 +1,4 @@
-corpusCa <- function(corpus, sparsity=0.9, ...) {
+runCorpusCa <- function(corpus, sparsity=0.9, ...) {
     if(!exists("dtm"))
         dtm<-DocumentTermMatrix(corpus)
 
@@ -81,7 +81,7 @@ corpusCaDlg <- function() {
         sparsity <- as.numeric(tclvalue(tclSparsity))
         dim <- as.numeric(tclvalue(tclDim))
 
-        doItAndPrint(paste("corpusCa <- corpusCa(corpus, sparsity=", sparsity/100, ", nd=", dim, ")", sep=""))
+        doItAndPrint(paste("corpusCa <- runCorpusCa(corpus, sparsity=", sparsity/100, ", nd=", dim, ")", sep=""))
         doItAndPrint("print(corpusCa)")
 
         activateMenus()

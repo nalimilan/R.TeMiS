@@ -1,9 +1,9 @@
-\name{corpusCa}
-\alias{corpusCa}
+\name{runCorpusCa}
+\alias{runCorpusCa}
 \title{Correspondence analysis from a tm corpus}
 \description{Compute a simple correspondence analysis on the document-term matrix of a tm corpus.}
-\usage{corpusCa(corpus, sparsity = 0.9, ...)}
-\details{The function \code{corpusCa} runs a correspondence analysis (CA) on the
+\usage{runCorpusCa(corpus, sparsity = 0.9, ...)}
+\details{The function \code{runCorpusCa} runs a correspondence analysis (CA) on the
          document-term matrix that can be extracted from a \pkg{tm} corpus by calling
          the \code{\link{DocumentTermMatrix}} function, or directly from the \code{dtm}
          object if present.
