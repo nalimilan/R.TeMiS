@@ -6,7 +6,7 @@ varTableDlg <- function() {
         return()
     }
 
-    initializeDialog(title=gettext_("Variable Cross Table"))
+    initializeDialog(title=gettext_("Variable One-Way Table"))
 
     vars <- colnames(meta(corpus))
     varBox <- variableListBox(top, vars,
@@ -97,7 +97,7 @@ varCrossTableDlg <- function() {
         return()
     }
 
-    initializeDialog(title=gettext_("Variable Cross Table"))
+    initializeDialog(title=gettext_("Variable Two-Way Table"))
 
     vars <- colnames(meta(corpus))
     varBox1 <- variableListBox(top, vars,
