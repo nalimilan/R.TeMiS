@@ -129,7 +129,8 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
 
         tab <- lapply(colnames(meta),
                       function(var) {
-                          mat <- with(meta(corpus), table(get(var), get(gettext_("Cluster"))))
+                          # We call factor() to drop empty levels, if any
+                          mat <- with(meta(corpus), table(factor(get(var)), factor(get(gettext_("Cluster")))))
 
                           # Handle names like in corpusCa()
                           # If only one level is present, don't add the level name (e.g. TRUE or YES)

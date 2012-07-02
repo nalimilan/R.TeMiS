@@ -277,7 +277,7 @@ importCorpusFromFile <- function(language=NA) {
         doItAndPrint("setCorpusVariables()")
     }
     else {
-        assign("corpusVars", data.frame(var1=rep(NA, length(corpus)), row.names=names(corpus)), envir=.GlobalEnv)
+        assign("corpusVars", data.frame(var1=factor(rep(NA, length(corpus))), row.names=names(corpus)), envir=.GlobalEnv)
         activeDataSet("corpusVars")
     }
 
