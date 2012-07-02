@@ -5,6 +5,11 @@
     item        tmMenu          command           "Import corpus..."                 importCorpusDlg             ""                    ""
     item        tmMenu          command           "Set corpus variables"             setCorpusVariables          "exists('corpus') && 'Corpus' %in% class(corpus) && activeDataSetP() && checkVariables()"          ""
 
+    menu        subsetMenu      tmMenu            ""                                 ""                          ""                    ""
+    item        subsetMenu      command           "By terms..."                      subsetCorpusByTermsDlg      "exists('corpus') && 'Corpus' %in% class(corpus)"                    ""
+    item        subsetMenu      command           "By variable..."                   subsetCorpusByVarDlg        "exists('corpus') && 'Corpus' %in% class(corpus)"                    ""
+    item        tmMenu          cascade           "Subset corpus"                    subsetMenu                    ""                    ""
+
     menu        termMenu        tmMenu            ""                                 ""                          ""                    ""
     item        termMenu        command           "List terms"                       listTerms                   "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        termMenu        command           "Select or exclude terms..."       restrictTermsDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
