@@ -1,5 +1,6 @@
 \name{showCorpusCaDlg}
 \alias{showCorpusCaDlg}
+\alias{showCorpusCa}
 \title{Show a correspondence analysis from a tm corpus}
 \description{Displays a correspondence analysis previously computed from a tm corpus.}
 \details{This dialog allows plotting and showing most contributive terms and documents from a
@@ -24,4 +25,4 @@
          to the size of the symbols) and relative contributions (corresponding to the color intensities). See
          the \code{contrib} argument to \code{\link{plot.ca}} for details.
         }
-\seealso{\code{\link{runCorpusCa}}, \code{\link{plot.ca}}, \code{\link{ca}} }
+\seealso{\code{\link{corpusCaDlg}}, \code{\link{plotCorpusCa}}, \code{\link{runCorpusCa}}, \code{\link{ca}} }
