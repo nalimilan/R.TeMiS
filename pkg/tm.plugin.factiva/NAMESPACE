@@ -1,4 +1,4 @@
-export(FactivaSource, readFactivaXML, readFactivaHTML, getElem, eoi)
+export(FactivaSource, readFactivaXML, readFactivaHTML)
 S3method(getElem, FactivaSource)
 S3method(eoi, FactivaSource)
 importFrom(tm, XMLSource, readXML, PlainTextDocument, meta, getElem, eoi)
