@@ -17,6 +17,7 @@ subsetCorpusByVarDlg <- function() {
     varsScrollbar <- ttkscrollbar(varsFrame, command=function(...) tkyview(varsBox, ...))
     tkconfigure(varsBox, yscrollcommand=function(...) tkset(varsScrollbar, ...))
     for(var in vars) tkinsert(varsBox, "end", var)
+    tkselection.set(varsBox, 0)
 
     levelsFrame <- tkframe(top)
     levelsBox <- tklistbox(levelsFrame, height=getRcmdr("variable.list.height"),
@@ -24,6 +25,7 @@ subsetCorpusByVarDlg <- function() {
     levelsScrollbar <- ttkscrollbar(levelsFrame, command=function(...) tkyview(levelsBox, ...))
     tkconfigure(levelsBox, yscrollcommand=function(...) tkset(levelsScrollbar, ...))
     for(level in unique(meta(corpus, vars[1])[[1]])) tkinsert(levelsBox, "end", level)
+    tkselection.set(levelsBox, 0)
 
     onSelect <- function() {
         var <- vars[as.numeric(tkcurselection(varsBox))+1]
