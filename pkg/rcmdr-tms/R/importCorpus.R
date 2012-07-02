@@ -275,6 +275,9 @@ importCorpusFromFactiva <- function(language=NA) {
         "corpus <- c(corpus, Corpus(FactivaSource(\"%s\"), readerControl=list(language=%s)), recursive=TRUE)",
                                                           file, language)))
 
+    # Set document names from the IDs if missing (XMLSource limitation)
+    if(length(names(corpus)) < length(corpus))
+        doItAndPrint("names(corpus) <- sapply(corpus, ID)")
 
     # Extract local per-document meta-data
     dates <- lapply(corpus, meta, "DateTimeStamp")
