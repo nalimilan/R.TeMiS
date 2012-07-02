@@ -70,7 +70,7 @@ docTermFreqDlg <- function() {
         # Plot
         if(plot == 1) {
            if(what == "col") {
-                if(is.na(ncol(termFreq))) {
+                if(!is.matrix(termFreq)) {
                         doItAndPrint(paste("pie(termFreq)", sep=""))
                         if(title != "")
                             doItAndPrint(paste("title(main=\"", gsub("%T", termsList[1], title),
@@ -98,7 +98,7 @@ docTermFreqDlg <- function() {
                 }
             }
             else {
-                if(is.na(ncol(termFreq))) {
+                if(!is.matrix(termFreq)) {
                         doItAndPrint(paste("barplot(termFreq, ylab=\"",  ylab, "\")", sep=""))
                         if(title != "")
                             doItAndPrint(paste("title(main=\"", gsub("%T", termsList[1], title),
@@ -114,7 +114,7 @@ docTermFreqDlg <- function() {
                                            "\", beside=TRUE, legend.text=rownames(termFreq))", sep=""))
                     }
 
-                    if(is.na(ncol(termFreq)))
+                    if(!is.matrix(termFreq))
                         doItAndPrint(paste("title(main=\"", title, "\")", sep=""))
                 }
             }
@@ -229,7 +229,7 @@ varTermFreqDlg <- function() {
         # Plot
         if(plot == 1) {
            if(what == "col") {
-                if(is.na(ncol(termFreq))) {
+                if(!is.matrix(termFreq)) {
                         doItAndPrint(paste("pie(termFreq)", sep=""))
                         if(title != "")
                             doItAndPrint(paste("title(main=\"", gsub("%T", termsList[1], title),
@@ -257,7 +257,7 @@ varTermFreqDlg <- function() {
                 }
             }
             else {
-                if(is.na(ncol(termFreq))) {
+                if(!is.matrix(termFreq)) {
                         doItAndPrint(paste("barplot(termFreq, ylab=\"",  ylab, "\")", sep=""))
                         if(title != "")
                             doItAndPrint(paste("title(main=\"", gsub("%T", termsList[1], title),
@@ -273,7 +273,7 @@ varTermFreqDlg <- function() {
                                            "\", beside=TRUE, legend.text=rownames(termFreq))", sep=""))
                     }
 
-                    if(is.na(ncol(termFreq)))
+                    if(!is.matrix(termFreq))
                         doItAndPrint(paste("title(main=\"", title, "\")", sep=""))
                 }
             }
