@@ -1,41 +1,67 @@
-#   type    menu/item      operation/parent  label                                  command/menu                activation            install?
+#   type        menu/item       operation/parent  label                              command/menu                activation            install?
 
     menu        tmMenu          topMenu           ""                                 ""                          ""                    "" 
     item        topMenu	        cascade           "Text mining"                      tmMenu                      ""                    ""
-    item        tmMenu          command           "Import corpus..."                 importCorpusDlg             ""                    ""
-    item        tmMenu          command           "Set corpus variables"             setCorpusVariables          "exists('corpus') && 'Corpus' %in% class(corpus) && activeDataSetP() && checkVariables()"          ""
 
-    menu        subsetMenu      tmMenu            ""                                 ""                          ""                    ""
+### Manage corpus menu ###
+    menu        corpusMenu      tmMenu            ""                                 ""                          ""                    ""
+    item        tmMenu          cascade           "Manage corpus"                    corpusMenu                    ""                    ""
+
+    # Subset sub-menu
+    menu        subsetMenu      corpusMenu        ""                                 ""                          ""                    ""
     item        subsetMenu      command           "By terms..."                      subsetCorpusByTermsDlg      "exists('corpus') && 'Corpus' %in% class(corpus)"                    ""
     item        subsetMenu      command           "By variable..."                   subsetCorpusByVarDlg        "exists('corpus') && 'Corpus' %in% class(corpus)"                    ""
-    item        subsetMenu      command           "Restore original corpus"          restoreCorpus               "exists('origCorpus') && 'Corpus' %in% class(origCorpus)"                    ""
-    item        tmMenu          cascade           "Subset corpus"                    subsetMenu                    ""                    ""
+    item        subsetMenu      command           "Restore saved corpus"             restoreCorpus               "exists('origCorpus') && 'Corpus' %in% class(origCorpus)"                    ""
 
-    menu        termMenu        tmMenu            ""                                 ""                          ""                    ""
-    item        termMenu        command           "List terms"                       listTerms                   "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu        command           "Select or exclude terms..."       restrictTermsDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu        command           "Show most frequent terms..."      freqTermsDlg                "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu        command           "Show associated terms..."         termsAssocDlg               "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        tmMenu          cascade           "Terms"                            termMenu                    ""                    ""
+    # Main items
+    item        corpusMenu      command           "Import corpus..."                 importCorpusDlg             ""                    ""
+    item        corpusMenu      command           "Set corpus variables"             setCorpusVariables          "exists('corpus') && 'Corpus' %in% class(corpus) && activeDataSetP() && checkVariables()"          ""
+    item        corpusMenu      cascade           "Subset corpus"                    subsetMenu                    ""                    ""
+    item        corpusMenu      command           "Select or exclude terms..."       restrictTermsDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
 
-    menu        vocabularyMenu  tmMenu            ""                                 ""                          ""                    ""
-    item        vocabularyMenu  command           "Per document..."                  docVocabularyDlg            "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"             ""
-    item        vocabularyMenu  command           "Per variable..."                  varVocabularyDlg            "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"             ""
-    item        vocabularyMenu  command           "Copy table"                       copyVocabularyTable         "exists('voc') && is.table(voc)"                            ""
-    item        tmMenu	        cascade           "Vocabulary summary"               vocabularyMenu              ""                    ""
 
-    menu        termFreqMenu    tmMenu            ""                                 ""                          ""                    ""
-    item        termFreqMenu    command           "Per document..."                  docTermFreqDlg              "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termFreqMenu    command           "Per variable..."                  varTermFreqDlg              "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""          ""
-    item        termFreqMenu    command           "Copy table"                       copyTermFreq                "exists('termFreqs') && is.table(termFreqs)"                            ""
-    item        tmMenu	        cascade           "Term frequencies"                 termFreqMenu                ""                    ""
+## Analyse corpus menu ##
+    menu        anaCorpusMenu   tmMenu            ""                                 ""                          ""                    ""
+    item        tmMenu	        cascade           "Analyse corpus"                   anaCorpusMenu               ""                    ""
 
+    # Crosstabs of variables menus
     menu        varFreqMenu     tmMenu            ""                                 ""                          ""                    ""
     item        varFreqMenu     command           "One-way table..."                 varTableDlg                 "exists('corpus') && 'Corpus' %in% class(corpus)"                    ""
     item        varFreqMenu     command           "Two-way table..."                 varCrossTableDlg            "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
     item        varFreqMenu     command           "Copy table"                       copyVarFreq                 "exists('varFreqs') && is.table(varFreqs)"                             ""
-    item        tmMenu	        cascade           "Variable frequencies"             varFreqMenu                 ""                    ""
 
+    item        anaCorpusMenu	cascade           "Analyse corpus variables"         varFreqMenu                 ""                    ""
+
+
+### Analyse term occurrences menu ###
+    menu        termMenu        tmMenu            ""                                 ""                          ""                    ""
+    item        tmMenu          cascade           "Analyse terms occurrences"        termMenu                    ""                    ""
+
+    # Vocabulary sub-menu
+    menu        vocabularyMenu  termMenu          ""                                 ""                          ""                    ""
+    item        vocabularyMenu  command           "Per document..."                  docVocabularyDlg            "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"             ""
+    item        vocabularyMenu  command           "Per variable..."                  varVocabularyDlg            "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"             ""
+    item        vocabularyMenu  command           "Copy table"                       copyVocabularyTable         "exists('voc') && is.table(voc)"                            ""
+
+    # Dictionary sub-menu
+    menu        dictMenu        termMenu          ""                                 ""                          ""                    ""
+    item        dictMenu        command           "List terms in alphabetical order" listTerms                   "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        dictMenu        command           "Show most frequent terms..."      freqTermsDlg                "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+
+    # Vocabulary sub-menu
+    menu        termFreqMenu    tmMenu            ""                                 ""                          ""                    ""
+    item        termFreqMenu    command           "Per document..."                  docTermFreqDlg              "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        termFreqMenu    command           "Per variable..."                  varTermFreqDlg              "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""          ""
+    item        termFreqMenu    command           "Copy table"                       copyTermFreq                "exists('termFreqs') && is.table(termFreqs)"                            ""
+
+    # Main items
+    item        termMenu        cascade           "Vocabulary summary"               vocabularyMenu              ""                    ""
+    item        termMenu        cascade           "Terms dictionary"                 dictMenu                    ""                    ""
+    item        termMenu        cascade           "Frequencies of specific terms"    termFreqMenu                ""                    ""
+    item        termMenu        command           "Cooccurrence of specific terms..." termsAssocDlg               "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+
+
+### Hierarchical clustering menu ###
     menu        clustMenu       tmMenu            ""                                 ""                          ""                    ""
     item        clustMenu       command           "Run clustering..."                corpusClustDlg              "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
     item        clustMenu       command           "Create classes..."                createClassesDlg            "exists('corpus') && 'Corpus' %in% class(corpus) && exists('corpusClust') && class(corpusClust) == 'hclust'"         ""
@@ -43,6 +69,9 @@
 
     menu        caMenu          tmMenu            ""                                 ""                          ""                    ""
 
+
+### Correspondence analysis menu ###
     item        caMenu          command           "Run correspondence analysis..."   corpusCaDlg                 "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
     item        caMenu          command           "Show correspondence analysis..."  showCorpusCaDlg             "exists('corpusCa') && class(corpusCa) == 'ca'"                    ""
     item        tmMenu	        cascade           "Correspondence analysis"          caMenu                      ""                    ""
+
