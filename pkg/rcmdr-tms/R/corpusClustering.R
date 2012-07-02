@@ -17,13 +17,13 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
     tkinsert(listbox, "end", gettext_("Clusters summary"))
     mark <- mark + 1
 
-    val <- round(rbind(sapply(corpusSubClust$lower, attr, "members"),
-                       sapply(corpusSubClust$lower, attr, "members")/sum(!is.na(meta(corpus, gettext_("Cluster")))) * 100,
-                       sapply(corpusSubClust$lower, attr, "height")), digits=1)
+    val <- rbind(sapply(corpusSubClust$lower, attr, "members"),
+                 sapply(corpusSubClust$lower, attr, "members")/sum(!is.na(meta(corpus, gettext_("Cluster")))) * 100,
+                 sapply(corpusSubClust$lower, attr, "height"))
     rownames(val) <- c(gettext_("Number of documents"), gettext_("% of documents"), gettext_("Intra-class inertia"))
     colnames(val) <- seq.int(ncol(val))
     names(dimnames(val)) <- c("", gettext_("Cluster"))
-    tkinsert(txt, "end", paste(capture.output(val), collapse="\n"), "fixed")
+    tkinsert(txt, "end", paste(capture.output(format(as.data.frame(val), nsmall=1, digits=2)), collapse="\n"), "fixed")
 
     meta <- meta(corpus)[!colnames(meta(corpus)) %in% c("MetaID", gettext_("Cluster"))]
     clusters <- meta(corpus, gettext_("Cluster"))[[1]]
@@ -36,11 +36,11 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
     if(nterms > 0) {
         # Get most contributive terms for each cluster
         # Same code as in typicalTermsDlg()
-        clusterDtm <- rollup(dtm, 1, clusters)
+        clusterDtm <- suppressWarnings(rollup(dtm, 1, clusters))
         expected <- row_sums(clusterDtm) %o% col_sums(clusterDtm)/sum(clusterDtm)
         chisq <- sign(as.matrix(clusterDtm - expected)) *  as.matrix((clusterDtm - expected)^2/expected)
         termsCtr <- sapply(rownames(clusterDtm), simplify=FALSE, USE.NAMES=TRUE, function(x)
-                           round(chisq[x,order(abs(chisq[x,]), decreasing=TRUE)[seq(1, min(nterms, length(chisq[x,])))]]))
+                           chisq[x,order(abs(chisq[x,]), decreasing=TRUE)[seq(1, min(nterms, length(chisq[x,])))]])
 
         rowTot <- as.matrix(row_sums(clusterDtm))[,1]
         colTot <- as.matrix(col_sums(clusterDtm))[,1]
@@ -58,12 +58,12 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
 
             termsNames <- names(termsCtr[[j]])
             df <- data.frame(row.names=termsNames,
-                             round(as.numeric(as.matrix(clusterDtm[j, termsNames])/rowTot[j] * 100), digits=2),
-                             round(as.numeric(as.matrix(clusterDtm[j, termsNames])/colTot[termsNames] * 100), digits=2),
-                             round(termsCtr[[j]]))
+                             as.numeric(as.matrix(clusterDtm[j, termsNames])/rowTot[j] * 100),
+                             as.numeric(as.matrix(clusterDtm[j, termsNames])/colTot[termsNames] * 100),
+                             termsCtr[[j]])
             colnames(df) <- c(gettext_("Prevalence (%)"), gettext_("Share of occur. (%)"), gettext_("Chi2 contr."))
 
-            tkinsert(txt, "end", paste(capture.output(df), collapse="\n"), "fixed")
+            tkinsert(txt, "end", paste(capture.output(format(df, nsmall=2, digits=2)), collapse="\n"), "fixed")
         }
 
         if(ndocs > 0) {
@@ -80,11 +80,10 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
                      paste("\n\n", sprintf(gettext_("Documents most typical of cluster %i:"), j), "\n", sep=""),
                      "heading")
 
-            df <- data.frame(row.names=docs,
-                             round(chisq))
+            df <- data.frame(row.names=docs, chisq)
             colnames(df) <- gettext_("Chi2 distance to cluster average")
 
-            tkinsert(txt, "end", paste(capture.output(df), collapse="\n"), "fixed")
+            tkinsert(txt, "end", paste(capture.output(format(df, nsmall=1, digits=2)), collapse="\n"), "fixed")
 
             # We need to use IDs rather than indexes to access documents in the corpus
             # since some documents may have been skipped in the clustering
@@ -146,9 +145,9 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
         tab <- rbind(tab, colSums(tab))
         rownames(tab)[nrow(tab)] <- gettext_("Corpus")
         names(dimnames(tab)) <- c("", gettext_("Cluster"))
-        tab <- round(prop.table(tab, 1) * 100, digits=1)
+        tab <- prop.table(tab, 1) * 100
 
-        tkinsert(txt, "end", paste(capture.output(tab), collapse="\n"), "fixed")
+        tkinsert(txt, "end", paste(capture.output(format(tab, nsmall=1, digits=2)), collapse="\n"), "fixed")
     }
 
     # Only raise the window when we're done, as filling it may take some time
