@@ -42,6 +42,9 @@
          }
 
              The rolling mean is left-aligned, meaning that the number of documents reported for a
-             point reflects the average of the values of the points occurring \emph{after} it.}
+             point reflects the average of the values of the points occurring \emph{after} it. When percents
+             of documents are plotted, time units with no document in the corpus are not plotted, since they
+             have no defined value (0/0, reported as \code{NaN}); when a rolling mean is applied, the values
+             are simply ignored, i.e. the mean is computed over the chosen window without the missing points.}
 \seealso{\code{\link{setCorpusVariables}}, \code{\link{meta}}, \code{\link{zoo}}, \code{\link{xyplot}} }
 

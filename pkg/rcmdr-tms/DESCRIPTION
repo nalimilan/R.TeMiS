@@ -12,8 +12,8 @@ Suggests: ROpenOffice, RODBC, tm.plugin.factiva
 Description: An Rcommander plug-in providing an integrated solution to perform
     a series of text mining tasks such as importing and cleaning a corpus, and
     analyses like terms and documents counts, vocabulary tables, terms
-    co-occurrences and documents similarity measures, correspondence analysis
-    and hierarchical clustering.
+    co-occurrences and documents similarity measures, time series analysis,
+    correspondence analysis and hierarchical clustering.
 License: GPL (>= 2)
 URL: https://r-forge.r-project.org/projects/rcmdr-tms/
 BugReports: https://r-forge.r-project.org/tracker/?group_id=1179

@@ -50,6 +50,12 @@ varTimeSeriesDlg <- function() {
 
     tkbind(varsBox, "<<ListboxSelect>>", onSelect)
 
+    radioButtons(name="what",
+                 buttons=c("number", "percent"),
+                 labels=c(gettext_("Number of documents per time unit"),
+                          gettext_("% of documents per time unit")),
+                 title=gettext_("Measure:"),
+                 right.buttons=FALSE)
 
     tclMean <- tclVar(0)
     meanButton <- tkcheckbutton(top, text=gettext_("Apply rolling mean"), variable=tclMean)
@@ -65,9 +71,16 @@ varTimeSeriesDlg <- function() {
     onOK <- function() {
         timeVar <- getSelection(timeVarBox)
         groupVar <- c("", vars)[as.numeric(tkcurselection(varsBox))+1]
+        what <- tclvalue(whatVariable)
         rollmean <- tclvalue(tclMean) == 1
         window <- as.numeric(tclvalue(tclWindow))
         title <- tclvalue(tclTitle)
+
+        if(what == "percent" && nchar(groupVar) == 0) {
+            Message(message=gettext_("Plotting percents of documents with only one curve does not make sense: all points would be 100%."),
+                    type="error")
+            return()
+        }
 
         if(nchar(groupVar) > 0)
             groupLevs <- unique(meta(corpus, groupVar)[[1]])[as.numeric(tkcurselection(levelsBox))+1]
@@ -78,7 +91,7 @@ varTimeSeriesDlg <- function() {
         time <- meta(corpus, timeVar)[[1]]
         time <- strptime(unique(time[!is.na(time)]), format)
         if(all(is.na(time))) {
-            Message(message=sprintf(gettext_('Incorrect date format: no values of "%s" could be converted to a time index.'), timeVar),
+            Message(message=sprintf(gettext_('Incorrect time format: no values of "%s" could be converted to a time index.'), timeVar),
                     type="error")
             return()
         }
@@ -87,11 +100,10 @@ varTimeSeriesDlg <- function() {
                     type="warning")
         }
 
-        closeDialog()
-
         if(nchar(groupVar) == 0) {
             doItAndPrint(sprintf('tab <- table(meta(corpus, "%s"))', timeVar))
             doItAndPrint(sprintf('time <- as.POSIXct(strptime(names(tab), "%s"))', format))
+            doItAndPrint("docSeries <- zoo(tab, order.by=time)")
         }
         else {
             if(length(groupLevs) < length(unique(meta(corpus, var)[[1]])))
@@ -101,52 +113,101 @@ varTimeSeriesDlg <- function() {
                 doItAndPrint(sprintf('tab <- table(meta(corpus, c("%s", "%s")))', timeVar, groupVar))
 
             doItAndPrint(sprintf('time <- as.POSIXct(strptime(rownames(tab), "%s"))', format))
+
+            if(what == "number")
+                doItAndPrint("docSeries <- zoo(tab, order.by=time)")
+            else
+                doItAndPrint("docSeries <- zoo(prop.table(tab, 1)*100, order.by=time)")
         }
 
-        # Trick to get a regular time series, since rollmeans() uses preceding and following points,
-        # without considering the spacing
-        doItAndPrint('docSeries <- merge(zoo(tab, order.by=time), zoo(, seq(min(time), max(time), min(diff(time)))), fill=0)')
+
+        # We need to be sure we have a common time unit, i.e. we have a zooreg object
+        if(!is.regular(docSeries))
+            doItAndPrint('docSeries <- aggregate(docSeries, list(as.POSIXct(trunc(time, units(diff(time))))), regular=TRUE)')
+
+
+        # For some reason, computing this after merging returns 24 "hours" instead of 1 "day" as unit
+        unitsLoc <- c(secs=gettext_("per second"), mins=gettext_("per minute"), hours=gettext_("per hour"),
+                      days=gettext_("per day"), weeks=gettext_("per week"))
+        unit <- unitsLoc[units(diff(time(docSeries)))]
+
+        # Trick to get a strictly regular time series with 0 where no document was observed
+        # difftime chooses the unit so that all differences are > 1, which is what we want
+        if(!is.regular(docSeries, strict=TRUE)) {
+            # seq() will specify different if we pass "day"
+            byUnit <- units(diff(time(docSeries)))
+            if(byUnit == "days") byUnit <- "DSTday"
+
+            doItAndPrint(sprintf('docSeries <- merge(docSeries, zoo(, seq(start(docSeries), end(docSeries), "%s")), fill=0)',
+                                 byUnit))
+        }
 
         if(rollmean) {
-            if(window >= length(docSeries))
+            if(window >= NROW(docSeries))
                 Message(message=gettext_("Chosen roll mean window is longer than the range of the time variable, rolling mean was not applied."),
                         type="warning")
             else
-                doItAndPrint(sprintf('docSeries <- rollmean(docSeries, %s, align="left")', window))
+                # For percents, the days with no observation get 0/0 == NaN, and we need to skip them
+                doItAndPrint(sprintf('docSeries <- rollapply(docSeries, %s, align="left", mean, na.rm=TRUE)', window))
         }
 
+        ylab <- if(what == "number") gettext_("Number of documents") else gettext_("% of documents")
         doItAndPrint(sprintf('xyplot(docSeries, superpose=TRUE, xlab="", ylab="%s", main="%s", auto.key=%s)',
-                             gettext_("Number of documents"), title,
+                             paste(ylab, unit), title,
                              if(NCOL(docSeries) > 1) 'list(space="bottom")' else "NULL"))
 
         doItAndPrint("rm(tab, time)")
-        doItAndPrint("print(docSeries)")
+
+        if(what == "number")
+            doItAndPrint("print(docSeries)")
+        else
+            doItAndPrint("round(docSeries, digits=2)")
 
         # Used by saveTableToOutput()
         last.table <<- "docSeries"
-        attr(docSeries, "title") <<- title
+        attr(docSeries, "title") <<- paste(title, " (", ylab, " ", unit, ")", sep="")
 
         activateMenus()
         tkfocus(CommanderWindow())
     }
 
-    OKCancelHelp(helpSubject="varTimeSeriesDlg")
+    buttonsFrame <- tkframe(top, borderwidth=5)
+    plotButton <- buttonRcmdr(buttonsFrame, text=gettext_("Plot"), foreground="darkgreen",
+                              command=onOK, default="active", borderwidth=3)
+    onClose <- function() {
+        closeDialog()
+        tkfocus(CommanderWindow())
+    }
+    closeButton <- buttonRcmdr(buttonsFrame, text=gettext_("Close"), foreground="red",
+                               command=onClose, borderwidth=3)
+    onHelp <- function() {
+        if (GrabFocus() && .Platform$OS.type != "windows") tkgrab.release(window)
+        print(help("varTimeSeriesDlg"))
+    }
+    helpButton <- buttonRcmdr(buttonsFrame, text=gettextRcmdr("Help"), width="12",
+                              command=onHelp, borderwidth=3)
+    tkgrid(plotButton, labelRcmdr(buttonsFrame, text="  "),
+           closeButton, labelRcmdr(buttonsFrame, text="            "),
+           helpButton, sticky="w")
+
     tkgrid(getFrame(timeVarBox), sticky="ewns", pady=6, row=0, rowspan=3)
     tkgrid(labelRcmdr(top, text=gettext_("Time format:")), pady=c(6, 0), sticky="w", row=0, column=1)
     tkgrid(formatEntry, sticky="w", row=1, column=1)
-    tkgrid(labelRcmdr(top, text=gettext_('%Y: year - %m: month - %d: day\nClick the "Help" button for more codes.')), sticky="w", row=2, column=1, pady=6)
+    tkgrid(labelRcmdr(top, text=gettext_('%Y: year - %m: month - %d: day\nClick the "Help" button for more codes.')),
+           sticky="w", row=2, column=1, pady=6)
     tkgrid(labelRcmdr(varsFrame, text=gettext_("Group by variable:"), foreground="blue"), sticky="w", pady=c(12, 0))
     tkgrid(varsBox, varsScrollbar, sticky="ewns", pady=6)
     tkgrid(varsFrame, levelsFrame, sticky="ewns", pady=6)
     tkgrid(labelRcmdr(levelsFrame, text=gettext_("Only plot levels:")), sticky="w", pady=c(12, 0))
     tkgrid(levelsBox, levelsScrollbar, sticky="ewns", pady=6)
+    tkgrid(whatFrame, sticky="w", pady=6, columnspan=2)
     tkgrid(labelRcmdr(top, text=gettext_("Rolling mean:"), foreground="blue"), sticky="w", pady=c(6, 0))
     tkgrid(meanButton, sticky="w")
-    tkgrid(labelRcmdr(top, text=gettext_("Time window for mean (in days):")), sliderWindow, sticky="w",
+    tkgrid(labelRcmdr(top, text=gettext_("Time window for mean (in time units):")), sliderWindow, sticky="w",
            padx=6, pady=c(0, 6))
     tkgrid(labelRcmdr(top, text=gettext_("Title:"), foreground="blue"), sticky="w", pady=c(6, 0))
     tkgrid(titleEntry, sticky="w", padx=6, pady=c(0, 6), columnspan=2)
     tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=2)
-    dialogSuffix(rows=12, columns=2, focus=timeVarBox$listbox)
+    dialogSuffix(rows=13, columns=2, focus=timeVarBox$listbox)
 }
 
