@@ -5,9 +5,9 @@ vocabularyTable <- function(termsDtm, wordsDtm, variable=NULL, unit=c("document"
     totaltPerDoc <- row_sums(termsDtm)
     uniquePerDoc <- rowSums(as.matrix(termsDtm) > 0)
     totalwPerDoc <- row_sums(wordsDtm)
-    longPerDoc <- row_sums(termsDtm[,nchar(colnames(termsDtm)) >= 7])
-    veryLongPerDoc <- row_sums(termsDtm[,nchar(colnames(termsDtm)) >= 10])
-    weightedLengths <- rowSums(sweep(as.matrix(termsDtm), 2, nchar(colnames(termsDtm)), "*"))
+    longPerDoc <- row_sums(wordsDtm[,nchar(colnames(wordsDtm)) >= 7])
+    veryLongPerDoc <- row_sums(wordsDtm[,nchar(colnames(wordsDtm)) >= 10])
+    weightedLengths <- rowSums(sweep(as.matrix(wordsDtm), 2, nchar(colnames(wordsDtm)), "*"))
 
     # Per-document statistics
     if(is.null(variable)) {
@@ -29,7 +29,7 @@ vocabularyTable <- function(termsDtm, wordsDtm, variable=NULL, unit=c("document"
                             sum(totalwPerDoc),
                             sum(longPerDoc), sum(longPerDoc)/sum(totalwPerDoc)*100,
                             sum(veryLongPerDoc), sum(veryLongPerDoc)/sum(totalwPerDoc)*100,
-                            sum(weightedLengths)/sum(termsDtm)))
+                            sum(weightedLengths)/sum(wordsDtm)))
 
         colnames(voc)[c(ncol(voc)-1, ncol(voc))] <- c(gettext_("Corpus mean"), gettext_("Corpus total"))
         lab <- ""
@@ -138,7 +138,7 @@ docVocabularyDlg <- function() {
         closeDialog()
 
         # Only compute the dtm the first time this operation is run
-        if(!exists("termsDtm")) {
+        if(!exists("wordsDtm")) {
             doItAndPrint("dtmCorpus <- corpus")
 
             if(meta(corpus, type="corpus", tag="language") == "french")
@@ -146,11 +146,11 @@ docVocabularyDlg <- function() {
 
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removePunctuation)")
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removeNumbers)")
-            doItAndPrint("termsDtm <- DocumentTermMatrix(dtmCorpus, control=list(wordLengths=c(2, Inf)))")
+            doItAndPrint("wordsDtm <- DocumentTermMatrix(dtmCorpus, control=list(wordLengths=c(2, Inf)))")
             doItAndPrint("rm(dtmCorpus)")
         }
 
-        doItAndPrint("voc <- vocabularyTable(dtm, termsDtm)")
+        doItAndPrint("voc <- vocabularyTable(dtm, wordsDtm)")
 
         # Plot
         measures <- c(totalt, uniquec, uniquep, totalw, longc, longp, vlongc, vlongp, longavg)
@@ -247,7 +247,7 @@ varVocabularyDlg <- function() {
         closeDialog()
 
         # Only compute the dtm the first time this operation is run
-        if(!exists("termsDtm")) {
+        if(!exists("wordsDtm")) {
             doItAndPrint("dtmCorpus <- corpus")
 
             if(meta(corpus, type="corpus", tag="language") == "french")
@@ -255,11 +255,11 @@ varVocabularyDlg <- function() {
 
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removePunctuation)")
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removeNumbers)")
-            doItAndPrint("termsDtm <- DocumentTermMatrix(dtmCorpus, control=list(wordLengths=c(2, Inf)))")
+            doItAndPrint("wordsDtm <- DocumentTermMatrix(dtmCorpus, control=list(wordLengths=c(2, Inf)))")
             doItAndPrint("rm(dtmCorpus)")
         }
 
-        doItAndPrint(sprintf('voc <- vocabularyTable(dtm, termsDtm, "%s", "%s")', var, unit))
+        doItAndPrint(sprintf('voc <- vocabularyTable(dtm, wordsDtm, "%s", "%s")', var, unit))
 
         # Plot
         measures <- c(totalt, uniquec, uniquep, totalw, longc, longp, vlongc, vlongp, longavg)
