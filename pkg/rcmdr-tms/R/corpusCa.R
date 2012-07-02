@@ -41,10 +41,11 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
 
             # If only one level is present, don't add the level name
             # (probably something like TRUE or YES)
+            # Also limit the length to 40 characters, beyond this things go out of control
             if(totNLevels == 1)
-                rownames(mat)<-colnames(meta)[i]
+                rownames(mat)<-substr(colnames(meta)[i], 0, 40)
             else
-                rownames(mat)<-paste(colnames(meta)[i], levels)
+                rownames(mat)<-make.unique(paste(substr(colnames(meta)[i], 0, 10), substr(levels, 0, 30)))
 
             dtm<-rbind(dtm, mat)
         }
