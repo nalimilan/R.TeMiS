@@ -21,6 +21,15 @@ importCorpusDlg <- function() {
                         gettext_("Stem words")),
                title=gettext_("Text processing:"))
 
+    chunksFrame <- tkframe(top)
+    tclChunks <- tclVar(0)
+    tclNParagraphs <- tclVar(1)
+    chunksButton <- tkcheckbutton(chunksFrame, variable=tclChunks,
+                                  text=gettext_("Split texts into smaller documents"))
+    chunksSlider <- tkscale(chunksFrame, from=1, to=20, showvalue=TRUE, variable=tclNParagraphs,
+		            resolution=1, orient="horizontal")
+    
+
     onOK <- function() {
         closeDialog()
 
@@ -49,6 +58,12 @@ importCorpusDlg <- function() {
 
         # Language is used again when creating the dtm to analyse word lengths
         doItAndPrint(sprintf('meta(corpus, type="corpus", tag="language") <- "%s"', lang))
+
+        # Create chunks
+        if(tclvalue(tclChunks) == 1) {
+            doItAndPrint(sprintf("corpus <- splitTexts(corpus, %s)", tclvalue(tclNParagraphs)))
+            doItAndPrint('meta(corpus, type="corpus", tag="split") <- TRUE')
+        }
 
         # Process texts
         lowercase <- tclvalue(lowercaseVariable) == 1
@@ -96,9 +111,14 @@ importCorpusDlg <- function() {
     OKCancelHelp(helpSubject="importCorpusDlg")
     tkgrid(sourceFrame, columnspan="2", sticky="w", pady=6)
     tkgrid(labelRcmdr(top, text=gettext_("Language of texts in the corpus:")), entryLang, sticky="w")
+    tkgrid(labelRcmdr(chunksFrame, text=gettext_("Text splitting:"), fg="blue"), sticky="ws")
+    tkgrid(chunksButton, columnspan="2", sticky="w", pady=6)
+    tkgrid(labelRcmdr(chunksFrame, text=gettext_("Size of new documents (in paragraphs):")),
+           chunksSlider, sticky="w", pady=6, padx=6)
+    tkgrid(chunksFrame, columnspan="2", sticky="w", pady=6)
     tkgrid(processingFrame, columnspan="2", sticky="w", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
-    dialogSuffix(rows=4, columns=2, focus=entryLang)
+    dialogSuffix(rows=6, columns=2, focus=entryLang)
 }
 
 # Choose a directory to load texts from
@@ -318,3 +338,52 @@ importCorpusFromFactiva <- function(language=NA) {
     return(TRUE)
 }
 
+# Adapted version of tm's makeChunks() remembering which chunk comes from which document
+# and preserving corpus meta-data.
+# Copyright Ingo Feinerer, Licence: GPL (≥ 2).
+# http://tm.r-forge.r-project.org/
+splitTexts <- function (corpus, chunksize, preserveMetadata=TRUE) 
+{
+    chunks <- list()
+    origin <- numeric()
+    for (k in seq_along(corpus)) {
+        s <- c(seq(1, length(corpus[[k]]), chunksize), length(corpus[[k]]) + 1)
+        origin <- c(origin, rep(k, length(s) - 1))
+        for (i in 1:(length(s) - 1)) {
+            chunks <- c(chunks, list(corpus[[k]][s[i]:(s[i + 1] - 1)]))
+        }
+    }
+    newCorpus <- Corpus(VectorSource(chunks))
+
+    names1 <- names(corpus)
+    names2 <- make.unique(names1[origin])
+
+    # Copy meta data from old documents
+    if(preserveMetadata) {
+        DMetaData(newCorpus) <- DMetaData(corpus)[origin,, drop=FALSE]
+
+        for(i in seq_along(corpus)) {
+            attrs <- attributes(corpus[[i]])
+
+            for(j in which(origin == i)) {
+                doc <- newCorpus[[j]]
+                attr(doc, "ID") <- names2[j]
+                attr(doc, "Document") <- names1[i]
+                attr(doc, "Author") <- attrs$Author
+                attr(doc, "DateTimeStamp") <- attrs$DateTimeStamp
+                attr(doc, "Description") <- attrs$Description
+                attr(doc, "Heading") <- attrs$Heading
+                attr(doc, "Language") <- attrs$Language
+                attr(doc, "LocalMetaData") <- attrs$LocalMetaData
+                attr(doc, "Origin") <- attrs$Origin
+                newCorpus[[j]] <- doc
+            }
+        }
+    }
+
+    meta(newCorpus, gettext_("Doc ID")) <- names1[origin]
+    meta(newCorpus, gettext_("Doc N")) <- origin
+    names(newCorpus) <- names2
+
+    newCorpus
+}

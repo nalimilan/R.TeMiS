@@ -3,6 +3,7 @@
 \alias{importCorpusFromDir}
 \alias{importCorpusFromFile}
 \alias{importCorpusFromFactiva}
+\alias{splitTexts}
 \title{Import a corpus and process it}
 \description{Import a corpus, process it and extract a document-term matrix.}
 \details{This dialog allows creating a \pkg{tm} corpus from various sources. Once the
@@ -31,6 +32,16 @@
          article, for example by removing half of the documents and retrying, until only one
          document is left in the corpus; then, report the problem to the Factiva Customer
          Service, or ask for help to the maintainers of the present package.
+
+         The original texts can optionally be split into smaller chunks, which will then be
+         considered as the real unit (called \sQuote{documents}) for all analyses. In order
+         to get meaningful chunks, texts are only splitted into paragraphs. These are defined
+         by the import filter: when importing a directory of text files, a new paragraph
+         starts with a line break; when importing a Factiva XML file, paragraphs are defined
+         by the content provider itself, so may vary in size (heading is always a separate
+         paragraph); splitting has no effect when importing from a spreadsheet file. A corpus
+         variable called \dQuote{Document} is created, which identifies the original text
+         the chunk comes from.
 
          For all sources, a data set called \code{corpusVariables} is created, with one row
          for each document in the corpus: it contains meta-data that could be extracted from

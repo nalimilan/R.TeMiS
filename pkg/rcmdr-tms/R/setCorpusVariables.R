@@ -17,35 +17,56 @@ setCorpusVariables <- function() {
         return()
     }
 
+    # If corpus was split, we need to replicate variables
+    split <- isTRUE(meta(corpus, type="corpus", tag="split"))
+
     dset <- get(.activeDataSet)
-    if(nrow(dset) != length(corpus)) {
-        Message(message=sprintf(gettext_("Active data set must contain exactly %d rows."), length(corpus)),
+    len <- if (split) length(unique(meta(corpus, gettext_("Doc N"))[[1]])) else length(corpus)
+    if(nrow(dset) != len) {
+        Message(message=sprintf(gettext_("Active data set must contain exactly %d rows."), len),
                 type="error")
         return()
     }
 
+    # Remove dropped variables
+    for(var in colnames(meta(corpus))[!colnames(meta(corpus)) %in%
+            c(colnames(dset), gettext_("Doc N"), gettext_("Doc ID"))])
+        doItAndPrint(sprintf('meta(corpus, "%s") <- NULL', var))
+
+    # Add new variables
     indices <- which(sapply(dset, function(x) !all(is.na(x) | x == "", na.rm=TRUE)))
 
-    if(length(indices) == 0) {
-        Message(message=gettext_("Active data set is empty."),
-                type="error")
-        return()
+    if(length(indices) > 0) {
+        if(split) {
+            for(i in indices)
+               doItAndPrint(sprintf('meta(corpus, "%s") <- %s[meta(corpus, "%s")[[1]], %i]',
+                                     colnames(dset)[i], ActiveDataSet(), gettext_("Doc N"), i))
+        }
+        else {
+            for(i in indices)
+                doItAndPrint(sprintf('meta(corpus, "%s") <- %s[[%i]]',
+                                     colnames(dset)[i], ActiveDataSet(), i))
+        }
     }
 
-    for(var in colnames(meta(corpus)))
-        doItAndPrint(paste("meta(corpus, tag=\"", var, "\") <- NULL", sep=""))
-
-    for(i in indices) {
-        doItAndPrint(paste("meta(corpus, tag=\"", colnames(dset)[i], "\") <- ", ActiveDataSet(), "[", i, "]", sep=""))
+    # Update names only if they changed
+    oldDocNames <- if(split) unique(meta(corpus, gettext_("Doc ID"))[[1]]) else names(corpus)
+    corpusNames <- names(corpus)
+    if(!identical(oldDocNames, row.names(dset))) {
+        if(split) {
+            doItAndPrint(sprintf('names(corpus) <- make.unique(row.names(%s)[meta(corpus, "%s")[[1]]])',
+                                 ActiveDataSet(), gettext_("Doc N")))
+            doItAndPrint(sprintf('meta(corpus, "%s") <- row.names(%s)[meta(corpus, "%s")[[1]]]',
+                                 gettext_("Doc ID"), ActiveDataSet(), gettext_("Doc N")))
+        }
+        else {
+            doItAndPrint(sprintf('names(corpus) <- row.names(%s)',
+                                 ActiveDataSet()))
+        }
     }
 
-    if(any(row.names(dset) != names(corpus))) {
-        # Update the names of the dtm since it affects all operations and cannot be done manually
-        # We assume the dtm corresponds to the current corpus if names are identical
-        if(all(rownames(dtm) == names(corpus)))
-            doItAndPrint(paste("rownames(dtm) <- row.names(", ActiveDataSet(), ")", sep=""))
-
-        doItAndPrint(paste("names(corpus) <- row.names(", ActiveDataSet(), ")", sep=""))
-        doItAndPrint('for(i in 1:length(corpus)) meta(corpus[[i]], "ID") <- names(corpus)[i]')
-    }
+    # Update the names of the dtm since it affects all operations and cannot be done manually
+    # We assume the dtm corresponds to the current corpus if names were identical
+    if(identical(corpusNames, rownames(dtm)))
+        doItAndPrint("rownames(dtm) <- names(corpus)")
 }

@@ -125,7 +125,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 
         termsCtr <- colCtr(corpusCa, dim[j])
         terms <- order(termsCtr, decreasing=TRUE)[1:nterms]
-    terms <- terms[!terms %in% corpusCa$colsup]
+        terms <- terms[!terms %in% corpusCa$colsup]
 
 
         tkinsert(txt, "end",
@@ -170,14 +170,15 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
 
             for(i in posdocs) {
-                tkinsert(txt, "end", paste("\n\n", names(corpus)[i], "\n", sep=""),
+                id <- corpusCa$rownames[i]
+                tkinsert(txt, "end", paste("\n\n", id, "\n", sep=""),
                          "articlehead")
                 tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
                 mark <- mark + 1
-                tkinsert(listbox, "end", names(corpus)[i])
+                tkinsert(listbox, "end", id)
 
-                origin <- meta(corpus[[i]], "Origin")
-                date <- meta(corpus[[i]], "DateTimeStamp")
+                origin <- meta(corpus[[id]], "Origin")
+                date <- meta(corpus[[id]], "DateTimeStamp")
                 if(length(origin) > 0 && length(date) > 0)
                     tkinsert(txt, "end", paste(origin, " - ", date, "\n", sep=""))
                 else if(length(origin) > 0)
@@ -185,7 +186,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
                 else if(length(origin) > 0)
                     tkinsert(txt, "end", paste(date, "\n", sep=""))
 
-                tkinsert(txt, "end", paste(paste(corpus[[i]], collapse="\n"), "\n\n"))
+                tkinsert(txt, "end", paste(paste(corpus[[id]], collapse="\n"), "\n\n"))
             }
         }
 
@@ -234,14 +235,15 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
 
             for(i in posdocs) {
-                tkinsert(txt, "end", paste("\n\n", names(corpus)[i], "\n", sep=""),
+                id <- corpusCa$rownames[i]
+                tkinsert(txt, "end", paste("\n\n", id, "\n", sep=""),
                          "articlehead")
                 tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
                 mark <- mark + 1
-                tkinsert(listbox, "end", names(corpus)[i])
+                tkinsert(listbox, "end", id)
 
-                origin <- meta(corpus[[i]], "Origin")
-                date <- meta(corpus[[i]], "DateTimeStamp")
+                origin <- meta(corpus[[id]], "Origin")
+                date <- meta(corpus[[id]], "DateTimeStamp")
                 if(length(origin) > 0 && length(date) > 0)
                     tkinsert(txt, "end", paste(origin, " - ", date, "\n", sep=""))
                 else if(length(origin) > 0)
@@ -249,7 +251,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
                 else if(length(origin) > 0)
                     tkinsert(txt, "end", paste(date, "\n", sep=""))
 
-                tkinsert(txt, "end", paste(paste(corpus[[i]], collapse="\n"), "\n\n"))
+                tkinsert(txt, "end", paste(paste(corpus[[id]], collapse="\n"), "\n\n"))
             }
         }
 

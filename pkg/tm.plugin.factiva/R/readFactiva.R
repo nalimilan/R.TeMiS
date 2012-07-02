@@ -4,10 +4,9 @@ readFactiva <- tm::readXML(
                              gsub("\n|\\s+", " ",
                                   sapply(XML::getNodeSet(node, "/article/byline"), xmlValue))))),
     Content = list("function", function(node)
-                   paste(sapply(XML::getNodeSet(node, "/article/headline"), xmlValue),
+                   c(sapply(XML::getNodeSet(node, "/article/headline"), xmlValue),
                          sapply(XML::getNodeSet(node, "/article/leadParagraph"), xmlValue),
-                         paste(sapply(XML::getNodeSet(node, "/article/tailParagraphs/paragraph"), xmlValue), collapse="\n"),
-                         sep="\n\n")),
+                         sapply(XML::getNodeSet(node, "/article/tailParagraphs/paragraph"), xmlValue))),
     DateTimeStamp = list("function", function(node)
                          strptime(sapply(XML::getNodeSet(node, "/article/publicationDate/date"), xmlValue),
                                   format="%Y-%m-%d")),
