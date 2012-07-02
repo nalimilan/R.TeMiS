@@ -54,21 +54,34 @@ termsAssocDlg <- function() {
     tclTerms <- tclVar("")
     entryTerms <- ttkentry(top,  width="35", textvariable=tclTerms)
 
-    tclN <- tclVar(80)
+    tclN <- tclVar(30)
     sliderN <- tkscale(top, from=0, to=100,
                        showvalue=TRUE, variable=tclN,
 	               resolution=1, orient="horizontal")
 
+    vars <- c(gettext_("None (whole corpus)"), colnames(meta(corpus)))
+    varBox <- variableListBox(top, vars,
+                              title=gettext_("Report results by variable:"),
+                              initialSelection=0)
+
     onOK <- function() {
+        n <- as.numeric(tclvalue(tclN))
+        termsList <- strsplit(tclvalue(tclTerms), " ")
+        var <- getSelection(varBox)
+
         closeDialog()
 
         setBusyCursor()
 
-        n <- as.numeric(tclvalue(tclN))
-        termsList <- strsplit(tclvalue(tclTerms), " ")
-
-        for(term in termsList[[1]])
-            doItAndPrint(paste("findAssocs(dtm, \"", term, "\", ", n/100, ")", sep=""))
+        if(var == gettext_("None (whole corpus)")) {
+            for(term in termsList[[1]])
+                doItAndPrint(sprintf('findAssocs(dtm, "%s", %s)', term, n/100))
+        }
+        else {
+            for(term in termsList[[1]])
+                doItAndPrint(sprintf('sapply(levels(factor(meta(corpus, "%s")[[1]])), function(l)\nfindAssocs(dtm[meta(corpus, "%s")[[1]] == l,], "%s", %s))',
+                                     var, var, term, n/100))
+        }
 
         setIdleCursor()
         tkfocus(CommanderWindow())
@@ -77,9 +90,10 @@ termsAssocDlg <- function() {
     OKCancelHelp(helpSubject="termsAssocDlg")
     tkgrid(labelRcmdr(top, text=gettext_("Reference terms (space-separated):")), sticky="w")
     tkgrid(entryTerms, sticky="w", columnspan=2)
-    tkgrid(labelRcmdr(top, text=gettext_("Correlation coefficient (%):")), sliderN, sticky="sw")
+    tkgrid(labelRcmdr(top, text=gettext_("Correlation coefficient (%):")), sliderN, sticky="sw", pady=6)
+    tkgrid(getFrame(varBox), columnspan="2", sticky="w", pady=6)
     tkgrid(buttonsFrame, columnspan=2, sticky="w", pady=6)
-    dialogSuffix(rows=4, columns=2, focus=entryTerms)
+    dialogSuffix(rows=5, columns=2, focus=entryTerms)
 }
 
 typicalTermsDlg <- function() {
