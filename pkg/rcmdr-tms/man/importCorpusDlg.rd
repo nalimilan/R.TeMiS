@@ -48,10 +48,6 @@
          French (\sQuote{fr}), German (\sQuote{de}), Hungarian (\sQuote{hu}), Italian (\sQuote{it}),
          Norwegian (\sQuote{no}), Portuguese (\sQuote{pt}), Russian (\sQuote{ru}), Spanish (\sQuote{es}),
          and Swedish (\sQuote{sv}) - to specifify via their ISO 639 two-letter code.
-         To improve readability of terms, it is also possible to complete extracted stems, replacing
-         them with the word corresponding to this stem which is the most prevalent in the corpus;
-         this operationis purely cosmetic (it has no effects on the analyses), and is the most
-         computer-intensive of all steps.
 
          Once the corpus has been imported, its document-term matrix is extracted.
 }
