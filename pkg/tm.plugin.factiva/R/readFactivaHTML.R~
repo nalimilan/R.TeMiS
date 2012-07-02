@@ -20,8 +20,8 @@ readFactivaHTML <- tm::FunctionGenerator(function(elem, language, id) {
         data <- as.character(table[match(vars, substr(table[,1], 0, 2)), 2])
         names(data) <- vars
 
-        # Encoding is passed explicitly to work around a bug in XML: htmlParse() and xmlParse() do not set it
-        # as they should when asText=TRUE for now
+        # Encoding is passed explicitly to work around a bug in XML: htmlParse() and xmlParse() do not set it as they
+        # should when asText=TRUE for now
         if(Encoding(data) == "unknown")
             Encoding(data) <- Encoding(elem$content)
 
