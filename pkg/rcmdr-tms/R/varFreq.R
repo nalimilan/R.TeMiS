@@ -1,36 +1,36 @@
 varTableDlg <- function() {
     nVars <- ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"])
     if(nVars == 0) {
-        Message(message=gettext_("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
+        Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
                 type="error")
         return()
     }
 
-    initializeDialog(title=gettext_("Variable One-Way Table"))
+    initializeDialog(title=.gettext("Variable One-Way Table"))
 
     vars <- colnames(meta(corpus))
     varBox <- variableListBox(top, vars,
-                               title=gettext_("Variable:"),
+                               title=.gettext("Variable:"),
                                initialSelection=0)
 
     radioButtons(name="what",
                  buttons=c("percent", "absolute"),
-                 labels=c(gettext_("Percent"),
-                          gettext_("Absolute counts")),
-                 title=gettext_("Measure:"),
+                 labels=c(.gettext("Percent"),
+                          .gettext("Absolute counts")),
+                 title=.gettext("Measure:"),
                  right.buttons=FALSE)
 
-    tclTitle <- tclVar(gettext_("Distribution of documents by %V"))
+    tclTitle <- tclVar(.gettext("Distribution of documents by %V"))
     titleEntry <- ttkentry(top, width="40", textvariable=tclTitle)
 
     tclPlotType <- tclVar("barplot")
     plotFrame <- tkframe(top)
     noneButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
-                                 value="none", text=gettext_("None"))
+                                 value="none", text=.gettext("None"))
     barplotButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
-                                    value="barplot", text=gettext_("Bar plot"))
+                                    value="barplot", text=.gettext("Bar plot"))
     pieButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
-                                value="pie", text=gettext_("Pie chart"))
+                                value="pie", text=.gettext("Pie chart"))
 
     onOK <- function() {
         var <- getSelection(varBox)
@@ -46,11 +46,11 @@ varTableDlg <- function() {
 
         if(what == "percent") {
             doItAndPrint("varFreqs <- prop.table(absVarFreqs) * 100")
-            ylab <- gettext_("% of documents")
+            ylab <- .gettext("% of documents")
         }
         else {
             doItAndPrint("varFreqs <- absVarFreqs")
-            ylab <- gettext_("Number of documents")
+            ylab <- .gettext("Number of documents")
         }
 
         if(plotType == "barplot") {
@@ -83,9 +83,9 @@ varTableDlg <- function() {
     OKCancelHelp(helpSubject="varTableDlg")
     tkgrid(getFrame(varBox), sticky="w", pady=6, columnspan=3)
     tkgrid(whatFrame, sticky="w", pady=6, columnspan=3)
-    tkgrid(labelRcmdr(top, text=gettext_("Title:"), foreground="blue"), sticky="w")
+    tkgrid(labelRcmdr(top, text=.gettext("Title:"), foreground="blue"), sticky="w")
     tkgrid(titleEntry, sticky="w")
-    tkgrid(labelRcmdr(plotFrame, text=gettext_("Plot:"), foreground="blue"),
+    tkgrid(labelRcmdr(plotFrame, text=.gettext("Plot:"), foreground="blue"),
            sticky="w", columnspan=3)
     tkgrid(plotFrame, sticky="w", pady=6, columnspan=3)
     tkgrid(noneButton, sticky="w", padx=3, column=1, row=4)
@@ -98,46 +98,46 @@ varTableDlg <- function() {
 varCrossTableDlg <- function() {
     nVars <- ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"])
     if(nVars == 0) {
-        Message(message=gettext_("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
+        Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
                 type="error")
         return()
     }
     else if(nVars == 1) {
-        Message(message=gettext_("Corpus has only one variable."),
+        Message(message=.gettext("Corpus has only one variable."),
                 type="error")
         return()
     }
 
-    initializeDialog(title=gettext_("Variable Two-Way Table"))
+    initializeDialog(title=.gettext("Variable Two-Way Table"))
 
     vars <- colnames(meta(corpus))
     varBox1 <- variableListBox(top, vars,
-                               title=gettext_("Row variable:"),
+                               title=.gettext("Row variable:"),
                                initialSelection=0)
 
     varBox2 <- variableListBox(top, vars,
-                               title=gettext_("Column variable:"),
+                               title=.gettext("Column variable:"),
                                initialSelection=1)
 
     radioButtons(name="what",
                  buttons=c("row", "col", "absolute"),
-                 labels=c(gettext_("Row %"),
-                          gettext_("Column %"),
-                          gettext_("Absolute counts")),
-                 title=gettext_("Measure:"),
+                 labels=c(.gettext("Row %"),
+                          .gettext("Column %"),
+                          .gettext("Absolute counts")),
+                 title=.gettext("Measure:"),
                  right.buttons=FALSE)
 
-    tclTitle <- tclVar(gettext_("Distribution of documents by %V1 and %V2"))
+    tclTitle <- tclVar(.gettext("Distribution of documents by %V1 and %V2"))
     titleEntry <- ttkentry(top, width="20", textvariable=tclTitle)
 
     tclPlotType <- tclVar("barplot")
     plotFrame <- tkframe(top)
     noneButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
-                                 value="none", text=gettext_("None"))
+                                 value="none", text=.gettext("None"))
     barplotButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
-                                    value="barplot", text=gettext_("Bar plot"))
+                                    value="barplot", text=.gettext("Bar plot"))
     pieButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
-                                value="pie", text=gettext_("Pie chart"))
+                                value="pie", text=.gettext("Pie chart"))
 
     onOK <- function() {
         var1 <- getSelection(varBox1)
@@ -155,15 +155,15 @@ varCrossTableDlg <- function() {
 
         if(what == "row") {
             doItAndPrint("varFreqs <- prop.table(absVarFreqs, 1) * 100")
-            ylab <- gettext_("% of documents")
+            ylab <- .gettext("% of documents")
         }
         else if (what == "col") {
             doItAndPrint("varFreqs <- prop.table(absVarFreqs, 2) * 100")
-            ylab <- gettext_("% of documents")
+            ylab <- .gettext("% of documents")
         }
         else {
             doItAndPrint("varFreqs <- absVarFreqs")
-            ylab <- gettext_("Number of documents")
+            ylab <- .gettext("Number of documents")
         }
 
         if(plotType == "barplot") {
@@ -204,9 +204,9 @@ varCrossTableDlg <- function() {
         # Used by saveTableToOutput()
         last.table <<- "varFreqs"
         if(what == "row")
-            attr(varFreqs, "title") <<- paste(title, gettext_("(row %)"))
+            attr(varFreqs, "title") <<- paste(title, .gettext("(row %)"))
         else if(what == "col")
-            attr(varFreqs, "title") <<- paste(title, gettext_("(column %)"))
+            attr(varFreqs, "title") <<- paste(title, .gettext("(column %)"))
         else
             attr(varFreqs, "title") <<- title
 
@@ -218,13 +218,13 @@ varCrossTableDlg <- function() {
     tkgrid(getFrame(varBox1), sticky="w", pady=6, columnspan=3)
     tkgrid(getFrame(varBox2), sticky="w", pady=6, columnspan=3)
     tkgrid(whatFrame, sticky="w", pady=6, columnspan=3)
-    tkgrid(labelRcmdr(plotFrame, text=gettext_("Plot:"), foreground="blue"),
+    tkgrid(labelRcmdr(plotFrame, text=.gettext("Plot:"), foreground="blue"),
            sticky="w", columnspan=3)
     tkgrid(plotFrame, sticky="w", pady=6, columnspan=3)
     tkgrid(noneButton, sticky="w", padx=3, column=1, row=4)
     tkgrid(barplotButton, sticky="w", padx=3, column=2, row=4)
     tkgrid(pieButton, sticky="w", padx=3, column=3, row=4)
-    tkgrid(labelRcmdr(top, text=gettext_("Title:")), titleEntry, sticky="w")
+    tkgrid(labelRcmdr(top, text=.gettext("Title:")), titleEntry, sticky="w")
     tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=3)
     dialogSuffix(rows=6, columns=3, focus=varBox1$listbox)
 }

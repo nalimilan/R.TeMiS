@@ -1,27 +1,27 @@
 docTermFreqDlg <- function() {
-    initializeDialog(title=gettext_("Terms Frequencies per Document"))
+    initializeDialog(title=.gettext("Terms Frequencies per Document"))
 
     tclTerms <- tclVar("")
     entryTerms <- ttkentry(top, width="30", textvariable=tclTerms)
 
     radioButtons(name="what",
                  buttons=c("row", "col", "absolute"),
-                 labels=c(gettext_("Row % (term prevalence in category)"),
-                          gettext_("Column % (distribution of occurrences)"),
-                          gettext_("Absolute counts")),
-                 title=gettext_("Measure:"),
+                 labels=c(.gettext("Row % (term prevalence in category)"),
+                          .gettext("Column % (distribution of occurrences)"),
+                          .gettext("Absolute counts")),
+                 title=.gettext("Measure:"),
                  right.buttons=FALSE)
 
     displayFrame <- tkframe(top)
 
-    tclTitle <- tclVar(gettext_("Occurrences of term %T by document"))
+    tclTitle <- tclVar(.gettext("Occurrences of term %T by document"))
     titleEntry <- ttkentry(displayFrame, width="40", textvariable=tclTitle)
 
     tclPlotVar <- tclVar(1)
-    plotButton <- tkcheckbutton(displayFrame, text=gettext_("Draw plot"), variable=tclPlotVar)
+    plotButton <- tkcheckbutton(displayFrame, text=.gettext("Draw plot"), variable=tclPlotVar)
 
     tclTransVar <- tclVar(0)
-    transButton <- tkcheckbutton(displayFrame, text=gettext_("Transpose table"), variable=tclTransVar)
+    transButton <- tkcheckbutton(displayFrame, text=.gettext("Transpose table"), variable=tclTransVar)
 
     onOK <- function() {
         termsList <- strsplit(tclvalue(tclTerms), " ")[[1]]
@@ -31,17 +31,17 @@ docTermFreqDlg <- function() {
 
         if(length(termsList) == 0) {
             errorCondition(recall=docTermFreqDlg,
-                           message=gettext_("Please enter at least one term."))
+                           message=.gettext("Please enter at least one term."))
             return()
         }
         else if(!all(termsList %in% colnames(dtm))) {
             wrongTerms <- termsList[!(termsList %in% colnames(dtm))]
             errorCondition(recall=docTermFreqDlg,
-                           message=sprintf(ngettext_(length(wrongTerms),
+                           message=sprintf(.ngettext(length(wrongTerms),
                                                     "Term \'%s\' does not exist in the corpus.",
                                                     "Terms \'%s\' do not exist in the corpus."),
                                                      # TRANSLATORS: this should be opening quote, comma, closing quote
-                                                     paste(wrongTerms, collapse=gettext_("\', \'"))))
+                                                     paste(wrongTerms, collapse=.gettext("\', \'"))))
             return()
         }
 
@@ -55,7 +55,7 @@ docTermFreqDlg <- function() {
 
         if(what == "row") {
             doItAndPrint("termFreqs <- absTermFreqs/row_sums(dtm) * 100")
-            ylab <- gettext_("% of all terms")
+            ylab <- .gettext("% of all terms")
         }
         else if (what == "col") {
             if(length(termsList) == 1)
@@ -63,11 +63,11 @@ docTermFreqDlg <- function() {
             else
                 doItAndPrint("termFreqs <- prop.table(absTermFreqs, 2) * 100")
 
-            ylab <- gettext_("% of occurrences")
+            ylab <- .gettext("% of occurrences")
         }
         else {
             doItAndPrint("termFreqs <- absTermFreqs")
-            ylab <- gettext_("Number of occurrences")
+            ylab <- .gettext("Number of occurrences")
         }
 
         # Plot
@@ -114,9 +114,9 @@ docTermFreqDlg <- function() {
         # Used by saveTableToOutput()
         last.table <<- "termFreqs"
         if(what == "row")
-            attr(termFreqs, "title") <<- paste(title, gettext_("(% of all terms)"))
+            attr(termFreqs, "title") <<- paste(title, .gettext("(% of all terms)"))
         else if(what == "col")
-            attr(termFreqs, "title") <<- paste(title, gettext_("(% of occurrences)"))
+            attr(termFreqs, "title") <<- paste(title, .gettext("(% of occurrences)"))
         else
             attr(termFreqs, "title") <<- title
 
@@ -125,11 +125,11 @@ docTermFreqDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="docTermFreqDlg")
-    tkgrid(labelRcmdr(top, text=gettext_("Terms to show (space-separated):")), sticky="w")
+    tkgrid(labelRcmdr(top, text=.gettext("Terms to show (space-separated):")), sticky="w")
     tkgrid(entryTerms, sticky="w", columnspan=2, pady=6)
     tkgrid(whatFrame, sticky="w", columnspan=2, pady=6)
-    tkgrid(labelRcmdr(displayFrame, text=gettext_("Display:"), foreground="blue"), sticky="w", columnspan=2)
-    tkgrid(labelRcmdr(displayFrame, text=gettext_("Title:")), titleEntry, sticky="w", padx=6)
+    tkgrid(labelRcmdr(displayFrame, text=.gettext("Display:"), foreground="blue"), sticky="w", columnspan=2)
+    tkgrid(labelRcmdr(displayFrame, text=.gettext("Title:")), titleEntry, sticky="w", padx=6)
     tkgrid(transButton, sticky="w", columnspan=2)
     tkgrid(plotButton, sticky="w", columnspan=2)
     tkgrid(displayFrame, sticky="w", pady=6, columnspan=2)
@@ -139,39 +139,39 @@ docTermFreqDlg <- function() {
 
 varTermFreqDlg <- function() {
     if(ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"]) == 0) {
-        Message(message=gettext_("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
+        Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
                 type="error")
         return()
     }
 
-    initializeDialog(title=gettext_("Terms Frequencies per Variable"))
+    initializeDialog(title=.gettext("Terms Frequencies per Variable"))
 
     tclTerms <- tclVar("")
     entryTerms <- ttkentry(top, width="30", textvariable=tclTerms)
 
     vars <- colnames(meta(corpus))
     varBox <- variableListBox(top, vars,
-                              title=gettext_("Variable:"),
+                              title=.gettext("Variable:"),
                               initialSelection=0)
 
     radioButtons(name="what",
                  buttons=c("row", "col", "absolute"),
-                 labels=c(gettext_("Row % (term prevalence in category)"),
-                          gettext_("Column % (distribution of occurrences)"),
-                          gettext_("Absolute counts")),
-                 title=gettext_("Measure:"),
+                 labels=c(.gettext("Row % (term prevalence in category)"),
+                          .gettext("Column % (distribution of occurrences)"),
+                          .gettext("Absolute counts")),
+                 title=.gettext("Measure:"),
                  right.buttons=FALSE)
 
     displayFrame <- tkframe(top)
 
-    tclTitle <- tclVar(gettext_("Occurrences of term %T by %V"))
+    tclTitle <- tclVar(.gettext("Occurrences of term %T by %V"))
     titleEntry <- ttkentry(displayFrame, width="40", textvariable=tclTitle)
 
     tclPlotVar <- tclVar(1)
-    plotButton <- tkcheckbutton(displayFrame, text=gettext_("Draw plot"), variable=tclPlotVar)
+    plotButton <- tkcheckbutton(displayFrame, text=.gettext("Draw plot"), variable=tclPlotVar)
 
     tclTransVar <- tclVar(0)
-    transButton <- tkcheckbutton(displayFrame, text=gettext_("Transpose table"), variable=tclTransVar)
+    transButton <- tkcheckbutton(displayFrame, text=.gettext("Transpose table"), variable=tclTransVar)
 
     onOK <- function() {
         termsList <- strsplit(tclvalue(tclTerms), " ")[[1]]
@@ -182,17 +182,17 @@ varTermFreqDlg <- function() {
 
         if(length(termsList) == 0) {
             errorCondition(recall=varTermFreqDlg,
-                           message=gettext_("Please enter at least one term."))
+                           message=.gettext("Please enter at least one term."))
             return()
         }
         else if(!all(termsList %in% colnames(dtm))) {
             wrongTerms <- termsList[!(termsList %in% colnames(dtm))]
             errorCondition(recall=varTermFreqDlg,
-                           message=sprintf(ngettext_(length(wrongTerms),
+                           message=sprintf(.ngettext(length(wrongTerms),
                                                     "Term \'%s\' does not exist in the corpus.",
                                                     "Terms \'%s\' do not exist in the corpus."),
                                                      # TRANSLATORS: this should be opening quote, comma, closing quote
-                                                     paste(wrongTerms, collapse=gettext_("\', \'"))))
+                                                     paste(wrongTerms, collapse=.gettext("\', \'"))))
             return()
         }
 
@@ -211,7 +211,7 @@ varTermFreqDlg <- function() {
             doItAndPrint(sprintf('termFreqs <- absTermFreqs/c(tapply(row_sums(dtm), meta(corpus, "%s"), sum)) * 100',
                                  var))
 
-            ylab <- gettext_("% of all terms")
+            ylab <- .gettext("% of all terms")
         }
         else if (what == "col") {
             if(length(termsList) == 1)
@@ -219,11 +219,11 @@ varTermFreqDlg <- function() {
             else
                 doItAndPrint("termFreqs <- prop.table(absTermFreqs, 2) * 100")
 
-            ylab <- gettext_("% of occurrences")
+            ylab <- .gettext("% of occurrences")
         }
         else {
             doItAndPrint("termFreqs <- absTermFreqs")
-            ylab <- gettext_("Number of occurrences")
+            ylab <- .gettext("Number of occurrences")
         }
 
         # Plot
@@ -269,9 +269,9 @@ varTermFreqDlg <- function() {
         # Used by saveTableToOutput()
         last.table <<- "termFreqs"
         if(what == "row")
-            attr(termFreqs, "title") <<- paste(title, gettext_("(% of all terms)"))
+            attr(termFreqs, "title") <<- paste(title, .gettext("(% of all terms)"))
         else if(what == "col")
-            attr(termFreqs, "title") <<- paste(title, gettext_("(% of occurrences)"))
+            attr(termFreqs, "title") <<- paste(title, .gettext("(% of occurrences)"))
         else
             attr(termFreqs, "title") <<- title
 
@@ -280,12 +280,12 @@ varTermFreqDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="varTermFreqDlg")
-    tkgrid(labelRcmdr(top, text=gettext_("Terms to show (space-separated):")), sticky="w", columnspan=2)
+    tkgrid(labelRcmdr(top, text=.gettext("Terms to show (space-separated):")), sticky="w", columnspan=2)
     tkgrid(entryTerms, sticky="w", columnspan=2)
     tkgrid(getFrame(varBox), sticky="w", columnspan=2, pady=6)
     tkgrid(whatFrame, sticky="w", columnspan=2, pady=6)
-    tkgrid(labelRcmdr(displayFrame, text=gettext_("Display:"), foreground="blue"), sticky="w", columnspan=2)
-    tkgrid(labelRcmdr(displayFrame, text=gettext_("Title:")), titleEntry, sticky="w", padx=6)
+    tkgrid(labelRcmdr(displayFrame, text=.gettext("Display:"), foreground="blue"), sticky="w", columnspan=2)
+    tkgrid(labelRcmdr(displayFrame, text=.gettext("Title:")), titleEntry, sticky="w", padx=6)
     tkgrid(transButton, sticky="w", columnspan=2)
     tkgrid(plotButton, sticky="w", columnspan=2)
     tkgrid(displayFrame, sticky="w", pady=6, columnspan=2)

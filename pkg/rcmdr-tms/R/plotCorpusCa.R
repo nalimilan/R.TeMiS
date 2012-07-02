@@ -258,18 +258,18 @@ plotCorpusCa <- function (x, dim = c(1, 2), map = "symmetric",
     }
     if (labels[1] > 0 && !is.na(x[1]) &&
         labels[2] > 0 && !is.na(y[1]))
-        pointLabel(rbind(x, y), c(x.names, y.names), cex = cex * par("cex"), xpd = TRUE,
+        .pointLabel(rbind(x, y), c(x.names, y.names), cex = cex * par("cex"), xpd = TRUE,
                    col=c(x.coltext, y.coltext), font=c(x.font, y.font))
     else if (labels[1] > 0 && !is.na(x[1]))
-        pointLabel(x, x.names, cex = cex * par("cex"), xpd = TRUE, col=x.coltext, font=x.font)
+        .pointLabel(x, x.names, cex = cex * par("cex"), xpd = TRUE, col=x.coltext, font=x.font)
     else if (labels[2] > 0 && !is.na(y[1]))
-        pointLabel(y, y.names, cex = cex * par("cex"), xpd = TRUE, col=y.coltext, font=y.font)
+        .pointLabel(y, y.names, cex = cex * par("cex"), xpd = TRUE, col=y.coltext, font=y.font)
 
     par(pty = pty.backup)
 }
 
 # Function taken from the directlabels package, but it is in the public domain
-pointLabel <- function(x, y = NULL, labels = seq(along = x), cex = 1,
+.pointLabel <- function(x, y = NULL, labels = seq(along = x), cex = 1,
                        method = c("SANN", "GA"),
                        allowSmallOverlap = FALSE,
                        trace = FALSE,

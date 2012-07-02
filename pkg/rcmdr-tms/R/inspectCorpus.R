@@ -1,12 +1,12 @@
 inspectCorpus <- function() {
-    setBusyCursor()
+    .setBusyCursor()
 
-    objects <- getCorpusWindow()
+    objects <- .getCorpusWindow()
     window <- objects$window
     txt <- objects$txt
     listbox <- objects$listbox
 
-    tkwm.title(window, gettext_("Current Corpus"))
+    tkwm.title(window, .gettext("Current Corpus"))
 
     mark <- 0
 
@@ -16,7 +16,7 @@ inspectCorpus <- function() {
     tktag.configure(txt, "small", font="sans 5")
     tktag.configure(txt, "fixed", font="courier 11")
 
-    tkinsert(txt, "end", sprintf(gettext_("Current corpus contains %i documents and %i terms.\n\n"),
+    tkinsert(txt, "end", sprintf(.gettext("Current corpus contains %i documents and %i terms.\n\n"),
                                  nrow(dtm), ncol(dtm)))
 
     for(i in seq_along(corpus)) {
@@ -42,7 +42,7 @@ inspectCorpus <- function() {
         tkinsert(txt, "end", paste(paste(corpus[[id]], collapse="\n"), "\n\n"))
     }
 
-    setIdleCursor()
+    .setIdleCursor()
     # Only raise the window when we're done, as filling it may take some time
     tkraise(window)
 }

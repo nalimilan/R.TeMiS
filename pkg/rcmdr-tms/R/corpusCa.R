@@ -14,7 +14,7 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
         dtm<-dtm[-invalid, , drop=FALSE]
         meta<-oldMeta[-invalid,]
         corpus<-corpus[-invalid]
-        msg<-sprintf(ngettext_(length(invalid),
+        msg<-sprintf(.ngettext(length(invalid),
                      "Document %s has been skipped because it does not include any occurrence of the terms retained in the final document-term matrix.\nIncrease the value of the 'sparsity' parameter to fix this warning.",
                      "Documents %s have been skipped because they do not include any occurrence of the terms retained in the final document-term matrix.\nIncrease the value of the 'sparsity' parameter to fix this warning."),
                      paste(names(invalid), collapse=", "))
@@ -25,7 +25,7 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
     nterms<-ncol(dtm)
 
     if(ndocs <= 1 || nterms <= 1) {
-        Message(gettext_("Please increase the value of the 'sparsity' parameter so that at least two documents and two terms are retained."),
+        Message(.gettext("Please increase the value of the 'sparsity' parameter so that at least two documents and two terms are retained."),
                 type="error")
         return()
     }
@@ -71,17 +71,17 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
     }
 
 
-    Message(sprintf(gettext_("Running correspondence analysis using %i documents, %i terms and %i variables."),
+    Message(sprintf(.gettext("Running correspondence analysis using %i documents, %i terms and %i variables."),
                     ndocs, nterms, ncol(meta)),
             type="note")
 
     if(length(skippedVars) > 0)
-        Message(sprintf(gettext_("Variable(s) %s have been skipped since it contains only missing values for retained documents."),
+        Message(sprintf(.gettext("Variable(s) %s have been skipped since it contains only missing values for retained documents."),
                         paste(skippedVars, collapse=", ")),
                 type="note")
 
     if(length(skippedLevs) > 0)
-        Message(sprintf(gettext_("Some levels of variable(s) %s have been skipped since they contain only missing values for retained documents."),
+        Message(sprintf(.gettext("Some levels of variable(s) %s have been skipped since they contain only missing values for retained documents."),
                         paste(skippedLevs, collapse=", ")),
                 type="note")
 
@@ -95,7 +95,7 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
 }
 
 corpusCaDlg <- function() {
-    initializeDialog(title=gettext_("Run Correspondence Analysis"))
+    initializeDialog(title=.gettext("Run Correspondence Analysis"))
     tclSparsity <- tclVar(95)
     sliderSparsity <- tkscale(top, from=1, to=100,
                               showvalue=TRUE, variable=tclSparsity,
@@ -108,10 +108,10 @@ corpusCaDlg <- function() {
     onOK <- function() {
         closeDialog()
 
-        setBusyCursor()
+        .setBusyCursor()
 
         if(ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"]) == 0)
-            Message(message=gettext_("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
+            Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
                     type="note")
 
         sparsity <- as.numeric(tclvalue(tclSparsity))
@@ -124,14 +124,14 @@ corpusCaDlg <- function() {
 
         activateMenus()
 
-        setIdleCursor()
+        .setIdleCursor()
         tkfocus(CommanderWindow())
     }
 
     OKCancelHelp(helpSubject=corpusCaDlg)
-    tkgrid(labelRcmdr(top, text=gettext_("Remove terms missing from more than (% of documents):")),
+    tkgrid(labelRcmdr(top, text=.gettext("Remove terms missing from more than (% of documents):")),
            sliderSparsity, sticky="sw", pady=6)
-    tkgrid(labelRcmdr(top, text=gettext_("Number of dimensions to retain:")),
+    tkgrid(labelRcmdr(top, text=.gettext("Number of dimensions to retain:")),
            sliderDim, sticky="sw", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
     dialogSuffix(rows=3, columns=2)

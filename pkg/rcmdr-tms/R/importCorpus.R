@@ -1,31 +1,31 @@
 importCorpusDlg <- function() {
     # Let the user select processing options
-    initializeDialog(title=gettext_("Import Corpus"))
+    initializeDialog(title=.gettext("Import Corpus"))
 
     radioButtons(name="source",
                  buttons=c("dir", "file", "factiva"),
-                 labels=c(gettext_("Directory containing plain text files"),
-                          gettext_("Spreadsheet file (CSV, XLS, ODS...)"),
-                          gettext_("Factiva XML or HTML file(s)")),
-                 title=gettext_("Load corpus from:"),
+                 labels=c(.gettext("Directory containing plain text files"),
+                          .gettext("Spreadsheet file (CSV, XLS, ODS...)"),
+                          .gettext("Factiva XML or HTML file(s)")),
+                 title=.gettext("Load corpus from:"),
                  right.buttons=FALSE)
 
     # TRANSLATORS: replace 'en' with your language's ISO 639 two-letter code
-    tclLang <- tclVar(gettext_("en"))
+    tclLang <- tclVar(.gettext("en"))
     entryLang <- ttkentry(top, width="12", textvariable=tclLang)
     checkBoxes(frame="processingFrame",
                boxes=c("lowercase", "punctuation", "numbers", "stopwords", "stemming"),
                initialValues=rep(1, 5),
-               labels=c(gettext_("Ignore case"), gettext_("Remove punctuation"),
-                        gettext_("Remove numbers"), gettext_("Remove stopwords"),
-                        gettext_("Stem words")),
-               title=gettext_("Text processing:"))
+               labels=c(.gettext("Ignore case"), .gettext("Remove punctuation"),
+                        .gettext("Remove numbers"), .gettext("Remove stopwords"),
+                        .gettext("Stem words")),
+               title=.gettext("Text processing:"))
 
     chunksFrame <- tkframe(top)
     tclChunks <- tclVar(0)
     tclNParagraphs <- tclVar(1)
     chunksButton <- tkcheckbutton(chunksFrame, variable=tclChunks,
-                                  text=gettext_("Split texts into smaller documents"))
+                                  text=.gettext("Split texts into smaller documents"))
     chunksSlider <- tkscale(chunksFrame, from=1, to=20, showvalue=TRUE, variable=tclNParagraphs,
 		            resolution=1, orient="horizontal")
     
@@ -106,16 +106,16 @@ importCorpusDlg <- function() {
 
         activateMenus()
 
-        setIdleCursor()
+        .setIdleCursor()
         tkfocus(CommanderWindow())
     }
 
     OKCancelHelp(helpSubject="importCorpusDlg")
     tkgrid(sourceFrame, columnspan="2", sticky="w", pady=6)
-    tkgrid(labelRcmdr(top, text=gettext_("Language of texts in the corpus:")), entryLang, sticky="w")
-    tkgrid(labelRcmdr(chunksFrame, text=gettext_("Text splitting:"), fg="blue"), sticky="ws")
+    tkgrid(labelRcmdr(top, text=.gettext("Language of texts in the corpus:")), entryLang, sticky="w")
+    tkgrid(labelRcmdr(chunksFrame, text=.gettext("Text splitting:"), fg="blue"), sticky="ws")
     tkgrid(chunksButton, columnspan="2", sticky="w", pady=6)
-    tkgrid(labelRcmdr(chunksFrame, text=gettext_("Size of new documents (in paragraphs):")),
+    tkgrid(labelRcmdr(chunksFrame, text=.gettext("Size of new documents (in paragraphs):")),
            chunksSlider, sticky="w", pady=6, padx=6)
     tkgrid(chunksFrame, columnspan="2", sticky="w", pady=6)
     tkgrid(processingFrame, columnspan="2", sticky="w", pady=6)
@@ -129,7 +129,7 @@ importCorpusFromDir <- function(language=NA) {
                                       parent=CommanderWindow()))
     if (dir == "") return()
 
-    setBusyCursor()
+    .setBusyCursor()
 
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
@@ -147,15 +147,15 @@ importCorpusFromDir <- function(language=NA) {
 # Choose a CSV file to load texts and variables from
 importCorpusFromFile <- function(language=NA) {
     file <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.csv .CSV}} {{%s} {.tsv .TSV}} {{%s} {.dbf .DBF}} {{%s} {.ods .ODS}} {{%s} {.xls .XLS}} {{%s} {.xlsx .XLSX}} {{%s} {.mdb .MDB}} {{%s} {.accdb .ACCDB}} {{%s} {.csv .CSV .tsv .TSV .dbf .DBF .ods .ODS .xls .XLS .xlsx .XLSX .mdb .MDB .accdb .ACCDB}}",
-                                                     gettext_("CSV file"),
-                                                     gettext_("TSV file"),
-                                                     gettext_("dBase file"),
-                                                     gettext_("ODS file"),
-                                                     gettext_("Excel file"),
-                                                     gettext_("Excel 2007 file"),
-                                                     gettext_("Access database"),
-                                                     gettext_("Access 2007 database"),
-                                                     gettext_("All supported types")),
+                                                     .gettext("CSV file"),
+                                                     .gettext("TSV file"),
+                                                     .gettext("dBase file"),
+                                                     .gettext("ODS file"),
+                                                     .gettext("Excel file"),
+                                                     .gettext("Excel 2007 file"),
+                                                     .gettext("Access database"),
+                                                     .gettext("Access 2007 database"),
+                                                     .gettext("All supported types")),
                                    parent=CommanderWindow()))
 
     if (file == "") return(FALSE)
@@ -180,12 +180,12 @@ importCorpusFromFile <- function(language=NA) {
     else if(ext == "ods") {
         # ROpenOffice is not available as binary, thus most likely to fail on Windows and Mac OS
         if(!"ROpenOffice" %in% rownames(available.packages(contrib.url("http://www.omegahat.org/R/")))) {
-	    Message(gettext_("Loading OpenDocument spreadsheets (.ods) is not supported on your system.\nYou should save your data set as a CSV file or as an Excel spreadsheet (.xls)."),
+	    Message(.gettext("Loading OpenDocument spreadsheets (.ods) is not supported on your system.\nYou should save your data set as a CSV file or as an Excel spreadsheet (.xls)."),
                     type="error")
             return(FALSE)
         }
 	else if(!require(ROpenOffice)) {
-            response <- tkmessageBox(message=gettext_("Loading OpenDocument spreadsheets (.ods) requires the ROpenOffice package.\nDo you want to install it?"),
+            response <- tkmessageBox(message=.gettext("Loading OpenDocument spreadsheets (.ods) requires the ROpenOffice package.\nDo you want to install it?"),
                                      icon="question", type="yesno")
 
             if (tclvalue(response) == "yes")
@@ -198,12 +198,12 @@ importCorpusFromFile <- function(language=NA) {
     }
     else {
         if(.Platform$OS.type != "windows") {
-	    Message(gettext_("Loading Excel and Access files is only supported on Windows.\nYou should save your data set as a CSV file or as an OpenDocument spreadsheet (.ods)."),
+	    Message(.gettext("Loading Excel and Access files is only supported on Windows.\nYou should save your data set as a CSV file or as an OpenDocument spreadsheet (.ods)."),
                     type="error")
             return(FALSE)
         }
 	else if(!require(RODBC)) {
-            response <- tkmessageBox(message=gettext_("The RODBC package is needed to read Excel and Access files.\nDo you want to install it?"),
+            response <- tkmessageBox(message=.gettext("The RODBC package is needed to read Excel and Access files.\nDo you want to install it?"),
                                      icon="question", type="yesno")
 
             if (tclvalue(response) == "yes")
@@ -212,7 +212,7 @@ importCorpusFromFile <- function(language=NA) {
                 return(FALSE)
         }
         else if(!any(grepl(ext, odbcDataSources()))) {
-	    Message(gettext_("No ODBC driver for this file type was found.\nYou probably need to install Excel or Access, or separate ODBC drivers."),
+	    Message(.gettext("No ODBC driver for this file type was found.\nYou probably need to install Excel or Access, or separate ODBC drivers."),
                     type="error")
             return(FALSE)
         }
@@ -240,12 +240,12 @@ importCorpusFromFile <- function(language=NA) {
 
         # If there are several tables
         if(length(tabdat) > 1)
-            fil <- tk_select.list(sort(tabdat), title=gettext_Rcmdr("Select one table"))
+            fil <- tk_select.list(sort(tabdat), title=.gettextRcmdr("Select one table"))
         else
             fil <- tabdat
 
         if(fil == "") {
-            Message(gettext_Rcmdr("No table selected"), type="error")
+            Message(.gettextRcmdr("No table selected"), type="error")
             return(FALSE)
         }
 
@@ -263,7 +263,7 @@ importCorpusFromFile <- function(language=NA) {
     if(is.null(corpusDataset))
         return(FALSE)
 
-    setBusyCursor()
+    .setBusyCursor()
 
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
@@ -287,7 +287,7 @@ importCorpusFromFile <- function(language=NA) {
 # Choose a Factiva XML or HTML file to load texts and variables from
 importCorpusFromFactiva <- function(language=NA) {
     if(!require(tm.plugin.factiva)) {
-            response <- tkmessageBox(message=gettext_("The tm.plugin.factiva package is needed to import corpora from Factiva files.\nDo you want to install it?"),
+            response <- tkmessageBox(message=.gettext("The tm.plugin.factiva package is needed to import corpora from Factiva files.\nDo you want to install it?"),
                                      icon="question", type="yesno")
 
             if (tclvalue(response) == "yes")
@@ -297,13 +297,13 @@ importCorpusFromFactiva <- function(language=NA) {
     }
 
     filestr <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.xml .html .XML .HTML}}",
-                                                        gettext_("Factiva XML and HTML files")),
+                                                        .gettext("Factiva XML and HTML files")),
                                       multiple=TRUE,
                                       parent=CommanderWindow()))
 
     if (filestr == "") return(FALSE)
 
-    setBusyCursor()
+    .setBusyCursor()
 
     files <- gsub("\\{|\\}", "", strsplit(filestr, "\\} \\{")[[1]])
 
@@ -333,7 +333,7 @@ importCorpusFromFactiva <- function(language=NA) {
         vars <- cbind(vars, unlist(var))
     }
 
-    colnames(vars) <- c(gettext_("Date"), gettext_("Origin"), gettext_("Author"), gettext_("Section"))
+    colnames(vars) <- c(.gettext("Date"), .gettext("Origin"), .gettext("Author"), .gettext("Section"))
     rownames(vars) <- names(corpus)
 
     assign("corpusVars", vars, envir=.GlobalEnv)
@@ -394,8 +394,8 @@ splitTexts <- function (corpus, chunksize, preserveMetadata=TRUE)
         }
     }
 
-    meta(newCorpus, gettext_("Doc ID")) <- names1[origin]
-    meta(newCorpus, gettext_("Doc N")) <- origin
+    meta(newCorpus, .gettext("Doc ID")) <- names1[origin]
+    meta(newCorpus, .gettext("Doc N")) <- origin
     names(newCorpus) <- names2
 
     newCorpus

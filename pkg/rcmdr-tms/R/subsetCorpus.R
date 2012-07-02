@@ -1,12 +1,12 @@
 subsetCorpusByVarDlg <- function() {
     nVars <- ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"])
     if(nVars == 0) {
-        Message(message=gettext_("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
+        Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
                 type="error")
         return()
     }
 
-    initializeDialog(title=gettext_("Subset Corpus by Variable"))
+    initializeDialog(title=.gettext("Subset Corpus by Variable"))
 
     vars <- colnames(meta(corpus))
 
@@ -38,7 +38,7 @@ subsetCorpusByVarDlg <- function() {
     tkbind(varsBox, "<<ListboxSelect>>", onSelect)
 
     tclSave <- tclVar("1")
-    checkSave <- tkcheckbutton(top, text=gettext_("Save original corpus to restore it later"),
+    checkSave <- tkcheckbutton(top, text=.gettext("Save original corpus to restore it later"),
                                variable=tclSave)
 
     onOK <- function() {
@@ -89,11 +89,11 @@ subsetCorpusByVarDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="subsetCorpusByVarDlg")
-    tkgrid(labelRcmdr(top, text=gettext_("Select a variable and one or more levels to retain:")),
+    tkgrid(labelRcmdr(top, text=.gettext("Select a variable and one or more levels to retain:")),
            columnspan=2, sticky="w", pady=6)
-    tkgrid(labelRcmdr(varsFrame, text=gettext_("Variable:"), foreground="blue"), sticky="w")
+    tkgrid(labelRcmdr(varsFrame, text=.gettext("Variable:"), foreground="blue"), sticky="w")
     tkgrid(varsBox, varsScrollbar, sticky="ewns", pady=6)
-    tkgrid(labelRcmdr(levelsFrame, text=gettext_("Levels:"), foreground="blue"), sticky="w")
+    tkgrid(labelRcmdr(levelsFrame, text=.gettext("Levels:"), foreground="blue"), sticky="w")
     tkgrid(levelsBox, levelsScrollbar, sticky="ewns", pady=6)
     tkgrid(varsFrame, levelsFrame, sticky="wns", pady=6)
     tkgrid(checkSave, sticky="w", pady=6)
@@ -103,7 +103,7 @@ subsetCorpusByVarDlg <- function() {
 
 
 subsetCorpusByTermsDlg <- function() {
-    initializeDialog(title=gettext_("Subset Corpus by Terms"))
+    initializeDialog(title=.gettext("Subset Corpus by Terms"))
 
     tclKeep <- tclVar("")
     entryKeep <- ttkentry(top, width="40", textvariable=tclKeep)
@@ -112,7 +112,7 @@ subsetCorpusByTermsDlg <- function() {
     entryExclude <- ttkentry(top, width="40", textvariable=tclExclude)
 
     tclSave <- tclVar("1")
-    checkSave <- tkcheckbutton(top, text=gettext_("Save original corpus to restore it later"),
+    checkSave <- tkcheckbutton(top, text=.gettext("Save original corpus to restore it later"),
                                variable=tclSave)
 
     onOK <- function() {
@@ -122,17 +122,17 @@ subsetCorpusByTermsDlg <- function() {
 
         if(length(keepList) == 0 && length(excludeList) == 0) {
             errorCondition(recall=subsetCorpusByTermsDlg,
-                           message=gettext_("Please enter at least one term."))
+                           message=.gettext("Please enter at least one term."))
             return()
         }
         else if(!all(c(keepList, excludeList) %in% colnames(dtm))) {
             wrongTerms <- c(keepList, excludeList)[!c(keepList, excludeList) %in% colnames(dtm)]
             errorCondition(recall=subsetCorpusByTermsDlg,
-                           message=sprintf(ngettext_(length(wrongTerms),
+                           message=sprintf(.ngettext(length(wrongTerms),
                                                     "Term \'%s\' does not exist in the corpus.",
                                                     "Terms \'%s\' do not exist in the corpus."),
                                                      # TRANSLATORS: this should be opening quote, comma, closing quote
-                                                     paste(wrongTerms, collapse=gettext_("\', \'"))))
+                                                     paste(wrongTerms, collapse=.gettext("\', \'"))))
             return()
         }
         else if(!any(row_sums(dtm[,keepList]) > 0 && row_sums(dtm[,excludeList]) == 0)) {
@@ -189,10 +189,10 @@ subsetCorpusByTermsDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="subsetCorpusByTermsDlg")
-    tkgrid(labelRcmdr(top, text=gettext_("Keep documents with terms (space-separated):")),
+    tkgrid(labelRcmdr(top, text=.gettext("Keep documents with terms (space-separated):")),
            sticky="w")
     tkgrid(entryKeep, sticky="w")
-    tkgrid(labelRcmdr(top, text=gettext_("Exclude documents with terms (space-separated):")),
+    tkgrid(labelRcmdr(top, text=.gettext("Exclude documents with terms (space-separated):")),
            sticky="w")
     tkgrid(entryExclude, sticky="w")
     tkgrid(checkSave, sticky="w", pady=6)
@@ -202,7 +202,7 @@ subsetCorpusByTermsDlg <- function() {
 
 restoreCorpus <- function() {
     if(!exists("origCorpus"))
-        Message(message=gettext_("No original corpus to restore was found."), type="error")
+        Message(message=.gettext("No original corpus to restore was found."), type="error")
 
     doItAndPrint("corpus <- origCorpus")
 

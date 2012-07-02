@@ -4,9 +4,9 @@ setOutputFile <- function() {
     else
         dir <- "."
 
-    file <- tclvalue(tkgetSaveFile(title=gettext_("Select a file to save results"),
+    file <- tclvalue(tkgetSaveFile(title=.gettext("Select a file to save results"),
                                    filetypes=sprintf("{{%s} {.html}}",
-                                                     gettext_("HTML file")),
+                                                     .gettext("HTML file")),
                                    defaultextension=".html",
                                    initialdir=dir,
                                    parent=CommanderWindow()))
@@ -14,10 +14,10 @@ setOutputFile <- function() {
     if (file == "") return(FALSE)
 
     doItAndPrint(sprintf('.HTML.file <- "%s"', file))
-    doItAndPrint(sprintf('HTML.title("%s", 1, append=FALSE)', gettext_("Text Mining Analysis Results")))
+    doItAndPrint(sprintf('HTML.title("%s", 1, append=FALSE)', .gettext("Text Mining Analysis Results")))
 
     # Set options for good formatting
-    options(R2HTML.format.decimal.mark=gettext_("."))
+    options(R2HTML.format.decimal.mark=.gettext("."))
 
     # The openOutputFile menu needs to notice the new file
     activateMenus()
@@ -27,11 +27,11 @@ setOutputFile <- function() {
 
 openOutputFile <- function() {
     if(!exists(".HTML.file")) {
-        Message(gettext_("No output file has been created yet."), type="error")
+        Message(.gettext("No output file has been created yet."), type="error")
         return()
     }
     else if(!file.exists(.HTML.file)) {
-        Message(gettext_("Output file does not exist (it was probably removed)."), type="error")
+        Message(.gettext("Output file does not exist (it was probably removed)."), type="error")
         return()
     }
 
@@ -40,7 +40,7 @@ openOutputFile <- function() {
 
 copyTableToOutput <- function() {
     if(!exists("last.table") || !exists(last.table)) {
-        Message(gettext_("No table has been built. Please create a table first."), type="error")
+        Message(.gettext("No table has been built. Please create a table first."), type="error")
         return()
     }
 
@@ -72,7 +72,7 @@ copyTableToOutput <- function() {
 
 copyPlotToOutput <- function() {
     if(length(dev.list()) == 0) {
-        Message(gettext_("No plot has been drawn. Please create a plot first."), type="error")
+        Message(.gettext("No plot has been drawn. Please create a plot first."), type="error")
         return()
     }
 
@@ -80,14 +80,14 @@ copyPlotToOutput <- function() {
     if(!(html.on || setOutputFile()))
         return()
 
-    file <- gsub(".html$", paste(format(Sys.time(), gettext_(" - plot %Y-%m-%d %H:%M")),
+    file <- gsub(".html$", paste(format(Sys.time(), .gettext(" - plot %Y-%m-%d %H:%M")),
                                  ".png", sep=""), .HTML.file)
 
     i <- 1
     testfile <- file
     while(file.exists(testfile)) {
         i <- i + 1
-        testfile <- gsub(".html$", paste(format(Sys.time(), gettext_(" - plot %Y-%m-%d %H:%M")),
+        testfile <- gsub(".html$", paste(format(Sys.time(), .gettext(" - plot %Y-%m-%d %H:%M")),
                                          "-", i, ".png", sep=""), .HTML.file)
     }
 

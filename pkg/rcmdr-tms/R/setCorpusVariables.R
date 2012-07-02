@@ -1,18 +1,18 @@
 setCorpusVariables <- function() {
     if(!exists("corpus") || !("Corpus" %in% class(corpus))) {
-        Message(message=gettext_("Please import a corpus first."),
+        Message(message=.gettext("Please import a corpus first."),
                 type="error")
         return()
     }
 
     if(!activeDataSetP()) {
-        Message(message=gettext_("Please create or import a data set first."),
+        Message(message=.gettext("Please create or import a data set first."),
                 type="error")
         return()
     }
 
     if(!checkVariables()) {
-        Message(message=gettext_("Please create at least one variable (column)."),
+        Message(message=.gettext("Please create at least one variable (column)."),
                 type="error")
         return()
     }
@@ -21,16 +21,16 @@ setCorpusVariables <- function() {
     split <- isTRUE(meta(corpus, type="corpus", tag="split"))
 
     dset <- get(.activeDataSet)
-    len <- if (split) length(unique(meta(corpus, gettext_("Doc N"))[[1]])) else length(corpus)
+    len <- if (split) length(unique(meta(corpus, .gettext("Doc N"))[[1]])) else length(corpus)
     if(nrow(dset) != len) {
-        Message(message=sprintf(gettext_("Active data set must contain exactly %d rows."), len),
+        Message(message=sprintf(.gettext("Active data set must contain exactly %d rows."), len),
                 type="error")
         return()
     }
 
     # Remove dropped variables
     for(var in colnames(meta(corpus))[!colnames(meta(corpus)) %in%
-            c(colnames(dset), gettext_("Doc N"), gettext_("Doc ID"), gettext_("Cluster"))])
+            c(colnames(dset), .gettext("Doc N"), .gettext("Doc ID"), .gettext("Cluster"))])
         doItAndPrint(sprintf('meta(corpus, "%s") <- NULL', var))
 
     # Add new variables
@@ -40,7 +40,7 @@ setCorpusVariables <- function() {
         if(split) {
             for(i in indices)
                doItAndPrint(sprintf('meta(corpus, "%s") <- %s[meta(corpus, "%s")[[1]], %i]',
-                                     colnames(dset)[i], ActiveDataSet(), gettext_("Doc N"), i))
+                                     colnames(dset)[i], ActiveDataSet(), .gettext("Doc N"), i))
         }
         else {
             for(i in indices)
@@ -50,14 +50,14 @@ setCorpusVariables <- function() {
     }
 
     # Update names only if they changed
-    oldDocNames <- if(split) unique(meta(corpus, gettext_("Doc ID"))[[1]]) else names(corpus)
+    oldDocNames <- if(split) unique(meta(corpus, .gettext("Doc ID"))[[1]]) else names(corpus)
     corpusNames <- names(corpus)
     if(!identical(oldDocNames, row.names(dset))) {
         if(split) {
             doItAndPrint(sprintf('names(corpus) <- make.unique(row.names(%s)[meta(corpus, "%s")[[1]]])',
-                                 ActiveDataSet(), gettext_("Doc N")))
+                                 ActiveDataSet(), .gettext("Doc N")))
             doItAndPrint(sprintf('meta(corpus, "%s") <- row.names(%s)[meta(corpus, "%s")[[1]]]',
-                                 gettext_("Doc ID"), ActiveDataSet(), gettext_("Doc N")))
+                                 .gettext("Doc ID"), ActiveDataSet(), .gettext("Doc N")))
         }
         else {
             doItAndPrint(sprintf('names(corpus) <- row.names(%s)',

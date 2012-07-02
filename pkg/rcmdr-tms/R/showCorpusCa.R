@@ -52,12 +52,12 @@ colSubsetCa <- function(obj, indices) {
 }
 
 showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
-    objects <- getCorpusWindow()
+    objects <- .getCorpusWindow()
     window <- objects$window
     txt <- objects$txt
     listbox <- objects$listbox
 
-    tkwm.title(window, gettext_("Correspondence Analysis"))
+    tkwm.title(window, .gettext("Correspondence Analysis"))
 
     mark <- 0
 
@@ -67,18 +67,18 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
     tktag.configure(txt, "small", font="sans 5")
     tktag.configure(txt, "fixed", font="courier 11")
 
-    cols <- c(gettext_("Position"), gettext_("Contribution (%)"), gettext_("Quality Repr. (%)"))
+    cols <- c(.gettext("Position"), .gettext("Contribution (%)"), .gettext("Quality Repr. (%)"))
 
-    tkinsert(txt, "end", paste(gettext_("Axes summary:"), "\n", sep=""), "heading")
+    tkinsert(txt, "end", paste(.gettext("Axes summary:"), "\n", sep=""), "heading")
     tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
-    tkinsert(listbox, "end", gettext_("Axes summary"))
+    tkinsert(listbox, "end", .gettext("Axes summary"))
     mark <- mark + 1
 
     nd <- min(length(corpusCa$sv), corpusCa$nd)
     values <- 100 * (corpusCa$sv[1:nd]^2)/sum(corpusCa$sv^2)
     values2 <- cumsum(values)
     val <- round(rbind(values, values2), digits=1)
-    rownames(val) <- c(gettext_("Inertia (%)"), gettext_("Cumulated inertia (%)"))
+    rownames(val) <- c(.gettext("Inertia (%)"), .gettext("Cumulated inertia (%)"))
     colnames(val) <- seq.int(ncol(val))
     names(dimnames(val)) <- c("", "Axis")
     tkinsert(txt, "end", paste(capture.output(val), collapse="\n"), "fixed")
@@ -103,17 +103,17 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 
 
         tkinsert(txt, "end",
-                 paste("\n\n", sprintf(gettext_("Most contributive terms on negative side of axis %i:"), dim[j]), "\n", sep=""),
+                 paste("\n\n", sprintf(.gettext("Most contributive terms on negative side of axis %i:"), dim[j]), "\n", sep=""),
                  "heading")
         tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
-        tkinsert(listbox, "end", sprintf(gettext_("Axis %i - Negative Side:"), dim[j]))
+        tkinsert(listbox, "end", sprintf(.gettext("Axis %i - Negative Side:"), dim[j]))
         tkitemconfigure(listbox, mark, background="grey")
         mark <- mark + 1
 
         negterms <- terms[corpusCa$colcoord[terms, dim[j]] < 0]
         if(length(negterms) == 0) {
             tkinsert(txt, "end",
-                     sprintf(gettext_("None among the %i most contributive terms."), nterms))
+                     sprintf(.gettext("None among the %i most contributive terms."), nterms))
         }
         else {
             df <- data.frame(row.names=corpusCa$colnames[negterms],
@@ -127,12 +127,12 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 
 
         tkinsert(txt, "end",
-                 paste("\n\n", sprintf(gettext_("Most contributive documents on negative side of axis %i:"), dim[j]), "\n", sep=""),
+                 paste("\n\n", sprintf(.gettext("Most contributive documents on negative side of axis %i:"), dim[j]), "\n", sep=""),
                  "heading")
         posdocs <- docs[corpusCa$rowcoord[docs, dim[j]] < 0]
         if(length(posdocs) == 0) {
             tkinsert(txt, "end",
-                     sprintf(gettext_("None among the %i most contributive documents."), nterms))
+                     sprintf(.gettext("None among the %i most contributive documents."), nterms))
         }
         else {
             df <- data.frame(row.names=corpusCa$rownames[posdocs],
@@ -171,10 +171,10 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 
 
         tkinsert(txt, "end",
-                 paste("\n\n", sprintf(gettext_("Most contributive terms on positive side of axis %i:"),
+                 paste("\n\n", sprintf(.gettext("Most contributive terms on positive side of axis %i:"),
                                        dim[j]), "\n", sep=""),
                  "heading")
-        tkinsert(listbox, "end", sprintf(gettext_("Axis %i - Positive Side:"), dim[j]))
+        tkinsert(listbox, "end", sprintf(.gettext("Axis %i - Positive Side:"), dim[j]))
         tkitemconfigure(listbox, mark, background="grey")
         tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
         mark <- mark + 1
@@ -182,7 +182,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
         posterms <- terms[corpusCa$colcoord[terms, dim[j]] >= 0]
         if(length(posterms) == 0) {
             tkinsert(txt, "end",
-                     sprintf(gettext_("None among the %i most contributive terms."), nterms))
+                     sprintf(.gettext("None among the %i most contributive terms."), nterms))
         }
         else {
             df <- data.frame(row.names=corpusCa$colnames[posterms],
@@ -196,13 +196,13 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 
 
         tkinsert(txt, "end",
-                 paste("\n\n", sprintf(gettext_("Most contributive documents on positive side of axis %i:"),
+                 paste("\n\n", sprintf(.gettext("Most contributive documents on positive side of axis %i:"),
                                        dim[j]), "\n", sep=""),
                  "heading")
         posdocs <- docs[corpusCa$rowcoord[docs, dim[j]] >= 0]
         if(length(posdocs) == 0) {
             tkinsert(txt, "end",
-                     sprintf(gettext_("None among the %i most contributive documents."), ndocs))
+                     sprintf(.gettext("None among the %i most contributive documents."), ndocs))
         }
         else {
             df <- data.frame(row.names=corpusCa$rownames[posdocs],
@@ -242,9 +242,9 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 
         if(length(corpusCa$rowsup) > 0) {
             tkinsert(txt, "end",
-                      paste("\n\n", sprintf(gettext_("Situation of variables on axis %i:"), dim[j]), "\n", sep=""),
+                      paste("\n\n", sprintf(.gettext("Situation of variables on axis %i:"), dim[j]), "\n", sep=""),
                      "heading")
-            tkinsert(listbox, "end", sprintf(gettext_("Axis %i - Variables"), dim[j]))
+            tkinsert(listbox, "end", sprintf(.gettext("Axis %i - Variables"), dim[j]))
             tkitemconfigure(listbox, mark, background="grey")
             tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
             mark <- mark + 1
@@ -264,15 +264,15 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 
 showCorpusCaDlg <- function() {
     if(!exists("corpusCa") || !class(corpusCa) == "ca") {
-        Message(message=gettext_("Please run a correspondence analysis on the corpus first."),
+        Message(message=.gettext("Please run a correspondence analysis on the corpus first."),
                 type="error")
         return()
     }
 
-    initializeDialog(title=gettext_("Show Correspondence Analysis"))
+    initializeDialog(title=.gettext("Show Correspondence Analysis"))
 
     dimFrame <- tkframe(top)
-    tkgrid(labelRcmdr(dimFrame, text=gettext_("Dimensions to plot:"), fg="blue"), sticky="s")
+    tkgrid(labelRcmdr(dimFrame, text=.gettext("Dimensions to plot:"), fg="blue"), sticky="s")
     tclXDim <- tclVar(1)
     tclYDim <- tclVar(2)
     nd <- min(length(corpusCa$sv), corpusCa$nd)
@@ -286,11 +286,11 @@ showCorpusCaDlg <- function() {
     vars <- colnames(meta(corpus))
     varBox <- variableListBox(top, vars,
                               selectmode="multiple",
-                              title=gettext_("Variables to plot:"),
+                              title=.gettext("Variables to plot:"),
                               initialSelection=(1:length(vars))-1)
 
     nFrame <- tkframe(top)
-    tkgrid(labelRcmdr(nFrame, text=gettext_("Number of items to plot:"), fg="blue"), sticky="s")
+    tkgrid(labelRcmdr(nFrame, text=.gettext("Number of items to plot:"), fg="blue"), sticky="s")
     tclNDocs <- tclVar(25)
     tclNTerms <- tclVar(25)
     docsSlider <- tkscale(nFrame, from=1, to=min(200, nrow(corpusCa$rowcoord)-length(corpusCa$rowsup)),
@@ -302,23 +302,23 @@ showCorpusCaDlg <- function() {
 
     ctrDimVariable <- tclVar("xyDim")
     ctrDimFrame <- tkframe(top)
-    ctrDim1 <- ttkradiobutton(ctrDimFrame, variable=ctrDimVariable, value="xyDim", text=gettext_("Both axes"))
-    ctrDim2 <- ttkradiobutton(ctrDimFrame, variable=ctrDimVariable, value="xDim", text=gettext_("Horizontal axis"))
-    ctrDim3 <- ttkradiobutton(ctrDimFrame, variable=ctrDimVariable, value="yDim", text=gettext_("Vertical axis"))
+    ctrDim1 <- ttkradiobutton(ctrDimFrame, variable=ctrDimVariable, value="xyDim", text=.gettext("Both axes"))
+    ctrDim2 <- ttkradiobutton(ctrDimFrame, variable=ctrDimVariable, value="xDim", text=.gettext("Horizontal axis"))
+    ctrDim3 <- ttkradiobutton(ctrDimFrame, variable=ctrDimVariable, value="yDim", text=.gettext("Vertical axis"))
 
     if(length(corpusCa$rowsup) == 0) {
         checkBoxes(frame="pointsFrame",
                    boxes=c("documentsPoints", "termsPoints"),
                    initialValues=c(0, 1),
-                   labels=c(gettext_("Documents"), gettext_("Terms")),
-                   title=gettext_("Draw point symbols for:"))
+                   labels=c(.gettext("Documents"), .gettext("Terms")),
+                   title=.gettext("Draw point symbols for:"))
      }
      else {
         checkBoxes(frame="pointsFrame",
                    boxes=c("variablesPoints", "documentsPoints", "termsPoints"),
                    initialValues=c(0, 0, 1),
-                   labels=c(gettext_("Variables"), gettext_("Documents"), gettext_("Terms")),
-                   title=gettext_("Draw point symbols for:"))
+                   labels=c(.gettext("Variables"), .gettext("Documents"), .gettext("Terms")),
+                   title=.gettext("Draw point symbols for:"))
     }
 
     onShow <- function() {
@@ -337,7 +337,7 @@ showCorpusCaDlg <- function() {
 
         if(!(documents || terms || variables) || (variables && length(vars) == 0)) {
             errorCondition(recall=showCorpusCaDlg,
-                           message=gettext_("Please select something to plot."))
+                           message=.gettext("Please select something to plot."))
             return()
         }
 
@@ -380,8 +380,8 @@ showCorpusCaDlg <- function() {
         doItAndPrint(sprintf('plotCorpusCa(plottingCa, dim=c(%s, %s), what=c("%s", "%s"), labels=c(2, 2), pch=c(%s, %s, 17, %s), mass=TRUE, xlab="%s", ylab="%s")',
                               x, y, rowWhat, colWhat,
                               if(documentsPoints) 16 else NA, if(variablesPoints) 1 else NA, if(termsPoints) 24 else NA,
-                              sprintf(gettext_("Dimension %s (%.1f%%)"), x, 100 * corpusCa$sv[as.integer(x)]^2/sum(corpusCa$sv^2)),
-                              sprintf(gettext_("Dimension %s (%.1f%%)"), y, 100 * corpusCa$sv[as.integer(y)]^2/sum(corpusCa$sv^2))))
+                              sprintf(.gettext("Dimension %s (%.1f%%)"), x, 100 * corpusCa$sv[as.integer(x)]^2/sum(corpusCa$sv^2)),
+                              sprintf(.gettext("Dimension %s (%.1f%%)"), y, 100 * corpusCa$sv[as.integer(y)]^2/sum(corpusCa$sv^2))))
 
         activateMenus()
     }
@@ -390,26 +390,26 @@ showCorpusCaDlg <- function() {
         checkBoxes(frame="whatFrame",
                    boxes=c("documents", "terms"),
                    initialValues=c(0, 1),
-                   labels=c(gettext_("Documents"), gettext_("Terms")),
-                   title=gettext_("Items to represent:"))
+                   labels=c(.gettext("Documents"), .gettext("Terms")),
+                   title=.gettext("Items to represent:"))
     }
     else {
         checkBoxes(frame="whatFrame",
                    boxes=c("variables", "documents", "terms"),
                    initialValues=c(0, 0, 1),
-                   labels=c(gettext_("Variables"), gettext_("Documents"), gettext_("Terms")),
-                   title=gettext_("Items to represent:"))
+                   labels=c(.gettext("Variables"), .gettext("Documents"), .gettext("Terms")),
+                   title=.gettext("Items to represent:"))
     }
 
     # Custom buttons, adapted from OKCancelHelp()
     buttonsFrame <- tkframe(top, borderwidth=5)
-    plotButton <- buttonRcmdr(buttonsFrame, text=gettext_("Show"), foreground="darkgreen",
+    plotButton <- buttonRcmdr(buttonsFrame, text=.gettext("Show"), foreground="darkgreen",
                               command=onShow, default="active", borderwidth=3)
     onClose <- function() {
         closeDialog()
         tkfocus(CommanderWindow())
     }
-    closeButton <- buttonRcmdr(buttonsFrame, text=gettext_("Close"), foreground="red",
+    closeButton <- buttonRcmdr(buttonsFrame, text=.gettext("Close"), foreground="red",
                                command=onClose, borderwidth=3)
     onHelp <- function() {
         if (GrabFocus() && .Platform$OS.type != "windows") tkgrab.release(window)
@@ -421,16 +421,16 @@ showCorpusCaDlg <- function() {
            closeButton, labelRcmdr(buttonsFrame, text="            "),
            helpButton, sticky="w")
 
-    tkgrid(labelRcmdr(dimFrame, text=gettext_("Horizontal axis:")), xSlider, sticky="w")
-    tkgrid(labelRcmdr(dimFrame, text=gettext_("Vertical axis:")), ySlider, sticky="w")
+    tkgrid(labelRcmdr(dimFrame, text=.gettext("Horizontal axis:")), xSlider, sticky="w")
+    tkgrid(labelRcmdr(dimFrame, text=.gettext("Vertical axis:")), ySlider, sticky="w")
     tkgrid(dimFrame, sticky="w", pady=6)
     tkgrid(whatFrame, sticky="w", pady=6)
     if(length(corpusCa$rowsup) > 0)
         tkgrid(getFrame(varBox), columnspan=3, sticky="we", pady=6)
-    tkgrid(labelRcmdr(nFrame, text=gettext_("Documents:")), docsSlider, sticky="w")
-    tkgrid(labelRcmdr(nFrame, text=gettext_("Terms:")), termsSlider, sticky="w")
+    tkgrid(labelRcmdr(nFrame, text=.gettext("Documents:")), docsSlider, sticky="w")
+    tkgrid(labelRcmdr(nFrame, text=.gettext("Terms:")), termsSlider, sticky="w")
     tkgrid(nFrame, sticky="w", pady=6)
-    tkgrid(labelRcmdr(ctrDimFrame, text=gettext_("Most contributive to:")), sticky="w", columnspan=3, pady=6)
+    tkgrid(labelRcmdr(ctrDimFrame, text=.gettext("Most contributive to:")), sticky="w", columnspan=3, pady=6)
     tkgrid(ctrDim1, ctrDim2, ctrDim3, sticky="w", pady=6)
     tkgrid(ctrDimFrame, sticky="w", pady=6)
     tkgrid.columnconfigure(ctrDimFrame, "all", uniform="a")

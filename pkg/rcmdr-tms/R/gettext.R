@@ -1,10 +1,10 @@
-# This function is a convenience wrapper to gettext_() which
+# This function is a convenience wrapper to .gettext() which
 # passes the domain name and avoid repeating it in the code
-gettext_ <- function(msg) {
+.gettext <- function(msg) {
     gettext(msg, domain="R-RcmdrPlugin.TextMiningSuite")
 }
 
-ngettext_ <- function(n, msg1, msg2) {
+.ngettext <- function(n, msg1, msg2) {
     ngettext(n, msg1, msg2, domain="R-RcmdrPlugin.TextMiningSuite")
 }
 

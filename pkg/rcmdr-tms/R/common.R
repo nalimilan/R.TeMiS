@@ -1,4 +1,4 @@
-setBusyCursor <- function() {
+.setBusyCursor <- function() {
     .commander <- CommanderWindow()
     .menu <- tkcget(.commander, menu=NULL)
     .log <- LogWindow()
@@ -12,7 +12,7 @@ setBusyCursor <- function() {
     tkconfigure(.messages, cursor="watch")
 }
 
-setIdleCursor <- function() {
+.setIdleCursor <- function() {
     .commander <- CommanderWindow()
     .menu <- tkcget(.commander, menu=NULL)
     .log <- LogWindow()
@@ -26,7 +26,7 @@ setIdleCursor <- function() {
     tkconfigure(.messages, cursor="xterm")
 }
 
-getCorpusWindow <- function() {
+.getCorpusWindow <- function() {
     if(exists("corpusTxt", "RcmdrEnv") &&
        !is.null(get("corpusTxt", "RcmdrEnv"))) {
         window <- getRcmdr("corpusWindow")

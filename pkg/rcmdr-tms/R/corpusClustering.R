@@ -1,12 +1,12 @@
 showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
-    setBusyCursor()
+    .setBusyCursor()
 
-    objects <- getCorpusWindow()
+    objects <- .getCorpusWindow()
     window <- objects$window
     txt <- objects$txt
     listbox <- objects$listbox
 
-    tkwm.title(window, gettext_("Hierarchical Clustering"))
+    tkwm.title(window, .gettext("Hierarchical Clustering"))
 
     mark <- 0
 
@@ -16,22 +16,22 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
     tktag.configure(txt, "small", font="sans 5")
     tktag.configure(txt, "fixed", font="courier 11")
 
-    tkinsert(txt, "end", paste(gettext_("Clusters summary:"), "\n", sep=""), "heading")
+    tkinsert(txt, "end", paste(.gettext("Clusters summary:"), "\n", sep=""), "heading")
     tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
-    tkinsert(listbox, "end", gettext_("Clusters summary"))
+    tkinsert(listbox, "end", .gettext("Clusters summary"))
     mark <- mark + 1
 
     val <- rbind(sapply(corpusSubClust$lower, attr, "members"),
-                 sapply(corpusSubClust$lower, attr, "members")/sum(!is.na(meta(corpus, gettext_("Cluster")))) * 100,
+                 sapply(corpusSubClust$lower, attr, "members")/sum(!is.na(meta(corpus, .gettext("Cluster")))) * 100,
                  sapply(corpusSubClust$lower, attr, "height"))
-    rownames(val) <- c(gettext_("Number of documents"), gettext_("% of documents"), gettext_("Intra-class inertia"))
+    rownames(val) <- c(.gettext("Number of documents"), .gettext("% of documents"), .gettext("Intra-class inertia"))
     colnames(val) <- seq.int(ncol(val))
-    names(dimnames(val)) <- c("", gettext_("Cluster"))
+    names(dimnames(val)) <- c("", .gettext("Cluster"))
     tkinsert(txt, "end", paste(capture.output(format(as.data.frame(val), nsmall=1, digits=2, width=6)),
                                collapse="\n"), "fixed")
 
-    meta <- meta(corpus)[!colnames(meta(corpus)) %in% c("MetaID", gettext_("Cluster"))]
-    clusters <- meta(corpus, gettext_("Cluster"))[[1]]
+    meta <- meta(corpus)[!colnames(meta(corpus)) %in% c("MetaID", .gettext("Cluster"))]
+    clusters <- meta(corpus, .gettext("Cluster"))[[1]]
 
     # Set by createClassesDlg()
     # It is more correct to use exactly the same matrix, and it is more efficient
@@ -54,10 +54,10 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
     for(j in 1:ncol(val)) {
         if(nterms > 0) {
             tkinsert(txt, "end",
-                     paste("\n\n", sprintf(gettext_("Terms most typical of cluster %i:"), j), "\n", sep=""),
+                     paste("\n\n", sprintf(.gettext("Terms most typical of cluster %i:"), j), "\n", sep=""),
                      "heading")
             tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
-            tkinsert(listbox, "end", sprintf(gettext_("Cluster %i:"), j))
+            tkinsert(listbox, "end", sprintf(.gettext("Cluster %i:"), j))
             tkitemconfigure(listbox, mark, background="grey")
             mark <- mark + 1
 
@@ -66,7 +66,7 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
                              as.numeric(as.matrix(clusterDtm[j, termsNames])/rowTot[j] * 100),
                              as.numeric(as.matrix(clusterDtm[j, termsNames])/colTot[termsNames] * 100),
                              termsCtr[[j]])
-            colnames(df) <- c(gettext_("Prevalence (%)"), gettext_("Distribution (%)"), gettext_("Chi2 contr."))
+            colnames(df) <- c(.gettext("Prevalence (%)"), .gettext("Distribution (%)"), .gettext("Chi2 contr."))
 
             tkinsert(txt, "end", paste(capture.output(format(df, nsmall=2, digits=2,
                                                              width=max(nchar(colnames(df), "width")))),
@@ -85,11 +85,11 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
             docs <- names(chisq)
 
             tkinsert(txt, "end",
-                     paste("\n\n", sprintf(gettext_("Documents most typical of cluster %i:"), j), "\n", sep=""),
+                     paste("\n\n", sprintf(.gettext("Documents most typical of cluster %i:"), j), "\n", sep=""),
                      "heading")
 
             df <- data.frame(row.names=docs, chisq)
-            colnames(df) <- gettext_("Chi2 distance to cluster average")
+            colnames(df) <- .gettext("Chi2 distance to cluster average")
 
             tkinsert(txt, "end", paste(capture.output(format(df, nsmall=1, digits=2)), collapse="\n"), "fixed")
 
@@ -121,10 +121,10 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
 
     if(ncol(meta) > 0) {
         tkinsert(txt, "end",
-                  paste("\n\n", gettext_("Distribution of variables among clusters:"), "\n", sep=""),
+                  paste("\n\n", .gettext("Distribution of variables among clusters:"), "\n", sep=""),
                  "heading")
-        tkinsert(txt, "end", paste(gettext_("Row %"), "\n", sep=""), "details")
-        tkinsert(listbox, "end", gettext_("Variables"))
+        tkinsert(txt, "end", paste(.gettext("Row %"), "\n", sep=""), "details")
+        tkinsert(listbox, "end", .gettext("Variables"))
         tkitemconfigure(listbox, mark, background="grey")
         tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
         mark <- mark + 1
@@ -135,7 +135,7 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
         tab <- lapply(colnames(meta),
                       function(var) {
                           # We call factor() to drop empty levels, if any
-                          mat <- with(meta(corpus), table(factor(get(var)), factor(get(gettext_("Cluster")))))
+                          mat <- with(meta(corpus), table(factor(get(var)), factor(get(.gettext("Cluster")))))
 
                           # Handle names like in corpusCa()
                           # If only one level is present, don't add the level name (e.g. TRUE or YES)
@@ -152,22 +152,22 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
 
         tab <- do.call(rbind, tab)
         tab <- rbind(tab, colSums(tab))
-        rownames(tab)[nrow(tab)] <- gettext_("Corpus")
-        names(dimnames(tab)) <- c("", gettext_("Cluster"))
+        rownames(tab)[nrow(tab)] <- .gettext("Corpus")
+        names(dimnames(tab)) <- c("", .gettext("Cluster"))
         tab <- prop.table(tab, 1) * 100
 
         tkinsert(txt, "end", paste(capture.output(format(as.data.frame(tab), nsmall=1, digits=2, width=5)),
                                    collapse="\n"), "fixed")
     }
 
-    setIdleCursor()
+    .setIdleCursor()
 
     # Only raise the window when we're done, as filling it may take some time
     tkraise(window)
 }
 
 corpusClustDlg <- function() {
-    initializeDialog(title=gettext_("Run Hierarchical Clustering"))
+    initializeDialog(title=.gettext("Run Hierarchical Clustering"))
     tclSparsity <- tclVar(95)
     sliderSparsity <- tkscale(top, from=1, to=100,
                               showvalue=TRUE, variable=tclSparsity,
@@ -176,7 +176,7 @@ corpusClustDlg <- function() {
     onOK <- function() {
         closeDialog()
 
-        setBusyCursor()
+        .setBusyCursor()
 
         sparsity <- as.numeric(tclvalue(tclSparsity))/100
 
@@ -185,7 +185,7 @@ corpusClustDlg <- function() {
             doItAndPrint(sprintf("clustDtm <- removeSparseTerms(dtm, %s)", sparsity))
 
             if(any(row_sums(clustDtm) == 0)) {
-                msg <- sprintf(ngettext_(sum(row_sums(clustDtm) == 0),
+                msg <- sprintf(.ngettext(sum(row_sums(clustDtm) == 0),
                              "Document %s has been skipped because it does not include any occurrence of the terms retained in the final document-term matrix.\nIncrease the value of the 'sparsity' parameter to fix this warning.",
                              "Documents %s have been skipped because they do not include any occurrence of the terms retained in the final document-term matrix.\nIncrease the value of the 'sparsity' parameter to fix this warning."),
                              paste(rownames(clustDtm)[row_sums(clustDtm) == 0], collapse=", "))
@@ -209,18 +209,18 @@ corpusClustDlg <- function() {
 
         doItAndPrint(sprintf('plot(as.dendrogram(corpusClust), nodePar=list(pch=NA, lab.cex=0.8), %sylab="%s", main="%s")',
                              if(length(corpus) > 20) 'leaflab="none", ' else "",
-                             gettext_("Within-cluster variance"),
-                             gettext_("Full cluster dendrogram")))
+                             .gettext("Within-cluster variance"),
+                             .gettext("Full cluster dendrogram")))
 
         # For the Create clusters item
         activateMenus()
 
-        setIdleCursor()
+        .setIdleCursor()
         tkfocus(CommanderWindow())
     }
 
     OKCancelHelp(helpSubject="corpusClustDlg")
-    tkgrid(labelRcmdr(top, text=gettext_("Remove terms missing from more than (% of documents):")),
+    tkgrid(labelRcmdr(top, text=.gettext("Remove terms missing from more than (% of documents):")),
            sliderSparsity, sticky="sw", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
     dialogSuffix(rows=2, columns=2)
@@ -228,12 +228,12 @@ corpusClustDlg <- function() {
 
 createClustersDlg <- function() {
     if(!(exists("corpusClust") && class(corpusClust) == "hclust")) {
-        Message(message=gettext_("Please run a hierarchical clustering on the corpus first."),
+        Message(message=.gettext("Please run a hierarchical clustering on the corpus first."),
                 type="error")
         return()
     }
 
-    initializeDialog(title=gettext_("Create Clusters"))
+    initializeDialog(title=.gettext("Create Clusters"))
 
     tclNClust <- tclVar(5)
     sliderNClust <- tkscale(top, from=2, to=min(15, length(corpusClust$order)),
@@ -253,7 +253,7 @@ createClustersDlg <- function() {
     onOK <- function() {
         closeDialog()
 
-        setBusyCursor()
+        .setBusyCursor()
 
         nclust <- as.numeric(tclvalue(tclNClust))
         ndocs <- as.numeric(tclvalue(tclNDocs))
@@ -264,11 +264,11 @@ createClustersDlg <- function() {
 
         # If some documents were skipped, we need to skip them and put NA
         if(length(clusters) == length(corpus)) {
-            doItAndPrint(paste("meta(corpus, \"", gettext_("Cluster"), "\") <- clusters", sep=""))
+            doItAndPrint(paste("meta(corpus, \"", .gettext("Cluster"), "\") <- clusters", sep=""))
         }
         else {
-            doItAndPrint(paste("meta(corpus, \"", gettext_("Cluster"), "\") <- NA", sep=""))
-            doItAndPrint(paste("meta(corpus, \"", gettext_("Cluster"),
+            doItAndPrint(paste("meta(corpus, \"", .gettext("Cluster"), "\") <- NA", sep=""))
+            doItAndPrint(paste("meta(corpus, \"", .gettext("Cluster"),
                                "\")[match(names(corpus), names(clusters), nomatch=0),] <- clusters", sep=""))
         }
 
@@ -276,12 +276,12 @@ createClustersDlg <- function() {
         if(exists("corpusVars")) {
             # If corpus was split, we cannot add cluster back into corpusVars
             if(nrow(corpusVars) == length(corpus))
-                doItAndPrint(paste("corpusVars$",  gettext_("Cluster"),
-                                   " <- meta(corpus, tag=\"", gettext_("Cluster"), "\")[[1]]", sep=""))
+                doItAndPrint(paste("corpusVars$",  .gettext("Cluster"),
+                                   " <- meta(corpus, tag=\"", .gettext("Cluster"), "\")[[1]]", sep=""))
         }
         else {
-            doItAndPrint(paste("corpusVars <- data.frame(",  gettext_("Cluster"),
-                               "=meta(corpus, tag=\"", gettext_("Cluster"), "\")[[1]])", sep=""))
+            doItAndPrint(paste("corpusVars <- data.frame(",  .gettext("Cluster"),
+                               "=meta(corpus, tag=\"", .gettext("Cluster"), "\")[[1]])", sep=""))
         }
 
         doItAndPrint(paste("corpusSubClust <- cut(as.dendrogram(corpusClust), h=",
@@ -292,25 +292,25 @@ createClustersDlg <- function() {
             doItAndPrint(sprintf('attr(corpusSubClust, "sparsity") <- %s', attr(corpusClust, "sparsity")))
 
         doItAndPrint(sprintf('plot(corpusSubClust$upper, nodePar=list(pch=NA, lab.cex=0.8), ylab="%s", main="%s")',
-                             gettext_("Within-cluster variance"),
-                             gettext_("Cluster dendrogram")))
+                             .gettext("Within-cluster variance"),
+                             .gettext("Cluster dendrogram")))
         doItAndPrint(sprintf("showCorpusClustering(corpusSubClust, %i, %i)", ndocs, nterms))
         doItAndPrint("rm(clusters)")
 
-        setIdleCursor()
+        .setIdleCursor()
         tkfocus(CommanderWindow())
     }
 
     OKCancelHelp(helpSubject="createClustersDlg")
-    tkgrid(labelRcmdr(top, text=gettext_("Clusters creation:"), foreground="blue"),
+    tkgrid(labelRcmdr(top, text=.gettext("Clusters creation:"), foreground="blue"),
            sticky="sw", pady=0)
-    tkgrid(labelRcmdr(top, text=gettext_("Number of clusters to retain:")), sliderNClust,
+    tkgrid(labelRcmdr(top, text=.gettext("Number of clusters to retain:")), sliderNClust,
            sticky="sw", pady=c(0, 6), padx=c(6, 0))
-    tkgrid(labelRcmdr(top, text=gettext_("Number of items to show (for each cluster):"), foreground="blue"),
+    tkgrid(labelRcmdr(top, text=.gettext("Number of items to show (for each cluster):"), foreground="blue"),
            sticky="sw", pady=c(24, 0))
-    tkgrid(labelRcmdr(top, text=gettext_("Most typical documents:")), sliderNDocs,
+    tkgrid(labelRcmdr(top, text=.gettext("Most typical documents:")), sliderNDocs,
            sticky="sw", pady=c(0, 6), padx=c(6, 0))
-    tkgrid(labelRcmdr(top, text=gettext_("Most typical terms:")), sliderNTerms,
+    tkgrid(labelRcmdr(top, text=.gettext("Most typical terms:")), sliderNTerms,
            sticky="sw", pady=6, padx=c(6, 0))
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
     dialogSuffix(rows=5, columns=2)

@@ -24,20 +24,20 @@ corpusDissimilarity <- function(x, y) {
 dissimilarityTableDlg <- function() {
     nVars <- ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"])
     if(nVars == 0) {
-        Message(message=gettext_("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
+        Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
                 type="error")
         return()
     }
 
-    initializeDialog(title=gettext_("Documents/Variables Dissimilarity"))
+    initializeDialog(title=.gettext("Documents/Variables Dissimilarity"))
 
-    vars <- c(gettext_("Document"), colnames(meta(corpus)))
+    vars <- c(.gettext("Document"), colnames(meta(corpus)))
     varBox1 <- variableListBox(top, vars,
-                               title=gettext_("Row variable:"),
+                               title=.gettext("Row variable:"),
                                initialSelection=0)
 
     varBox2 <- variableListBox(top, vars,
-                               title=gettext_("Column variable:"),
+                               title=.gettext("Column variable:"),
                                initialSelection=0)
 
     # Set the second variable identical to the first one by default,
@@ -54,10 +54,10 @@ dissimilarityTableDlg <- function() {
         var2 <- getSelection(varBox2)
 
         closeDialog()
-        setBusyCursor()
+        .setBusyCursor()
 
         if(var1 == var2) {
-            if(var1 == gettext_("Document")) {
+            if(var1 == .gettext("Document")) {
                 doItAndPrint('diss <- dist(sweep(dtm/row_sums(dtm), 2, sqrt(sum(dtm)/col_sums(dtm)), "*"))')
             }
             else {
@@ -67,12 +67,12 @@ dissimilarityTableDlg <- function() {
             }
         }
         else {
-            if(var1 == gettext_("Document")) {
+            if(var1 == .gettext("Document")) {
                 doItAndPrint(sprintf('dissDtm2 <- rollup(dtm, 1, meta(corpus, "%s"))', var2))
                 doItAndPrint('diss <- corpusDissimilarity(dtm, dissDtm2)')
                 doItAndPrint('rm(dissDtm2)')
             }
-            else if(var2 == gettext_("Document")) {
+            else if(var2 == .gettext("Document")) {
                 doItAndPrint(sprintf('dissDtm1 <- rollup(dtm, 1, meta(corpus, "%s"))', var1))
                 doItAndPrint('diss <- corpusDissimilarity(dissDtm1, dtm)')
                 doItAndPrint('rm(dissDtm1)')
@@ -89,7 +89,7 @@ dissimilarityTableDlg <- function() {
 
         activateMenus()
 
-        setIdleCursor()
+        .setIdleCursor()
         tkfocus(CommanderWindow())
     }
 

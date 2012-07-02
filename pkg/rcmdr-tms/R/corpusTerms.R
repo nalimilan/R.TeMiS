@@ -4,20 +4,20 @@ listTerms <- function() {
 
 freqTermsDlg <- function() {
     if(!(exists("dtm") && class(dtm) == "DocumentTermMatrix")) {
-        Message(message=gettext_("Please import a corpus and create the document-term matrix first."),
+        Message(message=.gettext("Please import a corpus and create the document-term matrix first."),
                 type="error")
         return()
     }
 
-    initializeDialog(title=gettext_("Show Most Frequent Terms"))
+    initializeDialog(title=.gettext("Show Most Frequent Terms"))
     tclN <- tclVar(10)
     sliderN <- tkscale(top, from=1, to=100,
                        showvalue=TRUE, variable=tclN,
 	               resolution=1, orient="horizontal")
 
-    vars <- c(gettext_("None (whole corpus)"), colnames(meta(corpus)))
+    vars <- c(.gettext("None (whole corpus)"), colnames(meta(corpus)))
     varBox <- variableListBox(top, vars,
-                              title=gettext_("Report results by variable:"),
+                              title=.gettext("Report results by variable:"),
                               initialSelection=0)
 
     onOK <- function() {
@@ -26,7 +26,7 @@ freqTermsDlg <- function() {
 
         closeDialog()
 
-        if(var == gettext_("None (whole corpus)"))
+        if(var == .gettext("None (whole corpus)"))
             doItAndPrint(paste("sort(col_sums(dtm), decreasing=TRUE)[1:", n, "]", sep=""))
         else
             doItAndPrint(sprintf('tapply(1:nrow(dtm), meta(corpus, "%s"), function(x) sort(col_sums(dtm[x,]), decreasing=TRUE)[1:%i])',
@@ -36,7 +36,7 @@ freqTermsDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="freqTermsDlg")
-    tkgrid(labelRcmdr(top, text=gettext_("Number of terms to show:")), sliderN,
+    tkgrid(labelRcmdr(top, text=.gettext("Number of terms to show:")), sliderN,
            sticky="sw", pady=6)
     tkgrid(getFrame(varBox), columnspan="2", sticky="w", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
@@ -45,12 +45,12 @@ freqTermsDlg <- function() {
 
 termsAssocDlg <- function() {
     if(!(exists("dtm") && class(dtm) == "DocumentTermMatrix")) {
-        Message(message=gettext_("Please import a corpus and create the document-term matrix first."),
+        Message(message=.gettext("Please import a corpus and create the document-term matrix first."),
                 type="error")
         return()
     }
 
-    initializeDialog(title=gettext_("Show Associated Terms"))
+    initializeDialog(title=.gettext("Show Associated Terms"))
 
     tclTerms <- tclVar("")
     entryTerms <- ttkentry(top,  width="35", textvariable=tclTerms)
@@ -60,9 +60,9 @@ termsAssocDlg <- function() {
                        showvalue=TRUE, variable=tclN,
 	               resolution=1, orient="horizontal")
 
-    vars <- c(gettext_("None (whole corpus)"), colnames(meta(corpus)))
+    vars <- c(.gettext("None (whole corpus)"), colnames(meta(corpus)))
     varBox <- variableListBox(top, vars,
-                              title=gettext_("Report results by variable:"),
+                              title=.gettext("Report results by variable:"),
                               initialSelection=0)
 
     onOK <- function() {
@@ -72,25 +72,25 @@ termsAssocDlg <- function() {
 
         if(length(termsList) == 0) {
             errorCondition(recall=termsAssocDlg,
-                           message=gettext_("Please enter at least one term."))
+                           message=.gettext("Please enter at least one term."))
             return()
         }
         else if(!all(termsList %in% colnames(dtm))) {
             wrongTerms <- termsList[!(termsList %in% colnames(dtm))]
             errorCondition(recall=termsAssocDlg,
-                           message=sprintf(ngettext_(length(wrongTerms),
+                           message=sprintf(.ngettext(length(wrongTerms),
                                                     "Term \'%s\' does not exist in the corpus.",
                                                     "Terms \'%s\' do not exist in the corpus."),
                                                      # TRANSLATORS: this should be opening quote, comma, closing quote
-                                                     paste(wrongTerms, collapse=gettext_("\', \'"))))
+                                                     paste(wrongTerms, collapse=.gettext("\', \'"))))
             return()
         }
 
         closeDialog()
 
-        setBusyCursor()
+        .setBusyCursor()
 
-        if(var == gettext_("None (whole corpus)")) {
+        if(var == .gettext("None (whole corpus)")) {
             for(term in termsList) {
                 doItAndPrint(sprintf('termsAssoc <- findAssocs(dtm, "%s", %s)', term, n/100))
                 doItAndPrint("print(termsAssoc)")
@@ -106,29 +106,29 @@ termsAssocDlg <- function() {
 
         # Used by saveTableToOutput()
         last.table <<- "termsAssoc"
-        title <- sprintf(ngettext_(length(termsList),
+        title <- sprintf(.ngettext(length(termsList),
                                    'Terms associated with term "%s" at more than %s%%',
                                    'Terms associated with terms "%s" at more than %s%%'),
                          # TRANSLATORS: this should be opening quote, comma, closing quote
-                         paste(termsList, collapse=gettext_('", "')), n)
+                         paste(termsList, collapse=.gettext('", "')), n)
 
-       if(var != gettext_("None (whole corpus)"))
-           attr(termsAssoc, "title") <<- paste(title, sprintf(gettext_("(for %s)"),
+       if(var != .gettext("None (whole corpus)"))
+           attr(termsAssoc, "title") <<- paste(title, sprintf(.gettext("(for %s)"),
                                                               paste(levels(factor(meta(corpus, var)[[1]])),
                                                                     collapse=", ")))
        else
            attr(termsAssoc, "title") <<- title
 
 
-        setIdleCursor()
+        .setIdleCursor()
         activateMenus()
         tkfocus(CommanderWindow())
     }
 
     OKCancelHelp(helpSubject="termsAssocDlg")
-    tkgrid(labelRcmdr(top, text=gettext_("Reference terms (space-separated):")), sticky="w")
+    tkgrid(labelRcmdr(top, text=.gettext("Reference terms (space-separated):")), sticky="w")
     tkgrid(entryTerms, sticky="w", columnspan=2)
-    tkgrid(labelRcmdr(top, text=gettext_("Correlation coefficient (%):")), sliderN, sticky="sw", pady=6)
+    tkgrid(labelRcmdr(top, text=.gettext("Correlation coefficient (%):")), sliderN, sticky="sw", pady=6)
     tkgrid(getFrame(varBox), columnspan="2", sticky="w", pady=6)
     tkgrid(buttonsFrame, columnspan=2, sticky="w", pady=6)
     dialogSuffix(rows=5, columns=2, focus=entryTerms)
@@ -136,20 +136,20 @@ termsAssocDlg <- function() {
 
 typicalTermsDlg <- function() {
     if(!(exists("dtm") && class(dtm) == "DocumentTermMatrix")) {
-        Message(message=gettext_("Please import a corpus and create the document-term matrix first."),
+        Message(message=.gettext("Please import a corpus and create the document-term matrix first."),
                 type="error")
         return()
     }
 
-    initializeDialog(title=gettext_("Show Most Typical Terms"))
+    initializeDialog(title=.gettext("Show Most Typical Terms"))
     tclN <- tclVar(10)
     sliderN <- tkscale(top, from=1, to=100,
                        showvalue=TRUE, variable=tclN,
 	               resolution=1, orient="horizontal")
 
-    vars <- c(gettext_("Per document"), colnames(meta(corpus)))
+    vars <- c(.gettext("Per document"), colnames(meta(corpus)))
     varBox <- variableListBox(top, vars,
-                              title=gettext_("Report results by variable:"),
+                              title=.gettext("Report results by variable:"),
                               initialSelection=0)
 
     onOK <- function() {
@@ -157,7 +157,7 @@ typicalTermsDlg <- function() {
         n <- as.numeric(tclvalue(tclN))
         closeDialog()
 
-        if(var == gettext_("Per document")) {
+        if(var == .gettext("Per document")) {
             doItAndPrint("expected <- row_sums(dtm) %o% col_sums(dtm)/sum(dtm)")
             doItAndPrint("chisq <- sign(as.matrix(dtm - expected)) *  as.matrix((dtm - expected)^2/expected)")
             doItAndPrint(sprintf("sapply(rownames(dtm), simplify=FALSE, USE.NAMES=TRUE, function(x) round(chisq[x,order(abs(chisq[x,]), decreasing=TRUE)[1:%i]]))", n))
@@ -175,7 +175,7 @@ typicalTermsDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="typicalTermsDlg")
-    tkgrid(labelRcmdr(top, text=gettext_("Number of terms to show:")), sliderN,
+    tkgrid(labelRcmdr(top, text=.gettext("Number of terms to show:")), sliderN,
            sticky="sw", pady=6)
     tkgrid(getFrame(varBox), columnspan="2", sticky="w", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
@@ -183,12 +183,12 @@ typicalTermsDlg <- function() {
 }
 
 restrictTermsDlg <- function() {
-    initializeDialog(title=gettext_("Select or Exclude Terms"))
+    initializeDialog(title=.gettext("Select or Exclude Terms"))
 
     radioButtons(name="what",
                  buttons=c("retain", "exclude"),
-                 labels=c(gettext_("Retain only these terms"),
-                          gettext_("Exclude these terms")),
+                 labels=c(.gettext("Retain only these terms"),
+                          .gettext("Exclude these terms")),
                  right.buttons=FALSE)
 
     tclTerms <- tclVar("")
@@ -199,17 +199,17 @@ restrictTermsDlg <- function() {
 
         if(length(termsList) == 0) {
             errorCondition(recall=restrictTermsDlg,
-                           message=gettext_("Please enter at least one term."))
+                           message=.gettext("Please enter at least one term."))
             return()
         }
         else if(!all(termsList %in% colnames(dtm))) {
             wrongTerms <- termsList[!termsList %in% colnames(dtm)]
             errorCondition(recall=restrictTermsDlg,
-                           message=sprintf(ngettext_(length(wrongTerms),
+                           message=sprintf(.ngettext(length(wrongTerms),
                                                     "Term \'%s\' does not exist in the corpus.",
                                                     "Terms \'%s\' do not exist in the corpus."),
                                                      # TRANSLATORS: this should be opening quote, comma, closing quote
-                                                     paste(wrongTerms, collapse=gettext_("\', \'"))))
+                                                     paste(wrongTerms, collapse=.gettext("\', \'"))))
             return()
         }
 
@@ -229,7 +229,7 @@ restrictTermsDlg <- function() {
 
     OKCancelHelp(helpSubject="restrictTermsDlg")
     tkgrid(whatFrame, sticky="w", columnspan=2, pady=6)
-    tkgrid(labelRcmdr(top, text=gettext_("Terms (space-separated):")),
+    tkgrid(labelRcmdr(top, text=.gettext("Terms (space-separated):")),
            columnspan=2, sticky="w")
     tkgrid(entryTerms, columnspan=2, sticky="w")
     tkgrid(buttonsFrame, sticky="w", pady=6)
