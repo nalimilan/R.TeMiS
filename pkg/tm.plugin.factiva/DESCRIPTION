@@ -7,9 +7,10 @@ Author@R: person("Milan", "Bouchet-Valat", email="nalimilan@club.fr")
 Author: Milan Bouchet-Valat <nalimilan@club.fr>
 Maintainer: Milan Bouchet-Valat <nalimilan@club.fr>
 Enhances: tm (>= 0.5)
-Depends: tm (>= 0.5)
-Imports: XML
+Imports: tm (>= 0.5), XML
 Description: This package provides a tm Source to create corpora from
   articles exported from Dow Jones's Factiva content provider as
   \acronym{XML} files.
 License: GPL (>= 2)
+URL: https://r-forge.r-project.org/projects/rcmdr-tms/
+BugReports: https://r-forge.r-project.org/tracker/?group_id=1179
