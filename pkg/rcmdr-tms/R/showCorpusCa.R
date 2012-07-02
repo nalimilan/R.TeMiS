@@ -117,14 +117,22 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
     names(dimnames(val)) <- c("", "Axis")
     tkinsert(txt, "end", paste(capture.output(val), collapse="\n"), "fixed")
 
+    # Contributions to both axes
+    docs <- order(rowCtr(corpusCa, dim), decreasing=TRUE)[1:ndocs]
+    docs <- docs[!docs %in% corpusCa$rowsup]
+
+    terms <- order(colCtr(corpusCa, dim), decreasing=TRUE)[1:nterms]
+    terms <- terms[!terms %in% corpusCa$colsup]
+
 
     for(j in 1:length(dim)) {
+        # Per-axis contributions, decreasing order
         docsCtr <- rowCtr(corpusCa, dim[j])
-        docs <- order(docsCtr, decreasing=TRUE)[1:ndocs]
+        docs <- docs[order(docsCtr[docs], decreasing=TRUE)]
         docs <- docs[!docs %in% corpusCa$rowsup]
 
         termsCtr <- colCtr(corpusCa, dim[j])
-        terms <- order(termsCtr, decreasing=TRUE)[1:nterms]
+        terms <- terms[order(termsCtr[terms], decreasing=TRUE)]
         terms <- terms[!terms %in% corpusCa$colsup]
 
 
