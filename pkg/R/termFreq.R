@@ -35,7 +35,8 @@ docTermFreqDlg <- function() {
                            message=sprintf(ngettext_(length(wrongTerms),
                                                     "Term \'%s\' does not exist in the corpus.",
                                                     "Terms \'%s\' do not exist in the corpus."),
-                                                     paste(wrongTerms, collapse='\', \'')))
+                                                     # TRANSLATORS: this should be opening quote, comma, closing quote
+                                                     paste(wrongTerms, collapse=gettext_("\', \'"))))
             return()
         }
 
@@ -185,7 +186,8 @@ varTermFreqDlg <- function() {
                            message=sprintf(ngettext_(length(wrongVars),
                                                     "Term \'%s\' does not exist in the corpus.",
                                                     "Terms \'%s\' do not exist in the corpus."),
-                                                     paste(wrongVars, collapse='\', \'')))
+                                                     # TRANSLATORS: this should be opening quote, comma, closing quote
+                                                     paste(wrongTerms, collapse=gettext_("\', \'"))))
             return()
         }
 
