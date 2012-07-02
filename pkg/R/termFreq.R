@@ -122,6 +122,7 @@ docTermFreqDlg <- function() {
 
         doItAndPrint("print(termFreq)")
 
+        activateMenus()
         tkfocus(CommanderWindow())
     }
 
@@ -280,6 +281,7 @@ varTermFreqDlg <- function() {
 
         doItAndPrint("print(termFreq)")
 
+        activateMenus()
         tkfocus(CommanderWindow())
     }
 

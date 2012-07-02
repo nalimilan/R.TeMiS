@@ -63,6 +63,7 @@ varTableDlg <- function() {
 
         doItAndPrint("print(varFreq)")
 
+        activateMenus()
         tkfocus(CommanderWindow())
     }
 
@@ -188,6 +189,7 @@ varCrossTableDlg <- function() {
 
         doItAndPrint("print(varFreq)")
 
+        activateMenus()
         tkfocus(CommanderWindow())
     }
 
