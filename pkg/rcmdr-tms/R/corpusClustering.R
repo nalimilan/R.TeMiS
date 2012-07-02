@@ -19,6 +19,8 @@ corpusClustDlg <- function() {
         else
             doItAndPrint("corpusClust <- hclust(dist(dtm), method = \"ward\")")
 
+        doItAndPrint("plot(as.dendrogram(corpusClust))")
+
         # For the Create classes item
         activateMenus()
 
