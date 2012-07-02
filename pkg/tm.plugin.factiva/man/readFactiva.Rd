@@ -1,11 +1,13 @@
 \name{readFactiva}
-\alias{readFactiva}
-\title{Read in a Factiva Article in XML format}
+\alias{readFactivaXML}
+\alias{readFactivaHTML}
+\title{Read in a Factiva article in XML or HTML formats}
 \description{
-  Read in an article exported from Factiva in \acronym{XML} format.
+  Read in an article exported from Factiva in \acronym{XML} or \acronym{HTML} formats.
 }
 \usage{
-  readFactiva(elem, language, id)
+  readFactivaXML(elem, language, id)
+  readFactivaHTML(elem, language, id)
 }
 \arguments{
   \item{elem}{A \code{list} with the named element \code{content} which
