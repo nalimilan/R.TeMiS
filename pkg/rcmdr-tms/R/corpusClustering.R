@@ -249,8 +249,14 @@ createClustersDlg <- function() {
         nterms <- as.numeric(tclvalue(tclNTerms))
         height <- floor(rev(corpusClust$height)[nclust-1] * 1e4)/1e4
 
-        doItAndPrint(paste("meta(corpus, tag=\"", gettext_("Cluster"),
-                           "\") <- cutree(corpusClust, h=", height, ")", sep=""))
+        doItAndPrint(sprintf("clusters <- cutree(corpusClust, h=%s)", height))
+
+        # If some documents were skipped, we need to skip them and put NA
+        if(length(clusters) == length(corpus))
+            doItAndPrint(paste("meta(corpus, \"", gettext_("Cluster"), "\") <- clusters", sep=""))
+        else
+            doItAndPrint(paste("meta(corpus, \"", gettext_("Cluster"),
+                               "\")[match(names(corpus), names(clusters), nomatch=0),] <- clusters", sep=""))
 
         # If corpus was split, we cannot add cluster back into corpusVars
         if(exists("corpusVars")) {
@@ -275,6 +281,7 @@ createClustersDlg <- function() {
                              gettext_("Within-cluster variance"),
                              gettext_("Cluster dendrogram")))
         doItAndPrint(sprintf("showCorpusClustering(corpusSubClust, %i, %i)", ndocs, nterms))
+        doItAndPrint("rm(clusters)")
 
         setIdleCursor()
         tkfocus(CommanderWindow())
