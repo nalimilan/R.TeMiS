@@ -45,21 +45,23 @@ varTableDlg <- function() {
         if(what == "percent") {
             doItAndPrint("varFreq <- prop.table(absVarFreq)")
             doItAndPrint("varFreq <- round(varFreq*100, d=1)")
-            xlab <- gettext_("% of documents")
+            ylab <- gettext_("% of documents")
         }
         else {
             doItAndPrint("varFreq <- absVarFreq")
-            xlab <- gettext_("Number of documents")
+            ylab <- gettext_("Number of documents")
         }
 
-        if(plotType == "barplot")
-            doItAndPrint(paste("barplot(varFreq, ylab=\"", xlab,
-                               "\", beside=TRUE)", sep=""))
-        else if(plotType == "pie")
+        if(plotType == "barplot") {
+            doItAndPrint(sprintf('barchart(varFreq, stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s")',
+                                     ylab, title))
+        }
+        else if(plotType == "pie") {
             doItAndPrint("pie(varFreq)")
 
-        if(plotType != "none" && title != "")
-            doItAndPrint(paste("title(main=\"", title, "\")", sep=""))
+            if(title != "")
+                doItAndPrint(paste("title(main=\"", title, "\")", sep=""))
+        }
 
         doItAndPrint("print(varFreq)")
 
@@ -154,18 +156,12 @@ varCrossTableDlg <- function() {
         }
 
         if(plotType == "barplot") {
-            if(what == "row") {
-              doItAndPrint(paste("barplot(t(varFreq), ylab=\"",  ylab,
-                                   "\", beside=TRUE, legend.text=colnames(varFreq))", sep=""))
-                if(title != "")
-                    doItAndPrint(paste("title(main=\"", title, "\")", sep=""))
-             }
-             else {
-                doItAndPrint(paste("barplot(varFreq, ylab=\"",  ylab,
-                                   "\", beside=TRUE, legend.text=rownames(varFreq))", sep=""))
-                if(title != "")
-                    doItAndPrint(paste("title(main=\"", title, "\")", sep=""))
-             }
+            if(what == "col")
+                doItAndPrint(sprintf('barchart(t(varFreq), stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
+                                     ylab, title))
+             else
+                doItAndPrint(sprintf('barchart(varFreq, stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
+                                     ylab, title))
         }
         else if(plotType == "pie") {
             if(what == "col") {

@@ -71,54 +71,25 @@ docTermFreqDlg <- function() {
         if(plot == 1) {
            if(what == "col") {
                 if(!is.matrix(termFreqs)) {
-                        doItAndPrint(paste("pie(termFreqs)", sep=""))
-                        if(title != "")
-                            doItAndPrint(paste("title(main=\"", gsub("%T", termsList[1], title),
-                                               "\")", sep=""))
+                    doItAndPrint(paste("pie(termFreqs)", sep=""))
+                    if(title != "")
+                        doItAndPrint(paste("title(main=\"", gsub("%T", termsList[1], title),
+                                           "\")", sep=""))
                 }
                 else {
-                    if(what == "col") {
-                        doItAndPrint(paste("opar <- par(mfrow=c(2, ", ceiling(ncol(termFreqs)/2), "))", sep=""))
-                        for(i in 1:ncol(termFreqs)) {
-                            doItAndPrint(paste("pie(termFreqs[,", i, "])", sep=""))
-                            if(title != "")
-                                doItAndPrint(paste("title(main=\"", gsub("%T", colnames(termFreqs)[i], title),
-                                                   "\")", sep=""))
-                        }
-                        doItAndPrint("par(opar)")
+                    doItAndPrint(paste("opar <- par(mfrow=c(2, ", ceiling(ncol(termFreqs)/2), "))", sep=""))
+                    for(i in 1:ncol(termFreqs)) {
+                        doItAndPrint(paste("pie(termFreqs[,", i, "])", sep=""))
+                        if(title != "")
+                            doItAndPrint(paste("title(main=\"", gsub("%T", colnames(termFreqs)[i], title),
+                                               "\")", sep=""))
                     }
-                    else {
-                        doItAndPrint(paste("opar <- par(mfrow=c(2, ", ceiling(nrow(termFreqs)/2), "))", sep=""))
-                        for(i in 1:nrow(termFreqs)) {
-                            doItAndPrint(paste("pie(termFreqs[", i, ",])", sep=""))
-                            if(title != "")
-                            doItAndPrint(paste("title(main=\"", names(dimnames(termFreqs))[1], " ",
-                                               rownames(termFreqs)[i], "\")", sep=""))
-                        }
-                        doItAndPrint("par(opar)")
-                    }
+                    doItAndPrint("par(opar)")
                 }
             }
             else {
-                if(!is.matrix(termFreqs)) {
-                        doItAndPrint(paste("barplot(termFreqs, ylab=\"",  ylab, "\")", sep=""))
-                        if(title != "")
-                            doItAndPrint(paste("title(main=\"", gsub("%T", termsList[1], title),
-                                               "\")", sep=""))
-                }
-                else {
-                    if(what == "row") {
-                        doItAndPrint(paste("barplot(t(termFreqs), ylab=\"",  ylab,
-                                           "\", beside=TRUE, legend.text=colnames(termFreqs))", sep=""))
-                    }
-                    else {
-                        doItAndPrint(paste("barplot(termFreqs, ylab=\"",  ylab,
-                                           "\", beside=TRUE, legend.text=rownames(termFreqs))", sep=""))
-                    }
-
-                    if(!is.matrix(termFreqs))
-                        doItAndPrint(paste("title(main=\"", title, "\")", sep=""))
-                }
+                doItAndPrint(sprintf('barchart(termFreqs, stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
+                                     ylab, gsub("%T", termsList[1], title)))
             }
         }
 
@@ -232,54 +203,25 @@ varTermFreqDlg <- function() {
         if(plot == 1) {
            if(what == "col") {
                 if(!is.matrix(termFreqs)) {
-                        doItAndPrint(paste("pie(termFreqs)", sep=""))
-                        if(title != "")
-                            doItAndPrint(paste("title(main=\"", gsub("%T", termsList[1], title),
-                                               "\")", sep=""))
+                    doItAndPrint(paste("pie(termFreqs)", sep=""))
+                    if(title != "")
+                        doItAndPrint(paste("title(main=\"", gsub("%T", termsList[1], title),
+                                           "\")", sep=""))
                 }
                 else {
-                    if(what == "col") {
-                        doItAndPrint(paste("opar <- par(mfrow=c(2, ", ceiling(ncol(termFreqs)/2), "))", sep=""))
-                        for(i in 1:ncol(termFreqs)) {
-                            doItAndPrint(paste("pie(termFreqs[,", i, "])", sep=""))
-                            if(title != "")
-                                doItAndPrint(paste("title(main=\"", gsub("%T", colnames(termFreqs)[i], title),
-                                                   "\")", sep=""))
-                        }
-                        doItAndPrint("par(opar)")
+                    doItAndPrint(paste("opar <- par(mfrow=c(2, ", ceiling(ncol(termFreqs)/2), "))", sep=""))
+                    for(i in 1:ncol(termFreqs)) {
+                        doItAndPrint(paste("pie(termFreqs[,", i, "])", sep=""))
+                        if(title != "")
+                            doItAndPrint(paste("title(main=\"", gsub("%T", colnames(termFreqs)[i], title),
+                                               "\")", sep=""))
                     }
-                    else {
-                        doItAndPrint(paste("opar <- par(mfrow=c(2, ", ceiling(nrow(termFreqs)/2), "))", sep=""))
-                        for(i in 1:nrow(termFreqs)) {
-                            doItAndPrint(paste("pie(termFreqs[", i, ",])", sep=""))
-                            if(title != "")
-                            doItAndPrint(paste("title(main=\"", names(dimnames(termFreqs))[1], " ",
-                                               rownames(termFreqs)[i], "\")", sep=""))
-                        }
-                        doItAndPrint("par(opar)")
-                    }
+                    doItAndPrint("par(opar)")
                 }
             }
             else {
-                if(!is.matrix(termFreqs)) {
-                        doItAndPrint(paste("barplot(termFreqs, ylab=\"",  ylab, "\")", sep=""))
-                        if(title != "")
-                            doItAndPrint(paste("title(main=\"", gsub("%T", termsList[1], title),
-                                               "\")", sep=""))
-                }
-                else {
-                    if(what == "row") {
-                        doItAndPrint(paste("barplot(t(termFreqs), ylab=\"",  ylab,
-                                           "\", beside=TRUE, legend.text=colnames(termFreqs))", sep=""))
-                    }
-                    else {
-                        doItAndPrint(paste("barplot(termFreqs, ylab=\"",  ylab,
-                                           "\", beside=TRUE, legend.text=rownames(termFreqs))", sep=""))
-                    }
-
-                    if(!is.matrix(termFreqs))
-                        doItAndPrint(paste("title(main=\"", title, "\")", sep=""))
-                }
+                doItAndPrint(sprintf('barchart(termFreqs, stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
+                                     ylab, gsub("%T", termsList[1], title)))
             }
         }
 
