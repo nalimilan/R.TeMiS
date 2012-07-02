@@ -23,6 +23,7 @@ freqTermsDlg <- function() {
     onOK <- function() {
         var <- getSelection(varBox)
         n <- as.numeric(tclvalue(tclN))
+
         closeDialog()
 
         if(var == gettext_("None (whole corpus)"))
@@ -66,19 +67,35 @@ termsAssocDlg <- function() {
 
     onOK <- function() {
         n <- as.numeric(tclvalue(tclN))
-        termsList <- strsplit(tclvalue(tclTerms), " ")
+        termsList <- strsplit(tclvalue(tclTerms), " ")[[1]]
         var <- getSelection(varBox)
+
+        if(length(termsList) == 0) {
+            errorCondition(recall=termsAssocDlg,
+                           message=gettext_("Please enter at least one term."))
+            return()
+        }
+        else if(!all(termsList %in% colnames(dtm))) {
+            wrongTerms <- termsList[!(termsList %in% colnames(dtm))]
+            errorCondition(recall=termsAssocDlg,
+                           message=sprintf(ngettext_(length(wrongTerms),
+                                                    "Term \'%s\' does not exist in the corpus.",
+                                                    "Terms \'%s\' do not exist in the corpus."),
+                                                     # TRANSLATORS: this should be opening quote, comma, closing quote
+                                                     paste(wrongTerms, collapse=gettext_("\', \'"))))
+            return()
+        }
 
         closeDialog()
 
         setBusyCursor()
 
         if(var == gettext_("None (whole corpus)")) {
-            for(term in termsList[[1]])
+            for(term in termsList)
                 doItAndPrint(sprintf('findAssocs(dtm, "%s", %s)', term, n/100))
         }
         else {
-            for(term in termsList[[1]])
+            for(term in termsList)
                 doItAndPrint(sprintf('sapply(levels(factor(meta(corpus, "%s")[[1]])), function(l)\nfindAssocs(dtm[meta(corpus, "%s")[[1]] == l,], "%s", %s))',
                                      var, var, term, n/100))
         }
