@@ -88,13 +88,14 @@ msgstr ""
 msgid "Run correspondence analysis..."
 msgstr ""
 
-msgid "Plot correspondence analysis..."
+msgid "Show correspondence analysis..."
 msgstr ""
 
 msgid "Correspondence analysis"
 msgstr ""
 
 # ## END OF MENUS
+
 
 #: R/corpusCa.R:11
 #, c-format
@@ -111,47 +112,48 @@ msgstr[1] ""
 
 #: R/corpusCa.R:21
 msgid ""
-"Please increase the value of the 'sparsity' parameter so that at least "
-"two documents and two terms are retained."
+"Please increase the value of the 'sparsity' parameter so that at least two "
+"documents and two terms are retained."
 msgstr ""
 
-#: R/corpusCa.R:28
+#: R/corpusCa.R:28 R/corpusCa.R:35
 #, c-format
 msgid ""
 "Variable %s has been skipped since it contains only missing values for "
 "retained documents."
 msgstr ""
 
-#: R/corpusCa.R:34
+#: R/corpusCa.R:34 R/corpusCa.R:41
 #, c-format
 msgid ""
 "Some levels of variable %s has been skipped since they contain only missing "
 "values for retained documents."
 msgstr ""
 
-#: R/corpusCa.R:53
+#: R/corpusCa.R:53 R/corpusCa.R:60
 #, c-format
 msgid ""
 "Running correspondence analysis using %i documents, %i terms and %i "
 "variables."
 msgstr ""
 
-#: R/corpusCa.R:64
+#: R/corpusCa.R:64 R/corpusCa.R:71
 msgid "Run Correspondence Analysis"
 msgstr ""
 
 #: R/corpusCa.R:78 R/termFreq.R:121 R/varFreq.R:4 R/varFreq.R:92
-#: R/vocabulary.R:193
+#: R/vocabulary.R:193 R/corpusCa.R:87 R/termFreq.R:130 R/vocabulary.R:213
 msgid ""
 "No corpus variables have been set. Use Text mining->Set corpus variables to "
 "add them."
 msgstr ""
 
-#: R/corpusCa.R:93 R/corpusClustering.R:23
+#: R/corpusCa.R:93 R/corpusClustering.R:23 R/corpusCa.R:105
+#: R/corpusClustering.R:26
 msgid "Remove terms missing from more than (% of documents):"
 msgstr ""
 
-#: R/corpusCa.R:95
+#: R/corpusCa.R:95 R/corpusCa.R:107
 msgid "Number of dimensions to retain:"
 msgstr ""
 
@@ -159,20 +161,22 @@ msgstr ""
 msgid "Run Hierarchical Clustering"
 msgstr ""
 
-#: R/corpusClustering.R:31
+#: R/corpusClustering.R:31 R/corpusClustering.R:34
 msgid "Please run a hierarchical clustering on the corpus first."
 msgstr ""
 
-#: R/corpusClustering.R:36
+#: R/corpusClustering.R:36 R/corpusClustering.R:39
 msgid "Create Classes"
 msgstr ""
 
 #: R/corpusClustering.R:49 R/corpusClustering.R:53 R/corpusClustering.R:54
 #: R/corpusClustering.R:56 R/corpusClustering.R:57 R/corpusClustering.R:62
+#: R/corpusClustering.R:52 R/corpusClustering.R:59 R/corpusClustering.R:60
+#: R/corpusClustering.R:65
 msgid "class"
 msgstr ""
 
-#: R/corpusClustering.R:69
+#: R/corpusClustering.R:69 R/corpusClustering.R:72
 msgid "Cut height:"
 msgstr ""
 
@@ -200,42 +204,45 @@ msgstr ""
 msgid "Show Associated Terms"
 msgstr ""
 
-#: R/corpusTerms.R:75
+#: R/corpusTerms.R:75 R/corpusTerms.R:78
 msgid "Reference terms (space-separated):"
 msgstr ""
 
-#: R/corpusTerms.R:77
+#: R/corpusTerms.R:77 R/corpusTerms.R:80
 msgid "Correlation coefficient (%):"
 msgstr ""
 
-#: R/corpusTerms.R:83
+#: R/corpusTerms.R:83 R/corpusTerms.R:86
 msgid "Select or Exclude Terms"
 msgstr ""
 
-#: R/corpusTerms.R:87
+#: R/corpusTerms.R:87 R/corpusTerms.R:90
 msgid "Retain only these terms"
 msgstr ""
 
-#: R/corpusTerms.R:88
+#: R/corpusTerms.R:88 R/corpusTerms.R:91
 msgid "Exclude these terms"
 msgstr ""
 
-#: R/corpusTerms.R:99 R/termFreq.R:29 R/termFreq.R:159
+#: R/corpusTerms.R:99 R/termFreq.R:29 R/termFreq.R:159 R/corpusTerms.R:102
+#: R/termFreq.R:34 R/termFreq.R:172
 msgid "Please enter at least one term."
 msgstr ""
 
-#: R/corpusTerms.R:106 R/termFreq.R:36 R/termFreq.R:166
+#: R/corpusTerms.R:106 R/termFreq.R:36 R/termFreq.R:166 R/corpusTerms.R:109
+#: R/termFreq.R:41 R/termFreq.R:179
 #, c-format
 msgid "Term '%s' does not exist in the corpus."
 msgid_plural "Terms '%s' do not exist in the corpus."
 msgstr[0] ""
 msgstr[1] ""
 
-#: R/corpusTerms.R:109 R/termFreq.R:39 R/termFreq.R:169
+#: R/corpusTerms.R:109 R/termFreq.R:39 R/termFreq.R:169 R/corpusTerms.R:112
+#: R/termFreq.R:44 R/termFreq.R:182
 msgid "', '"
 msgstr ""
 
-#: R/corpusTerms.R:129
+#: R/corpusTerms.R:129 R/corpusTerms.R:132
 msgid "Terms (space-separated):"
 msgstr ""
 
@@ -251,7 +258,7 @@ msgstr ""
 msgid "Spreadsheet file (CSV, XLS, ODS...)"
 msgstr ""
 
-#: R/importCorpus.R:9 R/importCorpus.R:269
+#: R/importCorpus.R:9 R/importCorpus.R:269 R/importCorpus.R:296
 msgid "Factiva XML file"
 msgstr ""
 
@@ -287,94 +294,94 @@ msgstr ""
 msgid "Text processing:"
 msgstr ""
 
-#: R/importCorpus.R:95
+#: R/importCorpus.R:95 R/importCorpus.R:113
 msgid "Language of texts in the corpus:"
 msgstr ""
 
-#: R/importCorpus.R:121
+#: R/importCorpus.R:121 R/importCorpus.R:146
 msgid "CSV file"
 msgstr ""
 
-#: R/importCorpus.R:122
+#: R/importCorpus.R:122 R/importCorpus.R:147
 msgid "TSV file"
 msgstr ""
 
-#: R/importCorpus.R:123
+#: R/importCorpus.R:123 R/importCorpus.R:148
 msgid "dBase file"
 msgstr ""
 
-#: R/importCorpus.R:124
+#: R/importCorpus.R:124 R/importCorpus.R:149
 msgid "ODS file"
 msgstr ""
 
-#: R/importCorpus.R:125
+#: R/importCorpus.R:125 R/importCorpus.R:150
 msgid "Excel file"
 msgstr ""
 
-#: R/importCorpus.R:126
+#: R/importCorpus.R:126 R/importCorpus.R:151
 msgid "Excel 2007 file"
 msgstr ""
 
-#: R/importCorpus.R:127
+#: R/importCorpus.R:127 R/importCorpus.R:152
 msgid "Access database"
 msgstr ""
 
-#: R/importCorpus.R:128
+#: R/importCorpus.R:128 R/importCorpus.R:153
 msgid "Access 2007 database"
 msgstr ""
 
-#: R/importCorpus.R:129
+#: R/importCorpus.R:129 R/importCorpus.R:154
 msgid "All supported types"
 msgstr ""
 
-#: R/importCorpus.R:154
+#: R/importCorpus.R:154 R/importCorpus.R:179
 msgid ""
 "Loading OpenDocument spreadsheets (.ods) is not supported on your system.\n"
 "You should save your data set as a CSV file or as an Excel spreadsheet (."
 "xls)."
 msgstr ""
 
-#: R/importCorpus.R:159
+#: R/importCorpus.R:159 R/importCorpus.R:184
 msgid ""
 "Loading OpenDocument spreadsheets (.ods) requires the ROpenOffice package.\n"
 "Do you want to install it?"
 msgstr ""
 
-#: R/importCorpus.R:172
+#: R/importCorpus.R:172 R/importCorpus.R:197
 msgid ""
 "Loading Excel and Access files is only supported on Windows.\n"
 "You should save your data set as a CSV file or as an OpenDocument "
 "spreadsheet (.ods)."
 msgstr ""
 
-#: R/importCorpus.R:177
+#: R/importCorpus.R:177 R/importCorpus.R:202
 msgid ""
 "The RODBC package is needed to read Excel and Access files.\n"
 "Do you want to install it?"
 msgstr ""
 
-#: R/importCorpus.R:186
+#: R/importCorpus.R:186 R/importCorpus.R:211
 msgid ""
 "No ODBC driver for this file type was found.\n"
 "You probably need to install Excel or Access, or separate ODBC drivers."
 msgstr ""
 
-#: R/importCorpus.R:259
+#: R/importCorpus.R:259 R/importCorpus.R:286
 msgid ""
 "The tm.plugin.factiva package is needed to import corpora from Factiva XML "
 "files.\n"
 "Do you want to install it?"
 msgstr ""
 
-#: R/importCorpus.R:303
+#: R/importCorpus.R:303 R/importCorpus.R:331
 msgid "Date"
 msgstr ""
 
-#: R/importCorpus.R:303
+#: R/importCorpus.R:303 R/importCorpus.R:331
 msgid "Origin"
 msgstr ""
 
-#: R/importCorpus.R:303
+#: R/importCorpus.R:303 R/importCorpus.R:331
 msgid "Author"
 msgstr ""
 
@@ -394,7 +401,7 @@ msgstr ""
 msgid "Pages"
 msgstr ""
 
-#: R/importCorpus.R:305
+#: R/importCorpus.R:305 R/importCorpus.R:331
 msgid "Section"
 msgstr ""
 
@@ -418,7 +425,7 @@ msgstr ""
 msgid "Please create at least one variable (column)."
 msgstr ""
 
-#: R/setCorpusVariables.R:22
+#: R/setCorpusVariables.R:22 R/setCorpusVariables.R:26
 #, c-format
 msgid "Active data set must contain exactly %d rows."
 msgstr ""
@@ -427,39 +434,39 @@ msgstr ""
 msgid "Active data set is empty."
 msgstr ""
 
-#: R/showCorpusCa.R:64
+#: R/showCorpusCa.R:64 R/showCorpusCa.R:66
 msgid "Correspondence Analysis"
 msgstr ""
 
-#: R/showCorpusCa.R:109
+#: R/showCorpusCa.R:109 R/showCorpusCa.R:105
 msgid "Position"
 msgstr ""
 
-#: R/showCorpusCa.R:109
+#: R/showCorpusCa.R:109 R/showCorpusCa.R:105
 msgid "Abs. Contr."
 msgstr ""
 
-#: R/showCorpusCa.R:109
+#: R/showCorpusCa.R:109 R/showCorpusCa.R:105
 msgid "Rel. Contr."
 msgstr ""
 
-#: R/showCorpusCa.R:114
+#: R/showCorpusCa.R:114 R/showCorpusCa.R:107
 msgid "Axes information:"
 msgstr ""
 
-#: R/showCorpusCa.R:116
+#: R/showCorpusCa.R:116 R/showCorpusCa.R:109
 msgid "Axes information"
 msgstr ""
 
-#: R/showCorpusCa.R:122
+#: R/showCorpusCa.R:122 R/showCorpusCa.R:116
 msgid "Inertia (%)"
 msgstr ""
 
-#: R/showCorpusCa.R:122
+#: R/showCorpusCa.R:122 R/showCorpusCa.R:116
 msgid "Cumulated inertia (%)"
 msgstr ""
 
-#: R/showCorpusCa.R:129
+#: R/showCorpusCa.R:129 R/showCorpusCa.R:141
 #, c-format
 msgid "Most contributive terms on negative side of axis %i:"
 msgstr ""
@@ -468,22 +475,24 @@ msgstr ""
 msgid "Negative Side:"
 msgstr ""
 
-#: R/showCorpusCa.R:139 R/showCorpusCa.R:201
+#: R/showCorpusCa.R:139 R/showCorpusCa.R:201 R/showCorpusCa.R:151
+#: R/showCorpusCa.R:215
 #, c-format
 msgid "None among the %i most contributive terms."
 msgstr ""
 
-#: R/showCorpusCa.R:153
+#: R/showCorpusCa.R:153 R/showCorpusCa.R:165
 #, c-format
 msgid "Most contributive documents on negative side of axis %i:"
 msgstr ""
 
-#: R/showCorpusCa.R:158 R/showCorpusCa.R:220
+#: R/showCorpusCa.R:158 R/showCorpusCa.R:220 R/showCorpusCa.R:170
+#: R/showCorpusCa.R:235
 #, c-format
 msgid "None among the %i most contributive documents."
 msgstr ""
 
-#: R/showCorpusCa.R:191
+#: R/showCorpusCa.R:191 R/showCorpusCa.R:204
 #, c-format
 msgid "Most contributive terms on positive side of axis %i:"
 msgstr ""
@@ -492,7 +501,7 @@ msgstr ""
 msgid "Positive Side:"
 msgstr ""
 
-#: R/showCorpusCa.R:215
+#: R/showCorpusCa.R:215 R/showCorpusCa.R:229
 #, c-format
 msgid "Most contributive documents on positive side of axis %i:"
 msgstr ""
@@ -501,75 +510,78 @@ msgstr ""
 msgid "Variables:"
 msgstr ""
 
-#: R/showCorpusCa.R:256 R/showCorpusCa.R:402
+#: R/showCorpusCa.R:256 R/showCorpusCa.R:402 R/showCorpusCa.R:426
 msgid "Variables"
 msgstr ""
 
-#: R/showCorpusCa.R:273
+#: R/showCorpusCa.R:273 R/showCorpusCa.R:290
 msgid "Please run a correspondence analysis on the corpus first."
 msgstr ""
 
-#: R/showCorpusCa.R:278
+#: R/showCorpusCa.R:278 R/showCorpusCa.R:295
 msgid "Show Correspondence Analysis"
 msgstr ""
 
-#: R/showCorpusCa.R:281
+#: R/showCorpusCa.R:281 R/showCorpusCa.R:298
 msgid "Dimensions to plot:"
 msgstr ""
 
-#: R/showCorpusCa.R:294
+#: R/showCorpusCa.R:294 R/showCorpusCa.R:312
 msgid "Variables to plot:"
 msgstr ""
 
-#: R/showCorpusCa.R:298
+#: R/showCorpusCa.R:298 R/showCorpusCa.R:316
 msgid "Number of items to plot:"
 msgstr ""
 
-#: R/showCorpusCa.R:309 R/showCorpusCa.R:426
+#: R/showCorpusCa.R:309 R/showCorpusCa.R:426 R/showCorpusCa.R:329
 msgid "Horizontal axis"
 msgstr ""
 
-#: R/showCorpusCa.R:309 R/showCorpusCa.R:427
+#: R/showCorpusCa.R:309 R/showCorpusCa.R:427 R/showCorpusCa.R:330
 msgid "Vertical axis"
 msgstr ""
 
 #: R/showCorpusCa.R:314 R/showCorpusCa.R:395 R/showCorpusCa.R:402
+#: R/showCorpusCa.R:335 R/showCorpusCa.R:419 R/showCorpusCa.R:426
 msgid "Documents"
 msgstr ""
 
 #: R/showCorpusCa.R:314 R/showCorpusCa.R:395 R/showCorpusCa.R:402
+#: R/showCorpusCa.R:335 R/showCorpusCa.R:419 R/showCorpusCa.R:426
 msgid "Terms"
 msgstr ""
 
-#: R/showCorpusCa.R:315
+#: R/showCorpusCa.R:315 R/showCorpusCa.R:336
 msgid "Draw point symbols for:"
 msgstr ""
 
-#: R/showCorpusCa.R:332
+#: R/showCorpusCa.R:332 R/showCorpusCa.R:353
 msgid "Please select something to plot."
 msgstr ""
 
-#: R/showCorpusCa.R:396 R/showCorpusCa.R:403
+#: R/showCorpusCa.R:396 R/showCorpusCa.R:403 R/showCorpusCa.R:420
+#: R/showCorpusCa.R:427
 msgid "Items to represent:"
 msgstr ""
 
-#: R/showCorpusCa.R:408
+#: R/showCorpusCa.R:408 R/showCorpusCa.R:432
 msgid "Display"
 msgstr ""
 
-#: R/showCorpusCa.R:414
+#: R/showCorpusCa.R:414 R/showCorpusCa.R:438
 msgid "Close"
 msgstr ""
 
-#: R/showCorpusCa.R:432
+#: R/showCorpusCa.R:432 R/showCorpusCa.R:456
 msgid "Documents:"
 msgstr ""
 
-#: R/showCorpusCa.R:433
+#: R/showCorpusCa.R:433 R/showCorpusCa.R:457
 msgid "Terms:"
 msgstr ""
 
-#: R/showCorpusCa.R:435
+#: R/showCorpusCa.R:435 R/showCorpusCa.R:459
 msgid "Most contributive to:"
 msgstr ""
 
@@ -577,43 +589,45 @@ msgstr ""
 msgid "Terms Frequencies per Document"
 msgstr ""
 
-#: R/termFreq.R:9 R/termFreq.R:138
+#: R/termFreq.R:9 R/termFreq.R:138 R/termFreq.R:147
 msgid "Row % (term prevalence in category)"
 msgstr ""
 
-#: R/termFreq.R:10 R/termFreq.R:139
+#: R/termFreq.R:10 R/termFreq.R:139 R/termFreq.R:148
 msgid "Column % (distribution of occurrences)"
 msgstr ""
 
 #: R/termFreq.R:11 R/termFreq.R:140 R/varFreq.R:19 R/varFreq.R:117
+#: R/termFreq.R:149
 msgid "Absolute counts"
 msgstr ""
 
 #: R/termFreq.R:12 R/termFreq.R:141 R/varFreq.R:20 R/varFreq.R:118
+#: R/termFreq.R:150
 msgid "Measure:"
 msgstr ""
 
-#: R/termFreq.R:17 R/termFreq.R:146
+#: R/termFreq.R:17 R/termFreq.R:146 R/termFreq.R:18 R/termFreq.R:155
 msgid "Draw plot"
 msgstr ""
 
-#: R/termFreq.R:19 R/termFreq.R:148
+#: R/termFreq.R:19 R/termFreq.R:148 R/termFreq.R:20 R/termFreq.R:157
 msgid "Occurrences of term %T"
 msgstr ""
 
-#: R/termFreq.R:54 R/termFreq.R:190
+#: R/termFreq.R:54 R/termFreq.R:190 R/termFreq.R:59 R/termFreq.R:203
 msgid "% of all terms"
 msgstr ""
 
-#: R/termFreq.R:62 R/termFreq.R:198
+#: R/termFreq.R:62 R/termFreq.R:198 R/termFreq.R:67 R/termFreq.R:211
 msgid "% of occurrences"
 msgstr ""
 
-#: R/termFreq.R:66 R/termFreq.R:202
+#: R/termFreq.R:66 R/termFreq.R:202 R/termFreq.R:71 R/termFreq.R:215
 msgid "Number of occurrences"
 msgstr ""
 
-#: R/termFreq.R:108 R/termFreq.R:244
+#: R/termFreq.R:108 R/termFreq.R:244 R/termFreq.R:116 R/termFreq.R:260
 msgid "Terms to show (space-separated):"
 msgstr ""
 
@@ -622,14 +636,16 @@ msgid "Plot:"
 msgstr ""
 
 #: R/termFreq.R:113 R/termFreq.R:250 R/varFreq.R:83 R/varFreq.R:207
+#: R/termFreq.R:122 R/termFreq.R:267
 msgid "Title:"
 msgstr ""
 
-#: R/termFreq.R:126
+#: R/termFreq.R:126 R/termFreq.R:135
 msgid "Terms Frequencies per Variable"
 msgstr ""
 
-#: R/termFreq.R:133 R/varFreq.R:13 R/vocabulary.R:202
+#: R/termFreq.R:133 R/varFreq.R:13 R/vocabulary.R:202 R/termFreq.R:142
+#: R/vocabulary.R:222
 msgid "Variable:"
 msgstr ""
 
@@ -689,98 +705,183 @@ msgstr ""
 msgid "Column %"
 msgstr ""
 
-#: R/vocabulary.R:34 R/vocabulary.R:117
+#: R/vocabulary.R:34 R/vocabulary.R:117 R/vocabulary.R:40 R/vocabulary.R:134
 msgid "Corpus mean"
 msgstr ""
 
-#: R/vocabulary.R:34 R/vocabulary.R:118
+#: R/vocabulary.R:34 R/vocabulary.R:118 R/vocabulary.R:40 R/vocabulary.R:135
 msgid "Corpus total"
 msgstr ""
 
-#: R/vocabulary.R:56 R/vocabulary.R:74
+#: R/vocabulary.R:56 R/vocabulary.R:74 R/vocabulary.R:65 R/vocabulary.R:86
 msgid "Corpus"
 msgstr ""
 
-#: R/vocabulary.R:57
+#: R/vocabulary.R:57 R/vocabulary.R:66
 msgid "Per document mean:"
 msgstr ""
 
-#: R/vocabulary.R:75
+#: R/vocabulary.R:75 R/vocabulary.R:87
 msgid "Per category total:"
 msgstr ""
 
-#: R/vocabulary.R:80 R/vocabulary.R:102 R/vocabulary.R:217
+#: R/vocabulary.R:80 R/vocabulary.R:102 R/vocabulary.R:217 R/vocabulary.R:92
+#: R/vocabulary.R:117 R/vocabulary.R:238
 msgid "Number of terms"
 msgstr ""
 
-#: R/vocabulary.R:81 R/vocabulary.R:103 R/vocabulary.R:218
+#: R/vocabulary.R:81 R/vocabulary.R:103 R/vocabulary.R:218 R/vocabulary.R:93
+#: R/vocabulary.R:118 R/vocabulary.R:239
 msgid "Number of unique terms"
 msgstr ""
 
-#: R/vocabulary.R:82 R/vocabulary.R:104 R/vocabulary.R:219
+#: R/vocabulary.R:82 R/vocabulary.R:104 R/vocabulary.R:219 R/vocabulary.R:94
+#: R/vocabulary.R:119 R/vocabulary.R:240
 msgid "Percent of unique terms"
 msgstr ""
 
-#: R/vocabulary.R:83 R/vocabulary.R:105 R/vocabulary.R:220
+#: R/vocabulary.R:83 R/vocabulary.R:105 R/vocabulary.R:220 R/vocabulary.R:97
+#: R/vocabulary.R:122 R/vocabulary.R:243
 msgid "Number of words"
 msgstr ""
 
-#: R/vocabulary.R:84 R/vocabulary.R:106 R/vocabulary.R:221
+#: R/vocabulary.R:84 R/vocabulary.R:106 R/vocabulary.R:221 R/vocabulary.R:98
+#: R/vocabulary.R:123 R/vocabulary.R:244
 msgid "Number of long words"
 msgstr ""
 
-#: R/vocabulary.R:85 R/vocabulary.R:107 R/vocabulary.R:222
+#: R/vocabulary.R:85 R/vocabulary.R:107 R/vocabulary.R:222 R/vocabulary.R:99
+#: R/vocabulary.R:124 R/vocabulary.R:245
 msgid "Percent of long words"
 msgstr ""
 
-#: R/vocabulary.R:86 R/vocabulary.R:108 R/vocabulary.R:223
+#: R/vocabulary.R:86 R/vocabulary.R:108 R/vocabulary.R:223 R/vocabulary.R:100
+#: R/vocabulary.R:125 R/vocabulary.R:246
 msgid "Number of very long words"
 msgstr ""
 
-#: R/vocabulary.R:87 R/vocabulary.R:109 R/vocabulary.R:224
+#: R/vocabulary.R:87 R/vocabulary.R:109 R/vocabulary.R:224 R/vocabulary.R:101
+#: R/vocabulary.R:126 R/vocabulary.R:247
 msgid "Percent of very long words"
 msgstr ""
 
-#: R/vocabulary.R:88 R/vocabulary.R:110 R/vocabulary.R:225
+#: R/vocabulary.R:88 R/vocabulary.R:110 R/vocabulary.R:225 R/vocabulary.R:102
+#: R/vocabulary.R:127 R/vocabulary.R:248
 msgid "Average word length"
 msgstr ""
 
-#: R/vocabulary.R:95
+#: R/vocabulary.R:95 R/vocabulary.R:109
 msgid "Vocabulary Summary per Document"
 msgstr ""
 
-#: R/vocabulary.R:98 R/vocabulary.R:213
+#: R/vocabulary.R:98 R/vocabulary.R:213 R/vocabulary.R:112 R/vocabulary.R:233
 msgid "Draw plot for:"
 msgstr ""
 
-#: R/vocabulary.R:113
+#: R/vocabulary.R:113 R/vocabulary.R:130
 msgid "Plot global corpus value:"
 msgstr ""
 
-#: R/vocabulary.R:116
+#: R/vocabulary.R:116 R/vocabulary.R:133
 msgid "Nothing"
 msgstr ""
 
-#: R/vocabulary.R:185 R/vocabulary.R:293
+#: R/vocabulary.R:185 R/vocabulary.R:293 R/vocabulary.R:205 R/vocabulary.R:319
 msgid "Plot title:"
 msgstr ""
 
-#: R/vocabulary.R:198
+#: R/vocabulary.R:198 R/vocabulary.R:218
 msgid "Vocabulary Summary per Variable"
 msgstr ""
 
-#: R/vocabulary.R:207
+#: R/vocabulary.R:207 R/vocabulary.R:227
 msgid "Document (mean)"
 msgstr ""
 
-#: R/vocabulary.R:208
+#: R/vocabulary.R:208 R/vocabulary.R:228
 msgid "Category (sum)"
 msgstr ""
 
-#: R/vocabulary.R:209
+#: R/vocabulary.R:209 R/vocabulary.R:229
 msgid "Unit:"
 msgstr ""
 
-#: R/vocabulary.R:226
+#: R/vocabulary.R:226 R/vocabulary.R:249
 msgid "Global corpus value"
+msgstr ""
+
+#: R/importCorpus.R:28
+msgid "Split texts into smaller documents"
+msgstr ""
+
+#: R/importCorpus.R:114
+msgid "Text splitting:"
+msgstr ""
+
+#: R/importCorpus.R:116
+msgid "Size of new documents (in paragraphs):"
+msgstr ""
+
+#: R/importCorpus.R:384 R/setCorpusVariables.R:33 R/setCorpusVariables.R:53
+#: R/setCorpusVariables.R:60
+msgid "Doc ID"
+msgstr ""
+
+#: R/importCorpus.R:385 R/setCorpusVariables.R:24 R/setCorpusVariables.R:33
+#: R/setCorpusVariables.R:43 R/setCorpusVariables.R:58
+#: R/setCorpusVariables.R:60
+msgid "Doc N"
+msgstr ""
+
+#: R/showCorpusCa.R:144
+#, c-format
+msgid "Axis %i - Negative Side:"
+msgstr ""
+
+#: R/showCorpusCa.R:207
+#, c-format
+msgid "Axis %i - Positive Side:"
+msgstr ""
+
+#: R/showCorpusCa.R:270
+#, c-format
+msgid "Situation of variables on axis %i:"
+msgstr ""
+
+#: R/showCorpusCa.R:272
+#, c-format
+msgid "Axis %i - Variables"
+msgstr ""
+
+#: R/showCorpusCa.R:328
+msgid "Both axes"
+msgstr ""
+
+#: R/showCorpusCa.R:409 R/showCorpusCa.R:410
+#, c-format
+msgid "Dimension %s (%.1f%%)"
+msgstr ""
+
+#: R/showCorpusCa.R:450
+msgid "Horizontal axis:"
+msgstr ""
+
+#: R/showCorpusCa.R:451
+msgid "Vertical axis:"
+msgstr ""
+
+#: R/termFreq.R:24 R/termFreq.R:161
+msgid "Transpose table"
+msgstr ""
+
+#: R/termFreq.R:119 R/termFreq.R:264
+msgid "Display:"
+msgstr ""
+
+#: R/vocabulary.R:95 R/vocabulary.R:120 R/vocabulary.R:241
+msgid "Number of hapax legomena"
+msgstr ""
+
+#: R/vocabulary.R:96 R/vocabulary.R:121 R/vocabulary.R:242
+msgid "Percent of hapax legomena"
 msgstr ""

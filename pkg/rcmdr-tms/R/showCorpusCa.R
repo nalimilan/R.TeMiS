@@ -429,7 +429,7 @@ showCorpusCaDlg <- function() {
 
     # Custom buttons, adapted from OKCancelHelp()
     buttonsFrame <- tkframe(top, borderwidth=5)
-    plotButton <- buttonRcmdr(buttonsFrame, text=gettext_("Display"), foreground="darkgreen",
+    plotButton <- buttonRcmdr(buttonsFrame, text=gettext_("Show"), foreground="darkgreen",
                               command=onPlot, default="active", borderwidth=3)
     onClose <- function() {
         closeDialog()
