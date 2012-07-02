@@ -377,9 +377,9 @@ showCorpusCaDlg <- function() {
             colWhat <- "none"
         }
 
-        doItAndPrint(sprintf('plotCorpusCa(plottingCa, dim=c(%s, %s), what=c("%s", "%s"), labels=c(2, 2), pch=c(%s, %s, 17, %s), mass=TRUE, xlab="%s", ylab="%s")',
+        doItAndPrint(sprintf('plotCorpusCa(plottingCa, dim=c(%s, %s), what=c("%s", "%s"), labels=c(2, 2), pch=c(%s, %s, %s, NA), mass=TRUE, xlab="%s", ylab="%s")',
                               x, y, rowWhat, colWhat,
-                              if(documentsPoints) 16 else NA, if(variablesPoints) 1 else NA, if(termsPoints) 24 else NA,
+                              if(documentsPoints) 16 else NA, if(variablesPoints) 1 else NA, if(termsPoints) 17 else NA,
                               sprintf(.gettext("Dimension %s (%.1f%%)"), x, 100 * corpusCa$sv[as.integer(x)]^2/sum(corpusCa$sv^2)),
                               sprintf(.gettext("Dimension %s (%.1f%%)"), y, 100 * corpusCa$sv[as.integer(y)]^2/sum(corpusCa$sv^2))))
 
