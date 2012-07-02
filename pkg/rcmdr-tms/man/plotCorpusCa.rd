@@ -6,8 +6,11 @@
              mass = c(FALSE, FALSE), contrib = c("none", "none"), 
              col = c("blue", "red"),
              col.text = c("black", "blue", "black", "red"),
-             font = c(1, 5, 1, 5), pch = c(16, 1, 17, 24), 
-             labels = c(2, 2), arrows = c(FALSE, FALSE), ...) }
+             font = c(3, 4, 1, 2), pch = c(16, 1, 17, 24), 
+             labels = c(2, 2), arrows = c(FALSE, FALSE),
+             cex = 0.75,
+             xlab = paste("Dimension", dim[1]),
+             ylab = paste("Dimension", dim[2]), ...) }
 \arguments{
   \item{x}{Simple correspondence analysis object returned by \code{\link{runCorpusCa}}}
   \item{dim}{Numerical vector of length 2 indicating the dimensions to plot on horizontal and vertical axes respectively; default is first dimension horizontal and second dimension vertical.}
@@ -39,7 +42,10 @@
   \item{pch}{Vector of length 4 giving the type of points to be used for row active and supplementary, column active and supplementary points. See \code{\link{pchlist}} for a list of symbols.}
   \item{labels}{Vector of length two specifying if the plot should contain symbols only (\kbd{0}), labels only (\kbd{1}) or both symbols and labels (\kbd{2}). Setting \code{labels} to \kbd{2} results in the symbols being plotted at the coordinates and the labels with an offset.}
   \item{arrows}{Vector of two logicals specifying if the plot should contain points (\kbd{FALSE}, default) or arrows (\kbd{TRUE}). First value sets the rows and the second value sets the columns.}
-  \item{...}{Further arguments passed to \code{\link{plot}} and \code{\link{points}}.}
+  \item{cex}{Numeric value indicating the size of the labels text.}
+  \item{xlab}{Title for the x axis: see \code{\link{title}}.}
+  \item{ylab}{Title for the y axis: see \code{\link{title}}.}
+  \item{...}{Further arguments passed to \code{\link{plot}}, to \code{\link{points}} and to \code{\link{text}}.}
           }
 \details{
 The function \code{plotCorpusCa} makes a two-dimensional map of the object created by \code{runCorpusCa} with respect to two selected dimensions.  By default the scaling option of the map is \kbd{"symmetric"}, that is the so-called \emph{symmetric map}. In this map both the row and column points are scaled to have inertias (weighted variances) equal to the principal inertia (eigenvalue or squared singular value) along the principal axes, that is both rows and columns are in pricipal coordinates. Other options are as follows:  
