@@ -6,7 +6,7 @@
 \details{This dialog allows plotting and showing most contributive terms and documents from a
          previously computed correspondence analysis (see \code{\link{corpusCaDlg}}).
          It allows plotting any dimensions of the CA together, showing either documents, terms,
-         or variables set on the corpus using the Text Mining->Set corpus variables menu.
+         or variables set on the corpus using the Text mining->Manage corpus->Set corpus variables menu.
 
          Compared with most correpondence analyses, CAs of a corpus tend to have many rows (documents)
          and columns (terms). Thus, the dialog provides two sliders ('Number of items to plot')

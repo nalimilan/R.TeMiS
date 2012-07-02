@@ -109,7 +109,7 @@ corpusCaDlg <- function() {
         setBusyCursor()
 
         if(ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"]) == 0)
-            Message(message=gettext_("No corpus variables have been set. Use Text mining->Set corpus variables to add them."),
+            Message(message=gettext_("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
                     type="note")
 
         sparsity <- as.numeric(tclvalue(tclSparsity))

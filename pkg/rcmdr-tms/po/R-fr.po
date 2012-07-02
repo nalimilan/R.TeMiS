@@ -174,11 +174,11 @@ msgstr "Réaliser une analyse des correspondances"
 #: R/corpusCa.R:112 R/subsetCorpus.R:4 R/termFreq.R:130 R/varFreq.R:4
 #: R/varFreq.R:92 R/vocabulary.R:218
 msgid ""
-"No corpus variables have been set. Use Text mining->Set corpus variables to "
+"No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to "
 "add them."
 msgstr ""
 "Il n'y a pas de variables dans le corpus. Utilisez le menu Analyse lexicale-"
-">Définir les variables du corpus pour en ajouter."
+">Gestion du Corpus->Définir les variables du corpus pour en ajouter."
 
 #: R/corpusCa.R:130 R/corpusClustering.R:32
 msgid "Remove terms missing from more than (% of documents):"
