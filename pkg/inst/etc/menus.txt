@@ -26,7 +26,7 @@
 
     menu        clustMenu      tmMenu            ""                                 ""                          ""                    ""
     item        clustMenu      command           "Run clustering..."                corpusClustDlg              "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
-    item        clustMenu      command           "Create classes..."                createClassesDlg            "exists('corpus') && 'Corpus' %in% class(corpus) && exists('corpusClust') && 'dendrogram' %in% class(corpusClust)"                    ""
+    item        clustMenu      command           "Create classes..."                createClassesDlg            "exists('corpus') && 'Corpus' %in% class(corpus) && exists('corpusClust') && class(corpusClust) == 'hclust'"         ""
     item        tmMenu	       cascade           "Hierarchical clustering"          clustMenu                   ""                    ""
 
     menu        caMenu         tmMenu            ""                                 ""                          ""                    ""
