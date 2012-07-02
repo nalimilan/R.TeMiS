@@ -76,7 +76,7 @@ vocabularyTable <- function(termsDtm, wordsDtm, variable=NULL, unit=c("document"
     }
 
 
-    voc <- as.table(round(voc, d=1))
+    voc <- as.table(voc)
     rownames(voc) <- c(gettext_("Number of terms"),
                        gettext_("Number of unique terms"),
                        gettext_("Percent of unique terms"),
@@ -172,7 +172,7 @@ docVocabularyDlg <- function() {
                                      indexes, exclude, rownames(voc)[measures], title, indexes, exclude))
         }
 
-        doItAndPrint("print(voc)")
+        doItAndPrint("print(round(voc, d=1))")
 
         activateMenus()
         tkfocus(CommanderWindow())
@@ -280,7 +280,7 @@ varVocabularyDlg <- function() {
 
         }
 
-        doItAndPrint("print(voc)")
+        doItAndPrint("print(round(voc, d=1))")
 
         activateMenus()
         tkfocus(CommanderWindow())
@@ -297,6 +297,6 @@ varVocabularyDlg <- function() {
 }
 
 copyVocabularyTable <- function() {
-    R2HTML::HTML2clip(voc)
+    R2HTML::HTML2clip(round(voc, d=1))
 }
 

@@ -43,8 +43,7 @@ varTableDlg <- function() {
         doItAndPrint(paste("absVarFreq <- table(meta(corpus, tag=\"", var, "\"))", sep=""))
 
         if(what == "percent") {
-            doItAndPrint("varFreq <- prop.table(absVarFreq)")
-            doItAndPrint("varFreq <- round(varFreq*100, d=1)")
+            doItAndPrint("varFreq <- prop.table(absVarFreq) * 100")
             ylab <- gettext_("% of documents")
         }
         else {
@@ -63,7 +62,10 @@ varTableDlg <- function() {
                 doItAndPrint(paste("title(main=\"", title, "\")", sep=""))
         }
 
-        doItAndPrint("print(varFreq)")
+        if(what == "percent")
+            doItAndPrint("round(varFreq, d=1)")
+         else
+            doItAndPrint("print(varFreq)")
 
         activateMenus()
         tkfocus(CommanderWindow())
@@ -141,13 +143,11 @@ varCrossTableDlg <- function() {
                            "\"), meta(corpus, tag=\"", var2, "\")))", sep=""))
 
         if(what == "row") {
-            doItAndPrint("varFreq <- prop.table(absVarFreq, 1)")
-            doItAndPrint("varFreq <- round(varFreq*100, d=1)")
+            doItAndPrint("varFreq <- prop.table(absVarFreq, 1) * 100")
             ylab <- gettext_("% of documents")
         }
         else if (what == "col") {
-            doItAndPrint("varFreq <- prop.table(absVarFreq, 2)")
-            doItAndPrint("varFreq <- round(varFreq*100, d=1)")
+            doItAndPrint("varFreq <- prop.table(absVarFreq, 2) * 100")
             ylab <- gettext_("% of documents")
         }
         else {
@@ -185,7 +185,10 @@ varCrossTableDlg <- function() {
             }
         }
 
-        doItAndPrint("print(varFreq)")
+        if(what %in% c("row", "col"))
+            doItAndPrint("round(varFreq, d=1)")
+         else
+            doItAndPrint("print(varFreq)")
 
         activateMenus()
         tkfocus(CommanderWindow())
@@ -207,6 +210,6 @@ varCrossTableDlg <- function() {
 }
 
 copyVarFreq <- function() {
-  R2HTML::HTML2clip(varFreq)
+  R2HTML::HTML2clip(round(varFreq, d=2))
 }
 

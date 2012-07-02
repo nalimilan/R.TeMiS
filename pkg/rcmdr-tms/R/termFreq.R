@@ -49,17 +49,15 @@ docTermFreqDlg <- function() {
                            ") ~ rownames(absTermFreqs), data=absTermFreqs)", sep=""))
 
         if(what == "row") {
-            doItAndPrint("termFreqs <- absTermFreqs/row_sums(dtm)")
-            doItAndPrint("termFreqs <- round(termFreqs*100, d=1)")
+            doItAndPrint("termFreqs <- absTermFreqs/row_sums(dtm) * 100")
             ylab <- gettext_("% of all terms")
         }
         else if (what == "col") {
             if(length(termsList) == 1)
-                doItAndPrint("termFreqs <- prop.table(absTermFreqs)")
+                doItAndPrint("termFreqs <- prop.table(absTermFreqs) * 100")
             else
-                doItAndPrint("termFreqs <- prop.table(absTermFreqs, 2)")
+                doItAndPrint("termFreqs <- prop.table(absTermFreqs, 2) * 100")
 
-            doItAndPrint("termFreqs <- round(termFreqs*100, d=1)")
             ylab <- gettext_("% of occurrences")
         }
         else {
@@ -93,7 +91,13 @@ docTermFreqDlg <- function() {
             }
         }
 
-        doItAndPrint("print(termFreqs)")
+        # We need more precision for row percents, which are usually small
+        if(what == "row")
+            doItAndPrint("round(termFreqs, d=2)")
+         else if(what == "col")
+            doItAndPrint("round(termFreqs, d=1)")
+         else
+            doItAndPrint("print(termFreqs)")
 
         activateMenus()
         tkfocus(CommanderWindow())
@@ -180,18 +184,16 @@ varTermFreqDlg <- function() {
         # Compute %
         if(what == "row") {
             doItAndPrint(paste("termFreqs <- absTermFreqs/aggregate(row_sums(dtm), meta(corpus, tag=\"",
-                               var, "\"), sum)[,-1]", sep=""))
+                               var, "\"), sum)[,-1] * 100", sep=""))
 
-            doItAndPrint("termFreqs <- round(termFreqs*100, d=1)")
             ylab <- gettext_("% of all terms")
         }
         else if (what == "col") {
             if(length(termsList) == 1)
-                doItAndPrint("termFreqs <- prop.table(absTermFreqs)")
+                doItAndPrint("termFreqs <- prop.table(absTermFreqs) * 100")
             else
-                doItAndPrint("termFreqs <- prop.table(absTermFreqs, 2)")
+                doItAndPrint("termFreqs <- prop.table(absTermFreqs, 2) * 100")
 
-            doItAndPrint("termFreqs <- round(termFreqs*100, d=1)")
             ylab <- gettext_("% of occurrences")
         }
         else {
@@ -225,7 +227,13 @@ varTermFreqDlg <- function() {
             }
         }
 
-        doItAndPrint("print(termFreqs)")
+        # We need more precision for row percents, which are usually small
+        if(what == "row")
+            doItAndPrint("round(termFreqs, d=2)")
+         else if(what == "col")
+            doItAndPrint("round(termFreqs, d=1)")
+         else
+            doItAndPrint("print(termFreqs)")
 
         activateMenus()
         tkfocus(CommanderWindow())
@@ -245,6 +253,6 @@ varTermFreqDlg <- function() {
 }
 
 copyTermFreq <- function() {
-  R2HTML::HTML2clip(termFreqs)
+  R2HTML::HTML2clip(round(termFreqs, d=2))
 }
 
