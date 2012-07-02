@@ -29,7 +29,7 @@ rowSubsetCa <- function(ca, indices) {
     ret$rowsup <- as.numeric(sapply(ca$rowsup[ca$rowsup %in% indices],
                                     function(x) x - sum(del < x)))
     ret$rowcoord <- matrix()
-    ret$rowcoord <- ca$rowcoord[indices,]
+    ret$rowcoord <- ca$rowcoord[indices,,drop=FALSE]
     ret$rownames <- ca$rownames[indices]
     ret
 }
@@ -44,7 +44,7 @@ colSubsetCa <- function(ca, indices) {
     ret$colsup <- ret$colsup[ret$colsup %in% indices]
     ret$colsup <- as.numeric(lapply(ca$colsup, function(x) x - sum(indices < x)))
     ret$colcoord <- matrix()
-    ret$colcoord <- ca$colcoord[indices,]
+    ret$colcoord <- ca$colcoord[indices,,drop=FALSE]
     ret$colnames <- ca$colnames[indices]
     ret
 }
