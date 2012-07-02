@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.TextMiningSuite 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-30 19:11+0100\n"
+"POT-Creation-Date: 2011-12-23 20:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,6 +52,9 @@ msgid "Show associated terms..."
 msgstr ""
 
 msgid "Exclude terms from analysis..."
+msgstr ""
+
+msgid "Vocabulary"
 msgstr ""
 
 msgid "Per document..."
@@ -94,7 +97,6 @@ msgid "Correspondence analysis"
 msgstr ""
 
 # ## END OF MENUS
-
 #: R/corpusCa.R:28
 #, c-format
 msgid ""
@@ -313,11 +315,13 @@ msgstr ""
 
 #: R/termFreq.R:131 R/termFreq.R:289 R/varFreq.R:72 R/varFreq.R:198
 #: R/termFreq.R:133 R/termFreq.R:293 R/varFreq.R:73 R/varFreq.R:200
+#: R/vocabulary.R:64 R/vocabulary.R:185
 msgid "Plot:"
 msgstr ""
 
 #: R/termFreq.R:133 R/termFreq.R:291 R/varFreq.R:78 R/varFreq.R:204
 #: R/termFreq.R:135 R/termFreq.R:295 R/varFreq.R:79 R/varFreq.R:206
+#: R/vocabulary.R:66 R/vocabulary.R:187
 msgid "Title:"
 msgstr ""
 
@@ -333,7 +337,7 @@ msgstr ""
 msgid "Variable Cross Table"
 msgstr ""
 
-#: R/varFreq.R:13 R/termFreq.R:155
+#: R/varFreq.R:13 R/termFreq.R:155 R/vocabulary.R:84
 msgid "Variable:"
 msgstr ""
 
@@ -392,7 +396,8 @@ msgstr ""
 msgid "Measure:"
 msgstr ""
 
-#: R/termFreq.R:17 R/termFreq.R:166 R/termFreq.R:168
+#: R/termFreq.R:17 R/termFreq.R:166 R/termFreq.R:168 R/vocabulary.R:6
+#: R/vocabulary.R:96
 msgid "Draw plot"
 msgstr ""
 
@@ -441,7 +446,7 @@ msgstr ""
 msgid "Documents meta-data"
 msgstr ""
 
-#: R/termFreq.R:36 R/termFreq.R:186
+#: R/termFreq.R:36 R/termFreq.R:186 R/corpusTerms.R:96 R/termFreq.R:188
 #, c-format
 msgid "Term '%s' does not exist in the corpus."
 msgid_plural "Terms '%s' do not exist in the corpus."
@@ -482,6 +487,7 @@ msgid ""
 msgstr ""
 
 #: R/corpusCa.R:78 R/termFreq.R:143 R/varFreq.R:4 R/varFreq.R:88
+#: R/vocabulary.R:75
 msgid ""
 "No corpus variables have been set. Use Text mining->Set corpus variables to "
 "add them."
@@ -589,4 +595,56 @@ msgstr ""
 
 #: R/corpusTerms.R:119
 msgid "Terms (space-separated):"
+msgstr ""
+
+#: R/vocabulary.R:2
+msgid "Vocabulary per Document"
+msgstr ""
+
+#: R/vocabulary.R:14 R/vocabulary.R:34 R/vocabulary.R:104 R/vocabulary.R:145
+msgid "Number of terms"
+msgstr ""
+
+#: R/vocabulary.R:15 R/vocabulary.R:35 R/vocabulary.R:105 R/vocabulary.R:146
+msgid "Number of unique terms"
+msgstr ""
+
+#: R/vocabulary.R:16 R/vocabulary.R:36 R/vocabulary.R:106 R/vocabulary.R:147
+msgid "Terms diversity"
+msgstr ""
+
+#: R/vocabulary.R:28
+msgid "Corpus mean"
+msgstr ""
+
+#: R/vocabulary.R:30
+msgid "Corpus total"
+msgstr ""
+
+#: R/vocabulary.R:80
+msgid "Vocabulary per Variable"
+msgstr ""
+
+#: R/vocabulary.R:89
+msgid "Document (mean)"
+msgstr ""
+
+#: R/vocabulary.R:90
+msgid "Category (sum)"
+msgstr ""
+
+#: R/vocabulary.R:91
+msgid "Unit:"
+msgstr ""
+
+#: R/vocabulary.R:129 R/vocabulary.R:138
+msgid "Corpus"
+msgstr ""
+
+#: R/vocabulary.R:131
+msgid "Per document mean:"
+msgstr ""
+
+#: R/vocabulary.R:140
+msgid "Per category total:"
 msgstr ""
