@@ -15,12 +15,21 @@ freqTermsDlg <- function() {
                        showvalue=TRUE, variable=tclN,
 	               resolution=1, orient="horizontal")
 
+    vars <- c(gettext_("None (whole corpus)"), colnames(meta(corpus)))
+    varBox <- variableListBox(top, vars,
+                              title=gettext_("Report results by variable:"),
+                              initialSelection=0)
+
     onOK <- function() {
+        var <- getSelection(varBox)
+        n <- as.numeric(tclvalue(tclN))
         closeDialog()
 
-        n <- as.numeric(tclvalue(tclN))
-
-        doItAndPrint(paste("sort(col_sums(dtm), decreasing=TRUE)[1:", n, "]", sep=""))
+        if(var == gettext_("None (whole corpus)"))
+            doItAndPrint(paste("sort(col_sums(dtm), decreasing=TRUE)[1:", n, "]", sep=""))
+        else
+            doItAndPrint(sprintf('tapply(1:nrow(dtm), meta(corpus, "%s"), function(x) sort(col_sums(dtm[x,]), decreasing=TRUE)[1:%i])',
+                                 var, n))
 
         tkfocus(CommanderWindow())
     }
@@ -28,8 +37,9 @@ freqTermsDlg <- function() {
     OKCancelHelp(helpSubject="freqTermsDlg")
     tkgrid(labelRcmdr(top, text=gettext_("Number of terms to show:")), sliderN,
            sticky="sw", pady=6)
+    tkgrid(getFrame(varBox), columnspan="2", sticky="w", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
-    dialogSuffix(rows=2, columns=2)
+    dialogSuffix(rows=3, columns=2)
 }
 
 termsAssocDlg <- function() {
