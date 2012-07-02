@@ -3,10 +3,8 @@ Type: Package
 Title: A plug-in for the tm text mining framework to import articles from Factiva
 Version: 1.1
 Date: 2012-06-01
-Author@R: person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
-                 role=c("aut", "cre"))
-Author: Milan Bouchet-Valat <nalimilan@club.fr>
-Maintainer: Milan Bouchet-Valat <nalimilan@club.fr>
+Authors@R: person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
+                  role=c("aut", "cre"))
 Enhances: tm (>= 0.5)
 Imports: tm (>= 0.5), XML
 Description: This package provides a tm Source to create corpora from

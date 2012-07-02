@@ -3,10 +3,8 @@ Type: Package
 Title: Graphical user interface providing an integrated text mining solution
 Version: 0.5
 Date: 2012-06-17
-Author@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr"),
-            person("Gilles", "Bastin", email="gilles.bastin@sciencespo-grenoble.fr"))
-Author: Milan Bouchet-Valat <nalimilan@club.fr> and Gilles Bastin <gilles.bastin@sciencespo-grenoble.fr>.
-Maintainer: Milan Bouchet-Valat <nalimilan@club.fr>
+Authors@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr", role=c("aut", "cre")),
+             person("Gilles", "Bastin", email="gilles.bastin@sciencespo-grenoble.fr", role=c("aut")))
 Depends: Rcmdr (>= 1.4-0), tm, Snowball, ca, slam, R2HTML, lattice, zoo
 Suggests: ROpenOffice, RODBC, tm.plugin.factiva
 Description: An Rcommander plug-in providing an integrated solution to perform
