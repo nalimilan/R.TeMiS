@@ -1,6 +1,6 @@
 Package: RcmdrPlugin.TextMiningSuite
 Type: Package
-Title: Graphical user interface for easy text mining
+Title: Graphical user interface providing an integrated text mining solution
 Version: 0.5
 Date: 2012-05-16
 Author@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr"),
@@ -9,9 +9,11 @@ Author: Milan Bouchet-Valat <nalimilan@club.fr> and Gilles Bastin <gilles.bastin
 Maintainer: Milan Bouchet-Valat <nalimilan@club.fr>
 Depends: Rcmdr (>= 1.4-0), tm, Snowball, ca, slam, R2HTML, lattice
 Suggests: ROpenOffice, RODBC, tm.plugin.factiva
-Description: This package provides an Rcommander plug-in to facilitate
-    common text mining tasks such as importing and cleaning a corpus, and analyses like term counts,
-    vocabulary tables, terms correlations, correspondence analysis and hierarchical clustering.
+Description: An Rcommander plug-in providing an integrated solution to perform
+    a series of text mining tasks such as importing and cleaning a corpus, and
+    analyses like terms and documents counts, vocabulary tables, terms
+    co-occurrences and documents similarity measures, correspondence analysis
+    and hierarchical clustering.
 License: GPL (>= 2)
 URL: https://r-forge.r-project.org/projects/rcmdr-tms/
 BugReports: https://r-forge.r-project.org/tracker/?group_id=1179
