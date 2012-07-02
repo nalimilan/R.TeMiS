@@ -77,8 +77,22 @@
   Milan Bouchet-Valat
 }
 \examples{
+    ## Load an XML file
     library(tm)
     file <- system.file("factiva_test.xml", package = "tm.plugin.factiva")
+    source <- FactivaSource(file)
+    corpus <- Corpus(source, readerControl = list(language = NA))
+
+    # See the contents of the documents
+    inspect(corpus)
+
+    # See meta-data associated with first article
+    meta(corpus[[1]])
+
+
+    ## For an HTML file
+    library(tm)
+    file <- system.file("factiva_test.html", package = "tm.plugin.factiva")
     source <- FactivaSource(file)
     corpus <- Corpus(source, readerControl = list(language = NA))
 
