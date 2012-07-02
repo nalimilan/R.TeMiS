@@ -78,8 +78,8 @@ plotCorpusCaDlg <- function() {
 
     nFrame <- tkframe(top)
     tkgrid(labelRcmdr(nFrame, text=gettext("Number of items to plot:"), fg="blue"), sticky="s")
-    tclNDocs <- tclVar(50)
-    tclNTerms <- tclVar(50)
+    tclNDocs <- tclVar(25)
+    tclNTerms <- tclVar(25)
     docsSlider <- tkscale(nFrame, from=1, to=nrow(corpusCa$rowcoord)-length(corpusCa$rowsup),
                           showvalue=TRUE, variable=tclNDocs,
 		          resolution=1, orient="horizontal")
