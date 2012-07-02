@@ -45,23 +45,34 @@ importCorpusDlg <- function() {
         stopwords <- tclvalue(stopwordsVariable) == 1
         stemming <- tclvalue(stemmingVariable) == 1
 
+        if(lowercase || punctuation || numbers || stopwords || stemming)
+            doItAndPrint("dtmCorpus <- corpus")
+
         if(lowercase)
-            doItAndPrint("corpus <- tm_map(corpus, tolower)")
+            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, tolower)")
         if(punctuation) {
             # Workaround to avoid French articles from getting concatenated with their noun
             if(lang == "french")
-                doItAndPrint("corpus <- tm_map(corpus, function(x) gsub(\"[\'\U2019]\", \" \", x))")
+                doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, function(x) gsub(\"[\'\U2019]\", \" \", x))")
 
-            doItAndPrint("corpus <- tm_map(corpus, removePunctuation)")
+            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removePunctuation)")
         }
         if(numbers)
-            doItAndPrint("corpus <- tm_map(corpus, removeNumbers)")
+            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removeNumbers)")
         if(stopwords)
-            doItAndPrint(paste("corpus <- tm_map(corpus, removeWords, stopwords(\"", lang, "\"))", sep=""))
+            doItAndPrint(paste("dtmCorpus <- tm_map(dtmCorpus, removeWords, stopwords(\"",
+                               lang, "\"))", sep=""))
         if(stemming)
-            doItAndPrint(paste("corpus <- tm_map(corpus, stemDocument, language=\"", lang, "\")", sep=""))
+            doItAndPrint(paste("dtmCorpus <- tm_map(dtmCorpus, stemDocument, language=\"",
+                               lang, "\")", sep=""))
 
-        doItAndPrint("dtm <- DocumentTermMatrix(corpus)")
+        if(lowercase || punctuation || numbers || stopwords || stemming) {
+            doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus)")
+            doItAndPrint("rm(dtmCorpus)")
+        }
+        else {
+            doItAndPrint("dtm <- DocumentTermMatrix(corpus)")
+        }
 
         doItAndPrint("corpus")
         doItAndPrint("dtm")
