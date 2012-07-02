@@ -778,5 +778,5 @@ msgid "Vocabulary Summary per Variable"
 msgstr ""
 
 #: R/vocabulary.R:226
-msgid "Corpus global value"
+msgid "Global corpus value"
 msgstr ""
