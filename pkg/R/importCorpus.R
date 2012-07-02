@@ -72,6 +72,8 @@ processCorpusDlg <- function() {
         # Extract terms
         doItAndPrint("dtm <- DocumentTermMatrix(corpus)")
 
+        activateMenus()
+
         tkfocus(CommanderWindow())
     }
 
