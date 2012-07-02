@@ -358,36 +358,38 @@ importCorpusFromFactiva <- function(language=NA) {
 # http://tm.r-forge.r-project.org/
 splitTexts <- function (corpus, chunksize, preserveMetadata=TRUE) 
 {
-    chunks <- list()
-    origin <- numeric()
+    chunks <- list(length(corpus))
+    origins <- list(length(corpus))
 
     for (k in seq_along(corpus)) {
-        s <- c(seq(1, length(corpus[[k]]), chunksize), length(corpus[[k]]) + 1)
+        chunks_k <- tapply(corpus[[k]], rep(seq(1, length(corpus[[k]])),
+                                            each=chunksize, length.out=length(corpus[[k]])), c)
 
-        for (i in 1:(length(s) - 1)) {
-            chunk <- corpus[[k]][s[i]:(s[i + 1] - 1)]
+        # Skeep empty chunks
+        keep <- nchar(gsub("[\n[:space:][:punct:]]+", "", sapply(chunks_k, paste, collapse=""))) > 0
 
-            # If chunk is empty, skip it
-            if(nchar(gsub("[\n[:space:][:punct:]]+", "", paste(chunk, collapse=""))) > 0) {
-                chunks <- c(chunks, list(chunk))
-                origin <- c(origin, k)
-            }
-        }
+        chunks[[k]] <- chunks_k[keep]
+        origins[[k]] <- rep(k, sum(keep))
     }
+
+    # Merge only the per-document lists of chunks at the end to reduce the number of copies
+    chunks <- do.call(c, chunks)
+    origins <- do.call(c, origins)
 
     newCorpus <- Corpus(VectorSource(chunks))
 
     names1 <- names(corpus)
-    names2 <- make.unique(names1[origin])
+    names2 <- make.unique(names1[origins])
 
     # Copy meta data from old documents
     if(preserveMetadata) {
-        DMetaData(newCorpus) <- DMetaData(corpus)[origin,, drop=FALSE]
+        DMetaData(newCorpus) <- DMetaData(corpus)[origins,, drop=FALSE]
+        docs <- list(length(newCorpus))
 
         for(i in seq_along(corpus)) {
             attrs <- attributes(corpus[[i]])
 
-            for(j in which(origin == i)) {
+            for(j in which(origins == i)) {
                 doc <- newCorpus[[j]]
                 attr(doc, "ID") <- names2[j]
                 attr(doc, "Document") <- names1[i]
@@ -398,13 +400,17 @@ splitTexts <- function (corpus, chunksize, preserveMetadata=TRUE)
                 attr(doc, "Language") <- attrs$Language
                 attr(doc, "LocalMetaData") <- attrs$LocalMetaData
                 attr(doc, "Origin") <- attrs$Origin
-                newCorpus[[j]] <- doc
+                docs[[j]] <- doc
             }
         }
+
+        # [[<-.VCorpus is terribly slow: it is incredibly faster to work on a list of documents,
+        # and only assign them in one shot at the end
+        newCorpus[] <- docs
     }
 
-    meta(newCorpus, .gettext("Doc ID")) <- names1[origin]
-    meta(newCorpus, .gettext("Doc N")) <- origin
+    meta(newCorpus, .gettext("Doc ID")) <- names1[origins]
+    meta(newCorpus, .gettext("Doc N")) <- origins
     names(newCorpus) <- names2
 
     newCorpus
