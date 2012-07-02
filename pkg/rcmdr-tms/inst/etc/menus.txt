@@ -58,7 +58,8 @@
     item        termMenu        cascade           "Vocabulary summary"               vocabularyMenu              ""                    ""
     item        termMenu        cascade           "Terms dictionary"                 dictMenu                    ""                    ""
     item        termMenu        cascade           "Frequencies of specific terms"    termFreqMenu                ""                    ""
-    item        termMenu        command           "Cooccurrence of specific terms..." termsAssocDlg               "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        termMenu        command           "Cooccurrence of specific terms..." termsAssocDlg              "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        termMenu        command           "Most typical terms..."            typicalTermsDlg             "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
 
 
 ### Hierarchical clustering menu ###

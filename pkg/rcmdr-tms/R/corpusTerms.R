@@ -82,6 +82,54 @@ termsAssocDlg <- function() {
     dialogSuffix(rows=4, columns=2, focus=entryTerms)
 }
 
+typicalTermsDlg <- function() {
+    if(!(exists("dtm") && class(dtm) == "DocumentTermMatrix")) {
+        Message(message=gettext_("Please import a corpus and create the document-term matrix first."),
+                type="error")
+        return()
+    }
+
+    initializeDialog(title=gettext_("Show Most Typical Terms"))
+    tclN <- tclVar(10)
+    sliderN <- tkscale(top, from=1, to=100,
+                       showvalue=TRUE, variable=tclN,
+	               resolution=1, orient="horizontal")
+
+    vars <- c(gettext_("Per document"), colnames(meta(corpus)))
+    varBox <- variableListBox(top, vars,
+                              title=gettext_("Report results by variable:"),
+                              initialSelection=0)
+
+    onOK <- function() {
+        var <- getSelection(varBox)
+        n <- as.numeric(tclvalue(tclN))
+        closeDialog()
+
+        if(var == gettext_("Per document")) {
+            doItAndPrint("expected <- row_sums(dtm) %o% col_sums(dtm)/sum(dtm)")
+            doItAndPrint("chisq <- sign(as.matrix(dtm - expected)) *  as.matrix((dtm - expected)^2/expected)")
+            doItAndPrint(sprintf("sapply(rownames(dtm), simplify=FALSE, USE.NAMES=TRUE, function(x) round(chisq[x,order(abs(chisq[x,]), decreasing=TRUE)[1:%i]]))", n))
+            doItAndPrint("rm(expected, chisq)")
+        }
+        else {
+            doItAndPrint(sprintf('typicalDtm <- rollup(dtm, 1, meta(corpus, "%s"))', var))
+            doItAndPrint("expected <- row_sums(typicalDtm) %o% col_sums(typicalDtm)/sum(typicalDtm)")
+            doItAndPrint("chisq <- sign(as.matrix(typicalDtm - expected)) *  as.matrix((typicalDtm - expected)^2/expected)")
+            doItAndPrint(sprintf("sapply(rownames(typicalDtm), simplify=FALSE, USE.NAMES=TRUE, function(x) round(chisq[x,order(abs(chisq[x,]), decreasing=TRUE)[1:%i]]))", n))
+            doItAndPrint("rm(typicalDtm, expected, chisq)")
+        }
+
+        tkfocus(CommanderWindow())
+    }
+
+    OKCancelHelp(helpSubject="typicalTermsDlg")
+    tkgrid(labelRcmdr(top, text=gettext_("Number of terms to show:")), sliderN,
+           sticky="sw", pady=6)
+    tkgrid(getFrame(varBox), columnspan="2", sticky="w", pady=6)
+    tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
+    dialogSuffix(rows=3, columns=2)
+}
+
 restrictTermsDlg <- function() {
     initializeDialog(title=gettext_("Select or Exclude Terms"))
 
