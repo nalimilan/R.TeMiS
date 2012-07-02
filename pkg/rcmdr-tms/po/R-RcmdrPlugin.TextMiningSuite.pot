@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.TextMiningSuite 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-30 19:30+0100\n"
+"POT-Creation-Date: 2012-07-01 12:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -123,6 +123,12 @@ msgid "Copy last table to report"
 msgstr ""
 
 msgid "Copy current plot to report"
+msgstr ""
+
+msgid "Draw black and white plots"
+msgstr ""
+
+msgid "Draw colored plots"
 msgstr ""
 
 msgid "Open report file"
@@ -1232,5 +1238,10 @@ msgstr ""
 #: R/time.R:99
 #, c-format
 msgid ""
-"Some values of \"%s\" could not be converted to a time index and will be missing."
+"Some values of \"%s\" could not be converted to a time index and will be "
+"missing."
+msgstr ""
+
+#: R/zzz.R:26
+msgid "# Set a nice color palette for plots"
 msgstr ""

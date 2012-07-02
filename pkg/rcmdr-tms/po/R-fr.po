@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.TextMiningSuite 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-30 19:30+0100\n"
+"POT-Creation-Date: 2012-07-01 12:30+0100\n"
 "PO-Revision-Date: 2012-06-30 19:30+0100\n"
 "Last-Translator: Milan Bouchet-Valat <nalimilan@club.fr>\n"
 "Language: fr\n"
@@ -121,6 +121,12 @@ msgstr "Copier la dernière table dans le rapport"
 
 msgid "Copy current plot to report"
 msgstr "Copier le dernier graphique dans le rapport"
+
+msgid "Draw black and white plots"
+msgstr "Dessiner les graphiques en noir et blanc"
+
+msgid "Draw colored plots"
+msgstr "Dessiner les graphiques en couleur"
 
 msgid "Open report file"
 msgstr "Ouvrir le fichier contenant le rapport"
@@ -1268,12 +1274,19 @@ msgstr " », « "
 msgid ""
 "Incorrect time format: no values of \"%s\" could be converted to a time "
 "index."
-msgstr "Format de temps incorrect : aucune valeur de « %s » n'a pu être "
-"convertie en repère temporel."
+msgstr ""
+"Format de temps incorrect : aucune valeur de « %s » n'a pu être convertie en "
+"repère temporel."
 
 #: R/time.R:99
 #, c-format
 msgid ""
-"Some values of \"%s\" could not be converted to a time index and will be missing."
-msgstr "Certaines valeurs de « %s » n'ont pas pu être converties en repères temporels "
-"et seront donc manquantes."
+"Some values of \"%s\" could not be converted to a time index and will be "
+"missing."
+msgstr ""
+"Certaines valeurs de « %s » n'ont pas pu être converties en repères "
+"temporels et seront donc manquantes."
+
+#: R/zzz.R:26
+msgid "# Set a nice color palette for plots"
+msgstr "# Choix d'une palette de couleurs agréable pour les graphiques"
