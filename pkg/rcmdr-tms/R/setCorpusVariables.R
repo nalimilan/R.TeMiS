@@ -30,7 +30,7 @@ setCorpusVariables <- function() {
 
     # Remove dropped variables
     for(var in colnames(meta(corpus))[!colnames(meta(corpus)) %in%
-            c(colnames(dset), gettext_("Doc N"), gettext_("Doc ID"), gettext_("Class"))])
+            c(colnames(dset), gettext_("Doc N"), gettext_("Doc ID"), gettext_("Cluster"))])
         doItAndPrint(sprintf('meta(corpus, "%s") <- NULL', var))
 
     # Add new variables

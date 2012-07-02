@@ -1,9 +1,9 @@
 copyVarFreq		Copy variable frequency table to clipboard as HTML
 copyVocabulary          Copy vocabulary table to clipboard as HTML
 corpusCa		Run a correspondence analysis adding corpus variables as passive rows
-corpusCaDlg		Run a correspondence analysis on a document-term matrix
-corpusClustDlg		Run a hierarchical clustering on a document-term matrix
-createClassesDlg	Create classes of documents from a hierarchical clustering previously run on the corpus
+corpusCaDlg		Run a correspondence analysis on the document-term matrix
+corpusClustDlg		Create a hierarchical clustering tree from the document-term matrix
+createClustersDlg	Create clusters of documents from a hierarchical clustering previously run on the corpus
 docTermFreqDlg		Create frequency a table crossing terms and documents
 docVocabularyDlg        Create a table crossing vocabulary and documents
 excludeTermsDlg		Exclude terms from the document-term matrix

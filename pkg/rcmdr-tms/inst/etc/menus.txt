@@ -63,8 +63,8 @@
 
 ### Hierarchical clustering menu ###
     menu        clustMenu       tmMenu            ""                                 ""                          ""                    ""
-    item        clustMenu       command           "Run clustering..."                corpusClustDlg              "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
-    item        clustMenu       command           "Create classes..."                createClassesDlg            "exists('corpus') && 'Corpus' %in% class(corpus) && exists('corpusClust') && class(corpusClust) == 'hclust'"         ""
+    item        clustMenu       command           "Create dendrogram..."             corpusClustDlg              "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
+    item        clustMenu       command           "Create clusters..."               createClustersDlg           "exists('corpus') && 'Corpus' %in% class(corpus) && exists('corpusClust') && class(corpusClust) == 'hclust'"         ""
     item        tmMenu	        cascade           "Hierarchical clustering"          clustMenu                   ""                    ""
 
     menu        caMenu          tmMenu            ""                                 ""                          ""                    ""
