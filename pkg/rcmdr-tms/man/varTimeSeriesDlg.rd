@@ -41,6 +41,12 @@
              \item{\sQuote{\%Y}}{Year with century.}
          }
 
+             \dQuote{Time units} are chosen automatically according to the values of the time variable:
+             it is set to the smallest unit in which all time values can be uniquely expressed.
+             For example, if free dates are entered, the unit will be days; if times are entered but minutes
+             are always 0, hours will be used; finally, if times are fully specified, seconds will be used as
+             the time unit. The chosen unit appears in the vertical axis label of the plot.
+
              The rolling mean is left-aligned, meaning that the number of documents reported for a
              point reflects the average of the values of the points occurring \emph{after} it. When percents
              of documents are plotted, time units with no document in the corpus are not plotted, since they
