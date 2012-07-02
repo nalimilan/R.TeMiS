@@ -66,7 +66,7 @@ termsAssocDlg <- function() {
     tkgrid(entryTerms, sticky="w", columnspan=2)
     tkgrid(labelRcmdr(top, text=gettext("Correlation coefficient (%):")), sliderN, sticky="sw")
     tkgrid(buttonsFrame, columnspan=2, sticky="w", pady=6)
-    dialogSuffix(rows=4, columns=2)
+    dialogSuffix(rows=4, columns=2, focus=entryTerms)
 }
 
 excludeTermsDlg <- function() {
@@ -90,6 +90,6 @@ excludeTermsDlg <- function() {
            columnspan=2, sticky="w")
     tkgrid(entryTerms, columnspan=2, sticky="w")
     tkgrid(buttonsFrame, sticky="w", pady=6)
-    dialogSuffix(rows=3, columns=1)
+    dialogSuffix(rows=3, columns=1, focus=entryTerms)
 }
 
