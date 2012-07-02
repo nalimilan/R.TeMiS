@@ -89,7 +89,7 @@ restrictTermsDlg <- function() {
                  buttons=c("retain", "exclude"),
                  labels=c(gettext_("Retain only these terms"),
                           gettext_("Exclude these terms")),
-                 right=FALSE)
+                 right.buttons=FALSE)
 
     tclTerms <- tclVar("")
     entryTerms <- ttkentry(top, width="30", textvariable=tclTerms)

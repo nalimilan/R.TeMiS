@@ -8,7 +8,7 @@ importCorpusDlg <- function() {
                           gettext_("Spreadsheet file (CSV, XLS, ODS...)"),
                           gettext_("Factiva XML or HTML file(s)")),
                  title=gettext_("Load corpus from:"),
-                 right=FALSE)
+                 right.buttons=FALSE)
 
     # TRANSLATORS: replace 'en' with your language's ISO 639 two-letter code
     tclLang <- tclVar(gettext_("en"))

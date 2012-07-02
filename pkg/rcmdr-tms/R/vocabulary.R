@@ -133,7 +133,7 @@ docVocabularyDlg <- function() {
                  labels=c(gettext_("Nothing"),
                           gettext_("Corpus mean"),
                           gettext_("Corpus total")),
-                 right=FALSE)
+                 right.buttons=FALSE)
 
     titleFrame <- tkframe(top)
     tclTitle <- tclVar("")
@@ -232,7 +232,7 @@ varVocabularyDlg <- function() {
                  labels=c(gettext_("Document (mean)"),
                           gettext_("Category (sum)")),
                  title=gettext_("Unit:"),
-                 right=FALSE)
+                 right.buttons=FALSE)
 
     checkBoxes(frame="whatFrame",
                title=gettext_("Draw plot for:"),

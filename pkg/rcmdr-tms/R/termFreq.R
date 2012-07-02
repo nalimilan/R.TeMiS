@@ -10,7 +10,7 @@ docTermFreqDlg <- function() {
                           gettext_("Column % (distribution of occurrences)"),
                           gettext_("Absolute counts")),
                  title=gettext_("Measure:"),
-                 right=FALSE)
+                 right.buttons=FALSE)
 
     displayFrame <- tkframe(top)
 
@@ -148,7 +148,7 @@ varTermFreqDlg <- function() {
                           gettext_("Column % (distribution of occurrences)"),
                           gettext_("Absolute counts")),
                  title=gettext_("Measure:"),
-                 right=FALSE)
+                 right.buttons=FALSE)
 
     displayFrame <- tkframe(top)
     tclPlotVar <- tclVar(1)

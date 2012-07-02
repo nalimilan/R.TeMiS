@@ -18,7 +18,7 @@ varTableDlg <- function() {
                  labels=c(gettext_("Percent"),
                           gettext_("Absolute counts")),
                  title=gettext_("Measure:"),
-                 right=FALSE)
+                 right.buttons=FALSE)
 
     tclPlotType <- tclVar("barplot")
     plotFrame <- tkframe(top)
@@ -116,7 +116,7 @@ varCrossTableDlg <- function() {
                           gettext_("Column %"),
                           gettext_("Absolute counts")),
                  title=gettext_("Measure:"),
-                 right=FALSE)
+                 right.buttons=FALSE)
 
     tclPlotType <- tclVar("barplot")
     plotFrame <- tkframe(top)
