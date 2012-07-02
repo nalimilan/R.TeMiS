@@ -1,0 +1,8 @@
+Version 1.1 - 2012-06-30
+    * Add support for HTML files since Factiva no longer allows exporting to XML.
+    * Work around encoding issues on Windows (for HTML only).
+    * Preserve paragraphs information so that e.g. makeChunks() from tm can be used
+      to split documents into smaller pieces.
+
+Version 1.0 - 2012-05-14
+    * Initial release with support for XML files.
