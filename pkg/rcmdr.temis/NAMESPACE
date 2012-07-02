@@ -1,3 +1,2 @@
-import(tcltk, stats, tm, Snowball, ca, slam)
-importFrom(Rcmdr, getRcmdr)
+import(Rcmdr, tcltk, stats, tm, Snowball, ca, slam, R2HTML, lattice, latticeExtra, zoo)
 exportPattern("^[^\\.]")
