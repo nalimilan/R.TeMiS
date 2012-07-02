@@ -7,6 +7,11 @@
                 options(Rcmdr=Rcmdr)
                 closeCommander(ask=FALSE, ask.save=TRUE)
 
+                # Work around a bug with Java on Mac OS blocking Snowball and RWeka
+                if (Sys.info()["sysname"] == "Darwin")  {
+                        Sys.setenv(NOAWT="true")
+                }
+
                 # Work around a bug in JGR: restore the correct locale
                 # https://www.rforge.net/bugzilla/show_bug.cgi?id=244
                 if (Sys.info()["sysname"] == "Darwin" && Sys.getlocale() == "C")  {
