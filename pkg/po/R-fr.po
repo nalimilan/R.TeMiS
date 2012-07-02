@@ -32,8 +32,8 @@ msgstr "Importer un corpus depuis un dossier..."
 msgid "Import corpus from file..."
 msgstr "Importer un corpus depuis un fichier..."
 
-msgid "Set corpus meta-data"
-msgstr "Définir les méta-données du corpus"
+msgid "Set corpus variables"
+msgstr "Définir les variables du corpus"
 
 msgid "List terms"
 msgstr "Afficher la liste des termes"

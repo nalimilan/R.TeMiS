@@ -36,7 +36,7 @@ msgstr ""
 msgid "Import corpus from file..."
 msgstr ""
 
-msgid "Set corpus meta-data"
+msgid "Set corpus variables"
 msgstr ""
 
 msgid "List terms"
