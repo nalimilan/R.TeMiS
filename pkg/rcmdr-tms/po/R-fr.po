@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.TextMiningSuite 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-23 20:29+0100\n"
+"POT-Creation-Date: 2012-02-12 18:29+0100\n"
 "PO-Revision-Date: 2011-12-23 20:29+0100\n"
 "Last-Translator: Milan Bouchet-Valat <nalimilan@club.fr>\n"
 "Language: fr\n"
@@ -26,11 +26,8 @@ msgstr ""
 msgid "Text mining"
 msgstr "Analyse lexicale"
 
-msgid "Import corpus from folder..."
-msgstr "Importer un corpus depuis un dossier..."
-
-msgid "Import corpus from file..."
-msgstr "Importer un corpus depuis un fichier..."
+msgid "Import corpus..."
+msgstr "Importer un corpus..."
 
 msgid "Set corpus variables"
 msgstr "Définir les variables du corpus"
@@ -187,15 +184,17 @@ msgstr "Exclure des termes de l'analyse"
 msgid "Terms to exclude (space-separated):"
 msgstr "Termes à exclure (séparés par une espace) :"
 
-#: R/importCorpus.R:31 R/importCorpus.R:144
+#: R/importCorpus.R:31 R/importCorpus.R:144 R/importCorpus.R:3
 msgid "Import Corpus"
 msgstr "Importer un corpus"
 
 #: R/importCorpus.R:32 R/importCorpus.R:33 R/importCorpus.R:146
+#: R/importCorpus.R:14
 msgid "english"
 msgstr "french"
 
 #: R/importCorpus.R:38 R/importCorpus.R:41 R/importCorpus.R:154
+#: R/importCorpus.R:22
 msgid "Text processing:"
 msgstr "Traitement des textes :"
 
@@ -204,6 +203,7 @@ msgid "No language has been chosen, using English."
 msgstr "Aucune langue choisie, utilisation de l'anglais."
 
 #: R/importCorpus.R:81 R/importCorpus.R:84 R/importCorpus.R:197
+#: R/importCorpus.R:76
 msgid "Language of texts in the corpus:"
 msgstr "Langue des textes du corpus :"
 
@@ -269,24 +269,24 @@ msgstr "Termes :"
 msgid "Most contributive to:"
 msgstr "Les plus contributifs à :"
 
-#: R/setCorpusMetadata.R:3
+#: R/setCorpusMetadata.R:3 R/setCorpusVariables.R:3
 msgid "Please import a corpus first."
 msgstr "Vous devez d'abord importer un corpus."
 
-#: R/setCorpusMetadata.R:9
+#: R/setCorpusMetadata.R:9 R/setCorpusVariables.R:9
 msgid "Please create or import a data set first."
 msgstr "Vous devez d'abord créer ou importer un jeu de données."
 
-#: R/setCorpusMetadata.R:15
+#: R/setCorpusMetadata.R:15 R/setCorpusVariables.R:15
 msgid "Please create at least one variable (column)."
 msgstr "Vous devez créer au moins une variable (colonne)."
 
-#: R/setCorpusMetadata.R:22
+#: R/setCorpusMetadata.R:22 R/setCorpusVariables.R:22
 #, c-format
 msgid "Active data set must contain exactly %d rows."
 msgstr "Le jeu de données actif doit contenir exactement %d lignes."
 
-#: R/setCorpusMetadata.R:28
+#: R/setCorpusMetadata.R:28 R/setCorpusVariables.R:28
 msgid "Active data set is empty."
 msgstr "Le jeu de données actif est vide."
 
@@ -464,23 +464,23 @@ msgid_plural "Terms '%s' do not exist in the corpus."
 msgstr[0] "Le terme « %s » n'existe pas dans le corpus."
 msgstr[1] "Les termes « %s » n'existent pas dans le corpus."
 
-#: R/importCorpus.R:38 R/importCorpus.R:151
+#: R/importCorpus.R:38 R/importCorpus.R:151 R/importCorpus.R:19
 msgid "Ignore case"
 msgstr "Ignorer la casse"
 
-#: R/importCorpus.R:38 R/importCorpus.R:151
+#: R/importCorpus.R:38 R/importCorpus.R:151 R/importCorpus.R:19
 msgid "Remove punctuation"
 msgstr "Supprimer la ponctuation"
 
-#: R/importCorpus.R:39 R/importCorpus.R:152
+#: R/importCorpus.R:39 R/importCorpus.R:152 R/importCorpus.R:20
 msgid "Remove numbers"
 msgstr "Supprimer les nombres"
 
-#: R/importCorpus.R:39 R/importCorpus.R:152
+#: R/importCorpus.R:39 R/importCorpus.R:152 R/importCorpus.R:20
 msgid "Remove stopwords"
 msgstr "Supprimer les mots vides"
 
-#: R/importCorpus.R:40 R/importCorpus.R:153
+#: R/importCorpus.R:40 R/importCorpus.R:153 R/importCorpus.R:21
 msgid "Stem words"
 msgstr "Extraire les radicaux"
 
@@ -514,43 +514,43 @@ msgstr ""
 msgid "Remove terms missing from more than (% of documents):"
 msgstr "Supprimer les termes absents de plus de (en % des documents) :"
 
-#: R/importCorpus.R:18
+#: R/importCorpus.R:18 R/importCorpus.R:102
 msgid "CSV file"
 msgstr "Fichier CSV"
 
-#: R/importCorpus.R:19
+#: R/importCorpus.R:19 R/importCorpus.R:103
 msgid "TSV file"
 msgstr "Fichier TSV"
 
-#: R/importCorpus.R:20
+#: R/importCorpus.R:20 R/importCorpus.R:104
 msgid "dBase file"
 msgstr "Fichier dBase"
 
-#: R/importCorpus.R:21
+#: R/importCorpus.R:21 R/importCorpus.R:105
 msgid "ODS file"
 msgstr "Fichier ODS"
 
-#: R/importCorpus.R:22
+#: R/importCorpus.R:22 R/importCorpus.R:106
 msgid "Excel file"
 msgstr "Fichier Excel"
 
-#: R/importCorpus.R:23
+#: R/importCorpus.R:23 R/importCorpus.R:107
 msgid "Excel 2007 file"
 msgstr "Fichier Excel 2007"
 
-#: R/importCorpus.R:24
+#: R/importCorpus.R:24 R/importCorpus.R:108
 msgid "Access database"
 msgstr "Base de données Access"
 
-#: R/importCorpus.R:25
+#: R/importCorpus.R:25 R/importCorpus.R:109
 msgid "Access 2007 database"
 msgstr "Base de données Access 2007"
 
-#: R/importCorpus.R:26
+#: R/importCorpus.R:26 R/importCorpus.R:110
 msgid "All supported types"
 msgstr "Tous les types pris en charge"
 
-#: R/importCorpus.R:51
+#: R/importCorpus.R:51 R/importCorpus.R:135
 msgid ""
 "Loading OpenDocument spreadsheets (.ods) is not supported on your system.\n"
 "You should save your data set as a CSV file or as an Excel spreadsheet (."
@@ -561,7 +561,7 @@ msgstr ""
 "Vous devriez enregistrer votre jeu de données dans un fichier CSV ou dans "
 "une feuille de calcul Excel (.xls)."
 
-#: R/importCorpus.R:56
+#: R/importCorpus.R:56 R/importCorpus.R:140
 msgid ""
 "Loading OpenDocument spreadsheets (.ods) requires the ROpenOffice package.\n"
 "Do you want to install it?"
@@ -570,7 +570,7 @@ msgstr ""
 "OpenDocument (.ods).\n"
 "Voulez-vous l'installer ?"
 
-#: R/importCorpus.R:69
+#: R/importCorpus.R:69 R/importCorpus.R:153
 msgid ""
 "Loading Excel and Access files is only supported on Windows.\n"
 "You should save your data set as a CSV file or as an OpenDocument "
@@ -581,7 +581,7 @@ msgstr ""
 "Vous devriez enregistrer votre jeu de données dans un fichier CSV ou dans "
 "une feuille de calcul OpenDocument (.ods)."
 
-#: R/importCorpus.R:74
+#: R/importCorpus.R:74 R/importCorpus.R:158
 msgid ""
 "The RODBC package is needed to read Excel and Access files.\n"
 "Do you want to install it?"
@@ -589,7 +589,7 @@ msgstr ""
 "Le paquet RODBC est nécessaire pour charger des fichiers Excel et Access.\n"
 "Voulez-vous l'installer ?"
 
-#: R/importCorpus.R:83
+#: R/importCorpus.R:83 R/importCorpus.R:167
 msgid ""
 "No ODBC driver for this file type was found.\n"
 "You probably need to install Excel or Access, or separate ODBC drivers."
@@ -597,6 +597,13 @@ msgstr ""
 "Aucun pilote ODBC n'a été trouvé pour ce type de fichier.\n"
 "Vous devez probablement installer Excel ou Access, ou des pilotes ODBC "
 "séparés."
+
+#: R/importCorpus.R:240
+msgid ""
+"The tm.plugin.factiva package is needed to import corpora from "
+"Factiva XML files.\nDo you want to install it?"
+msgstr "Le paquet tm.plugin.factiva est nécessaire pour importer des corpus "
+"a partir d'un fichier XML Factiva.\nVoulez-vous l'installer ?"
 
 #: R/plotCorpusCa.R:76
 msgid "Variables to plot:"
@@ -681,3 +688,60 @@ msgstr "Moyenne par document :"
 #: R/vocabulary.R:140
 msgid "Per category total:"
 msgstr "Total par catégorie :"
+
+#: R/importCorpus.R:7
+msgid "Directory containing plain text files"
+msgstr "Répertoire contenant des fichiers textes bruts"
+
+#: R/importCorpus.R:8
+msgid "Spreadsheet file (CSV, XLS, ODS...)"
+msgstr "Tableur (CSV, XLS, ODS...)"
+
+#: R/importCorpus.R:9 R/importCorpus.R:250
+msgid "Factiva XML file"
+msgstr "Fichier XML Factiva"
+
+#: R/importCorpus.R:10
+msgid "Load corpus from:"
+msgstr "Importer un corpus à partir d'un :"
+
+#: R/importCorpus.R:281
+msgid "Date"
+msgstr "Date"
+
+#: R/importCorpus.R:281
+msgid "Origin"
+msgstr "Origine"
+
+#: R/importCorpus.R:281
+msgid "Author"
+msgstr "Auteur"
+
+#: R/importCorpus.R:281
+msgid "Heading"
+msgstr "Titre"
+
+#: R/importCorpus.R:282
+msgid "Language"
+msgstr "Langue"
+
+#: R/importCorpus.R:282
+msgid "WordCount"
+msgstr "NombreDeMots"
+
+#: R/importCorpus.R:282
+msgid "Pages"
+msgstr "Pages"
+
+#: R/importCorpus.R:283
+msgid "Section"
+msgstr "Section"
+
+#: R/importCorpus.R:283
+msgid "Edition"
+msgstr "Edition"
+
+#: R/importCorpus.R:283
+msgid "Publisher"
+msgstr "Editeur"
+

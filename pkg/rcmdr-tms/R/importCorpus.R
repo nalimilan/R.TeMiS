@@ -237,7 +237,7 @@ importCorpusFromFile <- function(language=NA) {
 # Choose a Factiva XML file to load texts and variables from
 importCorpusFromFactiva <- function(language=NA) {
     if(!require(tm.plugin.factiva)) {
-            response <- tkmessageBox(message=gettext_(sprintf("The tm.plugin.factiva package is needed to import corpora from Factiva XML files.\nDo you want to install it?")),
+            response <- tkmessageBox(message=gettext_("The tm.plugin.factiva package is needed to import corpora from Factiva XML files.\nDo you want to install it?"),
                                      icon="question", type="yesno")
 
             if (tclvalue(response) == "yes")
@@ -247,7 +247,7 @@ importCorpusFromFactiva <- function(language=NA) {
     }
 
     filestr <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.xml .XML}}",
-                                                        gettext_("XML Factiva file")),
+                                                        gettext_("Factiva XML file")),
                                       multiple=TRUE,
                                       parent=CommanderWindow()))
 
