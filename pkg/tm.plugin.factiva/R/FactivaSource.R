@@ -12,13 +12,13 @@ FactivaSource <- function(x, encoding = "UTF-8", format = c("auto", "XML", "HTML
     }
     # HTML format
     else {
-        tree <- XML::htmlParse(x)
+        tree <- XML::htmlParse(x, encoding=encoding)
 
         # The full class is "article XXArticle", with XX the language code
         content <- XML::getNodeSet(tree, "//div[starts-with(@class, 'article')]")
         XML::free(tree)
 
-        s <- tm:::.Source(readFactivaHTML, "UTF-8", length(content), FALSE, seq(1, length(content)), 0, FALSE)
+        s <- tm:::.Source(readFactivaHTML, encoding, length(content), FALSE, seq(1, length(content)), 0, FALSE)
         s$Content <- content
         s$URI <- match.call()$x
         class(s) = c("FactivaSource", "Source")
