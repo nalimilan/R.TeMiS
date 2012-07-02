@@ -6,7 +6,9 @@ plotCorpusCa <- function (x, dim = c(1, 2), map = "symmetric",
                           what = c("all", "all"), mass = c(FALSE, FALSE),
                           contrib = c("none", "none"), col = c("#0000FF", "#FF0000"),
                           pch = c(16, 1, 17, 24), labels = c(2, 2),
-                          arrows = c(FALSE, FALSE), cex = 0.75, ...)
+                          arrows = c(FALSE, FALSE), cex = 0.75,
+                          xlab = paste("Dimension", dim[1]),
+                          ylab = paste("Dimension", dim[2]), ...)
 {
     obj <- x
     if (length(what) != 2) 
@@ -197,7 +199,7 @@ plotCorpusCa <- function (x, dim = c(1, 2), map = "symmetric",
     lim1 <- range(l1) + c(-0.05, 0.05) * diff(range(l1))
     lim2 <- range(l2) + c(-0.05, 0.05) * diff(range(l2))
     pty.backup <- par()$pty
-    plot(c(x[, 1], y[, 1]), c(x[, 2], y[, 2]), xlab = "", ylab = "", 
+    plot(c(x[, 1], y[, 1]), c(x[, 2], y[, 2]), xlab = xlab, ylab = ylab, 
         type = "n", axes = FALSE, asp = 1, ...)
     box()
     abline(h = 0, v = 0, lty = 3)

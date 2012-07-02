@@ -111,7 +111,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 
     values <- 100 * (corpusCa$sv[1:corpusCa$nd]^2)/sum(corpusCa$sv^2)
     values2 <- cumsum(values)
-    val <- round(rbind(values[1:corpusCa$nd], values2))
+    val <- round(rbind(values[1:corpusCa$nd], values2), digits=1)
     rownames(val) <- c(gettext_("Inertia (%)"), gettext_("Cumulated inertia (%)"))
     colnames(val) <- seq.int(ncol(val))
     names(dimnames(val)) <- c("", "Axis")
@@ -402,9 +402,10 @@ showCorpusCaDlg <- function() {
             colWhat <- "none"
         }
 
-        doItAndPrint(paste("plotCorpusCa(plottingCa, dim=c(", x, ", ", y, "), what=c(\"", rowWhat, "\", \"",
-                           colWhat, "\"), labels=c(", documentsPoints, ", ", termsPoints,
-                           "), mass=TRUE)", sep=""))
+        doItAndPrint(sprintf('plotCorpusCa(plottingCa, dim=c(%s, %s), what=c("%s", "%s"), labels=c(%s, %s), mass=TRUE, xlab="%s", ylab="%s")',
+                              x, y, rowWhat, colWhat, documentsPoints, termsPoints,
+                              sprintf(gettext_("Dimension %s (%.1f%%)"), x, 100 * corpusCa$sv[as.integer(x)]^2/sum(corpusCa$sv^2)),
+                              sprintf(gettext_("Dimension %s (%.1f%%)"), y, 100 * corpusCa$sv[as.integer(y)]^2/sum(corpusCa$sv^2))))
 
         activateMenus()
     }
