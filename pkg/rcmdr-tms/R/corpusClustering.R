@@ -23,7 +23,8 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
     rownames(val) <- c(gettext_("Number of documents"), gettext_("% of documents"), gettext_("Intra-class inertia"))
     colnames(val) <- seq.int(ncol(val))
     names(dimnames(val)) <- c("", gettext_("Cluster"))
-    tkinsert(txt, "end", paste(capture.output(format(as.data.frame(val), nsmall=1, digits=2)), collapse="\n"), "fixed")
+    tkinsert(txt, "end", paste(capture.output(format(as.data.frame(val), nsmall=1, digits=2, width=6)),
+                               collapse="\n"), "fixed")
 
     meta <- meta(corpus)[!colnames(meta(corpus)) %in% c("MetaID", gettext_("Cluster"))]
     clusters <- meta(corpus, gettext_("Cluster"))[[1]]
@@ -61,9 +62,11 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
                              as.numeric(as.matrix(clusterDtm[j, termsNames])/rowTot[j] * 100),
                              as.numeric(as.matrix(clusterDtm[j, termsNames])/colTot[termsNames] * 100),
                              termsCtr[[j]])
-            colnames(df) <- c(gettext_("Prevalence (%)"), gettext_("Share of occur. (%)"), gettext_("Chi2 contr."))
+            colnames(df) <- c(gettext_("Prevalence (%)"), gettext_("Distribution (%)"), gettext_("Chi2 contr."))
 
-            tkinsert(txt, "end", paste(capture.output(format(df, nsmall=2, digits=2)), collapse="\n"), "fixed")
+            tkinsert(txt, "end", paste(capture.output(format(df, nsmall=2, digits=2,
+                                                             width=max(nchar(colnames(df), "width")))),
+                                       collapse="\n"), "fixed")
         }
 
         if(ndocs > 0) {
@@ -147,7 +150,8 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
         names(dimnames(tab)) <- c("", gettext_("Cluster"))
         tab <- prop.table(tab, 1) * 100
 
-        tkinsert(txt, "end", paste(capture.output(format(tab, nsmall=1, digits=2)), collapse="\n"), "fixed")
+        tkinsert(txt, "end", paste(capture.output(format(as.data.frame(tab), nsmall=1, digits=2, width=5)),
+                                   collapse="\n"), "fixed")
     }
 
     # Only raise the window when we're done, as filling it may take some time

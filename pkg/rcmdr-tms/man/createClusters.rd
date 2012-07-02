@@ -19,9 +19,10 @@
          term from what would be expected if vocabulary was homogeneous accross all clusters. Terms that are
          negatively associated with the cluster are signalled by a negative Chi-squared value: this is just a
          printing convention, as by definition Chi-squared values can only be positive. Two statistics are also
-         provided: the prevalence of the term in the cluster, i.e. the ratio of the term's occurrences on the
-         total number of terms appearing in the cluster; the share of occurrences of the term that appear in
-         the considered cluster, rather than in others.
+         provided: the \dQuote{Prevalence} of the term in the cluster, i.e. the ratio of the term's occurrences
+         on the total number of terms appearing in the cluster; the \dQuote{Distribution} of occurrences of the
+         term in the cluster, i.e. the share of occurrences that appear in the considered cluster on the total
+         number of occurrences of the term.
 
          Most typical documents are selected using a different criterion than terms: documents with the smaller
          Chi-squared distance to the average vocabulary of the cluster are shown. This is a euclidean distance,
