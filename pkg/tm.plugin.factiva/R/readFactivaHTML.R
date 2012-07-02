@@ -21,11 +21,19 @@ readFactivaHTML <- tm::FunctionGenerator(function(elem, language, id) {
         names(data) <- vars
 
         date <- strptime(data[["PD"]], "%d %B %Y")
-        if(any(is.na(date) && !data[["PD"]] == "")) { # Try C locale, just in case
+        if(any(is.na(date) && !data[["PD"]] == "")) {
+            # Try C locale, just in case
             old.locale <- Sys.getlocale("LC_TIME")
             Sys.setlocale("LC_TIME", "C")
             date[is.na(date)] <- strptime(data[["PD"]][is.na(date)], "%d %B %Y")
             Sys.setlocale("LC_TIME", old.locale)
+
+            # A bug in Mac OS gives NA when start of month name matches an abbreviated name:
+            # http://www.freebsd.org/cgi/query-pr.cgi?pr=141939
+            # https://stat.ethz.ch/pipermail/r-sig-mac/2012-June/009296.html
+            # Add a workaround for French
+            if (Sys.info()["sysname"] == "Darwin")
+                date[is.na(date)] <- strptime(sub("[jJ]uillet", "07", data[["PD"]][is.na(date)]), "%d %m %Y")
 
             if(any(is.na(date) && !data[["PD"]] == ""))
                 warning(sprintf("Could not parse document date \"%s\". You may need to change the system locale to match that of the corpus. See LC_TIME in ?Sys.setlocale.", data[["PD"]]))
