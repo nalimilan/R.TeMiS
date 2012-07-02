@@ -40,7 +40,7 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
         expected <- row_sums(clusterDtm) %o% col_sums(clusterDtm)/sum(clusterDtm)
         chisq <- sign(as.matrix(clusterDtm - expected)) *  as.matrix((clusterDtm - expected)^2/expected)
         termsCtr <- sapply(rownames(clusterDtm), simplify=FALSE, USE.NAMES=TRUE, function(x)
-                           round(chisq[x,order(abs(chisq[x,]), decreasing=TRUE)[seq(1, min(nterms, length(chisq)))]]))
+                           round(chisq[x,order(abs(chisq[x,]), decreasing=TRUE)[seq(1, min(nterms, length(chisq[x,])))]]))
 
         rowTot <- as.matrix(row_sums(clusterDtm))[,1]
         colTot <- as.matrix(col_sums(clusterDtm))[,1]
