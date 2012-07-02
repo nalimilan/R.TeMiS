@@ -2,8 +2,7 @@
 
     menu        tmMenu         topMenu           ""                                 ""                          ""                    "" 
     item        topMenu	       cascade           "Text mining"                      tmMenu                      ""                    ""
-    item        tmMenu         command           "Import corpus from folder..."     importCorpusFromDir         ""                    ""
-    item        tmMenu         command           "Import corpus from file..."       importCorpusFromFile        ""                    ""
+    item        tmMenu         command           "Import corpus..."                 importCorpusDlg             ""                    ""
     item        tmMenu         command           "Set corpus variables"             setCorpusVariables          "exists('corpus') && 'Corpus' %in% class(corpus) && activeDataSetP() && checkVariables()"          ""
 
     menu        termMenu       tmMenu            ""                                 ""                          ""                    ""

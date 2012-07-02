@@ -20,4 +20,4 @@
          you want to take into account changes made to the data set.
 }
 
-\seealso{\code{\link{meta}}, \code{\link{processCorpusDlg}}}
+\seealso{\code{\link{meta}}, \code{\link{importCorpusDlg}}}

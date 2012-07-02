@@ -8,7 +8,7 @@ Author@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr"),
 Author: Milan Bouchet-Valat <nalimilan@club.fr> and Gilles Bastin <gilles.bastin@sciencespo-grenoble.fr>.
 Maintainer: Milan Bouchet-Valat <nalimilan@club.fr>
 Depends: Rcmdr (>= 1.4-0), tm, Snowball, ca, slam, R2HTML
-Suggests: ROpenOffice, RODBC
+Suggests: ROpenOffice, RODBC, tm.plugin.factiva
 Description: This package provides an Rcommander plug-in to facilitate
     common text mining tasks such as importing and cleaning a corpus, and analyses like term counts,
     vocabulary tables, terms correlations, correspondence analysis and hierarchical clustering.
