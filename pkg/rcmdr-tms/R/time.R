@@ -152,7 +152,7 @@ varTimeSeriesDlg <- function() {
         }
 
         ylab <- if(what == "number") .gettext("Number of documents") else .gettext("% of documents")
-        doItAndPrint(sprintf('xyplot(docSeries, superpose=TRUE, xlab="", ylab="%s", main="%s", auto.key=%s)',
+        doItAndPrint(sprintf('xyplot(docSeries, superpose=TRUE, xlab="", ylab="%s", main="%s", auto.key=%s, par.settings=simpleTheme(lwd=1.5))',
                              paste(ylab, unit), title,
                              if(NCOL(docSeries) > 1) 'list(space="bottom")' else "NULL"))
 
