@@ -51,10 +51,10 @@ createClassesDlg <- function() {
 
         if(exists("corpusVars"))
             doItAndPrint(paste("corpusVars$",  gettext_("class"),
-                               " <- meta(corpus, tag=\"", gettext_("class"), "\")", sep=""))
+                               " <- meta(corpus, tag=\"", gettext_("class"), "\")[[1]]", sep=""))
         else
             doItAndPrint(paste("corpusVars <- data.frame(",  gettext_("class"),
-                               "=meta(corpus, tag=\"", gettext_("class"), "\"))", sep=""))
+                               "=meta(corpus, tag=\"", gettext_("class"), "\")[[1]])", sep=""))
 
         doItAndPrint(paste("corpusSubClust <- cut(as.dendrogram(corpusClust), h=",
                            height, ")", sep=""))
