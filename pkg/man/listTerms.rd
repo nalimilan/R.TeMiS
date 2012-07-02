@@ -9,5 +9,5 @@
          via processing at import time (stopwords, numbers) or manually, via the Text mining
          ->Terms->Exclude terms from analysis... menu.
 }
-\seealso{\code{\link{DocumentTermMatrix}}, \code{\link{excludeTermsDlg}}, \code{\link{freqTermsDlg}},
+\seealso{\code{\link{DocumentTermMatrix}}, \code{\link{restrictTermsDlg}}, \code{\link{freqTermsDlg}},
          \code{\link{termsAssocDlg}} }

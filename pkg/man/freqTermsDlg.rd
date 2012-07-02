@@ -6,5 +6,5 @@
          to the columns with the highest total in the document-term matrix.
 }
 
-\seealso{\code{\link{DocumentTermMatrix}}, \code{\link{excludeTermsDlg}}, \code{\link{listTerms}},
+\seealso{\code{\link{DocumentTermMatrix}}, \code{\link{restrictTermsDlg}}, \code{\link{listTerms}},
          \code{\link{termsAssocDlg}} }

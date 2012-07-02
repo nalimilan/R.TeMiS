@@ -114,7 +114,7 @@ restrictTermsDlg <- function() {
         tkfocus(CommanderWindow())
     }
 
-    OKCancelHelp(helpSubject="excludeTermsDlg")
+    OKCancelHelp(helpSubject="restrictTermsDlg")
     tkgrid(whatFrame, sticky="w", columnspan=2, pady=6)
     tkgrid(labelRcmdr(top, text=gettext_("Terms (space-separated):")),
            columnspan=2, sticky="w")

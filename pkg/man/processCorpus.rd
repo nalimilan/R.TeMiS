@@ -19,6 +19,6 @@
             Ingo Feinerer. An introduction to text mining in R. R News, 8(2):19-22, October 2008. Available at \url{http://cran.r-project.org/doc/Rnews/Rnews_2008-2.pdf}}
 
 \seealso{\code{\link{importCorpusFromDir}}, \code{\link{importCorpusFromFile}},
-         \code{\link{Corpus}}, \code{\link{DocumentTermMatrix}}, \code{\link{excludeTermsDlg}},
+         \code{\link{Corpus}}, \code{\link{DocumentTermMatrix}}, \code{\link{restrictTermsDlg}},
          \code{\link{tolower}}, \code{\link{removePunctuation}}, \code{\link{removeNumbers}},
          \code{\link{stopwords}},  \code{\link{stemDocument}},  \code{\link{tm_map}} }

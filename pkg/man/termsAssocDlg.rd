@@ -14,5 +14,5 @@
          does not correspond to the terms correlated with all of the reference terms taken together.
 }
 
-\seealso{\code{\link{findAssocs}}, \code{\link{DocumentTermMatrix}}, \code{\link{excludeTermsDlg}},
+\seealso{\code{\link{findAssocs}}, \code{\link{DocumentTermMatrix}}, \code{\link{restrictTermsDlg}},
          \code{\link{listTerms}}, \code{\link{freqTermsDlg}} }
