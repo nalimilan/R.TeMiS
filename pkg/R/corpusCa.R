@@ -21,7 +21,19 @@ corpusCa <- function(corpus, sparsity=0.9, ...) {
     # Create mean dummy variables as rows
     if(ncol(meta) > 0) {
         for(i in 1:ncol(meta)) {
-            levels<-unlist(unique(meta[i]))
+            levels<-levels(factor(meta[,i]))
+            if(length(levels) == 0) {
+                Message(sprintf(gettext("Variable %s has been skipped since it contains only missing values for retained documents."),
+                                colnames(meta)[i]),
+                        type="note")
+                break
+            }
+            else if(length(levels) < nlevels(factor(meta(corpus)[,colnames(meta(corpus)) != "MetaID"][,i]))) {
+                Message(sprintf(gettext("Some levels of variable %s has been skipped since they contain only missing values for retained documents."),
+                                colnames(meta)[i]),
+                        type="note")
+                break
+            }
             mat<-aggregate(dtm[1:ndocs,], meta[i], sum)[,-1]
             rownames(mat)<-paste(colnames(meta)[i], levels)
             dtm<-rbind(dtm, mat)
