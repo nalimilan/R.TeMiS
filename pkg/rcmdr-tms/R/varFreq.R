@@ -81,7 +81,7 @@ varTableDlg <- function() {
     tkgrid(labelRcmdr(top, text=gettext_("Title:")), sticky="w", column=1, row=4)
     tkgrid(titleEntry, sticky="w", column=2, row=4, columnspan=2)
     tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=3)
-    dialogSuffix(rows=5, columns=3, focus=varBox)
+    dialogSuffix(rows=5, columns=3, focus=varBox$listbox)
 }
 
 varCrossTableDlg <- function() {
@@ -203,7 +203,7 @@ varCrossTableDlg <- function() {
     tkgrid(pieButton, sticky="w", padx=3, column=3, row=4)
     tkgrid(labelRcmdr(top, text=gettext_("Title:")), titleEntry, sticky="w")
     tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=3)
-    dialogSuffix(rows=6, columns=3, focus=varBox1)
+    dialogSuffix(rows=6, columns=3, focus=varBox1$listbox)
 }
 
 copyVarFreq <- function() {
