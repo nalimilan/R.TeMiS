@@ -51,11 +51,14 @@ copyTableToOutput <- function() {
 
     title <- attr(get(last.table), "title")
     if(length(title) > 0)
-        doItAndPrint(sprintf('HTML.title("%s", 3)', title))
+        doItAndPrint(sprintf("HTML.title('%s', 3)", title))
 
     # zoo objects are printed as plain text by default
     if(inherits(get(last.table), "zoo"))
         doItAndPrint(sprintf('HTML(as.matrix(%s), Border=NULL, align="left")', last.table))
+    # align="left" does not work for lists, it goes to cat() and appears in plain text
+    else if(class(get(last.table)) == "list")
+        doItAndPrint(sprintf('HTML(%s, Border=NULL)', last.table))
     else
         doItAndPrint(sprintf('HTML(%s, Border=NULL, align="left")', last.table))
 

@@ -91,16 +91,37 @@ termsAssocDlg <- function() {
         setBusyCursor()
 
         if(var == gettext_("None (whole corpus)")) {
-            for(term in termsList)
-                doItAndPrint(sprintf('findAssocs(dtm, "%s", %s)', term, n/100))
+            for(term in termsList) {
+                doItAndPrint(sprintf('termsAssoc <- findAssocs(dtm, "%s", %s)', term, n/100))
+                doItAndPrint("print(termsAssoc)")
+            }
         }
         else {
-            for(term in termsList)
-                doItAndPrint(sprintf('sapply(levels(factor(meta(corpus, "%s")[[1]])), function(l)\nfindAssocs(dtm[meta(corpus, "%s")[[1]] == l,], "%s", %s))',
+            for(term in termsList) {
+                doItAndPrint(sprintf('termsAssoc <- sapply(levels(factor(meta(corpus, "%s")[[1]])), function(l)\nfindAssocs(dtm[meta(corpus, "%s")[[1]] == l,], "%s", %s))',
                                      var, var, term, n/100))
+                doItAndPrint("print(termsAssoc)")
+            }
         }
 
+        # Used by saveTableToOutput()
+        last.table <<- "termsAssoc"
+        title <- sprintf(ngettext_(length(termsList),
+                                   'Terms associated with term "%s" at more than %s%%',
+                                   'Terms associated with terms "%s" at more than %s%%'),
+                         # TRANSLATORS: this should be opening quote, comma, closing quote
+                         paste(termsList, collapse=gettext_('", "')), n)
+
+       if(var != gettext_("None (whole corpus)"))
+           attr(termsAssoc, "title") <<- paste(title, sprintf(gettext_("(for %s)"),
+                                                              paste(levels(factor(meta(corpus, var)[[1]])),
+                                                                    collapse=", ")))
+       else
+           attr(termsAssoc, "title") <<- title
+
+
         setIdleCursor()
+        activateMenus()
         tkfocus(CommanderWindow())
     }
 
