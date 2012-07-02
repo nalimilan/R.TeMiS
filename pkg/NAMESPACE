@@ -1,0 +1,2 @@
+import(tcltk, stats, tm, Snowball, ca, slam)
+exportPattern("^[^\\.]")
