@@ -20,7 +20,7 @@ varTableDlg <- function() {
                  title=gettext_("Measure:"),
                  right=FALSE)
 
-    tclPlotType <- tclVar("none")
+    tclPlotType <- tclVar("barplot")
     plotFrame <- tkframe(top)
     noneButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
                                  value="none", text=gettext_("None"))
@@ -40,32 +40,32 @@ varTableDlg <- function() {
 
         closeDialog()
 
-        doItAndPrint(paste("absVarFreq <- table(meta(corpus, tag=\"", var, "\"))", sep=""))
+        doItAndPrint(paste("absVarFreqs <- table(meta(corpus, tag=\"", var, "\"))", sep=""))
 
         if(what == "percent") {
-            doItAndPrint("varFreq <- prop.table(absVarFreq) * 100")
+            doItAndPrint("varFreqs <- prop.table(absVarFreqs) * 100")
             ylab <- gettext_("% of documents")
         }
         else {
-            doItAndPrint("varFreq <- absVarFreq")
+            doItAndPrint("varFreqs <- absVarFreqs")
             ylab <- gettext_("Number of documents")
         }
 
         if(plotType == "barplot") {
-            doItAndPrint(sprintf('barchart(varFreq, stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s")',
+            doItAndPrint(sprintf('barchart(varFreqs, stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s")',
                                      ylab, title))
         }
         else if(plotType == "pie") {
-            doItAndPrint("pie(varFreq)")
+            doItAndPrint("pie(varFreqs)")
 
             if(title != "")
                 doItAndPrint(paste("title(main=\"", title, "\")", sep=""))
         }
 
         if(what == "percent")
-            doItAndPrint("round(varFreq, d=1)")
+            doItAndPrint("round(varFreqs, d=1)")
          else
-            doItAndPrint("print(varFreq)")
+            doItAndPrint("print(varFreqs)")
 
         activateMenus()
         tkfocus(CommanderWindow())
@@ -118,7 +118,7 @@ varCrossTableDlg <- function() {
                  title=gettext_("Measure:"),
                  right=FALSE)
 
-    tclPlotType <- tclVar("none")
+    tclPlotType <- tclVar("barplot")
     plotFrame <- tkframe(top)
     noneButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
                                  value="none", text=gettext_("None"))
@@ -139,56 +139,56 @@ varCrossTableDlg <- function() {
 
         closeDialog()
 
-        doItAndPrint(paste("absVarFreq <- table(cbind(meta(corpus, tag=\"", var1,
+        doItAndPrint(paste("absVarFreqs <- table(cbind(meta(corpus, tag=\"", var1,
                            "\"), meta(corpus, tag=\"", var2, "\")))", sep=""))
 
         if(what == "row") {
-            doItAndPrint("varFreq <- prop.table(absVarFreq, 1) * 100")
+            doItAndPrint("varFreqs <- prop.table(absVarFreqs, 1) * 100")
             ylab <- gettext_("% of documents")
         }
         else if (what == "col") {
-            doItAndPrint("varFreq <- prop.table(absVarFreq, 2) * 100")
+            doItAndPrint("varFreqs <- prop.table(absVarFreqs, 2) * 100")
             ylab <- gettext_("% of documents")
         }
         else {
-            doItAndPrint("varFreq <- absVarFreq")
+            doItAndPrint("varFreqs <- absVarFreqs")
             ylab <- gettext_("Number of documents")
         }
 
         if(plotType == "barplot") {
             if(what == "col")
-                doItAndPrint(sprintf('barchart(t(varFreq), stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
+                doItAndPrint(sprintf('barchart(t(varFreqs), stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
                                      ylab, title))
              else
-                doItAndPrint(sprintf('barchart(varFreq, stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
+                doItAndPrint(sprintf('barchart(varFreqs, stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
                                      ylab, title))
         }
         else if(plotType == "pie") {
             if(what == "col") {
-                doItAndPrint(paste("opar <- par(mfrow=c(2, ", ceiling(ncol(varFreq)/2), "))", sep=""))
-                for(i in 1:ncol(varFreq)) {
-                    doItAndPrint(paste("pie(varFreq[,", i, "])", sep=""))
+                doItAndPrint(paste("opar <- par(mfrow=c(2, ", ceiling(ncol(varFreqs)/2), "))", sep=""))
+                for(i in 1:ncol(varFreqs)) {
+                    doItAndPrint(paste("pie(varFreqs[,", i, "])", sep=""))
                     if(title != "")
-                        doItAndPrint(paste("title(main=\"", names(dimnames(varFreq))[2], " ",
-                                           colnames(varFreq)[i], "\")", sep=""))
+                        doItAndPrint(paste("title(main=\"", names(dimnames(varFreqs))[2], " ",
+                                           colnames(varFreqs)[i], "\")", sep=""))
                 }
                  doItAndPrint("par(opar)")
             }
             else {
-                doItAndPrint(paste("opar <- par(mfrow=c(2, ", ceiling(nrow(varFreq)/2), "))", sep=""))
-                for(i in 1:nrow(varFreq)) {
-                    doItAndPrint(paste("pie(varFreq[", i, ",])", sep=""))
-                    doItAndPrint(paste("title(main=\"", names(dimnames(varFreq))[1], " ",
-                                       rownames(varFreq)[i], "\")", sep=""))
+                doItAndPrint(paste("opar <- par(mfrow=c(2, ", ceiling(nrow(varFreqs)/2), "))", sep=""))
+                for(i in 1:nrow(varFreqs)) {
+                    doItAndPrint(paste("pie(varFreqs[", i, ",])", sep=""))
+                    doItAndPrint(paste("title(main=\"", names(dimnames(varFreqs))[1], " ",
+                                       rownames(varFreqs)[i], "\")", sep=""))
                 }
                 doItAndPrint("par(opar)")
             }
         }
 
         if(what %in% c("row", "col"))
-            doItAndPrint("round(varFreq, d=1)")
+            doItAndPrint("round(varFreqs, d=1)")
          else
-            doItAndPrint("print(varFreq)")
+            doItAndPrint("print(varFreqs)")
 
         activateMenus()
         tkfocus(CommanderWindow())
@@ -210,6 +210,6 @@ varCrossTableDlg <- function() {
 }
 
 copyVarFreq <- function() {
-  R2HTML::HTML2clip(round(varFreq, d=2))
+  R2HTML::HTML2clip(round(varFreqs, d=2))
 }
 

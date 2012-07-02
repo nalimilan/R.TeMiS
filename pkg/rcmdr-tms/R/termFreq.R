@@ -12,7 +12,7 @@ docTermFreqDlg <- function() {
                  title=gettext_("Measure:"),
                  right=FALSE)
 
-    tclPlotVar <- tclVar(0)
+    tclPlotVar <- tclVar(1)
     plotFrame <- tkframe(top)
     plotButton <- tkcheckbutton(plotFrame, text=gettext_("Draw plot"), variable=tclPlotVar)
 
@@ -88,7 +88,7 @@ docTermFreqDlg <- function() {
             }
             else {
                 doItAndPrint(sprintf('barchart(termFreqs, stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
-                                     ylab, gsub("%T", termsList[1], title)))
+                                     ylab, gsub("%T", if(length(termsList) == 1) termsList[1] else "", title)))
             }
         }
 
@@ -141,7 +141,7 @@ varTermFreqDlg <- function() {
                  title=gettext_("Measure:"),
                  right=FALSE)
 
-    tclPlotVar <- tclVar(0)
+    tclPlotVar <- tclVar(1)
     plotFrame <- tkframe(top)
     plotButton <- tkcheckbutton(plotFrame, text=gettext_("Draw plot"), variable=tclPlotVar)
 
@@ -224,7 +224,7 @@ varTermFreqDlg <- function() {
             }
             else {
                 doItAndPrint(sprintf('barchart(termFreqs, stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
-                                     ylab, gsub("%T", termsList[1], title)))
+                                     ylab, gsub("%T", if(length(termsList) == 1) termsList[1] else "", title)))
             }
         }
 
