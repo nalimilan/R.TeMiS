@@ -90,7 +90,7 @@ corpusCaDlg <- function() {
     }
 
     OKCancelHelp(helpSubject=corpusCaDlg)
-    tkgrid(labelRcmdr(top, text=gettext_("Only keep terms present in more than (% of documents):")),
+    tkgrid(labelRcmdr(top, text=gettext_("Remove terms missing from more than (% of documents):")),
            sliderSparsity, sticky="sw", pady=6)
     tkgrid(labelRcmdr(top, text=gettext_("Number of dimensions to retain:")),
            sliderDim, sticky="sw", pady=6)

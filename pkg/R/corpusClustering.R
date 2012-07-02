@@ -20,7 +20,7 @@ corpusClustDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="corpusClustDlg")
-    tkgrid(labelRcmdr(top, text=gettext_("Only keep terms present in more than (% of documents):")),
+    tkgrid(labelRcmdr(top, text=gettext_("Remove terms missing from more than (% of documents):")),
            sliderSparsity, sticky="sw", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
     dialogSuffix(rows=2, columns=2)
