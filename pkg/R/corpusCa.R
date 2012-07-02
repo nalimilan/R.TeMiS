@@ -16,13 +16,13 @@ corpusCa <- function(corpus, sparsity=0.9, ...) {
 
     ndocs<-nrow(dtm)
     nterms<-ncol(dtm)
-    meta<-meta(corpus)[,colnames(meta(corpus)) != "MetaID"]
+    meta<-meta(corpus)[colnames(meta(corpus)) != "MetaID"]
 
     # Create mean dummy variables as rows
     if(ncol(meta) > 0) {
         for(i in 1:ncol(meta)) {
             levels<-levels(factor(meta[,i]))
-            totNLevels<-nlevels(factor(meta(corpus)[,colnames(meta(corpus)) != "MetaID"][,i]))
+            totNLevels<-nlevels(factor(meta(corpus)[colnames(meta(corpus)) != "MetaID"][,i]))
 
             if(length(levels) == 0) {
                 Message(sprintf(gettext("Variable %s has been skipped since it contains only missing values for retained documents."),
