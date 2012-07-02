@@ -100,6 +100,8 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 
     tktag.configure(txt, "heading", font="sans 13 bold")
     tktag.configure(txt, "articlehead", font="sans 12 bold")
+    tktag.configure(txt, "details", font="sans 10 italic")
+    tktag.configure(txt, "small", font="sans 5")
     tktag.configure(txt, "fixed", font="courier 11")
 
     cols <- c(gettext_("Position"), gettext_("Contribution (%)"), gettext_("Quality Repr. (%)"))
@@ -191,11 +193,14 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
                 origin <- meta(corpus[[id]], "Origin")
                 date <- meta(corpus[[id]], "DateTimeStamp")
                 if(length(origin) > 0 && length(date) > 0)
-                    tkinsert(txt, "end", paste(origin, " - ", date, "\n", sep=""))
+                    tkinsert(txt, "end", paste(origin, " - ", date, "\n", sep=""), "details")
                 else if(length(origin) > 0)
-                    tkinsert(txt, "end", paste(origin, "\n", sep=""))
+                    tkinsert(txt, "end", paste(origin, "\n", sep=""), "details")
                 else if(length(origin) > 0)
-                    tkinsert(txt, "end", paste(date, "\n", sep=""))
+                    tkinsert(txt, "end", paste(date, "\n", sep=""), "details")
+
+                if(length(origin) > 0 || length(date) > 0)
+                    tkinsert(txt, "end", "\n", "small")
 
                 tkinsert(txt, "end", paste(paste(corpus[[id]], collapse="\n"), "\n\n"))
             }
@@ -258,11 +263,14 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
                 origin <- meta(corpus[[id]], "Origin")
                 date <- meta(corpus[[id]], "DateTimeStamp")
                 if(length(origin) > 0 && length(date) > 0)
-                    tkinsert(txt, "end", paste(origin, " - ", date, "\n", sep=""))
+                    tkinsert(txt, "end", paste(origin, " - ", date, "\n", sep=""), "details")
                 else if(length(origin) > 0)
-                    tkinsert(txt, "end", paste(origin, "\n", sep=""))
+                    tkinsert(txt, "end", paste(origin, "\n", sep=""), "details")
                 else if(length(origin) > 0)
-                    tkinsert(txt, "end", paste(date, "\n", sep=""))
+                    tkinsert(txt, "end", paste(date, "\n", sep=""), "details")
+
+                if(length(origin) > 0 || length(date) > 0)
+                    tkinsert(txt, "end", "\n", "small")
 
                 tkinsert(txt, "end", paste(paste(corpus[[id]], collapse="\n"), "\n\n"))
             }
