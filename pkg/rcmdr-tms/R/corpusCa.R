@@ -3,12 +3,13 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
         dtm<-DocumentTermMatrix(corpus)
 
     # Save old meta-data now to check what is lost when skipping documents
-    oldMeta<-meta(corpus)[colnames(meta(corpus)) != "MetaID"]
+    oldMeta<-meta<-meta(corpus)[colnames(meta(corpus)) != "MetaID"]
 
     dtm<-as.matrix(removeSparseTerms(dtm, sparsity))
     invalid<-which(apply(dtm,1,sum)==0)
     if(length(invalid) > 0) {
         dtm<-dtm[-invalid, , drop=FALSE]
+        meta<-oldMeta[-invalid,]
         corpus<-corpus[-invalid]
         msg<-sprintf(ngettext_(length(invalid),
                      "Document %s has been skipped because it does not include any occurrence of the terms retained in the final document-term matrix.\nIncrease the value of the 'sparsity' parameter to fix this warning.",
@@ -26,7 +27,6 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
         return()
     }
 
-    meta<-meta(corpus)[colnames(meta(corpus)) != "MetaID"]
     skippedVars<-character()
     skippedLevs<-character()
     origVars<-character()
@@ -37,14 +37,14 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
     if(ncol(meta) > 0) {
         for(i in 1:ncol(meta)) {
             var<-colnames(meta)[i]
-            levels<-levels(factor(meta[,i]))
-            totNLevels<-nlevels(oldMeta[,i])
+            levs<-levels(factor(meta[,i]))
+            totNLevels<-nlevels(factor(oldMeta[,i]))
 
-            if(length(levels) == 0) {
+            if(length(levs) == 0) {
                 skippedVars<-c(skippedVars, var)
                 next
             }
-            else if(length(levels) < totNLevels) {
+            else if(length(levs) < totNLevels) {
                 skippedLevs<-c(skippedLevs, var)
             }
 
@@ -54,12 +54,12 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
             if(totNLevels == 1) # If only one level is present, don't add the level name (e.g. TRUE or YES)
                 rownames(mat)<-substr(var, 0, 20)
             else if(dupLevels) # In case of ambiguous levels, add variable names everywhere
-                rownames(mat)<-make.unique(paste(substr(var, 0, 10), substr(levels, 0, 30)))
+                rownames(mat)<-make.unique(paste(substr(var, 0, 10), substr(levs, 0, 30)))
             else # Most general case: no need to waste space with variable names
-                rownames(mat)<-substr(levels, 0, 30)
+                rownames(mat)<-substr(levs, 0, 30)
 
             dtm<-rbind(dtm, mat)
-            origVars<-c(origVars, rep(var, length(levels)))
+            origVars<-c(origVars, rep(var, length(levs)))
         }
     }
 
