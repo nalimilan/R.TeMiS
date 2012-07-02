@@ -3,6 +3,8 @@
 \alias{openOutputFile}
 \alias{copyTableToOutput}
 \alias{copyPlotToOutput}
+\alias{enableBlackAndWhite}
+\alias{disableBlackAndWhite}
 \title{Output results to HTML file}
 \description{Functions to output tables and plots resulting from analysis of the corpus to an
              \acronym{HTML file}.}
@@ -18,5 +20,10 @@
          \acronym{HTML} file, using the titles that were configured when the objects where created.
          For plots, a plotting device must be currently open. The graph is saved in the \acronym{PNG}
          format with a reasonably high quality. For tables, the last created table is used.
+
+         \code{enableBlackAndWhite} and \code{disableBlackAndWhite} functions can be used to produce
+         black and white only graphics adapted for printing and publication. They affect the on-screen
+         device as well as the plot copied to the output file, so that the plot can be checked for
+         readability before exporting it.
 }
 

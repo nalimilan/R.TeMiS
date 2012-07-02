@@ -105,3 +105,32 @@ copyPlotToOutput <- function() {
     activateMenus()
 }
 
+enableBlackAndWhite <- function() {
+    doItAndPrint("lattice.options(default.theme=standard.theme(color=FALSE))")
+
+    # Update current plot if there is one
+    if(dev.cur() > 1) {
+        doItAndPrint("trellis.device(new=FALSE)")
+        doItAndPrint("trellis.last.object()")
+    }
+
+    options(bw.plots=TRUE)
+
+    activateMenus()
+}
+
+disableBlackAndWhite <- function() {
+    # Keep in sync with .onAttach()
+    doItAndPrint('lattice.options(default.theme=custom.theme(symbol=brewer.pal(8, "Set1")[c(2:1, 3:5, 7:9)], fill=brewer.pal(8, "Set1")[c(2:1, 3:5, 7:9)]))')
+
+    # Update current plot if there is one
+    if(dev.cur() > 1) {
+        doItAndPrint("trellis.device(new=FALSE)")
+        doItAndPrint("trellis.last.object()")
+    }
+
+    options(bw.plots=FALSE)
+
+    activateMenus()
+}
+
