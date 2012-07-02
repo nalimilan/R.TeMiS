@@ -29,32 +29,37 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
     meta<-meta(corpus)[colnames(meta(corpus)) != "MetaID"]
     skippedVars<-character()
     skippedLevs<-character()
+    origVars<-character()
+
+    dupLevels<-any(duplicated(unlist(lapply(meta, function(x) substr(unique(as.character(x[!is.na(x)])), 0, 30)))))
 
     # Create mean dummy variables as rows
     if(ncol(meta) > 0) {
         for(i in 1:ncol(meta)) {
+            var<-colnames(meta)[i]
             levels<-levels(factor(meta[,i]))
             totNLevels<-nlevels(oldMeta[,i])
 
             if(length(levels) == 0) {
-                skippedVars <- c(skippedVars, colnames(meta)[i])
+                skippedVars<-c(skippedVars, var)
                 next
             }
             else if(length(levels) < totNLevels) {
-                skippedLevs <- c(skippedLevs, colnames(meta)[i])
+                skippedLevs<-c(skippedLevs, var)
             }
 
             mat<-aggregate(dtm[1:ndocs, , drop=FALSE], meta[i], sum)[,-1, drop=FALSE]
 
-            # If only one level is present, don't add the level name
-            # (probably something like TRUE or YES)
             # Also limit the length to 40 characters, beyond this things go out of control
-            if(totNLevels == 1)
-                rownames(mat)<-substr(colnames(meta)[i], 0, 40)
-            else
-                rownames(mat)<-make.unique(paste(substr(colnames(meta)[i], 0, 10), substr(levels, 0, 30)))
+            if(totNLevels == 1) # If only one level is present, don't add the level name (e.g. TRUE or YES)
+                rownames(mat)<-substr(var, 0, 20)
+            else if(dupLevels) # In case of ambiguous levels, add variable names everywhere
+                rownames(mat)<-make.unique(paste(substr(var, 0, 10), substr(levels, 0, 30)))
+            else # Most general case: no need to waste space with variable names
+                rownames(mat)<-substr(levels, 0, 30)
 
             dtm<-rbind(dtm, mat)
+            origVars<-c(origVars, rep(var, length(levels)))
         }
     }
 
@@ -74,9 +79,12 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
                 type="note")
 
     if(nrow(dtm) - ndocs > 0)
-        ca(dtm, suprow=(ndocs+1):nrow(dtm), ...)
+        obj <- ca(dtm, suprow=(ndocs+1):nrow(dtm), ...)
     else
-        ca(dtm, ...)
+        obj <- ca(dtm, ...)
+
+    obj$rowsupvars <- origVars
+    obj
 }
 
 corpusCaDlg <- function() {

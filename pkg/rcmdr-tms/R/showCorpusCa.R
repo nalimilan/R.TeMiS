@@ -358,14 +358,7 @@ showCorpusCaDlg <- function() {
 
         if(documents && variables) {
             rowWhat <- "all"
-            varLevels <- unlist(lapply(vars, function(var) {
-                levels <- levels(factor(meta(corpus, tag=var)[,1]))
-                if(length(levels) == 1)
-                    var
-                else if(length(levels) > 0)
-                    paste(var, levels)
-            }))
-            varIndexes <- which(corpusCa$rownames %in% varLevels)
+            varIndexes <- corpusCa$rowsup[corpusCa$rowsupvars[seq_along(corpusCa$rowsup)] %in% vars]
             doItAndPrint(paste("plottingCa <- rowSubsetCa(corpusCa, c(order(rowCtr(corpusCa, ", ctrDim,
                                "), decreasing=TRUE)[1:", nDocs, "], ", paste(varIndexes, collapse=", "), "))", sep=""))
         }
@@ -376,14 +369,7 @@ showCorpusCaDlg <- function() {
         }
         else if(variables) {
             rowWhat <- "passive"
-            varLevels <- unlist(lapply(vars, function(var) {
-                levels <- levels(factor(meta(corpus, tag=var)[,1]))
-                if(length(levels) == 1)
-                    var
-                else if(length(levels) > 0)
-                    paste(var, levels)
-            }))
-            varIndexes <- which(corpusCa$rownames %in% varLevels)
+            varIndexes <- corpusCa$rowsup[corpusCa$rowsupvars[seq_along(corpusCa$rowsup)] %in% vars]
             doItAndPrint(paste("plottingCa <- rowSubsetCa(corpusCa, c(",
                                paste(varIndexes, collapse=", "), "))", sep=""))
         }
