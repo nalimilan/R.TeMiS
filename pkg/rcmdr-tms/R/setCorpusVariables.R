@@ -30,8 +30,8 @@ setCorpusVariables <- function() {
 
     # Remove dropped and empty variables
     for(var in colnames(meta(corpus))[!colnames(meta(corpus)) %in%
-            c(colnames(dset), .gettext("Doc N"), .gettext("Doc ID"), .gettext("Cluster")) |
-            sapply(corpusVars, function(x) all(is.na(x) | x == ""))])
+            c(colnames(dset), .gettext("Doc N"), .gettext("Doc ID"), .gettext("Cluster"),
+              sapply(corpusVars, function(x) all(is.na(x) | x == "")))])
         doItAndPrint(sprintf('meta(corpus, "%s") <- NULL', var))
 
     # Add new variables
