@@ -110,21 +110,21 @@ docVocabularyDlg <- function() {
 
     checkBoxes(frame="whatFrame",
                title=gettext_("Draw plot for:"),
-               boxes=c("totalt", "uniquec", "uniquep", "hapaxc", "hapaxp",
-                       "totalw", "longc", "longp",
-                       "vlongc", "vlongp", "longavg"),
-               initialValues=c(0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0),
-               labels=c(gettext_("Number of terms"),
-                        gettext_("Number of unique terms"),
-                        gettext_("Percent of unique terms"),
-                        gettext_("Number of hapax legomena"),
-                        gettext_("Percent of hapax legomena"),
-                        gettext_("Number of words"),
-                        gettext_("Number of long words"),
-                        gettext_("Percent of long words"),
-                        gettext_("Number of very long words"),
-                        gettext_("Percent of very long words"),
+               boxes=c("totalt", "unique", "hapax",
+                       "totalw", "long", "vlong", "longavg"),
+               initialValues=c(0, 0, 1, 0, 0, 0, 0),
+               labels=c(gettext_("All terms"),
+                        gettext_("Unique terms"),
+                        gettext_("Hapax legomena"),
+                        gettext_("All words"),
+                        gettext_("Long words"),
+                        gettext_("Very long words"),
                         gettext_("Average word length")))
+
+    measureVariable <- tclVar("percent")
+    measureFrame <- tkframe(top)
+    measure1 <- ttkradiobutton(measureFrame, variable=measureVariable, value="percent", text=gettext_("Percent"))
+    measure2 <- ttkradiobutton(measureFrame, variable=measureVariable, value="count", text=gettext_("Absolute counts"))
 
     radioButtons(name="corpusMeasure",
                  title=gettext_("Plot global corpus value:"),
@@ -142,17 +142,14 @@ docVocabularyDlg <- function() {
     onOK <- function() {
         title <- tclvalue(tclTitle)
         totalt <- tclvalue(totaltVariable) == 1
-        uniquec <- tclvalue(uniquecVariable) == 1
-        uniquep <- tclvalue(uniquepVariable) == 1
-        hapaxc <- tclvalue(hapaxcVariable) == 1
-        hapaxp <- tclvalue(hapaxpVariable) == 1
+        unique <- tclvalue(uniqueVariable) == 1
+        hapax <- tclvalue(hapaxVariable) == 1
         totalw <- tclvalue(totalwVariable) == 1
-        longc <- tclvalue(longcVariable) == 1
-        longp <- tclvalue(longpVariable) == 1
-        vlongc <- tclvalue(vlongcVariable) == 1
-        vlongp <- tclvalue(vlongpVariable) == 1
+        long <- tclvalue(longVariable) == 1
+        vlong <- tclvalue(vlongVariable) == 1
         longavg <- tclvalue(longavgVariable) == 1
         corpusMeasure <- tclvalue(corpusMeasureVariable)
+        measure <- tclvalue(measureVariable)
 
         closeDialog()
 
@@ -172,8 +169,13 @@ docVocabularyDlg <- function() {
         doItAndPrint("voc <- vocabularyTable(dtm, wordsDtm)")
 
         # Plot
-        measures <- c(totalt, uniquec, uniquep, hapaxc, hapaxp, totalw,
-                      longc, longp, vlongc, vlongp, longavg)
+        if(measure == "percent")
+            measures <- c(FALSE, FALSE, unique, FALSE, hapax, FALSE,
+                          FALSE, long, FALSE, vlong, longavg)
+        else
+            measures <- c(totalt, unique, FALSE, hapax, FALSE, totalw,
+                          long, FALSE, vlong, FALSE, longavg)
+
         if(any(measures)) {
             indexes <- paste(which(measures), collapse=", ")
 
@@ -200,12 +202,15 @@ docVocabularyDlg <- function() {
 
 
     OKCancelHelp(helpSubject="docVocabularyDlg")
-    tkgrid(whatFrame, sticky="w", pady=6, padx=6, columnspan=2)
-    tkgrid(corpusMeasureFrame, sticky="w", pady=6, padx=6, columnspan=2)
+    tkgrid(whatFrame, sticky="w", pady=6, padx=6, columnspan=3)
+    tkgrid(labelRcmdr(measureFrame, text=gettext_("Plotting measure:")),
+           measure1, measure2, sticky="w", padx=6)
+    tkgrid(measureFrame, sticky="w", pady=6, columnspan=3)
     tkgrid(labelRcmdr(titleFrame, text=gettext_("Plot title:")), titleEntry, sticky="w", padx=6)
-    tkgrid(titleFrame, sticky="w", pady=6, columnspan=2)
-    tkgrid(buttonsFrame, sticky="w", columnspan=2, pady=6)
-    dialogSuffix(rows=4, columns=2)
+    tkgrid(corpusMeasureFrame, sticky="w", pady=6, padx=6, columnspan=3)
+    tkgrid(titleFrame, sticky="w", pady=6, columnspan=3)
+    tkgrid(buttonsFrame, sticky="w", columnspan=3, pady=6)
+    dialogSuffix(rows=5, columns=3)
 }
 
 varVocabularyDlg <- function() {
@@ -231,22 +236,27 @@ varVocabularyDlg <- function() {
 
     checkBoxes(frame="whatFrame",
                title=gettext_("Draw plot for:"),
-               boxes=c("totalt", "uniquec", "uniquep", "hapaxc", "hapaxp",
-                       "totalw", "longc", "longp",
-                       "vlongc", "vlongp", "longavg", "corpus"),
-               initialValues=c(0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1),
-               labels=c(gettext_("Number of terms"),
-                        gettext_("Number of unique terms"),
-                        gettext_("Percent of unique terms"),
-                        gettext_("Number of hapax legomena"),
-                        gettext_("Percent of hapax legomena"),
-                        gettext_("Number of words"),
-                        gettext_("Number of long words"),
-                        gettext_("Percent of long words"),
-                        gettext_("Number of very long words"),
-                        gettext_("Percent of very long words"),
-                        gettext_("Average word length"),
-                        gettext_("Global corpus value")))
+               boxes=c("totalt", "unique", "hapax",
+                       "totalw", "long", "vlong", "longavg"),
+               initialValues=c(0, 0, 1, 0, 0, 0, 0),
+               labels=c(gettext_("All terms"),
+                        gettext_("Unique terms"),
+                        gettext_("Hapax legomena"),
+                        gettext_("All words"),
+                        gettext_("Long words"),
+                        gettext_("Very long words"),
+                        gettext_("Average word length")))
+
+    measureVariable <- tclVar("percent")
+    measureFrame <- tkframe(top)
+    measure1 <- ttkradiobutton(measureFrame, variable=measureVariable, value="percent",
+                               text=gettext_("Percent"))
+    measure2 <- ttkradiobutton(measureFrame, variable=measureVariable, value="count",
+                               text=gettext_("Absolute counts"))
+
+    corpusMeasureVar <- tclVar("0")
+    checkCorpusMeasure <- tkcheckbutton(top, text=gettext_("Plot global corpus value"),
+                                        variable=corpusMeasureVar)
 
     titleFrame <- tkframe(top)
     tclTitle <- tclVar("")
@@ -257,17 +267,14 @@ varVocabularyDlg <- function() {
         title <- tclvalue(tclTitle)
         unit <- tclvalue(unitVariable)
         totalt <- tclvalue(totaltVariable) == 1
-        uniquec <- tclvalue(uniquecVariable) == 1
-        uniquep <- tclvalue(uniquepVariable) == 1
-        hapaxc <- tclvalue(hapaxcVariable) == 1
-        hapaxp <- tclvalue(hapaxpVariable) == 1
+        unique <- tclvalue(uniqueVariable) == 1
+        hapax <- tclvalue(hapaxVariable) == 1
         totalw <- tclvalue(totalwVariable) == 1
-        longc <- tclvalue(longcVariable) == 1
-        longp <- tclvalue(longpVariable) == 1
-        vlongc <- tclvalue(vlongcVariable) == 1
-        vlongp <- tclvalue(vlongpVariable) == 1
+        long <- tclvalue(longVariable) == 1
+        vlong <- tclvalue(vlongVariable) == 1
         longavg <- tclvalue(longavgVariable) == 1
-        corpusMeasure <- tclvalue(corpusVariable) == 1
+        measure <- tclvalue(measureVariable)
+        corpusMeasure <- tclvalue(corpusMeasureVar) == 1
 
         closeDialog()
 
@@ -287,8 +294,13 @@ varVocabularyDlg <- function() {
         doItAndPrint(sprintf('voc <- vocabularyTable(dtm, wordsDtm, "%s", "%s")', var, unit))
 
         # Plot
-        measures <- c(totalt, uniquec, uniquep, hapaxc, hapaxp, totalw,
-                      longc, longp, vlongc, vlongp, longavg)
+        if(measure == "percent")
+            measures <- c(FALSE, FALSE, unique, FALSE, hapax, FALSE,
+                          FALSE, long, FALSE, vlong, longavg)
+        else
+            measures <- c(totalt, unique, FALSE, hapax, FALSE, totalw,
+                          long, FALSE, vlong, FALSE, longavg)
+
         if(any(measures)) {
             indexes <- paste(which(measures), collapse=", ")
 
@@ -313,13 +325,17 @@ varVocabularyDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="varVocabularyDlg")
-    tkgrid(getFrame(varBox), sticky="w", columnspan=2, pady=6)
-    tkgrid(unitFrame, sticky="w", columnspan=2)
-    tkgrid(whatFrame, sticky="w", pady=6, padx=6, columnspan=2)
+    tkgrid(getFrame(varBox), sticky="w", columnspan=3, pady=6, padx=6)
+    tkgrid(unitFrame, sticky="w", columnspan=3, padx=6)
+    tkgrid(whatFrame, sticky="w", pady=6, padx=6, columnspan=3)
+    tkgrid(labelRcmdr(measureFrame, text=gettext_("Plotting measure:")),
+           measure1, measure2, sticky="w", padx=6)
+    tkgrid(measureFrame, sticky="w", pady=6, columnspan=3)
+    tkgrid(checkCorpusMeasure, sticky="w", pady=6, columnspan=3)
     tkgrid(labelRcmdr(titleFrame, text=gettext_("Plot title:")), titleEntry, sticky="w", padx=6)
-    tkgrid(titleFrame, sticky="w", pady=6, columnspan=2)
-    tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=2)
-    dialogSuffix(rows=5, columns=2)
+    tkgrid(titleFrame, sticky="w", pady=6, columnspan=3)
+    tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=3)
+    dialogSuffix(rows=7, columns=3)
 }
 
 copyVocabularyTable <- function() {
