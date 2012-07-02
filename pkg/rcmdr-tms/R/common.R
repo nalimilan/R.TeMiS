@@ -1,10 +1,12 @@
 setBusyCursor <- function() {
     .commander <- CommanderWindow()
+    .menu <- tkcget(.commander, menu=NULL)
     .log <- LogWindow()
     .output <- OutputWindow()
     .messages <- MessagesWindow()
 
     tkconfigure(.commander, cursor="watch")
+    tkconfigure(.menu, cursor="watch")
     tkconfigure(.log, cursor="watch")
     tkconfigure(.output, cursor="watch")
     tkconfigure(.messages, cursor="watch")
@@ -12,11 +14,13 @@ setBusyCursor <- function() {
 
 setIdleCursor <- function() {
     .commander <- CommanderWindow()
+    .menu <- tkcget(.commander, menu=NULL)
     .log <- LogWindow()
     .output <- OutputWindow()
     .messages <- MessagesWindow()
 
     tkconfigure(.commander, cursor="")
+    tkconfigure(.menu, cursor="")
     tkconfigure(.log, cursor="xterm")
     tkconfigure(.output, cursor="xterm")
     tkconfigure(.messages, cursor="xterm")
