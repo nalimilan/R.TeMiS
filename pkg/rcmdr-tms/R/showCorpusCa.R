@@ -298,10 +298,10 @@ showCorpusCaDlg <- function() {
     tkgrid(labelRcmdr(nFrame, text=gettext_("Number of items to plot:"), fg="blue"), sticky="s")
     tclNDocs <- tclVar(25)
     tclNTerms <- tclVar(25)
-    docsSlider <- tkscale(nFrame, from=1, to=nrow(corpusCa$rowcoord)-length(corpusCa$rowsup),
+    docsSlider <- tkscale(nFrame, from=1, to=min(200, nrow(corpusCa$rowcoord)-length(corpusCa$rowsup)),
                           showvalue=TRUE, variable=tclNDocs,
 		          resolution=1, orient="horizontal")
-    termsSlider <- tkscale(nFrame, from=1, to=nrow(corpusCa$colcoord)-length(corpusCa$colsup),
+    termsSlider <- tkscale(nFrame, from=1, to=min(200, nrow(corpusCa$colcoord)-length(corpusCa$colsup)),
                            showvalue=TRUE, variable=tclNTerms,
 		           resolution=1, orient="horizontal")
     radioButtons(name="ctrDim",
