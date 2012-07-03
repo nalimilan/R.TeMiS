@@ -6,6 +6,7 @@
 \alias{copyPlotToOutput}
 \alias{enableBlackAndWhite}
 \alias{disableBlackAndWhite}
+\alias{HTML.ca}
 \title{Output results to HTML file}
 \description{Functions to output tables and plots resulting from analysis of the corpus to an
              \acronym{HTML file}.}
@@ -26,5 +27,7 @@
          black and white only graphics adapted for printing and publication. They affect the on-screen
          device as well as the plot copied to the output file, so that the plot can be checked for
          readability before exporting it.
+
+         \code{HTML.ca} outputs a correspondence analysis object of class \code{ca} to the HTML report.
 }
 

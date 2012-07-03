@@ -119,8 +119,12 @@ corpusCaDlg <- function() {
 
         doItAndPrint(paste("corpusCa <- runCorpusCa(corpus, sparsity=", sparsity/100, ", nd=", dim, ")", sep=""))
 
-        if(!is.null(corpusCa))
+        if(!is.null(corpusCa)) {
             doItAndPrint("print(corpusCa)")
+
+            last.table <<- "corpusCa"
+            attr(corpusCa, "title") <<- .gettext("Correspondence analysis")
+        }
 
         activateMenus()
 
