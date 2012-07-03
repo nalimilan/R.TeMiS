@@ -1,5 +1,6 @@
 \name{output}
 \alias{setOutputFile}
+\alias{initOutputFile}
 \alias{openOutputFile}
 \alias{copyTableToOutput}
 \alias{copyPlotToOutput}

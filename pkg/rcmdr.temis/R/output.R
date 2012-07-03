@@ -13,8 +13,7 @@ setOutputFile <- function() {
 
     if (file == "") return(FALSE)
 
-    doItAndPrint(sprintf('.HTML.file <- "%s"', file))
-    doItAndPrint(sprintf('HTML.title("%s", 1, append=FALSE)', .gettext("Text Mining Analysis Results")))
+    doItAndPrint(sprintf('initOutputFile("%s")', file))
 
     # Set options for good formatting
     options(R2HTML.format.decimal.mark=.gettext("."))
@@ -23,6 +22,19 @@ setOutputFile <- function() {
     activateMenus()
 
     return(TRUE)
+}
+
+initOutputFile <- function(file) {
+    title <- .gettext("Text Mining Analysis Results")
+
+    # R2HTML does not add encoding information to the HTML headers, even when using HTMLInitFile
+    header <- sprintf('<head>\n<meta http-equiv="Content-Type" content="text/html; charset=%s"/>\n<title>%s</title>\n</head>\n',
+                      if(Encoding(title) != "unknown") Encoding(title) else "UTF-8",
+                      title)
+    writeLines(header, file)
+
+    .HTML.file <<- file
+    HTML.title(title, 1, append=TRUE)
 }
 
 openOutputFile <- function() {
