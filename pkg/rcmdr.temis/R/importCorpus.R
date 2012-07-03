@@ -296,7 +296,7 @@ importCorpusFromFactiva <- function(language=NA) {
                 return(FALSE)
     }
 
-    filestr <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.xml .html .XML .HTML}}",
+    filestr <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.xml .htm .html .aspx .XML .HTM .HTML .ASPX}}",
                                                         .gettext("Factiva XML and HTML files")),
                                       multiple=TRUE,
                                       parent=CommanderWindow()))
