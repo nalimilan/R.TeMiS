@@ -94,7 +94,11 @@ docTermFreqDlg <- function() {
                 }
             }
             else {
-                title <- gsub("%T", if(length(termsList) == 1) termsList[1] else "", title)
+                if(length(termsList) == 1)
+                    title <- gsub("%T", termsList[1], title)
+                else
+                    title <- gsub(" %T ", " ", title)
+
                 doItAndPrint(sprintf('barchart(termFreqs, stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
                                      ylab, title))
             }
@@ -249,7 +253,13 @@ varTermFreqDlg <- function() {
                 }
             }
             else {
-                title <- gsub("%V", var, gsub("%T", if(length(termsList) == 1) termsList[1] else "", title))
+                if(length(termsList) == 1)
+                    title <- gsub("%T", termsList[1], title)
+                else
+                    title <- gsub(" %T ", " ", title)
+
+                title <- gsub("%V", var, title)
+
                 doItAndPrint(sprintf('barchart(termFreqs, stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
                                      ylab, title))
             }
