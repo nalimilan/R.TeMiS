@@ -333,16 +333,16 @@ importCorpusFromFactiva <- function(language=NA) {
     # Extract local per-document meta-data
     dates <- lapply(corpus, meta, "DateTimeStamp")
     dates <- sapply(dates, function(x) if(length(x) > 0) as.character(x) else NA)
-    vars <- data.frame(Date=dates)
+    vars <- data.frame(Origin=NA, Date=dates, Author=NA, Section=NA)
 
     tags <- c("Origin", "Author", "Section")
     for(tag in tags) {
         var <- lapply(corpus, meta, tag)
         var <- lapply(var, function(x) if(length(x) > 0) x else NA)
-        vars <- cbind(vars, unlist(var))
+        vars[[tag]] <- unlist(var)
     }
 
-    colnames(vars) <- c(.gettext("Date"), .gettext("Origin"), .gettext("Author"), .gettext("Section"))
+    colnames(vars) <- c(.gettext("Origin"), .gettext("Date"), .gettext("Author"), .gettext("Section"))
     rownames(vars) <- names(corpus)
 
     assign("corpusVars", vars, envir=.GlobalEnv)
