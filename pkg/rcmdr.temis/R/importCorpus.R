@@ -305,7 +305,12 @@ importCorpusFromFactiva <- function(language=NA) {
 
     .setBusyCursor()
 
-    files <- gsub("\\{|\\}", "", strsplit(filestr, "\\} \\{")[[1]])
+    # tkgetOpenFile() is terrible: if path contains a space, file paths are surrounded by {}
+    # If no spaces are present, they are not, but in both cases the separator is a space
+    if(substr(filestr, 0, 1) == "{")
+        files <- gsub("\\{|\\}", "", strsplit(filestr, "\\} \\{")[[1]])
+    else
+        files <- strsplit(filestr, " ")[[1]]
 
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
