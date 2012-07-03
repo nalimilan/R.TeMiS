@@ -134,7 +134,7 @@ importCorpusFromDir <- function(language=NA) {
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
 
-    doItAndPrint(sprintf("corpus <- Corpus(DirSource(\"%s\"), readerControl=list(language=%s))", dir, language))
+    doItAndPrint(sprintf('corpus <- Corpus(DirSource("%s", encoding=""), readerControl=list(language=%s))', dir, language))
 
     # Because of a bug in Rcmdr, filling the first column with NAs prevents entering data in this columns:
     # use "" instead
