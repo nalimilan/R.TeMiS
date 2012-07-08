@@ -159,10 +159,11 @@ docVocabularyDlg <- function() {
         if(!exists("wordsDtm")) {
             doItAndPrint("dtmCorpus <- corpus")
 
-            if(meta(corpus, type="corpus", tag="language") == "fr")
-                doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, function(x) gsub(\"[\'\U2019-]\", \" \", x))")
+            # The default tokenizer does not get rid of punctuation *and of line breaks!*, which
+            # get concatenated with surrounding words
+            # This also avoids French articles and dash-linked words from getting concatenated with their noun
+            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, function(x) gsub(\"([\'\U2019\\n]|[[:punct:]])+\", \" \", x))")
 
-            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removePunctuation)")
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removeNumbers)")
             doItAndPrint("wordsDtm <- DocumentTermMatrix(dtmCorpus, control=list(wordLengths=c(2, Inf)))")
             doItAndPrint("rm(dtmCorpus)")
@@ -290,8 +291,10 @@ varVocabularyDlg <- function() {
         if(!exists("wordsDtm")) {
             doItAndPrint("dtmCorpus <- corpus")
 
-            if(meta(corpus, type="corpus", tag="language") == "french")
-                doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, function(x) gsub(\"[\'\U2019-]\", \" \", x))")
+            # The default tokenizer does not get rid of punctuation *and of line breaks!*, which
+            # get concatenated with surrounding words
+            # This also avoids French articles and dash-linked words from getting concatenated with their noun
+            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, function(x) gsub(\"([\'\U2019\\n]|[[:punct:]])+\", \" \", x))")
 
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removePunctuation)")
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removeNumbers)")
