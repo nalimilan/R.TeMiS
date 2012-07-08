@@ -333,7 +333,10 @@ varVocabularyDlg <- function() {
 
         # Used by saveTableToOutput()
         last.table <<- "voc"
-        attr(voc, "title") <<- title
+        if(unit == "doc")
+            attr(voc, "title") <<- paste(title, .gettext("(per-document mean)"))
+        else
+            attr(voc, "title") <<- paste(title, .gettext("(per-category sum)"))
 
         activateMenus()
         tkfocus(CommanderWindow())

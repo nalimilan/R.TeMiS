@@ -87,6 +87,17 @@ dissimilarityTableDlg <- function() {
 
         doItAndPrint("round(diss, digits=1)")
 
+        # Used by saveTableToOutput()
+        last.table <<- "diss"
+        if(var1 == .gettext("Document") && var2 == .gettext("Document"))
+            attr(diss, "title") <<- .gettext("Documents dissimilarity table")
+        if(var1 == .gettext("Document"))
+            attr(diss, "title") <<- sprintf(.gettext("Documents by %s dissimilarity table"), var2)
+        else if(var2 == .gettext("Document"))
+            attr(diss, "title") <<- sprintf(.gettext("%s by documents dissimilarity table"), var1)
+        else
+            attr(diss, "title") <<- sprintf(.gettext("%s by %s dissimilarity table"), var1, var2)
+
         activateMenus()
 
         .setIdleCursor()

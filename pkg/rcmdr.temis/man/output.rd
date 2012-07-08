@@ -6,6 +6,7 @@
 \alias{copyPlotToOutput}
 \alias{enableBlackAndWhite}
 \alias{disableBlackAndWhite}
+\alias{HTML.list}
 \alias{HTML.ca}
 \title{Output results to HTML file}
 \description{Functions to output tables and plots resulting from analysis of the corpus to an
@@ -28,6 +29,7 @@
          device as well as the plot copied to the output file, so that the plot can be checked for
          readability before exporting it.
 
-         \code{HTML.ca} outputs a correspondence analysis object of class \code{ca} to the HTML report.
+         \code{HTML.list} outputs a list to the HTML report, printing each element of the list right after
+         its name. \code{HTML.ca} outputs a correspondence analysis object of class \code{ca} to the HTML report.
 }
 

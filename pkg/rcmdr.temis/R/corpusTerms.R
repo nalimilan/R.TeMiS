@@ -27,11 +27,21 @@ freqTermsDlg <- function() {
         closeDialog()
 
         if(var == .gettext("None (whole corpus)"))
-            doItAndPrint(paste("sort(col_sums(dtm), decreasing=TRUE)[1:", n, "]", sep=""))
+            doItAndPrint(paste("freqTerms <- sort(col_sums(dtm), decreasing=TRUE)[1:", n, "]", sep=""))
         else
-            doItAndPrint(sprintf('tapply(1:nrow(dtm), meta(corpus, "%s"), function(x) sort(col_sums(dtm[x,]), decreasing=TRUE)[1:%i])',
+            doItAndPrint(sprintf('freqTerms <- tapply(1:nrow(dtm), meta(corpus, "%s"), function(x) sort(col_sums(dtm[x,]), decreasing=TRUE)[1:%i])',
                                  var, n))
 
+        doItAndPrint("freqTerms")
+
+        # Used by saveTableToOutput()
+        last.table <<- "freqTerms"
+        if(var == .gettext("None (whole corpus)"))
+            attr(freqTerms, "title") <<- .gettext("Most frequent terms in the corpus")
+        else
+            attr(freqTerms, "title") <<- sprintf(.gettext("Most frequent terms by %s"), var)
+
+        activateMenus()
         tkfocus(CommanderWindow())
     }
 
@@ -160,16 +170,27 @@ typicalTermsDlg <- function() {
         if(var == .gettext("Per document")) {
             doItAndPrint("expected <- row_sums(dtm) %o% col_sums(dtm)/sum(dtm)")
             doItAndPrint("chisq <- sign(as.matrix(dtm - expected)) *  as.matrix((dtm - expected)^2/expected)")
-            doItAndPrint(sprintf("sapply(rownames(dtm), simplify=FALSE, USE.NAMES=TRUE, function(x) round(chisq[x,order(abs(chisq[x,]), decreasing=TRUE)[1:%i]]))", n))
+            doItAndPrint(sprintf("typicalTerms <- sapply(rownames(dtm), simplify=FALSE, USE.NAMES=TRUE, function(x) round(chisq[x,order(abs(chisq[x,]), decreasing=TRUE)[1:%i]]))", n))
             doItAndPrint("rm(expected, chisq)")
         }
         else {
             doItAndPrint(sprintf('typicalDtm <- rollup(dtm, 1, meta(corpus, "%s"))', var))
             doItAndPrint("expected <- row_sums(typicalDtm) %o% col_sums(typicalDtm)/sum(typicalDtm)")
             doItAndPrint("chisq <- sign(as.matrix(typicalDtm - expected)) *  as.matrix((typicalDtm - expected)^2/expected)")
-            doItAndPrint(sprintf("sapply(rownames(typicalDtm), simplify=FALSE, USE.NAMES=TRUE, function(x) round(chisq[x,order(abs(chisq[x,]), decreasing=TRUE)[1:%i]]))", n))
+            doItAndPrint(sprintf("typicalTerms <- sapply(rownames(typicalDtm), simplify=FALSE, USE.NAMES=TRUE, function(x) round(chisq[x,order(abs(chisq[x,]), decreasing=TRUE)[1:%i]]))", n))
             doItAndPrint("rm(typicalDtm, expected, chisq)")
         }
+
+        doItAndPrint("typicalTerms")
+
+        # Used by saveTableToOutput()
+        last.table <<- "typicalTerms"
+        if(var == .gettext("Per document"))
+            attr(typicalTerms, "title") <<- .gettext("Most typical terms per document")
+        else
+            attr(typicalTerms, "title") <<- sprintf(.gettext("Most typical terms by %s"), var)
+
+        activateMenus()
 
         tkfocus(CommanderWindow())
     }

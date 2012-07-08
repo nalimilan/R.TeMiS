@@ -70,12 +70,12 @@ copyTableToOutput <- function() {
 
     # zoo objects are printed as plain text by default
     if(inherits(get(last.table), "zoo"))
-        doItAndPrint(sprintf('HTML(as.matrix(%s), Border=NULL, align="left")', last.table))
-    # align="left" does not work for lists, it goes to cat() and appears in plain text
-    else if(class(get(last.table)) == "list")
-        doItAndPrint(sprintf('HTML(%s, Border=NULL)', last.table))
+        doItAndPrint(sprintf('HTML(as.matrix(%s), Border=NULL, align="left", scientific=4)', last.table))
+    # Arrays returned by tapply() (i.e. freqTerms) are not printed correclty by HTML.array
+    else if(class(get(last.table)) == "array")
+        doItAndPrint(sprintf('HTML(c(%s), Border=NULL, align="left", scientific=4)', last.table))
     else
-        doItAndPrint(sprintf('HTML(%s, Border=NULL, align="left")', last.table))
+        doItAndPrint(sprintf('HTML(%s, Border=NULL, align="left", scientific=4)', last.table))
 
     # Open file in browser when creating it
     if(!html.on)
@@ -147,6 +147,30 @@ disableBlackAndWhite <- function() {
     options(bw.plots=FALSE)
 
     activateMenus()
+}
+
+# The default HTML.list function does not print element names,
+# and redirects align="left" to cat(), which prints it to the file
+HTML.list <- function (x, file = get(".HTML.file"), first = TRUE, append = TRUE, ...) 
+{
+    cat("\n", file = file, append = append)
+    if (first)
+        HTML("<hr class='hr'>", file = file, append = TRUE, sep = "\n")
+
+    for (i in 1:length(x)) {
+        cat("<ul>", file = file, append = TRUE, sep = "\n")
+        cat("</center><li>", file = file, append = TRUE, sep = "\n")
+        HTML(paste(names(x)[i], "\n", sep=""), file = file, first = FALSE, ...)
+
+        if(length(x[[i]]) > 0)
+            HTML(x[[i]], file = file, first = FALSE, ...)
+        else
+            HTML(.gettext("No items."), file = file, first = FALSE, ...)
+
+        cat("</ul>", file = file, append = TRUE, sep = "\n")
+    }
+    cat("\n<br><hr class='hr'>", file = file, append = TRUE,
+        sep = "\n")
 }
 
 # This function is a slightly modified version of print.ca() from package ca.
