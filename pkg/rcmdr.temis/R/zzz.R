@@ -22,7 +22,14 @@
 
                 Commander()
 
+
+                # HTML.matrix() does not allow passing scientific separately,
+                # and vocabulary summary tables often end up printed in scientific notation
+                doItAndPrint(.gettext("# Prefer fixed to scientific notation"))
+                doItAndPrint('options(scipen=5)')
+
                 # Keep in sync with disableBlackAndWhite()
+                doItAndPrint("")
                 doItAndPrint(.gettext("# Set a nice color palette for plots"))
                 doItAndPrint('lattice.options(default.theme=custom.theme(symbol=brewer.pal(8, "Set1")[c(2:1, 3:5, 7:9)], fill=brewer.pal(8, "Set1")[c(2:1, 3:5, 7:9)]))')
         }
