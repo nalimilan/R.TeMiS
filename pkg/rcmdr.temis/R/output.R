@@ -101,15 +101,18 @@ copyPlotToOutput <- function() {
     if(!(html.on || setOutputFile()))
         return()
 
-    file <- gsub(".html$", paste(format(Sys.time(), .gettext(" - plot %Y-%m-%d %H:%M")),
-                                 ".png", sep=""), .HTML.file)
+    # Only the filename within the folder is needed, this allows moving HTML and PNG files to another folder
+    htmlFilename <- gsub(sprintf(".*%s", .Platform$file.sep), "", .HTML.file)
+
+    file <- gsub(".html$", paste(format(Sys.time(), .gettext(" - plot %Y-%m-%d %H-%M")),
+                                 ".png", sep=""), htmlFilename)
 
     i <- 1
     testfile <- file
     while(file.exists(testfile)) {
         i <- i + 1
-        testfile <- gsub(".html$", paste(format(Sys.time(), .gettext(" - plot %Y-%m-%d %H:%M")),
-                                         "-", i, ".png", sep=""), .HTML.file)
+        testfile <- gsub(".html$", paste(format(Sys.time(), .gettext(" - plot %Y-%m-%d %H-%M")),
+                                         "-", i, ".png", sep=""), htmlFilename)
     }
 
     if(file.exists(file))
