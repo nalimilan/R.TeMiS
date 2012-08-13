@@ -72,3 +72,29 @@
     list(window=window, txt=txt, listbox=listbox)
 }
 
+.checkAndInstall <- function(package, message) {
+    if(!suppressWarnings(require(package, character.only=TRUE, quietly=TRUE))) {
+            # Create a function because dialog does not close until function returns
+            msgbox <- function() tkmessageBox(message=message, icon="question", type="yesno")
+
+            if (tclvalue(msgbox()) == "yes") {
+                .setBusyCursor()
+
+                if(package %in% available.packages()[,1]) {
+                    install.packages(package)
+                    .setIdleCursor()
+                    return(TRUE)
+                }
+                else {
+                    Message(.gettext("Package not available. Please check your Internet connection, restart R and try again."),
+                            type="error")
+                }
+            }
+
+        .setIdleCursor()
+        return(FALSE)
+    }
+
+    return(TRUE)
+}
+

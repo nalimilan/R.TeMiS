@@ -208,14 +208,8 @@ importCorpusFromFile <- function(language=NA) {
                     type="error")
             return(FALSE)
         }
-	else if(!require(RODBC)) {
-            response <- tkmessageBox(message=.gettext("The RODBC package is needed to read Excel and Access files.\nDo you want to install it?"),
-                                     icon="question", type="yesno")
-
-            if (tclvalue(response) == "yes")
-	        install.packages("RODBC")
-            else
-                return(FALSE)
+	else if(!.checkAndInstall("RODBC", .gettext("The RODBC package is needed to read Excel and Access files.\nDo you want to install it?"))) {
+            return(FALSE)
         }
         else if(!any(grepl(ext, odbcDataSources()))) {
 	    Message(.gettext("No ODBC driver for this file type was found.\nYou probably need to install Excel or Access, or separate ODBC drivers."),
@@ -292,15 +286,9 @@ importCorpusFromFile <- function(language=NA) {
 
 # Choose a Factiva XML or HTML file to load texts and variables from
 importCorpusFromFactiva <- function(language=NA) {
-    if(!require(tm.plugin.factiva)) {
-            response <- tkmessageBox(message=.gettext("The tm.plugin.factiva package is needed to import corpora from Factiva files.\nDo you want to install it?"),
-                                     icon="question", type="yesno")
-
-            if (tclvalue(response) == "yes")
-	        install.packages("tm.plugin.factiva")
-            else
-                return(FALSE)
-    }
+    if(!.checkAndInstall("tm.plugin.factiva",
+                         .gettext("The tm.plugin.factiva package is needed to import corpora from Factiva files.\nDo you want to install it?")))
+        return(FALSE)
 
     filestr <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.xml .htm .html .aspx .XML .HTM .HTML .ASPX}}",
                                                         .gettext("Factiva XML and HTML files")),
@@ -379,15 +367,9 @@ importCorpusFromFactiva <- function(language=NA) {
 
 # Choose a Twitter hashtag to search for messages
 importCorpusFromTwitter <- function(language=NA) {
-    if(!require(twitteR)) {
-            response <- tkmessageBox(message=.gettext("The twitteR package is needed to import corpora from Twitter.\nDo you want to install it?"),
-                                     icon="question", type="yesno")
-
-            if (tclvalue(response) == "yes")
-	        install.packages("twitteR")
-            else
-                return(FALSE)
-    }
+    if(!.checkAndInstall("twitteR",
+                         .gettext("The twitteR package is needed to import corpora from Twitter.\nDo you want to install it?")))
+        return(FALSE)
 
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
