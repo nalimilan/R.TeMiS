@@ -70,6 +70,12 @@ readFactivaHTML <- tm::FunctionGenerator(function(elem, language, id) {
         else
             id <- paste(sample(LETTERS, 10), collapse="")
 
+        subject <- if(!is.na(data[["NS"]])) strsplit(data[["NS"]], "( \\| )")[[1]] else character(0)
+        subject <- gsub(".* : ", "", subject)
+
+        coverage <- if(!is.na(data[["RE"]])) strsplit(data[["RE"]], "( \\| )")[[1]] else character(0)
+        coverage <- gsub(".* : ", "", coverage)
+
         # XMLSource uses character(0) rather than NA, do the same
         doc <- tm::PlainTextDocument(x = content,
                                      author = if(!is.na(data[["BY"]])) data[["BY"]] else character(0),
@@ -80,8 +86,8 @@ readFactivaHTML <- tm::FunctionGenerator(function(elem, language, id) {
                                      language = language)
         tm::meta(doc, "Edition") <- if(!is.na(data[["ED"]])) data[["ED"]] else character(0)
         tm::meta(doc, "Section") <- if(!is.na(data[["SE"]])) data[["SE"]] else character(0)
-        tm::meta(doc, "Subject") <- if(!is.na(data[["NS"]])) strsplit(data[["NS"]], "( \\| )")[[1]] else character(0)
-        tm::meta(doc, "Coverage") <- if(!is.na(data[["RE"]])) strsplit(data[["RE"]], "( \\| )")[[1]] else character(0)
+        tm::meta(doc, "Subject") <- subject
+        tm::meta(doc, "Coverage") <- coverage
         tm::meta(doc, "WordCount") <- wc
         tm::meta(doc, "Publisher") <- if(!is.na(data[["PUB"]])) data[["PUB"]] else character(0)
         tm::meta(doc, "Rights") <- if(!is.na(data[["CY"]])) data[["CY"]] else character(0)
