@@ -3,10 +3,11 @@ importCorpusDlg <- function() {
     initializeDialog(title=.gettext("Import Corpus"))
 
     radioButtons(name="source",
-                 buttons=c("dir", "file", "factiva"),
+                 buttons=c("dir", "file", "factiva", "twitter"),
                  labels=c(.gettext("Directory containing plain text files"),
                           .gettext("Spreadsheet file (CSV, XLS, ODS...)"),
-                          .gettext("Factiva XML or HTML file(s)")),
+                          .gettext("Factiva XML or HTML file(s)"),
+                          .gettext("Twitter search")),
                  title=.gettext("Load corpus from:"),
                  right.buttons=FALSE)
 
@@ -52,7 +53,8 @@ importCorpusDlg <- function() {
         success <- switch(source,
                           dir=importCorpusFromDir(lang),
                           file=importCorpusFromFile(lang),
-                          factiva=importCorpusFromFactiva(lang))
+                          factiva=importCorpusFromFactiva(lang),
+                          twitter=importCorpusFromTwitter(lang))
 
         # If loading failed, do not add errors to errors
         if(!success || length(corpus) == 0)
@@ -68,14 +70,18 @@ importCorpusDlg <- function() {
         }
 
         # Process texts
+        twitter <- source == "twitter"
         lowercase <- tclvalue(lowercaseVariable) == 1
         punctuation <- tclvalue(punctuationVariable) == 1
         numbers <- tclvalue(numbersVariable) == 1
         stopwords <- tclvalue(stopwordsVariable) == 1
         stemming <- tclvalue(stemmingVariable) == 1
 
-        if(lowercase || punctuation || numbers || stopwords || stemming)
+        if(twitter || lowercase || punctuation || numbers || stopwords || stemming)
             doItAndPrint("dtmCorpus <- corpus")
+
+        if(twitter)
+            doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, function(x) gsub("http://[[:alnum:]/\\\\.\\\\-\\\\?=&#_;,]*|[@#][[:alnum:]]+|RT:", "", x))')
 
         if(lowercase)
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, tolower)")
@@ -355,6 +361,101 @@ importCorpusFromFactiva <- function(language=NA) {
     doItAndPrint("setCorpusVariables()")
 
     return(TRUE)
+}
+
+# Choose a Twitter hashtag to search for messages
+importCorpusFromTwitter <- function(language=NA) {
+    if(!require(twitteR)) {
+            response <- tkmessageBox(message=.gettext("The twitteR package is needed to import corpora from Twitter.\nDo you want to install it?"),
+                                     icon="question", type="yesno")
+
+            if (tclvalue(response) == "yes")
+	        install.packages("twitteR")
+            else
+                return(FALSE)
+    }
+
+    if(!is.na(language))
+        language <- paste("\"", language, "\"", sep="")
+
+    initializeDialog(title=.gettext("Import Corpus From Twitter"))
+
+    # TRANSLATORS: replace 'en' with your language's ISO 639 two-letter code
+    tclText <- tclVar("")
+    entryText <- ttkentry(top, width="12", textvariable=tclText)
+
+    tclNMess <- tclVar(100)
+    tclNSlider <- tkscale(top, from=1, to=1500,
+                          showvalue=TRUE, variable=tclNMess,
+                          resolution=1, orient="horizontal")
+
+    result <- tclVar()
+
+    onOK <- function() {
+        text <- tclvalue(tclText)
+        nmess <- tclvalue(tclNMess)
+
+        if(text == "") {
+            Message(gettext.("Please enter valid text to search for."), type="error")
+            return()
+        }
+
+        closeDialog()
+        .setBusyCursor()
+        on.exit(.setIdleCursor())
+
+        # In case something goes wrong
+        tclvalue(result) <- "error"
+
+        doItAndPrint("library(twitteR)")
+        doItAndPrint(sprintf('messages <- searchTwitter("%s", %s, %s)', text, nmess, language))
+
+        if(length(messages) == 0) {
+            Message(sprintf(.gettext("No recent tweets match the specified search criteria in the chosen language (%s)."), language),
+                    type="error")
+            return()
+        }
+
+        doItAndPrint("corpusDataset <- twListToDF(messages)")
+        doItAndPrint("rownames(corpusDataset) <- make.unique(paste(corpusDataset$screenName, corpusDataset$created))")
+        doItAndPrint(sprintf('corpus <- Corpus(DataframeSource(corpusDataset[1]), readerControl=list(language=%s))',
+                             language))
+        doItAndPrint("rm(messages)")
+
+        if(!exists("corpus") || length(corpus) == 0) {
+            Message(.gettext("Retrieving messages from Twitter failed."),
+                    type="error")
+            return()
+        }
+
+        doItAndPrint('corpusVars <- corpusDataset[c("screenName", "created", "truncated", "statusSource")]')
+        doItAndPrint("rm(corpusDataset)")
+        doItAndPrint(sprintf('colnames(corpusVars) <- c("%s", "%s", "%s", "%s")',
+                             .gettext("Author"), .gettext("Time"), .gettext("Truncated"), .gettext("StatusSource")))
+        doItAndPrint("activeDataSet(\"corpusVars\")")
+        doItAndPrint("setCorpusVariables()")
+
+        tclvalue(result) <- "success"
+
+        return()
+    }
+
+    onCancel <- function() {
+        if (GrabFocus()) tkgrab.release(messageBox)
+        tkdestroy(top)
+        tkfocus(CommanderWindow())
+        tclvalue(result) <- "cancel"
+    }
+
+    OKCancelHelp(helpSubject="importCorpusDlg")
+    tkgrid(labelRcmdr(top, text=.gettext("Text to search for:")),
+           entryText, sticky="w", pady=6)
+    tkgrid(labelRcmdr(top, text=.gettext("Maximum number of tweets to download:")),
+           tclNSlider, sticky="w", pady=6)
+    tkgrid(buttonsFrame, columnspan=2, sticky="w", pady=6)
+    dialogSuffix(rows=2, columns=2, focus=entryText)
+
+    return(tclvalue(result) == "success")
 }
 
 # Adapted version of tm's makeChunks() remembering which chunk comes from which document,

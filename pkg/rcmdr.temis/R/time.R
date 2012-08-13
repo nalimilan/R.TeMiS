@@ -10,12 +10,17 @@ varTimeSeriesDlg <- function() {
 
     vars <- colnames(meta(corpus))[colnames(meta(corpus)) != "MetaID"]
 
-    datevar <- which(vars %in% .gettext("Date")) - 1
-    timeVarBox <- variableListBox(top, vars,
-                                  title=.gettext("Time variable:"),
-                                  initialSelection=if(length(datevar) > 0) datevar else 0)
+    datevar <- which(vars == .gettext("Date")) - 1
+    timevar <- which(vars == .gettext("Time")) - 1
+    datetimevar <- if(length(datevar) > 0) datevar
+                   else if(length(timevar) > 0) timevar
+                   else 0
 
-    tclFormat <- tclVar("%Y-%m-%d")
+    timeVarBox <- variableListBox(top, vars,
+                                  title=.gettext("Date/Time variable:"),
+                                  initialSelection=datetimevar)
+
+    tclFormat <- if(length(timevar) == 0) tclVar("%Y-%m-%d") else tclVar("%Y-%m-%d %H:%M")
     formatEntry <- ttkentry(top, width="20", textvariable=tclFormat)
 
     # We cannot use variableListBox as it is not meant for changing levels
@@ -25,7 +30,6 @@ varTimeSeriesDlg <- function() {
     varsScrollbar <- ttkscrollbar(varsFrame, command=function(...) tkyview(varsBox, ...))
     tkconfigure(varsBox, yscrollcommand=function(...) tkset(varsScrollbar, ...))
     for(var in c(.gettext("None (one curve)"), vars)) tkinsert(varsBox, "end", var)
-    datevar <- which(vars %in% .gettext("Date"))
     tkselection.set(varsBox, 0)
 
     levelsFrame <- tkframe(top)
@@ -35,7 +39,22 @@ varTimeSeriesDlg <- function() {
     tkconfigure(levelsBox, yscrollcommand=function(...) tkset(levelsScrollbar, ...))
     tkselection.set(levelsBox, 0)
 
-    onSelect <- function() {
+    onSelectTimeVar <- function() {
+        var <- getSelection(timeVarBox)
+
+        if(var == .gettext("Date")) {
+            tkdelete(formatEntry, "0", "end")
+            tkinsert(formatEntry, "end", "%Y-%m-%d")
+        }
+        else if (var == .gettext("Time")) {
+            tkdelete(formatEntry, "0", "end")
+            tkinsert(formatEntry, "end", "%Y-%m-%d %H:%M")
+        }
+    }
+
+    tkbind(timeVarBox$listbox, "<<ListboxSelect>>", onSelectTimeVar)
+
+    onSelectGroup <- function() {
         var <- c("", vars)[as.numeric(tkcurselection(varsBox))+1]
         tkdelete(levelsBox, "0", "end")
 
@@ -48,7 +67,7 @@ varTimeSeriesDlg <- function() {
         tkselection.set(levelsBox, 0, "end")
     }
 
-    tkbind(varsBox, "<<ListboxSelect>>", onSelect)
+    tkbind(varsBox, "<<ListboxSelect>>", onSelectGroup)
 
     radioButtons(name="what",
                  buttons=c("number", "percent"),
@@ -101,12 +120,13 @@ varTimeSeriesDlg <- function() {
         }
 
         if(nchar(groupVar) == 0) {
-            doItAndPrint(sprintf('tab <- table(meta(corpus, "%s"))', timeVar))
+            doItAndPrint(sprintf('tab <- table(as.character(strptime(meta(corpus, "%s")[[1]], "%s")))', timeVar, format))
             doItAndPrint(sprintf('time <- as.POSIXct(strptime(names(tab), "%s"))', format))
             doItAndPrint("docSeries <- zoo(tab, order.by=time)")
         }
         else {
-            doItAndPrint(sprintf('tab <- table(meta(corpus, c("%s", "%s")))', timeVar, groupVar))
+            doItAndPrint(sprintf('tab <- table(as.character(strptime(meta(corpus, "%s")[[1]], "%s"), meta(corpus, "%s")[[1]]))',
+                                               timeVar, format, groupVar))
 
             if(what == "percent")
                 doItAndPrint("tab <- prop.table(tab, 1)*100")

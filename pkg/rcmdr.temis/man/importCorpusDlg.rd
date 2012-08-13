@@ -3,6 +3,7 @@
 \alias{importCorpusFromDir}
 \alias{importCorpusFromFile}
 \alias{importCorpusFromFactiva}
+\alias{importCorpusFromTwitter}
 \alias{splitTexts}
 \title{Import a corpus and process it}
 \description{Import a corpus, process it and extract a document-term matrix.}
@@ -33,6 +34,16 @@
          documents and retrying, until only one document is left in the corpus; then, report
          the problem to the Factiva Customer Service, or ask for help to the maintainers of the
          present package.
+
+         The third source, \dQuote{Twitter search}, retrieves most recent tweets matching the search
+         query and written in the specified language, up to the chosen maximum number of messages.
+         Due to limitations imposed by Twitter, only tweets published up to 6 or 9 days ago can be
+         downloaded, and up to a maximum number of 1500 tweets. Search queries can notably include
+         one or more terms that must be present together for a tweet to match the query, and/or of
+         hashtags  starting with \dQuote{#}; see \url{https://dev.twitter.com/docs/using-search} if
+         you need more complex search strings. User names, hashtags, URLs and \dQuote{RT} (re-tweet)
+         mentions are automatically removed from the corpus when computing the document-term matrix
+         as they generally disturb the analysis.
 
          The original texts can optionally be split into smaller chunks, which will then be
          considered as the real unit (called \sQuote{documents}) for all analyses. In order
