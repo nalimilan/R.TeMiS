@@ -137,15 +137,24 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
                           # We call factor() to drop empty levels, if any
                           mat <- with(meta(corpus), table(factor(get(var)), factor(get(.gettext("Cluster")))))
 
-                          # Handle names like in corpusCa()
-                          # If only one level is present, don't add the level name (e.g. TRUE or YES)
-                          if(nrow(mat) == 1)
-                              rownames(mat) <- substr(var, 0, 20)
+                          # Keep in sync with corpusCa()
+
+                          # For boolean variables, only show the TRUE when no NA is present
+                          # Rationale: TRUE and FALSE are symmetric except when missing values appear
+                          if(nrow(mat) == 2 && all(c("TRUE", "FALSE") %in% rownames(mat)) &&
+                             !any(is.na(meta(corpus, .gettext("Cluster"))[[1]]))) {
+                              mat<-mat["TRUE", , drop=FALSE]
+                              rownames(mat)<-substr(var, 0, 20)
+                          }
+                          # If only one level is present, don't add the level name (e.g. YES),
+                          # except if all values are the same (in which case variable is useless but is more obvious that way)
+                          else if(nrow(mat) == 1 && any(is.na(meta(corpus, .gettext("Cluster"))[[1]])))
+                              rownames(mat)<-substr(var, 0, 20)
                           # In case of ambiguous levels of only numbers in levels, add variable names everywhere
                           else if(dupLevels || !any(is.na(suppressWarnings(as.numeric(rownames(mat))))))
-                              rownames(mat) <- make.unique(paste(substr(var, 0, 10), substr(rownames(mat), 0, 30)))
+                              rownames(mat)<-make.unique(paste(substr(var, 0, 10), substr(rownames(mat), 0, 30)))
                           else # Most general case: no need to waste space with variable names
-                              rownames(mat) <- substr(rownames(mat), 0, 30)
+                              rownames(mat)<-substr(levs, 0, 30)
 
                           mat
                        })
