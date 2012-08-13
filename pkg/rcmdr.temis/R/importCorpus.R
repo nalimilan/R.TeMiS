@@ -354,6 +354,20 @@ importCorpusFromFactiva <- function(language=NA) {
     }
 
     colnames(vars) <- c(.gettext("Origin"), .gettext("Date"), .gettext("Author"), .gettext("Section"))
+
+    tags <- c("Subject", "Coverage")
+    for(tag in tags) {
+        var <- lapply(corpus, meta, tag)
+        levs <- unique(unlist(var))
+        levs <- levs[!is.na(levs)]
+
+        if(length(levs) == 0)
+            next
+
+        for(lev in levs)
+            vars[[make.names(lev)]] <- sapply(var, function(x) lev %in% x)
+    }
+
     rownames(vars) <- names(corpus)
 
     assign("corpusVars", vars, envir=.GlobalEnv)
