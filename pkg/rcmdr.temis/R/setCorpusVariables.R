@@ -32,7 +32,7 @@ setCorpusVariables <- function() {
     for(var in colnames(meta(corpus))[!colnames(meta(corpus)) %in%
             c(colnames(dset), .gettext("Doc N"), .gettext("Doc ID"), .gettext("Cluster"),
               sapply(corpusVars, function(x) all(is.na(x) | x == "")))])
-        doItAndPrint(sprintf('meta(corpus, "%s") <- NULL', var))
+        meta(corpus, var) <<- NULL
 
     # Add new variables
     indices <- which(sapply(dset, function(x) !all(is.na(x) | x == "", na.rm=TRUE)))
@@ -43,13 +43,11 @@ setCorpusVariables <- function() {
     if(length(indices) > 0) {
         if(split) {
             for(i in indices)
-               doItAndPrint(sprintf('meta(corpus, "%s") <- factor(as.character(%s[meta(corpus, "%s")[[1]], %i]))',
-                                     colnames(dset)[i], ActiveDataSet(), .gettext("Doc N"), i))
+               meta(corpus, colnames(dset)[i]) <<- factor(as.character(dset[meta(corpus, .gettext("Doc N"))[[1]], i]))
         }
         else {
             for(i in indices)
-                doItAndPrint(sprintf('meta(corpus, "%s") <- factor(as.character(%s[[%i]]))',
-                                     colnames(dset)[i], ActiveDataSet(), i))
+                meta(corpus, colnames(dset)[i]) <<- factor(as.character(dset[[i]]))
         }
     }
 
@@ -58,22 +56,19 @@ setCorpusVariables <- function() {
     corpusNames <- names(corpus)
     if(!identical(oldDocNames, row.names(dset))) {
         if(split) {
-            doItAndPrint(sprintf('names(corpus) <- make.unique(row.names(%s)[meta(corpus, "%s")[[1]]])',
-                                 ActiveDataSet(), .gettext("Doc N")))
-            doItAndPrint(sprintf('meta(corpus, "%s") <- row.names(%s)[meta(corpus, "%s")[[1]]]',
-                                 .gettext("Doc ID"), ActiveDataSet(), .gettext("Doc N")))
+            names(corpus) <<- make.unique(row.names(dset)[meta(corpus, .gettext("Doc N"))[[1]]])
+            meta(corpus, .gettext("Doc ID")) <<- row.names(dset)[meta(corpus, .gettext("Doc N"))[[1]]]
         }
         else {
-            doItAndPrint(sprintf('names(corpus) <- row.names(%s)',
-                                 ActiveDataSet()))
+            names(corpus) <- row.names(dset)
         }
 
         # Update the names of the dtm since it affects all operations and cannot be done manually
         # We assume the dtm corresponds to the current corpus if names were identical
         if(identical(corpusNames, rownames(dtm)))
-            doItAndPrint("rownames(dtm) <- names(corpus)")
+            rownames(dtm) <<- names(corpus)
 
         if(exists("wordsDtm") && identical(corpusNames, rownames(wordsDtm)))
-            doItAndPrint("rownames(wordsDtm) <- names(corpus)")
+            rownames(wordsDtm) <<- names(corpus)
     }
 }
