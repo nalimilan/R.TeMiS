@@ -26,14 +26,20 @@ setOutputFile <- function() {
 
 initOutputFile <- function(file) {
     title <- .gettext("Text Mining Analysis Results")
-    # To find the default encoding, we rely on terms, because Encoding("é") returns "unknown" from a package function
-    # If several encodings are used in the dtm (unlikely), we only use that of the first one
-    enc <- unique(Encoding(colnames(dtm))[Encoding(colnames(dtm)) != "unknown"])
+
+    # R2HTML uses cat() to output text, which in turns uses the value of getOption("encoding")
+    # By default, this corresponds to native.enc returned by localeToCharset()
+    enc <- getOption("encoding", "")
+
+    if(enc %in% c("", "native.enc"))
+        enc <- localeToCharset()[1]
+
+    if(is.na(enc)) # In case system encoding could not be detected
+       enc <- "UTF-8"
 
     # R2HTML does not add encoding information to the HTML headers, even when using HTMLInitFile
     header <- sprintf('<head>\n<meta http-equiv="Content-Type" content="text/html; charset=%s"/>\n<title>%s</title>\n</head>\n',
-                      if(length(enc) > 0) enc[1] else "latin1",
-                      title)
+                      enc, title)
     writeLines(header, file)
 
     .HTML.file <<- file
