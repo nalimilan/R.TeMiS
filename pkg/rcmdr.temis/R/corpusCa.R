@@ -74,7 +74,7 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
                 rownames(mat)<-substr(levs, 0, 30)
 
             dtm<-rbind(dtm, mat)
-            origVars<-c(origVars, rep(var, length(levs)))
+            origVars<-c(origVars, rep(var, nrow(mat)))
         }
     }
 
