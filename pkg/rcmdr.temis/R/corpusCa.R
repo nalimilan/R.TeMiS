@@ -104,10 +104,35 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
 
 corpusCaDlg <- function() {
     initializeDialog(title=.gettext("Run Correspondence Analysis"))
+
+    labelNDocs <- labelRcmdr(top)
+
+    labels <- c(.gettext("(Terms present in at least %s documents will be retained in the analysis.)"),
+                .gettext("(Terms present in at least one document will be retained in the analysis.)"),
+                .gettext("(All terms will be retained in the analysis.)"))
+
+    tkconfigure(labelNDocs, width=max(nchar(labels)))
+
+    updateNDocs <- function(...) {
+        ndocs <- floor((1 - as.numeric(tclvalue(tclSparsity))/100) * nrow(dtm))
+
+        if(ndocs > 1)
+            tkconfigure(labelNDocs, text=sprintf(labels[1], ndocs))
+        else if(ndocs == 1)
+            tkconfigure(labelNDocs, text=labels[2])
+        else
+            tkconfigure(labelNDocs, text=labels[3])
+    }
+
     tclSparsity <- tclVar(95)
     sliderSparsity <- tkscale(top, from=1, to=100,
                               showvalue=TRUE, variable=tclSparsity,
-		              resolution=1, orient="horizontal")
+		              resolution=1, orient="horizontal",
+                              command=updateNDocs)
+    updateNDocs()
+
+
+
     tclDim <- tclVar(8)
     sliderDim <- tkscale(top, from=1, to=30,
                          showvalue=TRUE, variable=tclDim,
@@ -143,9 +168,10 @@ corpusCaDlg <- function() {
     OKCancelHelp(helpSubject=corpusCaDlg)
     tkgrid(labelRcmdr(top, text=.gettext("Remove terms missing from more than (% of documents):")),
            sliderSparsity, sticky="sw", pady=6)
+    tkgrid(labelNDocs, sticky="sw", pady=6, columnspan=2)
     tkgrid(labelRcmdr(top, text=.gettext("Number of dimensions to retain:")),
            sliderDim, sticky="sw", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
-    dialogSuffix(rows=3, columns=2)
+    dialogSuffix(rows=4, columns=2)
 }
 
