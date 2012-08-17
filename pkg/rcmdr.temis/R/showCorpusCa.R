@@ -283,6 +283,33 @@ showCorpusCaDlg <- function() {
                       showvalue=TRUE, variable=tclYDim,
 		      resolution=1, orient="horizontal")
 
+    if(length(corpusCa$rowsup) == 0) {
+        checkBoxes(frame="labelsFrame",
+                   boxes=c("docLabels", "termLabels"),
+                   initialValues=c(0, 1),
+                   labels=c(.gettext("Documents"), .gettext("Terms")),
+                   title=.gettext("Draw labels for:"))
+
+        checkBoxes(frame="pointsFrame",
+                   boxes=c("docPoints", "termPoints"),
+                   initialValues=c(0, 1),
+                   labels=c(.gettext("Documents"), .gettext("Terms")),
+                   title=.gettext("Draw point symbols for:"))
+    }
+    else {
+        checkBoxes(frame="labelsFrame",
+                   boxes=c("varLabels", "docLabels", "termLabels"),
+                   initialValues=c(0, 0, 1),
+                   labels=c(.gettext("Variables"), .gettext("Documents"), .gettext("Terms")),
+                   title=.gettext("Draw labels for:"))
+
+        checkBoxes(frame="pointsFrame",
+                   boxes=c("varPoints", "docPoints", "termPoints"),
+                   initialValues=c(0, 0, 1),
+                   labels=c(.gettext("Variables"), .gettext("Documents"), .gettext("Terms")),
+                   title=.gettext("Draw point symbols for:"))
+    }
+
     vars <- colnames(meta(corpus))
     varBox <- variableListBox(top, vars,
                               selectmode="multiple",
@@ -306,36 +333,25 @@ showCorpusCaDlg <- function() {
     ctrDim2 <- ttkradiobutton(ctrDimFrame, variable=ctrDimVariable, value="xDim", text=.gettext("Horizontal axis"))
     ctrDim3 <- ttkradiobutton(ctrDimFrame, variable=ctrDimVariable, value="yDim", text=.gettext("Vertical axis"))
 
-    if(length(corpusCa$rowsup) == 0) {
-        checkBoxes(frame="pointsFrame",
-                   boxes=c("documentsPoints", "termsPoints"),
-                   initialValues=c(0, 1),
-                   labels=c(.gettext("Documents"), .gettext("Terms")),
-                   title=.gettext("Draw point symbols for:"))
-     }
-     else {
-        checkBoxes(frame="pointsFrame",
-                   boxes=c("variablesPoints", "documentsPoints", "termsPoints"),
-                   initialValues=c(0, 0, 1),
-                   labels=c(.gettext("Variables"), .gettext("Documents"), .gettext("Terms")),
-                   title=.gettext("Draw point symbols for:"))
-    }
 
     onShow <- function() {
         x <- tclvalue(tclXDim)
         y <- tclvalue(tclYDim)
-        documents <- tclvalue(documentsVariable) == 1
-        terms <- tclvalue(termsVariable) == 1
-        variables <- if(length(corpusCa$rowsup) == 0) FALSE else tclvalue(variablesVariable) == 1
+        docLabels <- tclvalue(docLabelsVariable) == 1
+        termLabels <- tclvalue(termLabelsVariable) == 1
+        varLabels <- if(length(corpusCa$rowsup) == 0) FALSE else tclvalue(varLabelsVariable) == 1
+        docPoints <- tclvalue(docPointsVariable) == 1
+        termPoints <- tclvalue(termPointsVariable) == 1
+        varPoints <- if(length(corpusCa$rowsup) == 0) FALSE else tclvalue(varPointsVariable) == 1
         vars <- getSelection(varBox)
         nDocs <- tclvalue(tclNDocs)
         nTerms <- tclvalue(tclNTerms)
         ctrDim <- switch(tclvalue(ctrDimVariable), xyDim=paste("c(", x, ", ", y, ")", sep=""), xDim=x, yDim=y)
-        variablesPoints <- if(length(corpusCa$rowsup) == 0) FALSE else tclvalue(variablesPointsVariable) == 1
-        documentsPoints <- tclvalue(documentsPointsVariable) == 1
-        termsPoints <- tclvalue(termsPointsVariable) == 1
+        varPoints <- if(length(corpusCa$rowsup) == 0) FALSE else tclvalue(varPointsVariable) == 1
+        docPoints <- tclvalue(docPointsVariable) == 1
+        termPoints <- tclvalue(termPointsVariable) == 1
 
-        if(!(documents || terms || variables) || (variables && length(vars) == 0)) {
+        if(!(docLabels || termLabels || varLabels || docPoints || termPoints || varPoints)) {
             errorCondition(recall=showCorpusCaDlg,
                            message=.gettext("Please select something to plot."))
             return()
@@ -343,18 +359,18 @@ showCorpusCaDlg <- function() {
 
         doItAndPrint(sprintf("showCorpusCa(corpusCa, %s, %s, %s)", ctrDim, nDocs, nTerms))
 
-        if(documents && variables) {
+        if((docLabels || docPoints) && (varLabels || varPoints)) {
             rowWhat <- "all"
             varIndexes <- corpusCa$rowsup[corpusCa$rowsupvars[seq_along(corpusCa$rowsup)] %in% vars]
             doItAndPrint(paste("plottingCa <- rowSubsetCa(corpusCa, c(order(rowCtr(corpusCa, ", ctrDim,
                                "), decreasing=TRUE)[1:", nDocs, "], ", paste(varIndexes, collapse=", "), "))", sep=""))
         }
-        else if(documents) {
+        else if(docLabels || docPoints) {
             rowWhat <- "active"
             doItAndPrint(paste("plottingCa <- rowSubsetCa(corpusCa, order(rowCtr(corpusCa, ", ctrDim,
                                "), decreasing=TRUE)[1:", nDocs, "])", sep=""))
         }
-        else if(variables) {
+        else if(varLabels || varPoints) {
             rowWhat <- "passive"
             varIndexes <- corpusCa$rowsup[corpusCa$rowsupvars[seq_along(corpusCa$rowsup)] %in% vars]
             doItAndPrint(paste("plottingCa <- rowSubsetCa(corpusCa, c(",
@@ -364,9 +380,13 @@ showCorpusCaDlg <- function() {
             rowWhat <- "none"
         }
 
-        if(terms) {
+        if(((docPoints || docLabels) && (varPoints || varLabels)) && docLabels != varLabels)
+            Message(.gettext("Plotting documents and variables at the same time currently forces labels to be drawn for both or none."),
+                    "note")
+
+        if(termLabels || termPoints) {
             colWhat <- "all"
-            if(documents || variables)
+            if(docLabels || docPoints || varLabels || varPoints)
                 doItAndPrint(paste("plottingCa <- colSubsetCa(plottingCa, order(colCtr(corpusCa, ", ctrDim,
                                    "), decreasing=TRUE)[1:", nTerms, "])", sep=""))
             else
@@ -377,28 +397,14 @@ showCorpusCaDlg <- function() {
             colWhat <- "none"
         }
 
-        doItAndPrint(sprintf('plotCorpusCa(plottingCa, dim=c(%s, %s), what=c("%s", "%s"), labels=c(2, 2), pch=c(%s, %s, %s, NA), mass=TRUE, xlab="%s", ylab="%s")',
+        doItAndPrint(sprintf('plotCorpusCa(plottingCa, dim=c(%s, %s), what=c("%s", "%s"), labels=c(%i, %i), pch=c(%s, %s, %s, NA), mass=TRUE, xlab="%s", ylab="%s")',
                               x, y, rowWhat, colWhat,
-                              if(documentsPoints) 16 else NA, if(variablesPoints) 1 else NA, if(termsPoints) 17 else NA,
+                              if(docLabels  || varLabels) 2 else 0, if(termLabels) 2 else 0,
+                              if(docPoints) 16 else NA, if(varPoints) 1 else NA, if(termPoints) 17 else NA,
                               sprintf(.gettext("Dimension %s (%.1f%%)"), x, 100 * corpusCa$sv[as.integer(x)]^2/sum(corpusCa$sv^2)),
                               sprintf(.gettext("Dimension %s (%.1f%%)"), y, 100 * corpusCa$sv[as.integer(y)]^2/sum(corpusCa$sv^2))))
 
         activateMenus()
-    }
-
-    if(length(corpusCa$rowsup) == 0) {
-        checkBoxes(frame="whatFrame",
-                   boxes=c("documents", "terms"),
-                   initialValues=c(0, 1),
-                   labels=c(.gettext("Documents"), .gettext("Terms")),
-                   title=.gettext("Items to represent:"))
-    }
-    else {
-        checkBoxes(frame="whatFrame",
-                   boxes=c("variables", "documents", "terms"),
-                   initialValues=c(0, 0, 1),
-                   labels=c(.gettext("Variables"), .gettext("Documents"), .gettext("Terms")),
-                   title=.gettext("Items to represent:"))
     }
 
     # Custom buttons, adapted from OKCancelHelp()
@@ -423,19 +429,18 @@ showCorpusCaDlg <- function() {
 
     tkgrid(labelRcmdr(dimFrame, text=.gettext("Horizontal axis:")), xSlider, sticky="w")
     tkgrid(labelRcmdr(dimFrame, text=.gettext("Vertical axis:")), ySlider, sticky="w")
-    tkgrid(dimFrame, sticky="w", pady=6)
-    tkgrid(whatFrame, sticky="w", pady=6)
+    tkgrid(dimFrame, sticky="w", pady=6, columnspan=2)
+    tkgrid(labelsFrame, pointsFrame, sticky="w", pady=6, padx=c(0, 6))
     if(length(corpusCa$rowsup) > 0)
-        tkgrid(getFrame(varBox), columnspan=3, sticky="we", pady=6)
+        tkgrid(getFrame(varBox), columnspan=2, sticky="we", pady=6)
     tkgrid(labelRcmdr(nFrame, text=.gettext("Documents:")), docsSlider, sticky="w")
     tkgrid(labelRcmdr(nFrame, text=.gettext("Terms:")), termsSlider, sticky="w")
-    tkgrid(nFrame, sticky="w", pady=6)
-    tkgrid(labelRcmdr(ctrDimFrame, text=.gettext("Most contributive to:")), sticky="w", columnspan=3, pady=6)
+    tkgrid(nFrame, sticky="w", pady=6, columnspan=2)
+    tkgrid(labelRcmdr(ctrDimFrame, text=.gettext("Most contributive to:")), sticky="w", columnspan=2, pady=6)
     tkgrid(ctrDim1, ctrDim2, ctrDim3, sticky="w", pady=6)
-    tkgrid(ctrDimFrame, sticky="w", pady=6)
+    tkgrid(ctrDimFrame, sticky="w", pady=6, columnspan=2)
     tkgrid.columnconfigure(ctrDimFrame, "all", uniform="a")
-    tkgrid(pointsFrame, sticky="w", pady=6)
-    tkgrid(buttonsFrame, sticky="w", pady=6)
+    tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=2)
     nrows <- if(length(corpusCa$rowsup) == 0) 6 else 7
 
     # We don't use dialogSuffix() itself because the dialog should not close,
