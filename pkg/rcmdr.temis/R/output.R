@@ -102,23 +102,23 @@ copyPlotToOutput <- function() {
         return()
 
     # Only the filename within the folder is needed, this allows moving HTML and PNG files to another folder
-    htmlFilename <- gsub(sprintf(".*%s", .Platform$file.sep), "", .HTML.file)
+    filename <- gsub(".html$", "", basename(.HTML.file))
 
-    file <- gsub(".html$", paste(format(Sys.time(), .gettext(" - plot %Y-%m-%d %H-%M")),
-                                 ".png", sep=""), htmlFilename)
+    file <- paste(filename, format(Sys.time(), .gettext(" - plot %Y-%m-%d %H-%M")), ".png", sep="")
 
     i <- 1
     testfile <- file
     while(file.exists(testfile)) {
         i <- i + 1
-        testfile <- gsub(".html$", paste(format(Sys.time(), .gettext(" - plot %Y-%m-%d %H-%M")),
-                                         "-", i, ".png", sep=""), htmlFilename)
+        testfile <- paste(filename, format(Sys.time(), .gettext(" - plot %Y-%m-%d %H-%M")),
+                          "-", i, ".png", sep="")
     }
 
     if(file.exists(file))
         file <- testfile
 
-    doItAndPrint(sprintf('dev.print(png, width=7, height=7, unit="in", res=200, filename="%s")', file))
+    doItAndPrint(sprintf('dev.print(png, width=7, height=7, unit="in", res=200, filename="%s")',
+                         paste(dirname(.HTML.file), .Platform$file.sep, file, sep="")))
     doItAndPrint(sprintf('HTMLInsertGraph("%s", "", 0, "left")', file))
 
     # Open file in browser when creating it
