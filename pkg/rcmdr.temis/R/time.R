@@ -244,7 +244,7 @@ varTimeSeriesDlg <- function() {
 
 
         # We need to be sure we have a common time unit, i.e. we have a zooreg object
-        if(!is.regular(docSeries))
+        if(length(docSeries) > 1 && !is.regular(docSeries))
             doItAndPrint('docSeries <- aggregate(docSeries, list(as.POSIXct(trunc(time, units(diff(time))))), regular=TRUE)')
 
 
@@ -255,7 +255,7 @@ varTimeSeriesDlg <- function() {
 
         # Trick to get a strictly regular time series with 0 where no document was observed
         # difftime chooses the unit so that all differences are > 1, which is what we want
-        if(!is.regular(docSeries, strict=TRUE)) {
+        if(length(docSeries) > 1 && !is.regular(docSeries, strict=TRUE)) {
             # seq() will specify different if we pass "day"
             byUnit <- units(diff(time(docSeries)))
             if(byUnit == "days") byUnit <- "DSTday"
@@ -274,9 +274,12 @@ varTimeSeriesDlg <- function() {
         }
 
         ylab <- if(what == "number") .gettext("Number of documents") else .gettext("% of documents")
-        doItAndPrint(sprintf('xyplot(docSeries, superpose=TRUE, xlab="", ylab="%s", main="%s", auto.key=%s, par.settings=simpleTheme(lwd=1.5))',
-                             paste(ylab, unit), title,
-                             if(NCOL(docSeries) > 1) 'list(space="bottom")' else "NULL"))
+        if(length(docSeries) > 1)
+            doItAndPrint(sprintf('xyplot(docSeries, superpose=TRUE, xlab="", ylab="%s", main="%s", auto.key=%s, par.settings=simpleTheme(lwd=1.5))',
+                                 paste(ylab, unit), title,
+                                 if(NCOL(docSeries) > 1) 'list(space="bottom")' else "NULL"))
+        else
+            Message(.gettext("Only one time point present, no plot can be drawn."), "warning")
 
         doItAndPrint("rm(tab, time)")
 
@@ -511,7 +514,7 @@ termTimeSeriesDlg <- function() {
             }
 
         # We need to be sure we have a common time unit, i.e. we have a zooreg object
-        if(!is.regular(termSeries))
+        if(length(termSeries) > 1 && !is.regular(termSeries))
             doItAndPrint('termSeries <- aggregate(termSeries, list(as.POSIXct(trunc(time, units(diff(time))))), regular=TRUE)')
 
 
@@ -522,7 +525,7 @@ termTimeSeriesDlg <- function() {
 
         # Trick to get a strictly regular time series with NA where no document was observed
         # difftime chooses the unit so that all differences are > 1, which is what we want
-        if(!is.regular(termSeries, strict=TRUE)) {
+        if(length(termSeries) > 1 && !is.regular(termSeries, strict=TRUE)) {
             # seq() will specify different if we pass "day"
             byUnit <- units(diff(time(termSeries)))
             if(byUnit == "days") byUnit <- "DSTday"
@@ -540,9 +543,13 @@ termTimeSeriesDlg <- function() {
                 doItAndPrint(sprintf('termSeries <- rollapply(termSeries, %s, align="left", mean, na.rm=TRUE)', window))
         }
 
-        doItAndPrint(sprintf('xyplot(termSeries, superpose=TRUE, xlab="", ylab="%s", main="%s", auto.key=%s, par.settings=simpleTheme(lwd=1.5))',
-                             paste(ylab, unit), title,
-                             if(NCOL(termSeries) > 1) 'list(space="bottom")' else "NULL"))
+        # If only one time point is present, plotting always fails
+        if(length(termSeries) > 1)
+            doItAndPrint(sprintf('xyplot(termSeries, superpose=TRUE, xlab="", ylab="%s", main="%s", auto.key=%s, par.settings=simpleTheme(lwd=1.5))',
+                                 paste(ylab, unit), title,
+                                 if(NCOL(termSeries) > 1) 'list(space="bottom")' else "NULL"))
+        else
+            Message(.gettext("Only one time point present, no plot can be drawn."), "warning")
 
         doItAndPrint("rm(absTermFreqs, time)")
 
