@@ -21,7 +21,7 @@
     item        corpusMenu      command           "Set corpus variables"             setCorpusVariables          "exists('corpus') && 'Corpus' %in% class(corpus) && activeDataSetP() && checkVariables()"          ""
     item        corpusMenu      cascade           "Subset corpus"                    subsetMenu                    ""                    ""
     item        corpusMenu      command           "Select or exclude terms..."       restrictTermsDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-
+    item        corpusMenu      command           "Recode time variable"             recodeTimeVarDlg            "exists('corpus') && 'Corpus' %in% class(corpus) && activeDataSetP() && checkVariables()"          ""
 
 ## Analyse corpus menu ##
     menu        anaCorpusMenu   tmMenu            ""                                 ""                          ""                    ""
@@ -58,6 +58,7 @@
     item        termMenu        cascade           "Frequencies of specific terms"    termFreqMenu                ""                    ""
     item        termMenu        command           "Cooccurrence of specific terms..." termsAssocDlg              "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        termMenu        command           "Most typical terms..."            typicalTermsDlg             "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        termMenu        command           "Temporal evolution..."            termTimeSeriesDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                       ""
 
 
 ### Hierarchical clustering menu ###
