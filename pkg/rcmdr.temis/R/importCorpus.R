@@ -133,7 +133,7 @@ importCorpusDlg <- function() {
 importCorpusFromDir <- function(language=NA) {
     dir <- tclvalue(tkchooseDirectory(initialdir=getwd(),
                                       parent=CommanderWindow()))
-    if (dir == "") return()
+    if (dir == "") return(FALSE)
 
     .setBusyCursor()
 
@@ -393,7 +393,7 @@ importCorpusFromTwitter <- function(language=NA) {
 
         if(text == "") {
             Message(gettext.("Please enter valid text to search for."), type="error")
-            return()
+            return(FALSE)
         }
 
         closeDialog()
@@ -409,7 +409,7 @@ importCorpusFromTwitter <- function(language=NA) {
         if(length(messages) == 0) {
             Message(sprintf(.gettext("No recent tweets match the specified search criteria in the chosen language (%s)."), language),
                     type="error")
-            return()
+            return(FALSE)
         }
 
         doItAndPrint("corpusDataset <- twListToDF(messages)")
@@ -421,7 +421,7 @@ importCorpusFromTwitter <- function(language=NA) {
         if(!exists("corpus") || length(corpus) == 0) {
             Message(.gettext("Retrieving messages from Twitter failed."),
                     type="error")
-            return()
+            return(FALSE)
         }
 
         doItAndPrint('corpusVars <- corpusDataset[c("screenName", "created", "truncated", "statusSource")]')
@@ -433,7 +433,7 @@ importCorpusFromTwitter <- function(language=NA) {
 
         tclvalue(result) <- "success"
 
-        return()
+        return(FALSE)
     }
 
     onCancel <- function() {
