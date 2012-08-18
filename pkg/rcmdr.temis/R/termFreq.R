@@ -109,9 +109,9 @@ docTermFreqDlg <- function() {
 
         # We need more precision for row percents, which are usually small
         if(what == "row")
-            doItAndPrint("round(termFreqs, digits=2)")
+            doItAndPrint("print(termFreqs, digits=2)")
          else if(what == "col")
-            doItAndPrint("round(termFreqs, digits=1)")
+            doItAndPrint("print(termFreqs, digits=1)")
          else
             doItAndPrint("print(termFreqs)")
 
@@ -270,9 +270,9 @@ varTermFreqDlg <- function() {
 
         # We need more precision for row percents, which are usually small
         if(what == "row")
-            doItAndPrint("round(termFreqs, digits=2)")
+            doItAndPrint("print(termFreqs, digits=2)")
          else if(what == "col")
-            doItAndPrint("round(termFreqs, digits=1)")
+            doItAndPrint("print(termFreqs, digits=1)")
          else
             doItAndPrint("print(termFreqs)")
 

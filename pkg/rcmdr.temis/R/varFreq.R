@@ -65,7 +65,7 @@ varTableDlg <- function() {
         }
 
         if(what == "percent")
-            doItAndPrint("round(varFreqs, digits=1)")
+            doItAndPrint("print(varFreqs, digits=1)")
         else
             doItAndPrint("print(varFreqs)")
 
@@ -197,7 +197,7 @@ varCrossTableDlg <- function() {
         }
 
         if(what %in% c("row", "col"))
-            doItAndPrint("round(varFreqs, digits=1)")
+            doItAndPrint("print(varFreqs, digits=1)")
          else
             doItAndPrint("print(varFreqs)")
 

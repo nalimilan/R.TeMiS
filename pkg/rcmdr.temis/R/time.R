@@ -286,7 +286,7 @@ varTimeSeriesDlg <- function() {
         if(what == "number")
             doItAndPrint("print(docSeries)")
         else
-            doItAndPrint("round(docSeries, digits=2)")
+            doItAndPrint("print(docSeries, digits=2)")
 
         # Used by saveTableToOutput()
         last.table <<- "docSeries"
@@ -556,7 +556,7 @@ termTimeSeriesDlg <- function() {
         if(what == "number")
             doItAndPrint("print(termSeries)")
         else
-            doItAndPrint("round(termSeries, digits=2)")
+            doItAndPrint("print(termSeries, digits=2)")
 
         # Used by saveTableToOutput()
         last.table <<- "termSeries"
