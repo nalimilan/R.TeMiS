@@ -49,4 +49,4 @@
 
 \seealso{\code{\link{vocabularyTable}}, \code{\link{setCorpusVariables}},
          \code{\link{meta}}, \code{\link{DocumentTermMatrix}}, \code{\link{table}},
-         \code{\link{barplot}} }
+         \code{\link{barchart}} }

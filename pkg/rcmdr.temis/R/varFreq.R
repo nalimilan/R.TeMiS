@@ -23,12 +23,12 @@ varTableDlg <- function() {
     tclTitle <- tclVar(.gettext("Distribution of documents by %V"))
     titleEntry <- ttkentry(top, width="40", textvariable=tclTitle)
 
-    tclPlotType <- tclVar("barplot")
+    tclPlotType <- tclVar("barchart")
     plotFrame <- tkframe(top)
     noneButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
                                  value="none", text=.gettext("None"))
-    barplotButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
-                                    value="barplot", text=.gettext("Bar plot"))
+    barchartButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
+                                    value="barchart", text=.gettext("Bar plot"))
     pieButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
                                 value="pie", text=.gettext("Pie chart"))
 
@@ -53,7 +53,7 @@ varTableDlg <- function() {
             ylab <- .gettext("Number of documents")
         }
 
-        if(plotType == "barplot") {
+        if(plotType == "barchart") {
             doItAndPrint(sprintf('barchart(varFreqs, stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s")',
                                      ylab, title))
         }
@@ -89,7 +89,7 @@ varTableDlg <- function() {
            sticky="w", columnspan=3)
     tkgrid(plotFrame, sticky="w", pady=6, columnspan=3)
     tkgrid(noneButton, sticky="w", padx=3, column=1, row=4)
-    tkgrid(barplotButton, sticky="w", padx=3, column=2, row=4)
+    tkgrid(barchartButton, sticky="w", padx=3, column=2, row=4)
     tkgrid(pieButton, sticky="w", padx=3, column=3, row=4)
     tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=3)
     dialogSuffix(rows=5, columns=3, focus=varBox$listbox)
@@ -130,12 +130,12 @@ varCrossTableDlg <- function() {
     tclTitle <- tclVar(.gettext("Distribution of documents by %V1 and %V2"))
     titleEntry <- ttkentry(top, width="20", textvariable=tclTitle)
 
-    tclPlotType <- tclVar("barplot")
+    tclPlotType <- tclVar("barchart")
     plotFrame <- tkframe(top)
     noneButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
                                  value="none", text=.gettext("None"))
-    barplotButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
-                                    value="barplot", text=.gettext("Bar plot"))
+    barchartButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
+                                    value="barchart", text=.gettext("Bar plot"))
     pieButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
                                 value="pie", text=.gettext("Pie chart"))
 
@@ -166,7 +166,7 @@ varCrossTableDlg <- function() {
             ylab <- .gettext("Number of documents")
         }
 
-        if(plotType == "barplot") {
+        if(plotType == "barchart") {
             if(what == "col")
                 doItAndPrint(sprintf('barchart(t(varFreqs), stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
                                      ylab, title))
@@ -222,7 +222,7 @@ varCrossTableDlg <- function() {
            sticky="w", columnspan=3)
     tkgrid(plotFrame, sticky="w", pady=6, columnspan=3)
     tkgrid(noneButton, sticky="w", padx=3, column=1, row=4)
-    tkgrid(barplotButton, sticky="w", padx=3, column=2, row=4)
+    tkgrid(barchartButton, sticky="w", padx=3, column=2, row=4)
     tkgrid(pieButton, sticky="w", padx=3, column=3, row=4)
     tkgrid(labelRcmdr(top, text=.gettext("Title:")), titleEntry, sticky="w")
     tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=3)

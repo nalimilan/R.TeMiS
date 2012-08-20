@@ -30,4 +30,4 @@
 }
 
 \seealso{\code{\link{setCorpusVariables}}, \code{\link{meta}}, \code{\link{DocumentTermMatrix}},
-         \code{\link{table}}, \code{\link{barplot}}, \code{\link{pie}} }
+         \code{\link{table}}, \code{\link{barchart}}, \code{\link{pie}} }

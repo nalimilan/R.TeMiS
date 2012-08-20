@@ -14,4 +14,4 @@
          the type of computed percent.}
 
 \seealso{\code{\link{setCorpusVariables}}, \code{\link{meta}}, \code{\link{table}},
-         \code{\link{barplot}}, \code{\link{pie}} }
+         \code{\link{barchart}}, \code{\link{pie}} }
