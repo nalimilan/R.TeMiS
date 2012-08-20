@@ -121,23 +121,25 @@ subsetCorpusByTermsDlg <- function() {
         save <- tclvalue(tclSave) == "1"
 
         if(length(keepList) == 0 && length(excludeList) == 0) {
-            errorCondition(recall=subsetCorpusByTermsDlg,
-                           message=.gettext("Please enter at least one term."))
+            Message(.gettext("Please enter at least one term."), "error")
+
             return()
         }
         else if(!all(c(keepList, excludeList) %in% colnames(dtm))) {
             wrongTerms <- c(keepList, excludeList)[!c(keepList, excludeList) %in% colnames(dtm)]
-            errorCondition(recall=subsetCorpusByTermsDlg,
-                           message=sprintf(.ngettext(length(wrongTerms),
-                                                    "Term \'%s\' does not exist in the corpus.",
-                                                    "Terms \'%s\' do not exist in the corpus."),
-                                                     # TRANSLATORS: this should be opening quote, comma, closing quote
-                                                     paste(wrongTerms, collapse=.gettext("\', \'"))))
+            Message(sprintf(.ngettext(length(wrongTerms),
+                                      "Term \'%s\' does not exist in the corpus.",
+                                      "Terms \'%s\' do not exist in the corpus."),
+                                      # TRANSLATORS: this should be opening quote, comma, closing quote
+                                      paste(wrongTerms, collapse=.gettext("\', \'"))),
+                    "error")
+
             return()
         }
         else if(!any(row_sums(dtm[,keepList]) > 0 & row_sums(dtm[,excludeList]) == 0)) {
-            errorCondition(recall=subsetCorpusByTermsDlg,
-                           message=gettext("Specified conditions would exclude all documents from the corpus."))
+            Message(.gettext("Specified conditions would exclude all documents from the corpus."),
+                    "error")
+
             return()
         }
 

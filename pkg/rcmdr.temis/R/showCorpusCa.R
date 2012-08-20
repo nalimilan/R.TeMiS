@@ -352,8 +352,8 @@ showCorpusCaDlg <- function() {
         termPoints <- tclvalue(termPointsVariable) == 1
 
         if(!(docLabels || termLabels || varLabels || docPoints || termPoints || varPoints)) {
-            errorCondition(recall=showCorpusCaDlg,
-                           message=.gettext("Please select something to plot."))
+            Message(.gettext("Please select something to plot."), "error")
+
             return()
         }
 
