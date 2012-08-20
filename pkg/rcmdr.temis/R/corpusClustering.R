@@ -38,10 +38,11 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
     if(length(attr(corpusSubClust, "sparsity")) > 0)
         dtm <- removeSparseTerms(dtm, attr(corpusSubClust, "sparsity"))
 
+    clusterDtm <- suppressWarnings(rollup(dtm, 1, clusters))
+
     if(nterms > 0) {
         # Get most contributive terms for each cluster
         # Same code as in typicalTermsDlg()
-        clusterDtm <- suppressWarnings(rollup(dtm, 1, clusters))
         expected <- row_sums(clusterDtm) %o% col_sums(clusterDtm)/sum(clusterDtm)
         chisq <- sign(as.matrix(clusterDtm - expected)) *  as.matrix((clusterDtm - expected)^2/expected)
         termsCtr <- sapply(rownames(clusterDtm), simplify=FALSE, USE.NAMES=TRUE, function(x)
@@ -244,12 +245,12 @@ corpusClustDlg <- function() {
             doItAndPrint(sprintf('plot(cut(as.dendrogram(corpusClust), h=%s)$upper, leaflab="none", ylab="%s", main="%s")',
                                  height,
                                  .gettext("Within-cluster variance"),
-                                 .gettext("Upper part of cluster dendrogram")))
+                                 .gettext("Upper part of documents dendrogram")))
         else
             doItAndPrint(sprintf('plot(as.dendrogram(corpusClust), nodePar=list(pch=NA, lab.cex=0.8), %sylab="%s", main="%s")',
                                  if(length(corpus) > 20) 'leaflab="none", ' else "",
                                  .gettext("Within-cluster variance"),
-                                 .gettext("Full cluster dendrogram")))
+                                 .gettext("Full documents dendrogram")))
 
         # For the Create clusters item
         activateMenus()
@@ -300,17 +301,19 @@ createClustersDlg <- function() {
         nterms <- as.numeric(tclvalue(tclNTerms))
         height <- floor(rev(corpusClust$height)[nclust-1] * 1e4)/1e4
 
-        doItAndPrint(sprintf("clusters <- cutree(corpusClust, h=%s)", height))
+        doItAndPrint(paste("corpusSubClust <- cut(as.dendrogram(corpusClust), h=",
+                           height, ")", sep=""))
 
-        # If some documents were skipped, we need to skip them and put NA
-        if(length(clusters) == length(corpus)) {
-            doItAndPrint(paste("meta(corpus, \"", .gettext("Cluster"), "\") <- clusters", sep=""))
-        }
-        else {
-            doItAndPrint(paste("meta(corpus, \"", .gettext("Cluster"), "\") <- NA", sep=""))
-            doItAndPrint(paste("meta(corpus, \"", .gettext("Cluster"),
-                               "\")[match(names(corpus), names(clusters), nomatch=0),] <- clusters", sep=""))
-        }
+        # Hack needed to replace cutree(), which orders clusters by order of appearance in the data,
+        # which does not correspond to that used by the dendrogram
+        doItAndPrint(sprintf('clusters <- rep(1:%s, sapply(corpusSubClust$lower, attr, "members"))', nclust))
+        doItAndPrint('names(clusters) <- rapply(corpusSubClust$lower, function(x) attr(x, "label"))')
+
+        # If some documents were skipped, we need to fill with NA
+        doItAndPrint(sprintf('meta(corpus, "%s") <- NA', .gettext("Cluster")))
+
+        doItAndPrint(sprintf('meta(corpus, "%s")[match(names(clusters), names(corpus), nomatch=0),] <- clusters',
+                             .gettext("Cluster")))
 
         # If corpus was split, we cannot add cluster back into corpusVars
         if(exists("corpusVars")) {
@@ -324,16 +327,13 @@ createClustersDlg <- function() {
                                "=meta(corpus, tag=\"", .gettext("Cluster"), "\")[[1]])", sep=""))
         }
 
-        doItAndPrint(paste("corpusSubClust <- cut(as.dendrogram(corpusClust), h=",
-                           height, ")", sep=""))
-
         # Set by corpusClustDlg() and used by showCorpusClustering() to recreate dtm
         if(length(attr(corpusClust, "sparsity")) > 0)
             doItAndPrint(sprintf('attr(corpusSubClust, "sparsity") <- %s', attr(corpusClust, "sparsity")))
 
         doItAndPrint(sprintf('plot(corpusSubClust$upper, nodePar=list(pch=NA, lab.cex=0.8), ylab="%s", main="%s")',
                              .gettext("Within-cluster variance"),
-                             .gettext("Cluster dendrogram")))
+                             .gettext("Clusters dendrogram")))
         doItAndPrint(sprintf("showCorpusClustering(corpusSubClust, %i, %i)", ndocs, nterms))
         doItAndPrint("rm(clusters)")
 
