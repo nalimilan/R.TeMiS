@@ -186,7 +186,7 @@ HTML.list <- function (x, file = get(".HTML.file"), first = TRUE, append = TRUE,
 # Released under the GPL (no version specified), Copyright Michael Greenacre
 # and Oleg Nenadic <onenadi at uni-goettingen.de>.
 # http://cran.r-project.org/web/packages/ca/index.html
-HTML.ca <- function(obj, ...) {
+HTML.ca <- function(x, ...) {
     nd0 <- length(obj$sv)
     nd  <- obj$nd
     if (is.na(nd)){
