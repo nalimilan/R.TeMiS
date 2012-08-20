@@ -20,7 +20,7 @@ setCorpusVariables <- function() {
     # If corpus was split, we need to replicate variables
     split <- isTRUE(meta(corpus, type="corpus", tag="split"))
 
-    dset <- get(.activeDataSet)
+    dset <- get(ActiveDataSet())
     len <- if (split) length(unique(meta(corpus, .gettext("Doc N"))[[1]])) else length(corpus)
     if(nrow(dset) != len) {
         Message(message=sprintf(.gettext("Active data set must contain exactly %d rows."), len),

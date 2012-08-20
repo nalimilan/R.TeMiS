@@ -240,12 +240,12 @@ importCorpusFromFile <- function(language=NA) {
 
         # If there are several tables
         if(length(tabdat) > 1)
-            fil <- tk_select.list(sort(tabdat), title=.gettextRcmdr("Select one table"))
+            fil <- tk_select.list(sort(tabdat), title=.gettext("Select one table"))
         else
             fil <- tabdat
 
         if(fil == "") {
-            Message(.gettextRcmdr("No table selected"), type="error")
+            Message(.gettext("No table selected"), type="error")
             return(FALSE)
         }
 
@@ -392,7 +392,7 @@ importCorpusFromTwitter <- function(language=NA) {
         nmess <- tclvalue(tclNMess)
 
         if(text == "") {
-            Message(gettext.("Please enter valid text to search for."), type="error")
+            Message(.gettext("Please enter valid text to search for."), type="error")
             return(FALSE)
         }
 
@@ -437,7 +437,7 @@ importCorpusFromTwitter <- function(language=NA) {
     }
 
     onCancel <- function() {
-        if (GrabFocus()) tkgrab.release(messageBox)
+        if (GrabFocus()) tkgrab.release(top)
         tkdestroy(top)
         tkfocus(CommanderWindow())
         tclvalue(result) <- "cancel"

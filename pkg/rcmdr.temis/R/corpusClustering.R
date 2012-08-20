@@ -154,7 +154,7 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
                           else if(dupLevels || !any(is.na(suppressWarnings(as.numeric(rownames(mat))))))
                               rownames(mat)<-make.unique(paste(substr(var, 0, 10), substr(rownames(mat), 0, 30)))
                           else # Most general case: no need to waste space with variable names
-                              rownames(mat)<-substr(levs, 0, 30)
+                              rownames(mat)<-substr(rownames(mat), 0, 30)
 
                           mat
                        })

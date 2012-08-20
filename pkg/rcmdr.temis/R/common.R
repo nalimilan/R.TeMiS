@@ -1,3 +1,23 @@
+if (getRversion() >= '2.15.1') globalVariables(c(
+    "tl", ".HTML.file",
+    "last.table", "top", "dtm", "corpus", "corpusCa", "buttonsFrame",
+    "clustDtm", "corpusClust", "clusters", "corpusVars", "diss",
+    "freqTerms", "sourceVariable", "lowercaseVariable",
+    "punctuationVariable", "numbersVariable", "stopwordsVariable",
+    "stemmingVariable", "sourceFrame", "processingFrame", "foreign",
+    "channel", "corpusDataset", "messages",
+    "messageBox", "whatVariable", "whatFrame",
+    "wordsDtm", "docLabelsVariable", "termLabelsVariable",
+    "varLabelsVariable", "docPointsVariable", "termPointsVariable",
+    "varPointsVariable", "labelsFrame", "pointsFrame",
+    "preventDoubleClick", "termFreqs", "termSeries",
+    "termsAssoc", "typicalTerms", "varFreqs", "docSeries", "docButton",
+    "globalButton", "unitVariable", "totaltVariable", "uniqueVariable",
+    "hapaxVariable", "totalwVariable", "longVariable", "vlongVariable",
+    "longavgVariable", "voc", "unitFrame"
+    ))
+
+
 .setBusyCursor <- function() {
     .commander <- CommanderWindow()
     .menu <- tkcget(.commander, menu=NULL)
