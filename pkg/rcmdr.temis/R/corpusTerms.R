@@ -356,7 +356,7 @@ termFreqDlg <- function() {
                 if(!is.matrix(termFreqs)) {
                     doItAndPrint(paste("pie(termFreqs)", sep=""))
 
-                    title <- gsub("%V", var, gsub("%T", termsList[1], title))
+                    title <- gsub("%V", tolower(var), gsub("%T", termsList[1], title))
                     if(title != "")
                         doItAndPrint(paste("title(main=\"", title, "\")", sep=""))
                 }
@@ -365,7 +365,7 @@ termFreqDlg <- function() {
                     for(i in 1:ncol(termFreqs)) {
                         doItAndPrint(paste("pie(termFreqs[,", i, "])", sep=""))
 
-                        title <- gsub("%V", var, gsub("%T", colnames(termFreqs)[i], title))
+                        title <- gsub("%V", tolower(var), gsub("%T", tolower(colnames(termFreqs)[i]), title))
                         if(title != "")
                             doItAndPrint(paste("title(main=\"", title, "\")", sep=""))
                     }
@@ -378,7 +378,7 @@ termFreqDlg <- function() {
                 else
                     title <- gsub(" %T ", " ", title)
 
-                title <- gsub("%V", var, title)
+                title <- gsub("%V", tolower(var), title)
 
                 doItAndPrint(sprintf('barchart(termFreqs, stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
                                      ylab, title))

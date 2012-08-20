@@ -179,7 +179,7 @@ vocabularyDlg <- function() {
 
         closeDialog()
 
-        title <- gsub("%V", var, title)
+        title <- gsub("%V", tolower(var), title)
 
         # Only compute the dtm the first time this operation is run
         if(!exists("wordsDtm")) {

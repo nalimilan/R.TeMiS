@@ -40,7 +40,7 @@ varTableDlg <- function() {
 
         closeDialog()
 
-        title <- gsub("%V", var, title)
+        title <- gsub("%V", tolower(var), title)
 
         doItAndPrint(sprintf('absVarFreqs <- table(meta(corpus, "%s"), dnn="%s")', var, var))
 
@@ -148,7 +148,7 @@ varCrossTableDlg <- function() {
 
         closeDialog()
 
-        title <- gsub("%V2", var2, gsub("%V1", var1, title))
+        title <- gsub("%V2", tolower(var2), gsub("%V1", tolower(var1), title))
 
         doItAndPrint(paste("absVarFreqs <- table(cbind(meta(corpus, tag=\"", var1,
                            "\"), meta(corpus, tag=\"", var2, "\")))", sep=""))
