@@ -193,13 +193,15 @@ subsetCorpusByTermsDlg <- function() {
     OKCancelHelp(helpSubject="subsetCorpusByTermsDlg")
     tkgrid(labelRcmdr(top, text=.gettext("Keep documents with terms (space-separated):")),
            sticky="w")
-    tkgrid(entryKeep, sticky="w")
+    tkgrid(entryKeep, sticky="w", pady=c(0, 6))
     tkgrid(labelRcmdr(top, text=.gettext("Exclude documents with terms (space-separated):")),
-           sticky="w")
-    tkgrid(entryExclude, sticky="w")
-    tkgrid(checkSave, sticky="w", pady=6)
+           sticky="w", pady=c(6, 0))
+    tkgrid(entryExclude, sticky="w", pady=c(0, 6))
+    tkgrid(labelRcmdr(top, text=.gettext("(Only documents matching both conditions will be retained in the new corpus.)")),
+           sticky="w", pady=6)
+    tkgrid(checkSave, sticky="w", pady=c(12, 6))
     tkgrid(buttonsFrame, sticky="w", pady=6)
-    dialogSuffix(rows=6, focus=entryKeep)
+    dialogSuffix(rows=7, focus=entryKeep)
 }
 
 restoreCorpus <- function() {

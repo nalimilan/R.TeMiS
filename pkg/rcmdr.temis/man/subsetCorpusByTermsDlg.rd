@@ -5,9 +5,10 @@
 \description{Create a subset of the corpus by retaining only the documents which contain (or not)
              specified terms.}
 \details{This operation will restrict the corpus, document-term matrix and the \dQuote{corpusVars}
-         data set so that they only contain documents with or without specified terms.
-         Previously run analyses like correspondence analysis or hierarchical clustering will be
-         removed to prevent confusion.
+         data set so that they only contain documents with occurrences of terms from the first list,
+         \emph{and} without terms from the same list (both conditions must be filled). Previously
+         run analyses like correspondence analysis or hierarchical clustering are removed to prevent
+         confusion.
 
          If you choose to save the original corpus, you will be able to restore it later from the
          Text mining -> Subset corpus -> Restore original corpus menu. Warning: checking this option
