@@ -30,7 +30,7 @@ vocabularyTable(termsDtm, wordsDtm, variable = NULL, unit = c("document", "globa
 
          Please note that percentages for \emph{terms} and \emph{words} are computed with regard
          respectively to the total number of terms and of words, so the denominators are not the
-         same for all measures. See \code{\link{docVocabularyDlg}}.
+         same for all measures. See \code{\link{vocabularyDlg}}.
 
          When \code{variable} is not \code{NULL}, \code{unit} defines two different ways of
          aggregating per-document statistics into per-category measures:
@@ -44,5 +44,4 @@ vocabularyTable(termsDtm, wordsDtm, variable = NULL, unit = c("document", "globa
          In both cases, the \dQuote{Corpus} column follows the above definition.
 }
 
-\seealso{\code{\link{docVocabularyDlg}}, \code{\link{varVocabularyDlg}},
-         \code{\link{DocumentTermMatrix}}, \code{\link{table}}, }
+\seealso{\code{\link{vocabularyDlg}}, code{\link{DocumentTermMatrix}}, \code{\link{table}}, }

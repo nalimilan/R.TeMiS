@@ -37,16 +37,10 @@
     menu        termMenu        tmMenu            ""                                 ""                          ""                    ""
     item        tmMenu          cascade           "Terms"                            termMenu                    ""                    ""
 
-    # Term frequencies sub-menu
-    menu        termFreqMenu    tmMenu            ""                                 ""                          ""                    ""
-    item        termFreqMenu    command           "Per document..."                  docTermFreqDlg              "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termFreqMenu    command           "Per variable..."                  varTermFreqDlg              "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""          ""
-
-    # Main items
     item        termMenu        command           "List all terms"                   listTerms                   "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        termMenu        command           "Most frequent terms..."           freqTermsDlg                "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        termMenu        command           "Most typical terms..."            typicalTermsDlg             "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu        cascade           "Frequencies of specific terms"    termFreqMenu                ""                    ""
+    item        termMenu        command           "Frequencies of specific terms..."  termFreqDlg                "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        termMenu        command           "Cooccurrence of specific terms..." termsAssocDlg              "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        termMenu        command           "Temporal evolution of specific terms..." termTimeSeriesDlg    "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                       ""
 
@@ -55,13 +49,7 @@
     menu        vocMenu         tmMenu            ""                                 ""                          ""                    ""
     item        tmMenu          cascade           "Vocabulary"                       vocMenu                     ""                    ""
 
-    # Vocabulary summary sub-menu
-    menu        summaryMenu     vocMenu           ""                                 ""                          ""                    ""
-    item        summaryMenu     command           "Per document..."                  docVocabularyDlg            "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"             ""
-    item        summaryMenu     command           "Per variable..."                  varVocabularyDlg            "exists('corpus') && 'Corpus' %in% class(corpus) && exists('dtm') && class(dtm) == 'DocumentTermMatrix'"             ""
-
-    # Main items
-    item        vocMenu         cascade           "Vocabulary summary"               summaryMenu              ""                    ""
+    item        vocMenu         command           "Vocabulary summary..."            vocabularyDlg               ""                    ""
     item        vocMenu         command           "Dissimilarity table..."           dissimilarityTableDlg       "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
 
 

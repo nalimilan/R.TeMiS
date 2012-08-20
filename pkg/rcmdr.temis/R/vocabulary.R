@@ -105,131 +105,10 @@ vocabularyTable <- function(termsDtm, wordsDtm, variable=NULL, unit=c("document"
     voc
 }
 
-docVocabularyDlg <- function() {
-    initializeDialog(title=.gettext("Vocabulary Summary per Document"))
+vocabularyDlg <- function() {
+    initializeDialog(title=.gettext("Vocabulary Summary"))
 
-    checkBoxes(frame="whatFrame",
-               title=.gettext("Draw plot for:"),
-               boxes=c("totalt", "unique", "hapax",
-                       "totalw", "long", "vlong", "longavg"),
-               initialValues=c(0, 0, 1, 0, 0, 0, 0),
-               labels=c(.gettext("All terms"),
-                        .gettext("Unique terms"),
-                        .gettext("Hapax legomena"),
-                        .gettext("All words"),
-                        .gettext("Long words"),
-                        .gettext("Very long words"),
-                        .gettext("Average word length")))
-
-    measureVariable <- tclVar("percent")
-    measureFrame <- tkframe(top)
-    measure1 <- ttkradiobutton(measureFrame, variable=measureVariable, value="percent",
-                               text=.gettext("Percent"))
-    measure2 <- ttkradiobutton(measureFrame, variable=measureVariable, value="count",
-                               text=.gettext("Number of occurrences"))
-
-    radioButtons(name="corpusMeasure",
-                 title=.gettext("Plot global corpus value:"),
-                 buttons=c("none", "mean", "total"),
-                 initialValue="mean",
-                 labels=c(.gettext("Nothing"),
-                          .gettext("Corpus mean"),
-                          .gettext("Corpus total")),
-                 right.buttons=FALSE)
-
-    titleFrame <- tkframe(top)
-    tclTitle <- tclVar(.gettext("Vocabulary summary by document"))
-    titleEntry <- ttkentry(top, width="40", textvariable=tclTitle)
-
-    onOK <- function() {
-        title <- tclvalue(tclTitle)
-        totalt <- tclvalue(totaltVariable) == 1
-        unique <- tclvalue(uniqueVariable) == 1
-        hapax <- tclvalue(hapaxVariable) == 1
-        totalw <- tclvalue(totalwVariable) == 1
-        long <- tclvalue(longVariable) == 1
-        vlong <- tclvalue(vlongVariable) == 1
-        longavg <- tclvalue(longavgVariable) == 1
-        corpusMeasure <- tclvalue(corpusMeasureVariable)
-        measure <- tclvalue(measureVariable)
-
-        closeDialog()
-
-        # Only compute the dtm the first time this operation is run
-        if(!exists("wordsDtm")) {
-            doItAndPrint("dtmCorpus <- corpus")
-
-            # The default tokenizer does not get rid of punctuation *and of line breaks!*, which
-            # get concatenated with surrounding words
-            # This also avoids French articles and dash-linked words from getting concatenated with their noun
-            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, function(x) gsub(\"([\'\U2019\\n]|[[:punct:]])+\", \" \", x))")
-
-            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removeNumbers)")
-            doItAndPrint("wordsDtm <- DocumentTermMatrix(dtmCorpus, control=list(wordLengths=c(2, Inf)))")
-            doItAndPrint("rm(dtmCorpus)")
-        }
-
-        doItAndPrint("voc <- vocabularyTable(dtm, wordsDtm)")
-
-        # Plot
-        if(measure == "percent")
-            measures <- c(FALSE, FALSE, unique, FALSE, hapax, FALSE,
-                          FALSE, long, FALSE, vlong, longavg)
-        else
-            measures <- c(totalt, unique, FALSE, hapax, FALSE, totalw,
-                          long, FALSE, vlong, FALSE, longavg)
-
-        if(any(measures)) {
-            indexes <- paste(which(measures), collapse=", ")
-
-            if(corpusMeasure == "mean")
-                exclude <- sprintf(" -%s", ncol(voc))
-            else if(corpusMeasure == "total")
-                exclude <- sprintf(" -%s", ncol(voc)-1)
-            else
-                exclude <- sprintf(" -c(%s, %s)", ncol(voc)-1, ncol(voc))
-
-            if(sum(measures) > 1)
-                doItAndPrint(sprintf('barchart(t(voc[c(%s),%s, drop=FALSE]), stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="", main="%s", auto.key=list(space="bottom"), ylim=c(0, max(voc[c(%s), %s])*1.1))',
-                                     indexes, exclude, title, indexes, exclude))
-            else
-                doItAndPrint(sprintf('barchart(t(voc[c(%s),%s, drop=FALSE]), stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", ylim=c(0, max(voc[c(%s), %s])*1.1))',
-                                     indexes, exclude, rownames(voc)[measures], title, indexes, exclude))
-        }
-
-        doItAndPrint("print(round(voc, digits=1))")
-
-        # Used by saveTableToOutput()
-        last.table <<- "voc"
-        attr(voc, "title") <<- title
-
-        activateMenus()
-        tkfocus(CommanderWindow())
-    }
-
-
-    OKCancelHelp(helpSubject="docVocabularyDlg")
-    tkgrid(whatFrame, sticky="w", pady=6, padx=6, columnspan=3)
-    tkgrid(labelRcmdr(measureFrame, text=.gettext("Plotting measure:")),
-           measure1, measure2, sticky="w", padx=6)
-    tkgrid(measureFrame, sticky="w", pady=6, columnspan=3)
-    tkgrid(labelRcmdr(titleFrame, text=.gettext("Plot title:")), titleEntry, sticky="w", padx=6)
-    tkgrid(corpusMeasureFrame, sticky="w", pady=6, padx=6, columnspan=3)
-    tkgrid(titleFrame, sticky="w", pady=6, columnspan=3)
-    tkgrid(buttonsFrame, sticky="w", columnspan=3, pady=6)
-    dialogSuffix(rows=5, columns=3)
-}
-
-varVocabularyDlg <- function() {
-    if(ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"]) == 0) {
-        Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
-                type="error")
-        return()
-    }
-
-    initializeDialog(title=.gettext("Vocabulary Summary per Variable"))
-
-    vars <- colnames(meta(corpus))
+    vars <- c(.gettext("Document"), colnames(meta(corpus)))
     varBox <- variableListBox(top, vars,
                               title=.gettext("Variable:"),
                               initialSelection=0)
@@ -253,6 +132,21 @@ varVocabularyDlg <- function() {
                         .gettext("Long words"),
                         .gettext("Very long words"),
                         .gettext("Average word length")))
+
+    onSelectVar <- function() {
+        var <- getSelection(varBox)
+
+        if(var == .gettext("Document")) {
+            tkinvoke(docButton)
+            tkconfigure(globalButton, state="disabled")
+        }
+        else {
+            tkconfigure(globalButton, state="enabled")
+        }
+    }
+
+    tkbind(varBox$listbox, "<<ListboxSelect>>", onSelectVar)
+    onSelectVar()
 
     measureVariable <- tclVar("percent")
     measureFrame <- tkframe(top)
@@ -302,7 +196,10 @@ varVocabularyDlg <- function() {
             doItAndPrint("rm(dtmCorpus)")
         }
 
-        doItAndPrint(sprintf('voc <- vocabularyTable(dtm, wordsDtm, "%s", "%s")', var, unit))
+        if(var == .gettext("Document"))
+            doItAndPrint("voc <- vocabularyTable(dtm, wordsDtm)")
+        else
+            doItAndPrint(sprintf('voc <- vocabularyTable(dtm, wordsDtm, "%s", "%s")', var, unit))
 
         # Plot
         if(measure == "percent")
@@ -342,7 +239,7 @@ varVocabularyDlg <- function() {
         tkfocus(CommanderWindow())
     }
 
-    OKCancelHelp(helpSubject="varVocabularyDlg")
+    OKCancelHelp(helpSubject="vocabularyDlg")
     tkgrid(getFrame(varBox), sticky="w", columnspan=3, pady=6, padx=6)
     tkgrid(unitFrame, sticky="w", columnspan=3, padx=6)
     tkgrid(whatFrame, sticky="w", pady=6, padx=6, columnspan=3)
