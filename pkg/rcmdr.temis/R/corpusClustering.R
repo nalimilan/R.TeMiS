@@ -89,7 +89,7 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
                      "heading")
 
             df <- data.frame(row.names=docs, chisq)
-            colnames(df) <- .gettext("Chi2 distance to cluster average")
+            colnames(df) <- .gettext("Chi2 dist. to centroid")
 
             tkinsert(txt, "end", paste(capture.output(format(df, nsmall=1, digits=2)), collapse="\n"), "fixed")
 
