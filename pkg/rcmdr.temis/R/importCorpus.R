@@ -99,7 +99,7 @@ importCorpusDlg <- function() {
         if(stemming)
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, stemDocument)")
 
-        if(lowercase || punctuation || numbers || stopwords || stemming) {
+        if(twitter || lowercase || punctuation || numbers || stopwords || stemming) {
             doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus)")
             doItAndPrint("rm(dtmCorpus)")
         }
