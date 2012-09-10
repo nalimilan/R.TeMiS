@@ -227,6 +227,14 @@ corpusClustDlg <- function() {
             }
 
             doItAndPrint('chisqDist <- dist(sweep(clustDtm/row_sums(clustDtm), 2, sqrt(col_sums(clustDtm)/sum(clustDtm)), "/"))')
+
+            # Memory allocation can fail here, so avoid stacking errors
+            if(!exists("chisqDist")) {
+                doItAndPrint("rm(clustDtm)")
+                .setIdleCursor()
+                return()
+            }
+
             doItAndPrint('corpusClust <- hclust(chisqDist, method="ward")')
             # Used by createClustersDialog() and showCorpusClust() to recreate the dtm
             doItAndPrint(sprintf('attr(corpusClust, "sparsity") <- %s', sparsity))
@@ -235,6 +243,13 @@ corpusClustDlg <- function() {
         }
         else {
             doItAndPrint('chisqDist <- dist(sweep(dtm/row_sums(dtm), 2, sqrt(col_sums(dtm)/sum(dtm)), "/"))')
+
+            # Memory allocation can fail here, so avoid stacking errors
+            if(!exists("chisqDist")) {
+                .setIdleCursor()
+                return()
+            }
+
             doItAndPrint('corpusClust <- hclust(chisqDist, method="ward")')
             doItAndPrint("rm(chisqDist)")
         }
