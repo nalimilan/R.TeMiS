@@ -240,17 +240,22 @@ corpusClustDlg <- function() {
         }
 
         # Do not plot all leafs if there are too many of them (can even crash!)
-        height <- floor(rev(corpusClust$height)[500] * 1e4)/1e4
-        if(length(corpusClust$labels) > 500 && height > 0)
+        if(length(corpusClust$labels) > 500) {
+            # If 500th is already at 0, cutting there won't have any effect,
+            # so take the last non-0 height in the 1:500 range
+            revList <- rev(corpusClust$height)[1:500]
+            height <- floor(tail(revList[revList > sqrt(.Machine$double.eps)], 1) * 1e4)/1e4
             doItAndPrint(sprintf('plot(cut(as.dendrogram(corpusClust), h=%s)$upper, leaflab="none", ylab="%s", main="%s")',
                                  height,
                                  .gettext("Within-cluster variance"),
                                  .gettext("Upper part of documents dendrogram")))
-        else
+        }
+        else {
             doItAndPrint(sprintf('plot(as.dendrogram(corpusClust), nodePar=list(pch=NA, lab.cex=0.8), %sylab="%s", main="%s")',
                                  if(length(corpus) > 20) 'leaflab="none", ' else "",
                                  .gettext("Within-cluster variance"),
                                  .gettext("Full documents dendrogram")))
+        }
 
         # For the Create clusters item
         activateMenus()
