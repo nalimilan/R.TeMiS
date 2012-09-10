@@ -253,8 +253,7 @@ importCorpusFromFile <- function(language=NA) {
             fil <- paste("[", fil, "$]", sep = "")
 
         # Retrieve the data
-        command <- paste("sqlQuery(channel=channel, select * from ", fil,")",
-        	         sep = "")
+        command <- sprintf('sqlQuery(channel=channel, "select * from %s")', fil)
         doItAndPrint(paste("corpusDataset <- ", command, sep = ""))
         doItAndPrint("odbcCloseAll()")
     }
