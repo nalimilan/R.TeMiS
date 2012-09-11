@@ -152,16 +152,17 @@ importCorpusFromDir <- function(language=NA) {
 
 # Choose a CSV file to load texts and variables from
 importCorpusFromFile <- function(language=NA) {
-    file <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.csv .CSV}} {{%s} {.tsv .TSV}} {{%s} {.dbf .DBF}} {{%s} {.ods .ODS}} {{%s} {.xls .XLS}} {{%s} {.xlsx .XLSX}} {{%s} {.mdb .MDB}} {{%s} {.accdb .ACCDB}} {{%s} {.csv .CSV .tsv .TSV .dbf .DBF .ods .ODS .xls .XLS .xlsx .XLSX .mdb .MDB .accdb .ACCDB}}",
-                                                     .gettext("CSV file"),
-                                                     .gettext("TSV file"),
+    file <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.csv .CSV .tsv .TSV .dbf .DBF .ods .ODS .xls .XLS .xlsx .XLSX .mdb .MDB .accdb .ACCDB}} {{%s} {.csv .CSV}} {{%s} {.tsv .txt .dat .TSV .TXT .DAT}} {{%s} {.dbf .DBF}} {{%s} {.ods .ODS}} {{%s} {.xls .XLS}} {{%s} {.xlsx .XLSX}} {{%s} {.mdb .MDB}} {{%s} {.accdb .ACCDB}} {{%s} {*}}",
+                                                     .gettext("All supported types"),
+                                                     .gettext("Comma-separated values (CSV) file"),
+                                                     .gettext("Tab-separated values (TSV) file"),
                                                      .gettext("dBase file"),
-                                                     .gettext("ODS file"),
+                                                     .gettext("Open Document Spreadsheet file"),
                                                      .gettext("Excel file"),
                                                      .gettext("Excel 2007 file"),
                                                      .gettext("Access database"),
                                                      .gettext("Access 2007 database"),
-                                                     .gettext("All supported types")),
+                                                     .gettext("All files")),
                                    parent=CommanderWindow()))
 
     if (file == "") return(FALSE)
@@ -176,8 +177,8 @@ importCorpusFromFile <- function(language=NA) {
     if(ext == "csv") {
         doItAndPrint(paste("corpusDataset <- read.csv(\"", file, "\")", sep=""))
     }
-    else if(ext == "tsv") {
-        doItAndPrint(paste("corpusDataset <- read.tsv(\"", file, "\")", sep=""))
+    else if(ext %in% c("tsv", "txt", "dat")) {
+        doItAndPrint(paste("corpusDataset <- read.delim(\"", file, "\")", sep=""))
     }
     else if(ext == "dbf") {
         Library(foreign)
@@ -202,7 +203,7 @@ importCorpusFromFile <- function(language=NA) {
 
         doItAndPrint(paste("corpusDataset <- read.ods(\"", file, "\")", sep=""))
     }
-    else {
+    else if(ext %in% c("xls", "xlsx", "mdb", "accdb")) {
         if(.Platform$OS.type != "windows") {
 	    Message(.gettext("Loading Excel and Access files is only supported on Windows.\nYou should save your data set as a CSV file or as an OpenDocument spreadsheet (.ods)."),
                     type="error")
@@ -257,6 +258,10 @@ importCorpusFromFile <- function(language=NA) {
         doItAndPrint(paste("corpusDataset <- ", command, sep = ""))
         doItAndPrint("odbcCloseAll()")
     }
+    else {
+        Message(.gettext("File has unknown extension, assuming it is in the tab-separated values format."), "warning")
+        doItAndPrint(paste("corpusDataset <- read.delim(\"", file, "\")", sep=""))
+    }
 
     # In case something went wrong, no point in continuing
     if(is.null(corpusDataset))
@@ -289,8 +294,9 @@ importCorpusFromFactiva <- function(language=NA) {
                          .gettext("The tm.plugin.factiva package is needed to import corpora from Factiva files.\nDo you want to install it?")))
         return(FALSE)
 
-    filestr <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.xml .htm .html .aspx .XML .HTM .HTML .ASPX}}",
-                                                        .gettext("Factiva XML and HTML files")),
+    filestr <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.xml .htm .html .aspx .XML .HTM .HTML .ASPX}} {{%s} {*}}",
+                                                        .gettext("Factiva XML and HTML files"),
+                                                        .gettext("All files")),
                                       multiple=TRUE,
                                       parent=CommanderWindow()))
 
