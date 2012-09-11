@@ -19,9 +19,11 @@
 
          The second source, \dQuote{Spreadsheet file}, creates one document for each row
          of a file containg tabular data, typically an Excel (.xls) or Open Document
-         Spreadsheet (.ods), CSV (.csv) or TSV (.tsv) file. The first column is taken as
-         the contents of the document, while the remaining columns are added as variables
-         describing each document.
+         Spreadsheet (.ods), comma-separated values (.csv) or tab-separated values (.tsv, .txt,
+         .dat) file. The first column is taken as the contents of the document, while the
+         remaining columns are added as variables describing each document. For the CSV format,
+         \dQuote{,} or \dQuote{;} is used as separator, whichever is the most frequent in the
+         50 first lines of the file.
 
          The third source, \dQuote{Factiva XML file}, loads articles exported from
          the Dow Jones Factiva website in the \acronym{XML} or \acronym{HTML} formats (the former

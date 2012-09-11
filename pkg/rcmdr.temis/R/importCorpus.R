@@ -175,7 +175,16 @@ importCorpusFromFile <- function(language=NA) {
     ext <- tolower(substring(file, nchar(file) - sop + 2, nchar(file)))
 
     if(ext == "csv") {
-        doItAndPrint(paste("corpusDataset <- read.csv(\"", file, "\")", sep=""))
+        # Try to guess the separator from the most common character of ; and ,
+        # This should work in all cases where text is not too long
+        excerpt <- readLines(file, 50)
+        n1 <- sum(sapply(gregexpr(",", excerpt), length))
+        n2 <- sum(sapply(gregexpr(";", excerpt), length))
+
+        if(n1 > n2)
+            doItAndPrint(paste("corpusDataset <- read.csv(\"", file, "\")", sep=""))
+        else
+            doItAndPrint(paste("corpusDataset <- read.csv2(\"", file, "\")", sep=""))
     }
     else if(ext %in% c("tsv", "txt", "dat")) {
         doItAndPrint(paste("corpusDataset <- read.delim(\"", file, "\")", sep=""))
