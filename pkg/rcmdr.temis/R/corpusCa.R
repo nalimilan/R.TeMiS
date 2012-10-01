@@ -183,6 +183,8 @@ corpusCaDlg <- function() {
 
         .setIdleCursor()
         tkfocus(CommanderWindow())
+
+        showCorpusCaDlg()
     }
 
     OKCancelHelp(helpSubject=corpusCaDlg)

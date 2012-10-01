@@ -270,6 +270,8 @@ corpusClustDlg <- function() {
 
         .setIdleCursor()
         tkfocus(CommanderWindow())
+
+        createClustersDlg()
     }
 
     OKCancelHelp(helpSubject="corpusClustDlg")
