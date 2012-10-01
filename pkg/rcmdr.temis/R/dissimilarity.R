@@ -55,6 +55,7 @@ dissimilarityTableDlg <- function() {
 
         closeDialog()
         .setBusyCursor()
+        on.exit(.setIdleCursor())
 
         if(var1 == var2) {
             if(var1 == .gettext("Document")) {
@@ -100,7 +101,6 @@ dissimilarityTableDlg <- function() {
 
         activateMenus()
 
-        .setIdleCursor()
         tkfocus(CommanderWindow())
     }
 

@@ -100,6 +100,7 @@ termsAssocDlg <- function() {
         closeDialog()
 
         .setBusyCursor()
+        on.exit(.setIdleCursor())
 
         if(var == .gettext("None (whole corpus)")) {
             for(term in termsList) {
@@ -131,7 +132,6 @@ termsAssocDlg <- function() {
            attr(termsAssoc, "title") <<- title
 
 
-        .setIdleCursor()
         activateMenus()
         tkfocus(CommanderWindow())
     }

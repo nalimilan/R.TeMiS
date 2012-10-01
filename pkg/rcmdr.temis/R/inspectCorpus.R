@@ -1,5 +1,6 @@
 inspectCorpus <- function() {
     .setBusyCursor()
+    on.exit(.setIdleCursor())
 
     objects <- .getCorpusWindow()
     window <- objects$window
@@ -42,7 +43,6 @@ inspectCorpus <- function() {
         tkinsert(txt, "end", paste(paste(corpus[[id]], collapse="\n"), "\n\n"))
     }
 
-    .setIdleCursor()
     # Only raise the window when we're done, as filling it may take some time
     tkraise(window)
 }

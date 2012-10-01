@@ -99,10 +99,10 @@ if (getRversion() >= '2.15.1') globalVariables(c(
 
             if (tclvalue(msgbox()) == "yes") {
                 .setBusyCursor()
+                on.exit(.setIdleCursor())
 
                 if(package %in% available.packages()[,1]) {
                     install.packages(package)
-                    .setIdleCursor()
                     return(TRUE)
                 }
                 else {
@@ -111,7 +111,6 @@ if (getRversion() >= '2.15.1') globalVariables(c(
                 }
             }
 
-        .setIdleCursor()
         return(FALSE)
     }
 

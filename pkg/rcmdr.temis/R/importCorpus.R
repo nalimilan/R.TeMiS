@@ -112,7 +112,6 @@ importCorpusDlg <- function() {
 
         activateMenus()
 
-        .setIdleCursor()
         tkfocus(CommanderWindow())
     }
 
@@ -134,8 +133,6 @@ importCorpusFromDir <- function(language=NA) {
     dir <- tclvalue(tkchooseDirectory(initialdir=getwd(),
                                       parent=CommanderWindow()))
     if (dir == "") return(FALSE)
-
-    .setBusyCursor()
 
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
@@ -276,8 +273,6 @@ importCorpusFromFile <- function(language=NA) {
     if(is.null(corpusDataset))
         return(FALSE)
 
-    .setBusyCursor()
-
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
 
@@ -311,8 +306,6 @@ importCorpusFromFactiva <- function(language=NA) {
 
     if (filestr == "") return(FALSE)
 
-    .setBusyCursor()
-
     # tkgetOpenFile() is terrible: if path contains a space, file paths are surrounded by {}
     # If no spaces are present, they are not, but in both cases the separator is a space
     if(substr(filestr, 0, 1) == "{")
@@ -332,8 +325,6 @@ importCorpusFromFactiva <- function(language=NA) {
     if(!exists("corpus") || length(corpus) == 0) {
         Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
                 type="error")
-
-        .setIdleCursor()
 
         return(FALSE)
     }
@@ -411,8 +402,6 @@ importCorpusFromTwitter <- function(language=NA) {
         }
 
         closeDialog()
-        .setBusyCursor()
-        on.exit(.setIdleCursor())
 
         # In case something goes wrong
         tclvalue(result) <- "error"

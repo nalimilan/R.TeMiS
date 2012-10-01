@@ -1,5 +1,6 @@
 showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
     .setBusyCursor()
+    on.exit(.setIdleCursor())
 
     objects <- .getCorpusWindow()
     window <- objects$window
@@ -163,8 +164,6 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
                                    collapse="\n"), "fixed")
     }
 
-    .setIdleCursor()
-
     # Only raise the window when we're done, as filling it may take some time
     tkraise(window)
 }
@@ -202,6 +201,7 @@ corpusClustDlg <- function() {
         closeDialog()
 
         .setBusyCursor()
+        on.exit(.setIdleCursor())
 
         sparsity <- as.numeric(tclvalue(tclSparsity))/100
 
@@ -224,7 +224,6 @@ corpusClustDlg <- function() {
             # Memory allocation can fail here, so avoid stacking errors
             if(!exists("chisqDist")) {
                 doItAndPrint("rm(clustDtm)")
-                .setIdleCursor()
                 return()
             }
 
@@ -238,10 +237,8 @@ corpusClustDlg <- function() {
             doItAndPrint('chisqDist <- dist(sweep(dtm/row_sums(dtm), 2, sqrt(col_sums(dtm)/sum(dtm)), "/"))')
 
             # Memory allocation can fail here, so avoid stacking errors
-            if(!exists("chisqDist")) {
-                .setIdleCursor()
+            if(!exists("chisqDist"))
                 return()
-            }
 
             doItAndPrint('corpusClust <- hclust(chisqDist, method="ward")')
             doItAndPrint("rm(chisqDist)")
@@ -268,7 +265,6 @@ corpusClustDlg <- function() {
         # For the Create clusters item
         activateMenus()
 
-        .setIdleCursor()
         tkfocus(CommanderWindow())
 
         createClustersDlg()
@@ -310,6 +306,7 @@ createClustersDlg <- function() {
         closeDialog()
 
         .setBusyCursor()
+        on.exit(.setIdleCursor())
 
         nclust <- as.numeric(tclvalue(tclNClust))
         ndocs <- as.numeric(tclvalue(tclNDocs))
@@ -352,7 +349,6 @@ createClustersDlg <- function() {
         doItAndPrint(sprintf("showCorpusClustering(corpusSubClust, %i, %i)", ndocs, nterms))
         doItAndPrint("rm(clusters)")
 
-        .setIdleCursor()
         tkfocus(CommanderWindow())
     }
 
