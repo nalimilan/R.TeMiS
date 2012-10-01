@@ -26,7 +26,7 @@
 
 ## Documents menu ##
     menu        docMenu         tmMenu            ""                                 ""                          ""                    ""
-    item        tmMenu	        cascade           "Documents"                        docMenu                     ""                    ""
+    item        tmMenu	        cascade           "Distribution of documents"        docMenu                     ""                    ""
 
     item        docMenu         command           "One-way table..."                 varTableDlg                 "exists('corpus') && 'Corpus' %in% class(corpus)"                    ""
     item        docMenu         command           "Two-way table..."                 varCrossTableDlg            "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
@@ -62,8 +62,8 @@
 
 ### Correspondence analysis menu ###
     menu        caMenu          tmMenu            ""                                 ""                          ""                    ""
-    item        caMenu          command           "Run correspondence analysis..."   corpusCaDlg                 "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
-    item        caMenu          command           "Show correspondence analysis..."  showCorpusCaDlg             "exists('corpusCa') && class(corpusCa) == 'ca'"                    ""
+    item        caMenu          command           "Run analysis..."                  corpusCaDlg                 "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
+    item        caMenu          command           "Show results..."                  showCorpusCaDlg             "exists('corpusCa') && class(corpusCa) == 'ca'"                    ""
     item        tmMenu	        cascade           "Correspondence analysis"          caMenu                      ""                    ""
 
 
