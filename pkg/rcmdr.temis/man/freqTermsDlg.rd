@@ -9,4 +9,4 @@
 }
 
 \seealso{\code{\link{DocumentTermMatrix}}, \code{\link{restrictTermsDlg}}, \code{\link{listTerms}},
-         \code{\link{termsAssocDlg}} }
+         \code{\link{termsCoocDlg}} }

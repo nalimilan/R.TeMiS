@@ -10,5 +10,5 @@
          computing a correspondence analysis. They are not removed from the corpus's documents.
 }
 
-\seealso{\code{\link{findAssocs}}, \code{\link{DocumentTermMatrix}},
+\seealso{\code{\link{DocumentTermMatrix}},
          \code{\link{listTerms}}, \code{\link{freqTermsDlg}} }

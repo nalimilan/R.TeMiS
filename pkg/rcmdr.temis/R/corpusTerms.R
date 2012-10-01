@@ -53,19 +53,41 @@ freqTermsDlg <- function() {
     dialogSuffix(rows=3, columns=2)
 }
 
-termsAssocDlg <- function() {
+termChisqDist <- function(term, dtm, n=5, variable=NULL) {
+    if(!term %in% colnames(dtm))
+         stop("'term' is not present in 'dtm'")
+
+    dev <- sweep(as.matrix(dtm)/col_sums(dtm), 1,
+                 as.matrix(dtm[, term])/sum(dtm[, term]), "-")
+    chisq <- sweep(dev^2, 1, row_sums(dtm)/sum(dtm), "/")
+
+    # na.rm=TRUE is here because some empty documents might exist, even if it's useless
+    if(is.null(variable)) {
+        head(sort(colSums(chisq, na.rm=TRUE)), n)
+    }
+    else {
+        sapply(levels(factor(variable)), function(l) {
+            if(sum(dtm[variable == l, term]) == 0)
+                NA
+            else
+                head(sort(colSums(chisq[variable == l, , drop=FALSE], na.rm=TRUE)), n)
+        })
+    }
+}
+
+termsCoocDlg <- function() {
     if(!(exists("dtm") && class(dtm) == "DocumentTermMatrix")) {
         Message(message=.gettext("Please import a corpus and create the document-term matrix first."),
                 type="error")
         return()
     }
 
-    initializeDialog(title=.gettext("Show Associated Terms"))
+    initializeDialog(title=.gettext("Show Terms Co-occurrences"))
 
     tclTerms <- tclVar("")
     entryTerms <- ttkentry(top,  width="35", textvariable=tclTerms)
 
-    tclN <- tclVar(30)
+    tclN <- tclVar(10)
     sliderN <- tkscale(top, from=0, to=100,
                        showvalue=TRUE, variable=tclN,
 	               resolution=1, orient="horizontal")
@@ -103,43 +125,49 @@ termsAssocDlg <- function() {
         on.exit(.setIdleCursor())
 
         if(var == .gettext("None (whole corpus)")) {
-            for(term in termsList) {
-                doItAndPrint(sprintf('termsAssoc <- findAssocs(dtm, "%s", %s)', term, n/100))
-                doItAndPrint("print(termsAssoc)")
-            }
+            if(length(termsList) == 1)
+                doItAndPrint(sprintf('coocs <- termChisqDist("%s", dtm, %i)', termsList, n))
+            else
+                doItAndPrint(sprintf('coocs <- sapply(c("%s"), termChisqDist, dtm, %i, simplify=FALSE)',
+                                     paste(termsList, collapse='", "'), n))
+
+            doItAndPrint("coocs")
         }
         else {
-            for(term in termsList) {
-                doItAndPrint(sprintf('termsAssoc <- sapply(levels(factor(meta(corpus, "%s")[[1]])), function(l)\nfindAssocs(dtm[meta(corpus, "%s")[[1]] == l,], "%s", %s))',
-                                     var, var, term, n/100))
-                doItAndPrint("print(termsAssoc)")
-            }
+            if(length(termsList) == 1)
+                doItAndPrint(sprintf('coocs <- termChisqDist("%s", dtm, %i, meta(corpus, "%s")[[1]])',
+                                     termsList, n, var))
+            else
+                doItAndPrint(sprintf('coocs <- sapply(c("%s"), termChisqDist, dtm, %i, meta(corpus, "%s")[[1]], simplify=FALSE)',
+                                     paste(termsList, collapse='", "'), n, var))
+
+            doItAndPrint("coocs")
         }
 
         # Used by saveTableToOutput()
-        last.table <<- "termsAssoc"
+        last.table <<- "coocs"
         title <- sprintf(.ngettext(length(termsList),
-                                   "Terms associated with term \"%s\" at more than %s%%",
-                                   "Terms associated with terms \"%s\" at more than %s%%"),
+                                   "Terms associated with term \"%s\" according to Chi-squared distance",
+                                   "Terms associated with terms \"%s\" according to Chi-squared distance"),
                          # TRANSLATORS: this should be opening quote, comma, closing quote
                          paste(termsList, collapse=.gettext("\", \"")), n)
 
        if(var != .gettext("None (whole corpus)"))
-           attr(termsAssoc, "title") <<- paste(title, sprintf(.gettext("(for %s)"),
+           attr(coocs, "title") <<- paste(title, sprintf(.gettext("(for %s)"),
                                                               paste(levels(factor(meta(corpus, var)[[1]])),
                                                                     collapse=", ")))
        else
-           attr(termsAssoc, "title") <<- title
+           attr(coocs, "title") <<- title
 
 
         activateMenus()
         tkfocus(CommanderWindow())
     }
 
-    OKCancelHelp(helpSubject="termsAssocDlg")
+    OKCancelHelp(helpSubject="termsCoocDlg")
     tkgrid(labelRcmdr(top, text=.gettext("Reference terms (space-separated):")), sticky="w")
     tkgrid(entryTerms, sticky="w", columnspan=2)
-    tkgrid(labelRcmdr(top, text=.gettext("Correlation coefficient (%):")), sliderN, sticky="sw", pady=6)
+    tkgrid(labelRcmdr(top, text=.gettext("Number of terms to show:")), sliderN, sticky="sw", pady=6)
     tkgrid(getFrame(varBox), columnspan="2", sticky="w", pady=6)
     tkgrid(buttonsFrame, columnspan=2, sticky="w", pady=6)
     dialogSuffix(rows=5, columns=2, focus=entryTerms)

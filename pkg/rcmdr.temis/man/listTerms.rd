@@ -10,4 +10,4 @@
          ->Terms->Exclude terms from analysis... menu.
 }
 \seealso{\code{\link{DocumentTermMatrix}}, \code{\link{restrictTermsDlg}}, \code{\link{freqTermsDlg}},
-         \code{\link{termsAssocDlg}} }
+         \code{\link{termsCoocDlg}} }
