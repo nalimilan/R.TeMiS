@@ -42,7 +42,7 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
 
     if(nterms > 0) {
         # Get most contributive terms for each cluster
-        # Same code as in typicalTermsDlg()
+        # Same code as in specificTermsDlg()
         expected <- row_sums(clusterDtm) %o% col_sums(clusterDtm)/sum(clusterDtm)
         chisq <- sign(as.matrix(clusterDtm - expected)) *  as.matrix((clusterDtm - expected)^2/expected)
         termsCtr <- sapply(rownames(clusterDtm), simplify=FALSE, USE.NAMES=TRUE, function(x)
@@ -55,7 +55,7 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
     for(j in 1:ncol(val)) {
         if(nterms > 0) {
             tkinsert(txt, "end",
-                     paste("\n\n", sprintf(.gettext("Terms most typical of cluster %i:"), j), "\n", sep=""),
+                     paste("\n\n", sprintf(.gettext("Terms specific of cluster %i:"), j), "\n", sep=""),
                      "heading")
             tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
             tkinsert(listbox, "end", sprintf(.gettext("Cluster %i:"), j))
@@ -86,7 +86,7 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
             docs <- names(chisq)
 
             tkinsert(txt, "end",
-                     paste("\n\n", sprintf(.gettext("Documents most typical of cluster %i:"), j), "\n", sep=""),
+                     paste("\n\n", sprintf(.gettext("Documents specific of cluster %i:"), j), "\n", sep=""),
                      "heading")
 
             df <- data.frame(row.names=docs, chisq)
@@ -368,9 +368,9 @@ createClustersDlg <- function() {
            sticky="sw", pady=c(0, 6), padx=c(6, 0))
     tkgrid(labelRcmdr(top, text=.gettext("Number of items to show (for each cluster):"), foreground="blue"),
            sticky="sw", pady=c(24, 0))
-    tkgrid(labelRcmdr(top, text=.gettext("Most typical documents:")), sliderNDocs,
+    tkgrid(labelRcmdr(top, text=.gettext("Specific documents:")), sliderNDocs,
            sticky="sw", pady=c(0, 6), padx=c(6, 0))
-    tkgrid(labelRcmdr(top, text=.gettext("Most typical terms:")), sliderNTerms,
+    tkgrid(labelRcmdr(top, text=.gettext("Specific terms:")), sliderNTerms,
            sticky="sw", pady=6, padx=c(6, 0))
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
     dialogSuffix(rows=5, columns=2)

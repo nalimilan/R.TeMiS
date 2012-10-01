@@ -12,8 +12,8 @@
          Clusters will be created by starting from the top of the dendrogram, and going through
          the merge points with the highest position until the requested number of branches is reached.
 
-         A window opens to summarize created clusters, providing information about most typical documents
-         and terms for each cluster. Most typical terms are those with the highest Chi-squared statistic
+         A window opens to summarize created clusters, providing information about specific documents
+         and terms for each cluster. Specific terms are those with the highest Chi-squared statistic
          in the document-term matrix collapsed so that the rows contain for each term the sum of its
          occurrences in the cluster's documents. Thus, the Chi-squared value reflects the deviation of the
          term from what would be expected if vocabulary was homogeneous accross all clusters. Terms that are
@@ -24,7 +24,7 @@
          term in the cluster, i.e. the share of occurrences that appear in the considered cluster on the total
          number of occurrences of the term.
 
-         Most typical documents are selected using a different criterion than terms: documents with the smaller
+         Specific documents are selected using a different criterion than terms: documents with the smaller
          Chi-squared distance to the average vocabulary of the cluster are shown. This is a euclidean distance,
          but weighted by the inverse of the prevalence of each term in the whole corpus, and controlling for
          the documents' different lengths.

@@ -145,14 +145,14 @@ termsAssocDlg <- function() {
     dialogSuffix(rows=5, columns=2, focus=entryTerms)
 }
 
-typicalTermsDlg <- function() {
+specificTermsDlg <- function() {
     if(!(exists("dtm") && class(dtm) == "DocumentTermMatrix")) {
         Message(message=.gettext("Please import a corpus and create the document-term matrix first."),
                 type="error")
         return()
     }
 
-    initializeDialog(title=.gettext("Show Most Typical Terms"))
+    initializeDialog(title=.gettext("Show Specific Terms"))
     tclN <- tclVar(10)
     sliderN <- tkscale(top, from=1, to=100,
                        showvalue=TRUE, variable=tclN,
@@ -160,7 +160,7 @@ typicalTermsDlg <- function() {
 
     vars <- c(.gettext("Document"), colnames(meta(corpus)))
     varBox <- variableListBox(top, vars,
-                              title=.gettext("Report results by variable:"),
+                              title=.gettext("Specific of levels of variable:"),
                               initialSelection=0)
 
     onOK <- function() {
@@ -171,32 +171,32 @@ typicalTermsDlg <- function() {
         if(var == .gettext("Document")) {
             doItAndPrint("expected <- row_sums(dtm) %o% col_sums(dtm)/sum(dtm)")
             doItAndPrint("chisq <- sign(as.matrix(dtm - expected)) *  as.matrix((dtm - expected)^2/expected)")
-            doItAndPrint(sprintf("typicalTerms <- sapply(rownames(dtm), simplify=FALSE, USE.NAMES=TRUE, function(x) round(chisq[x,order(abs(chisq[x,]), decreasing=TRUE)[1:%i]]))", n))
+            doItAndPrint(sprintf("specificTerms <- sapply(rownames(dtm), simplify=FALSE, USE.NAMES=TRUE, function(x) round(chisq[x,order(abs(chisq[x,]), decreasing=TRUE)[1:%i]]))", n))
             doItAndPrint("rm(expected, chisq)")
         }
         else {
-            doItAndPrint(sprintf('typicalDtm <- rollup(dtm, 1, meta(corpus, "%s"))', var))
-            doItAndPrint("expected <- row_sums(typicalDtm) %o% col_sums(typicalDtm)/sum(typicalDtm)")
-            doItAndPrint("chisq <- sign(as.matrix(typicalDtm - expected)) *  as.matrix((typicalDtm - expected)^2/expected)")
-            doItAndPrint(sprintf("typicalTerms <- sapply(rownames(typicalDtm), simplify=FALSE, USE.NAMES=TRUE, function(x) round(chisq[x,order(abs(chisq[x,]), decreasing=TRUE)[1:%i]]))", n))
-            doItAndPrint("rm(typicalDtm, expected, chisq)")
+            doItAndPrint(sprintf('specificDtm <- rollup(dtm, 1, meta(corpus, "%s"))', var))
+            doItAndPrint("expected <- row_sums(specificDtm) %o% col_sums(specificDtm)/sum(specificDtm)")
+            doItAndPrint("chisq <- sign(as.matrix(specificDtm - expected)) *  as.matrix((specificDtm - expected)^2/expected)")
+            doItAndPrint(sprintf("specificTerms <- sapply(rownames(specificDtm), simplify=FALSE, USE.NAMES=TRUE, function(x) round(chisq[x,order(abs(chisq[x,]), decreasing=TRUE)[1:%i]]))", n))
+            doItAndPrint("rm(specificDtm, expected, chisq)")
         }
 
-        doItAndPrint("typicalTerms")
+        doItAndPrint("specificTerms")
 
         # Used by saveTableToOutput()
-        last.table <<- "typicalTerms"
+        last.table <<- "specificTerms"
         if(var == .gettext("Document"))
-            attr(typicalTerms, "title") <<- .gettext("Most typical terms Document")
+            attr(specificTerms, "title") <<- .gettext("Most specific terms by document")
         else
-            attr(typicalTerms, "title") <<- sprintf(.gettext("Most typical terms by %s"), var)
+            attr(specificTerms, "title") <<- sprintf(.gettext("Most specific terms by %s"), var)
 
         activateMenus()
 
         tkfocus(CommanderWindow())
     }
 
-    OKCancelHelp(helpSubject="typicalTermsDlg")
+    OKCancelHelp(helpSubject="specificTermsDlg")
     tkgrid(labelRcmdr(top, text=.gettext("Number of terms to show:")), sliderN,
            sticky="sw", pady=6)
     tkgrid(getFrame(varBox), columnspan="2", sticky="w", pady=6)

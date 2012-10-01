@@ -76,7 +76,7 @@ subsetCorpusByVarDlg <- function() {
 
         # Remove objects left from a previous analysis on the old corpus to avoid confusion
         # (we assume later existing objects match the current corpus)
-        objects <- c("keep", "voc", "lengths", "termFreqs", "absTermFreqs", "varTermFreqs", "freqTerms", "typicalTerms",
+        objects <- c("keep", "voc", "lengths", "termFreqs", "absTermFreqs", "varTermFreqs", "freqTerms", "specificTerms",
                      "corpusClust", "corpusSubClust", "corpusCa", "plottingCa")
         doItAndPrint(paste('rm(list=c("', paste(objects[sapply(objects, exists)], collapse='", "'), '"))', sep=""))
         gc()

@@ -39,10 +39,10 @@
 
     item        termMenu        command           "List all terms"                   listTerms                   "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        termMenu        command           "Most frequent terms..."           freqTermsDlg                "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu        command           "Most typical terms..."            typicalTermsDlg             "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu        command           "Frequencies of specific terms..."  termFreqDlg                "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu        command           "Cooccurrence of specific terms..." termsAssocDlg              "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu        command           "Temporal evolution of specific terms..." termTimeSeriesDlg    "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                       ""
+    item        termMenu        command           "Terms specific of levels..."      specificTermsDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        termMenu        command           "Frequencies of particular terms..." termFreqDlg               "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        termMenu        command           "Cooccurrence of particular terms..." termsAssocDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        termMenu        command           "Temporal evolution of particular terms..." termTimeSeriesDlg  "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                       ""
 
 
 ### Analyse vocabulary menu ###

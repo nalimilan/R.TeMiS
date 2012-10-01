@@ -11,7 +11,7 @@ if (getRversion() >= '2.15.1') globalVariables(c(
     "varLabelsVariable", "docPointsVariable", "termPointsVariable",
     "varPointsVariable", "labelsFrame", "pointsFrame",
     "preventDoubleClick", "termFreqs", "termSeries",
-    "termsAssoc", "typicalTerms", "varFreqs", "docSeries", "docButton",
+    "termsAssoc", "specificTerms", "varFreqs", "docSeries", "docButton",
     "globalButton", "unitVariable", "totaltVariable", "uniqueVariable",
     "hapaxVariable", "totalwVariable", "longVariable", "vlongVariable",
     "longavgVariable", "voc", "unitFrame"
