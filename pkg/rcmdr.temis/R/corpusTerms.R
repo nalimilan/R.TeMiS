@@ -215,9 +215,9 @@ specificTermsDlg <- function() {
         # Used by saveTableToOutput()
         last.table <<- "specificTerms"
         if(var == .gettext("Document"))
-            attr(specificTerms, "title") <<- .gettext("Most specific terms by document")
+            attr(specificTerms, "title") <<- .gettext("Specific terms by document")
         else
-            attr(specificTerms, "title") <<- sprintf(.gettext("Most specific terms by %s"), var)
+            attr(specificTerms, "title") <<- sprintf(.gettext("Specific terms by %s"), var)
 
         activateMenus()
 
@@ -288,7 +288,7 @@ restrictTermsDlg <- function() {
 }
 
 termFreqDlg <- function() {
-    initializeDialog(title=.gettext("Frequency of Specific Terms"))
+    initializeDialog(title=.gettext("Term Frequencies"))
 
     tclTerms <- tclVar("")
     entryTerms <- ttkentry(top, width="30", textvariable=tclTerms)

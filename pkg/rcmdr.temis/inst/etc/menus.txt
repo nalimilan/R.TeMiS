@@ -40,9 +40,9 @@
     item        termMenu        command           "List all terms"                   listTerms                   "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        termMenu        command           "Most frequent terms..."           freqTermsDlg                "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        termMenu        command           "Terms specific of levels..."      specificTermsDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu        command           "Frequencies of particular terms..." termFreqDlg               "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu        command           "Cooccurrence of particular terms..." termsCoocDlg             "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu        command           "Temporal evolution of particular terms..." termTimeSeriesDlg  "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                       ""
+    item        termMenu        command           "Term frequencies..."              termFreqDlg               "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        termMenu        command           "Term co-occurrences..."           termsCoocDlg             "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        termMenu        command           "Temporal evolution of terms..."   termTimeSeriesDlg  "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                       ""
 
 
 ### Analyse vocabulary menu ###
@@ -63,7 +63,7 @@
 ### Correspondence analysis menu ###
     menu        caMenu          tmMenu            ""                                 ""                          ""                    ""
     item        caMenu          command           "Run analysis..."                  corpusCaDlg                 "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
-    item        caMenu          command           "Show results..."                  showCorpusCaDlg             "exists('corpusCa') && class(corpusCa) == 'ca'"                    ""
+    item        caMenu          command           "Show analysis results..."         showCorpusCaDlg             "exists('corpusCa') && class(corpusCa) == 'ca'"                    ""
     item        tmMenu	        cascade           "Correspondence analysis"          caMenu                      ""                    ""
 
 
