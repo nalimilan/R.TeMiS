@@ -2,17 +2,21 @@
 \alias{runCorpusCa}
 \title{Correspondence analysis from a tm corpus}
 \description{Compute a simple correspondence analysis on the document-term matrix of a tm corpus.}
-\usage{runCorpusCa(corpus, sparsity = 0.9, ...)}
+\usage{runCorpusCa(corpus, variables = NULL, sparsity = 0.9, ...)}
 \details{The function \code{runCorpusCa} runs a correspondence analysis (CA) on the
          document-term matrix that can be extracted from a \pkg{tm} corpus by calling
          the \code{\link{DocumentTermMatrix}} function, or directly from the \code{dtm}
          object if present.
 
-         Before calling \code{\link{ca}} on the matrix, the function adds meta-data
-         variables as supplementary (passive) rows, creating dummy variables for all
-         levels of all meta-data of the corpus; more precisely, these passive rows
-         correspond to the per-column sum of all documents included in the category.
-         Thus, they give the mean point of the documents in the category.
+         If no variable is passed via the \code{variables} argument, a CA is run on the
+         full document-term matrix (possibly skipping sparse terms, see below). If one or more
+         variables are chosen, the CA will be based on a staked table whose rows correspond to
+         the levels of the variables: each cell contains the sum of occurrences of a given term in
+         all the documents of the level. Documents that contain a \code{NA} are skipped for this
+         variable, but taken into account for the others, if any.
+
+         In all cases, variables that have not been selected are added as passive rows. If at least
+         one variable is passed, documents are also passive rows, while they are active otherwise.
 
          The \code{sparsity} argument is passed to \code{\link{removeSparseTerms}}
          to remove less significant terms from the document-term matrix. This is

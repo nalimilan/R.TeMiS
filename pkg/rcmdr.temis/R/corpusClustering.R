@@ -140,16 +140,9 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
 
                           # Keep in sync with corpusCa()
 
-                          # For boolean variables, only show the TRUE when no NA is present
-                          # Rationale: TRUE and FALSE are symmetric except when missing values appear
-                          if(nrow(mat) == 2 && all(c("TRUE", "FALSE") %in% rownames(mat)) &&
-                             !any(is.na(meta(corpus, .gettext("Cluster"))[[1]]))) {
-                              mat<-mat["TRUE", , drop=FALSE]
-                              rownames(mat)<-substr(var, 0, 20)
-                          }
                           # If only one level is present, don't add the level name (e.g. YES),
                           # except if all values are the same (in which case variable is useless but is more obvious that way)
-                          else if(nrow(mat) == 1 && any(is.na(meta(corpus, .gettext("Cluster"))[[1]])))
+                          if(nrow(mat) == 1 && any(is.na(meta(corpus, .gettext("Cluster"))[[1]])))
                               rownames(mat)<-substr(var, 0, 20)
                           # In case of ambiguous levels of only numbers in levels, add variable names everywhere
                           else if(dupLevels || !any(is.na(suppressWarnings(as.numeric(rownames(mat))))))

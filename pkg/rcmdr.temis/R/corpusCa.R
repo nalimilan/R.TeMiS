@@ -1,6 +1,9 @@
-runCorpusCa <- function(corpus, sparsity=0.9, ...) {
+runCorpusCa <- function(corpus, variables=NULL, sparsity=0.9, ...) {
     if(!exists("dtm"))
         dtm<-DocumentTermMatrix(corpus)
+
+    if(!all(variables %in% colnames(meta(corpus))))
+        stop("All items of 'variables' should be meta-data variables of the corpus.")
 
     # Save old meta-data now to check what is lost when skipping documents
     oldMeta<-meta<-meta(corpus)[colnames(meta(corpus)) != "MetaID"]
@@ -36,7 +39,8 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
 
     dupLevels<-any(duplicated(unlist(lapply(meta, function(x) substr(unique(as.character(x[!is.na(x)])), 0, 30)))))
 
-    dtm<-as.matrix(dtm)
+
+    varDtm <- NULL
 
     # Create mean dummy variables as rows
     if(ncol(meta) > 0) {
@@ -57,15 +61,9 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
 
             # Keep in sync with showCorpusClustering()
 
-            # For boolean variables, only show the TRUE when no NA is present
-            # Rationale: TRUE and FALSE are symmetric except when missing values appear
-            if(length(levs) == 2 && all(c("TRUE", "FALSE") %in% levs) && !any(is.na(meta[,i]))) {
-                mat<-mat["TRUE", , drop=FALSE]
-                rownames(mat)<-substr(var, 0, 20)
-            }
             # If only one level is present, don't add the level name (e.g. YES),
             # except if all values are the same (in which case variable is useless but is more obvious that way)
-            else if(totNLevels == 1 && any(is.na(meta[,i])))
+            if(totNLevels == 1 && any(is.na(meta[,i])))
                 rownames(mat)<-substr(var, 0, 20)
             # In case of ambiguous levels of only numbers in levels, add variable names everywhere
             else if(dupLevels || !any(is.na(suppressWarnings(as.numeric(levs)))))
@@ -73,7 +71,7 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
             else # Most general case: no need to waste space with variable names
                 rownames(mat)<-substr(levs, 0, 30)
 
-            dtm<-rbind(dtm, mat)
+            varDtm<-rbind(varDtm, mat)
             origVars<-c(origVars, rep(var, nrow(mat)))
         }
     }
@@ -93,12 +91,23 @@ runCorpusCa <- function(corpus, sparsity=0.9, ...) {
                         paste(skippedLevs, collapse=", ")),
                 type="note")
 
-    if(nrow(dtm) - ndocs > 0)
-        obj <- ca(dtm, suprow=(ndocs+1):nrow(dtm), ...)
-    else
-        obj <- ca(dtm, ...)
 
-    obj$rowsupvars <- origVars
+    newDtm <- as.matrix(rbind(dtm, varDtm))
+
+    if(!is.null(variables))
+        obj <- ca(newDtm, suprow=c(1:nrow(dtm), nrow(dtm) + which(!origVars %in% variables)), ...)
+    else if(nrow(newDtm) - ndocs > 0)
+        obj <- ca(newDtm, suprow=(ndocs+1):nrow(newDtm), ...)
+    else
+        obj <- ca(newDtm, ...)
+
+    if(nrow(newDtm) - ndocs > 0) {
+        obj$rowvars <- seq.int(ndocs + 1, nrow(newDtm))
+        names(obj$rowvars) <- origVars
+    }
+
+    attr(obj, "sparsity") <- sparsity
+
     obj
 }
 
@@ -124,6 +133,12 @@ corpusCaDlg <- function() {
             tkconfigure(labelNDocs, text=labels[3])
     }
 
+    vars <- c(.gettext("None (run analysis on full matrix)"), colnames(meta(corpus)))
+    varBox <- variableListBox(top, vars,
+                              selectmode="multiple",
+                              title=.gettext("Aggregate document-term matrix by variables:"),
+                              initialSelection=0)
+
     tclSparsity <- tclVar(95)
     sliderSparsity <- tkscale(top, from=1, to=100,
                               showvalue=TRUE, variable=tclSparsity,
@@ -132,13 +147,17 @@ corpusCaDlg <- function() {
     updateNDocs()
 
 
-
     tclDim <- tclVar(8)
     sliderDim <- tkscale(top, from=1, to=30,
                          showvalue=TRUE, variable=tclDim,
 	                 resolution=1, orient="horizontal")
 
+
     onOK <- function() {
+        sparsity <- as.numeric(tclvalue(tclSparsity))
+        vars <- getSelection(varBox)
+        dim <- as.numeric(tclvalue(tclDim))
+
         closeDialog()
 
         .setBusyCursor()
@@ -147,10 +166,11 @@ corpusCaDlg <- function() {
             Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
                     type="note")
 
-        sparsity <- as.numeric(tclvalue(tclSparsity))
-        dim <- as.numeric(tclvalue(tclDim))
-
-        doItAndPrint(paste("corpusCa <- runCorpusCa(corpus, sparsity=", sparsity/100, ", nd=", dim, ")", sep=""))
+        if(length(vars) == 1 && vars[1] == .gettext("None (run analysis on full matrix)"))
+            doItAndPrint(sprintf("corpusCa <- runCorpusCa(corpus, sparsity=%s, nd=%i)", sparsity/100, dim))
+        else
+            doItAndPrint(sprintf('corpusCa <- runCorpusCa(corpus, c("%s"), sparsity=%s, nd=%i)',
+                                  paste(vars, collapse='", "'), sparsity/100, dim))
 
         if(!is.null(corpusCa)) {
             doItAndPrint("print(corpusCa)")
@@ -166,12 +186,13 @@ corpusCaDlg <- function() {
     }
 
     OKCancelHelp(helpSubject=corpusCaDlg)
+    tkgrid(getFrame(varBox), columnspan=2, sticky="we", pady=6)
     tkgrid(labelRcmdr(top, text=.gettext("Remove terms missing from more than (% of documents):")),
            sliderSparsity, sticky="sw", pady=6)
     tkgrid(labelNDocs, sticky="sw", pady=6, columnspan=2)
     tkgrid(labelRcmdr(top, text=.gettext("Number of dimensions to retain:")),
            sliderDim, sticky="sw", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
-    dialogSuffix(rows=4, columns=2)
+    dialogSuffix(rows=5, columns=2)
 }
 
