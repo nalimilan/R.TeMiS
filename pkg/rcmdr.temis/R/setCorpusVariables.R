@@ -1,3 +1,5 @@
+doSetCorpusVariables <- function() doItAndPrint("setCorpusVariables()")
+
 setCorpusVariables <- function() {
     if(!exists("corpus") || !("Corpus" %in% class(corpus))) {
         Message(message=.gettext("Please import a corpus first."),
