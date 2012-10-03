@@ -400,7 +400,7 @@ showCorpusCaDlg <- function() {
     if(actDocs)
         selection <- (1:length(vars)) - 1
     else
-        selection <- which(unique(names(corpusCa$rowvars[!corpusCa$rowvars %in% corpusCa$rowsup])) %in% vars) - 1
+        selection <- match(unique(names(corpusCa$rowvars[!corpusCa$rowvars %in% corpusCa$rowsup])), vars) - 1
 
     varBox <- variableListBox(top, vars,
                               selectmode="multiple",
@@ -451,7 +451,7 @@ showCorpusCaDlg <- function() {
         if(actDocs) {
             if((docLabels || docPoints) && (varLabels || varPoints)) {
                 rowWhat <- "all"
-                varIndexes <- setcorpusCa$rowvars[names(corpusCa$rowvars) %in% vars]
+                varIndexes <- corpusCa$rowvars[names(corpusCa$rowvars) %in% vars]
                 doItAndPrint(paste("plottingCa <- rowSubsetCa(corpusCa, c(order(rowCtr(corpusCa, ", ctrDim,
                                    "), decreasing=TRUE)[1:", nDocs, "], ", paste(varIndexes, collapse=", "), "))", sep=""))
             }
@@ -549,7 +549,7 @@ showCorpusCaDlg <- function() {
     tkgrid(labelsFrame, pointsFrame, sticky="w", pady=6, padx=c(0, 6))
     if(actDocs || length(corpusCa$rowsup) > 0)
         tkgrid(getFrame(varBox), columnspan=2, sticky="we", pady=6)
-    if(!actDocs)
+    if(actDocs)
         tkgrid(labelRcmdr(nFrame, text=.gettext("Documents:")), docsSlider, sticky="w")
     tkgrid(labelRcmdr(nFrame, text=.gettext("Terms:")), termsSlider, sticky="w")
     tkgrid(nFrame, sticky="w", pady=6, columnspan=2)
