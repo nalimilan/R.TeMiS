@@ -416,7 +416,18 @@ importCorpusFromTwitter <- function(language=NA) {
         }
 
         doItAndPrint("corpusDataset <- twListToDF(messages)")
-        doItAndPrint("rownames(corpusDataset) <- make.unique(paste(corpusDataset$screenName, corpusDataset$created))")
+
+        if(length(unique(strftime(corpusDataset$created, "%y-%m-%d"))) == 1)
+            fmt <- "%H:%M"
+        else if(length(unique(strftime(corpusDataset$created, "%y-%m"))) == 1)
+            fmt <- "%d %H:%M"
+        else if(length(unique(strftime(corpusDataset$created, "%y"))) == 1)
+            ftm <- "%m-%d %H:%M"
+        else
+            fmt <- "%y-%m-%d %H:%M"
+
+        doItAndPrint(sprintf('rownames(corpusDataset) <- make.unique(paste(abbreviate(corpusDataset$screenName, 10), strftime(corpusDataset$created, "%s")))', fmt))
+
         doItAndPrint(sprintf('corpus <- Corpus(DataframeSource(corpusDataset[1]), readerControl=list(language=%s))',
                              language))
         doItAndPrint("rm(messages)")
