@@ -60,6 +60,9 @@ importCorpusDlg <- function() {
         if(!success || length(corpus) == 0)
             return()
 
+        .setBusyCursor()
+        on.exit(.setIdleCursor())
+
         # Language is used again when creating the dtm to analyse word lengths
         doItAndPrint(sprintf('meta(corpus, type="corpus", tag="language") <- "%s"', lang))
 
@@ -134,6 +137,9 @@ importCorpusFromDir <- function(language=NA) {
                                       parent=CommanderWindow()))
     if (dir == "") return(FALSE)
 
+    .setBusyCursor()
+    on.exit(.setIdleCursor())
+
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
 
@@ -163,6 +169,9 @@ importCorpusFromFile <- function(language=NA) {
                                    parent=CommanderWindow()))
 
     if (file == "") return(FALSE)
+
+    .setBusyCursor()
+    on.exit(.setIdleCursor())
 
     # Code adapted from Rcommander's data-menu.R file
     # The following function was contributed by Matthieu Lesnoff
@@ -306,6 +315,9 @@ importCorpusFromFactiva <- function(language=NA) {
 
     if (filestr == "") return(FALSE)
 
+    .setBusyCursor()
+    on.exit(.setIdleCursor())
+
     # tkgetOpenFile() is terrible: if path contains a space, file paths are surrounded by {}
     # If no spaces are present, they are not, but in both cases the separator is a space
     if(substr(filestr, 0, 1) == "{")
@@ -402,6 +414,9 @@ importCorpusFromTwitter <- function(language=NA) {
         }
 
         closeDialog()
+
+        .setBusyCursor()
+        on.exit(.setIdleCursor())
 
         # In case something goes wrong
         tclvalue(result) <- "error"
