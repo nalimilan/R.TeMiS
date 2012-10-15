@@ -1,3 +1,57 @@
+.selectCorpusVariables <- function() {
+    # Let the user select processing options
+    initializeDialog(title=.gettext("Select Variables to Import"))
+
+
+    vars <- c(.gettext("No variables"), colnames(corpusVars))
+    varBox <- variableListBox(top, vars,
+                              selectmode="multiple",
+                              title=.gettext("Select the corpus variables that should be imported:"),
+                              initialSelection=seq.int(1, length(vars) - 1))
+
+    result <- tclVar()
+
+    onOK <- function() {
+        selVars <- getSelection(varBox)
+
+        # In case something goes wrong
+        tclvalue(result) <- "error"
+
+        closeDialog()
+
+        # Replace corpusVars with an empty data.frame
+        if(length(selVars) == 1 && selVars[1] == .gettext("No variables")) {
+            # Because of a bug in Rcmdr, filling the first column with NAs prevents entering data in this columns:
+            # use "" instead
+            doItAndPrint('corpusVars <- data.frame(var1=factor(rep("", length(corpus))), row.names=names(corpus))')
+        }
+        # Import only some variables
+        else {
+            if(length(intersect(vars, selVars)) < length(vars) - 1)
+                doItAndPrint(sprintf('corpusVars <- corpusVars[c("%s")]',
+                                     paste(setdiff(selVars, .gettext("No variables")),
+                                           collapse='", "')))
+        }
+
+        tkfocus(CommanderWindow())
+        tclvalue(result) <- "success"
+    }
+
+    onCancel <- function() {
+        if (GrabFocus()) tkgrab.release(top)
+        tkdestroy(top)
+        tkfocus(CommanderWindow())
+        tclvalue(result) <- "cancel"
+    }
+
+    OKCancelHelp(helpSubject=importCorpusDlg)
+    tkgrid(getFrame(varBox), sticky="nswe", pady=6)
+    tkgrid(buttonsFrame, sticky="w", pady=6)
+    dialogSuffix(rows=2, columns=1)
+
+    return(tclvalue(result) == "success")
+}
+
 importCorpusDlg <- function() {
     # Let the user select processing options
     initializeDialog(title=.gettext("Import Corpus"))
@@ -62,6 +116,19 @@ importCorpusDlg <- function() {
 
         .setBusyCursor()
         on.exit(.setIdleCursor())
+
+        # If source-specific functions load variables, they create corpusVars; else, create an empty data frame
+        if(exists("corpusVars")) {
+            if(!.selectCorpusVariables()) return()
+        }
+        else {
+            # Because of a bug in Rcmdr, filling the first column with NAs prevents entering data in this columns:
+            # use "" instead
+            doItAndPrint('corpusVars <- data.frame(var1=factor(rep("", length(corpus))), row.names=names(corpus))')
+        }
+
+        doItAndPrint('activeDataSet("corpusVars")')
+        doItAndPrint("setCorpusVariables()")
 
         # Language is used again when creating the dtm to analyse word lengths
         doItAndPrint(sprintf('meta(corpus, type="corpus", tag="language") <- "%s"', lang))
@@ -144,11 +211,6 @@ importCorpusFromDir <- function(language=NA) {
         language <- paste("\"", language, "\"", sep="")
 
     doItAndPrint(sprintf('corpus <- Corpus(DirSource("%s", encoding=""), readerControl=list(language=%s))', dir, language))
-
-    # Because of a bug in Rcmdr, filling the first column with NAs prevents entering data in this columns:
-    # use "" instead
-    assign("corpusVars", data.frame(var1=rep("", length(corpus)), row.names=names(corpus)), envir=.GlobalEnv)
-    activeDataSet("corpusVars")
 
     return(TRUE)
 }
@@ -288,15 +350,8 @@ importCorpusFromFile <- function(language=NA) {
     doItAndPrint(sprintf("corpus <- Corpus(DataframeSource(corpusDataset[1]), readerControl=list(language=%s))",
                          language))
 
-    if(ncol(corpusDataset) > 1) {
+    if(ncol(corpusDataset) > 1)
         doItAndPrint("corpusVars <- corpusDataset[-1]")
-        doItAndPrint("activeDataSet(\"corpusVars\")")
-        doItAndPrint("setCorpusVariables()")
-    }
-    else {
-        assign("corpusVars", data.frame(var1=factor(rep(NA, length(corpus))), row.names=names(corpus)), envir=.GlobalEnv)
-        activeDataSet("corpusVars")
-    }
 
     return(TRUE)
 }
@@ -376,8 +431,6 @@ importCorpusFromFactiva <- function(language=NA) {
     rownames(vars) <- names(corpus)
 
     assign("corpusVars", vars, envir=.GlobalEnv)
-    activeDataSet("corpusVars")
-    doItAndPrint("setCorpusVariables()")
 
     return(TRUE)
 }
@@ -457,8 +510,6 @@ importCorpusFromTwitter <- function(language=NA) {
         doItAndPrint("rm(corpusDataset)")
         doItAndPrint(sprintf('colnames(corpusVars) <- c("%s", "%s", "%s", "%s")',
                              .gettext("Author"), .gettext("Time"), .gettext("Truncated"), .gettext("StatusSource")))
-        doItAndPrint("activeDataSet(\"corpusVars\")")
-        doItAndPrint("setCorpusVariables()")
 
         tclvalue(result) <- "success"
 
