@@ -86,7 +86,7 @@ dissimilarityTableDlg <- function() {
             }
         }
 
-        doItAndPrint("print(diss, digits=1)")
+        doItAndPrint("diss")
 
         # Used by saveTableToOutput()
         last.table <<- "diss"

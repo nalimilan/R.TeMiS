@@ -64,10 +64,7 @@ varTableDlg <- function() {
                 doItAndPrint(paste("title(main=\"", title, "\")", sep=""))
         }
 
-        if(what == "percent")
-            doItAndPrint("print(varFreqs, digits=1)")
-        else
-            doItAndPrint("print(varFreqs)")
+        doItAndPrint("print(varFreqs)")
 
         # Used by saveTableToOutput()
         last.table <<- "varFreqs"
@@ -196,10 +193,7 @@ varCrossTableDlg <- function() {
             }
         }
 
-        if(what %in% c("row", "col"))
-            doItAndPrint("print(varFreqs, digits=1)")
-         else
-            doItAndPrint("print(varFreqs)")
+        doItAndPrint("print(varFreqs)")
 
         # Used by saveTableToOutput()
         last.table <<- "varFreqs"

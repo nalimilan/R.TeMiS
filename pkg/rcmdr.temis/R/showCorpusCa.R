@@ -80,7 +80,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
     nd <- min(length(corpusCa$sv), corpusCa$nd)
     values <- 100 * (corpusCa$sv[1:nd]^2)/sum(corpusCa$sv^2)
     values2 <- cumsum(values)
-    val <- round(rbind(values, values2), digits=1)
+    val <- rbind(values, values2)
     rownames(val) <- c(.gettext("Inertia (%)"), .gettext("Cumulated inertia (%)"))
     colnames(val) <- seq.int(ncol(val))
     names(dimnames(val)) <- c("", "Axis")
@@ -122,9 +122,9 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
         }
         else {
             df <- data.frame(row.names=corpusCa$colnames[negcols],
-                             round(corpusCa$colcoord[negcols, dim[j]] * corpusCa$sv[dim[j]], digits=2),
-                             round(colsCtr[negcols] * 100, digits=1),
-                             round((corpusCa$colcoord[negcols, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$coldist[negcols])^2 * 100, digits=1))
+                             corpusCa$colcoord[negcols, dim[j]] * corpusCa$sv[dim[j]],
+                             colsCtr[negcols] * 100,
+                             (corpusCa$colcoord[negcols, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$coldist[negcols])^2 * 100)
             colnames(df) <- titles
 
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
@@ -138,9 +138,9 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
                      paste("\n\n", sprintf(.gettext("Active levels on negative side of axis %i:"), dim[j]), "\n", sep=""),
                      "heading")
             df <- data.frame(row.names=corpusCa$rownames[negrows],
-                             round(corpusCa$rowcoord[negrows, dim[j]] * corpusCa$sv[dim[j]], digits=2),
-                             round(rowsCtr[negrows] * 100, digits=1),
-                             round((corpusCa$rowcoord[negrows, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[negrows])^2 * 100, digits=1))
+                             corpusCa$rowcoord[negrows, dim[j]] * corpusCa$sv[dim[j]],
+                             rowsCtr[negrows] * 100,
+                             (corpusCa$rowcoord[negrows, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[negrows])^2 * 100)
             colnames(df) <- titles
 
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
@@ -156,8 +156,8 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
             negrows <- negrows[!is.na(negrows)]
 
             df <- data.frame(row.names=corpusCa$rownames[negrows],
-                             round(corpusCa$rowcoord[negrows, dim[j]] * corpusCa$sv[dim[j]], digits=2),
-                             round((corpusCa$rowcoord[negrows, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[negrows])^2 * 100, digits=1))
+                             corpusCa$rowcoord[negrows, dim[j]] * corpusCa$sv[dim[j]],,
+                             (corpusCa$rowcoord[negrows, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[negrows])^2 * 100)
             colnames(df) <- titles[-2]
         }
         else {
@@ -168,9 +168,9 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
             negrows <- rows[corpusCa$rowcoord[rows, dim[j]] < 0]
 
             df <- data.frame(row.names=corpusCa$rownames[negrows],
-                             round(corpusCa$rowcoord[negrows, dim[j]] * corpusCa$sv[dim[j]], digits=2),
-                             round(rowsCtr[negrows] * 100, digits=1),
-                             round((corpusCa$rowcoord[negrows, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[negrows])^2 * 100, digits=1))
+                             corpusCa$rowcoord[negrows, dim[j]] * corpusCa$sv[dim[j]],
+                             rowsCtr[negrows] * 100,
+                             (corpusCa$rowcoord[negrows, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[negrows])^2 * 100)
             colnames(df) <- titles
         }
 
@@ -224,9 +224,9 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
         }
         else {
             df <- data.frame(row.names=corpusCa$colnames[poscols],
-                             round(corpusCa$colcoord[poscols, dim[j]] * corpusCa$sv[dim[j]], digits=2),
-                             round(colsCtr[poscols] * 100, digits=1),
-                             round((corpusCa$colcoord[poscols, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$coldist[poscols])^2 * 100, digits=1))
+                             corpusCa$colcoord[poscols, dim[j]] * corpusCa$sv[dim[j]],
+                             colsCtr[poscols] * 100,
+                             (corpusCa$colcoord[poscols, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$coldist[poscols])^2 * 100)
             colnames(df) <- titles
 
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
@@ -239,9 +239,9 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
                      paste("\n\n", sprintf(.gettext("Active levels on positive side of axis %i:"), dim[j]), "\n", sep=""),
                      "heading")
             df <- data.frame(row.names=corpusCa$rownames[posrows],
-                             round(corpusCa$rowcoord[posrows, dim[j]] * corpusCa$sv[dim[j]], digits=2),
-                             round(rowsCtr[posrows] * 100, digits=1),
-                             round((corpusCa$rowcoord[posrows, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[posrows])^2 * 100, digits=1))
+                             corpusCa$rowcoord[posrows, dim[j]] * corpusCa$sv[dim[j]],
+                             rowsCtr[posrows] * 100,
+                             (corpusCa$rowcoord[posrows, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[posrows])^2 * 100)
             colnames(df) <- titles
 
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
@@ -256,8 +256,8 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
             posrows <- posrows[!is.na(posrows)]
 
             df <- data.frame(row.names=corpusCa$rownames[posrows],
-                             round(corpusCa$rowcoord[posrows, dim[j]] * corpusCa$sv[dim[j]], digits=2),
-                             round((corpusCa$rowcoord[posrows, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[posrows])^2 * 100, digits=1))
+                             corpusCa$rowcoord[posrows, dim[j]] * corpusCa$sv[dim[j]],
+                             (corpusCa$rowcoord[posrows, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[posrows])^2 * 100)
             colnames(df) <- titles[-2]
         }
         else {
@@ -268,9 +268,9 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
             posrows <- rows[corpusCa$rowcoord[rows, dim[j]] > 0]
 
             df <- data.frame(row.names=corpusCa$rownames[posrows],
-                             round(corpusCa$rowcoord[posrows, dim[j]] * corpusCa$sv[dim[j]], digits=2),
-                             round(rowsCtr[posrows] * 100, digits=1),
-                             round((corpusCa$rowcoord[posrows, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[posrows])^2 * 100, digits=1))
+                             corpusCa$rowcoord[posrows, dim[j]] * corpusCa$sv[dim[j]],
+                             rowsCtr[posrows] * 100,
+                             (corpusCa$rowcoord[posrows, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[posrows])^2 * 100)
             colnames(df) <- titles
         }
 
@@ -321,8 +321,8 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
             mark <- mark + 1
 
             df <- data.frame(row.names=corpusCa$rownames[suprows],
-                             round(corpusCa$rowcoord[suprows, dim[j]] * corpusCa$sv[dim[j]], digits=2),
-                             round((corpusCa$rowcoord[suprows, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[suprows])^2 * 100, digits=1))
+                             corpusCa$rowcoord[suprows, dim[j]] * corpusCa$sv[dim[j]],
+                             (corpusCa$rowcoord[suprows, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[suprows])^2 * 100)
             colnames(df) <- titles[-2]
 
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
