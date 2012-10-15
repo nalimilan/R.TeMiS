@@ -22,6 +22,7 @@
 
                 Commander()
 
+                options(ask.on.exit=FALSE)
 
                 # HTML.matrix() does not allow passing scientific separately,
                 # and vocabulary summary tables often end up printed in scientific notation
