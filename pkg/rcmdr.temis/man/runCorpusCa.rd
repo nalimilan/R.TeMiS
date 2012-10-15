@@ -25,7 +25,7 @@
 \arguments{
   \item{corpus  }{A \pkg{tm} corpus.}
   \item{sparsity}{Optional sparsity threshold (between 0 and 1) below which terms should be
-                  skipped. See \code{removeSparseTerms} from tm.}
+                  skipped. See \code{\link{removeSparseTerms}} from tm.}
   \item{...     }{Additional parameters passed to \code{\link{ca}}.}
           }
 \value{A \code{ca} object as returned by the \code{\link{ca}} function.}

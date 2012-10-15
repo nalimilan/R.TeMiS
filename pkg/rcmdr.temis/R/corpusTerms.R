@@ -173,6 +173,58 @@ termsCoocDlg <- function() {
     dialogSuffix(rows=5, columns=2, focus=entryTerms)
 }
 
+specificTerms <- function(variable, dtm, p=0.1, n.max=25, sparsity=0.95, min.occ=2) {
+    if(!is.null(variable) && length(unique(variable)) < 2)
+        stop("Please provide a variable with at least two levels.")
+
+    if(sparsity < 1)
+        dtm <- removeSparseTerms(dtm, sparsity)
+
+    if(min.occ > 1)
+        dtm <- dtm[, col_sums(dtm) >= min.occ]
+
+    if(!is.null(variable))
+        dtm <- rollup(dtm, 1, variable)
+
+    rs <- row_sums(dtm)
+    cs <- col_sums(dtm)
+    tot <- sum(rs)
+    cs.tot <- cs/tot
+
+    sapply(rownames(dtm), simplify=FALSE, function(l) {
+        # rownames(dtm) == l is used below because "" is a possible level
+        i <- rownames(dtm) == l
+
+        rp <- as.matrix(dtm[l,]/rs[l])
+        cp <- as.matrix(dtm[l,])/cs
+        sup <- rp > cs.tot
+
+        counts <- as.matrix(dtm[i,])[1,]
+
+        # As this is a discrete distribution, we need to subtract one
+        # to include the value when switching sides
+        counts <- ifelse(sup, counts - 1, counts)
+
+        p.val <- phyper(counts, rs[l], tot - rs[l], cs)
+        t.val <- qnorm(p.val)
+
+        p.val[sup] <- 1 - p.val[sup]
+        p.val <- 2 * p.val
+
+        keep <- which(p.val <= p)
+
+        if(length(keep) == 0) return(numeric(0))
+
+        ord <- head(intersect(order(p.val), keep), n.max)
+        ret <- cbind(term.clus=rp[ord] * 100, clus.term=cp[ord] * 100,
+                     p.global=cs[ord]/tot * 100, n.global=cs[ord],
+                     t.value=t.val[ord], p.value=round(p.val[ord], 4))
+        colnames(ret) <- c(.gettext("% Term/Level"), .gettext("% Level/Term"), .gettext("Global %"), .gettext("Global freq."),
+                           .gettext("t value"), .gettext("Prob."))
+        ret
+    })
+}
+
 specificTermsDlg <- function() {
     if(!(exists("dtm") && class(dtm) == "DocumentTermMatrix")) {
         Message(message=.gettext("Please import a corpus and create the document-term matrix first."),
@@ -181,43 +233,51 @@ specificTermsDlg <- function() {
     }
 
     initializeDialog(title=.gettext("Show Specific Terms"))
-    tclN <- tclVar(10)
+
+    vars <- c(.gettext("Document"), colnames(meta(corpus)))
+    varBox <- variableListBox(top, vars,
+                              title=.gettext("Show terms specific of levels of variable:"),
+                              initialSelection=0)
+
+    tclP <- tclVar(10)
+    sliderP <- tkscale(top, from=1, to=100,
+                       showvalue=TRUE, variable=tclP,
+	               resolution=1, orient="horizontal")
+
+    tclN <- tclVar(25)
     sliderN <- tkscale(top, from=1, to=100,
                        showvalue=TRUE, variable=tclN,
 	               resolution=1, orient="horizontal")
 
-    vars <- c(.gettext("Document"), colnames(meta(corpus)))
-    varBox <- variableListBox(top, vars,
-                              title=.gettext("Specific of levels of variable:"),
-                              initialSelection=0)
+    tclOcc <- tclVar(5)
+    sliderOcc <- tkscale(top, from=1, to=50,
+                         showvalue=TRUE, variable=tclOcc,
+	                 resolution=1, orient="horizontal")
 
     onOK <- function() {
         var <- getSelection(varBox)
         n <- as.numeric(tclvalue(tclN))
+        p <- as.numeric(tclvalue(tclP))
+        occ <- as.numeric(tclvalue(tclOcc))
         closeDialog()
 
         if(var == .gettext("Document")) {
-            doItAndPrint("expected <- row_sums(dtm) %o% col_sums(dtm)/sum(dtm)")
-            doItAndPrint("chisq <- sign(as.matrix(dtm - expected)) *  as.matrix((dtm - expected)^2/expected)")
-            doItAndPrint(sprintf("specificTerms <- sapply(rownames(dtm), simplify=FALSE, USE.NAMES=TRUE, function(x) round(chisq[x,order(abs(chisq[x,]), decreasing=TRUE)[1:%i]]))", n))
-            doItAndPrint("rm(expected, chisq)")
+            doItAndPrint(sprintf('specTerms <- specificTerms(NULL, dtm, p=%s, min.occ=%s, n.max=%s)',
+                                 p/100, occ, n))
         }
         else {
-            doItAndPrint(sprintf('specificDtm <- rollup(dtm, 1, meta(corpus, "%s"))', var))
-            doItAndPrint("expected <- row_sums(specificDtm) %o% col_sums(specificDtm)/sum(specificDtm)")
-            doItAndPrint("chisq <- sign(as.matrix(specificDtm - expected)) *  as.matrix((specificDtm - expected)^2/expected)")
-            doItAndPrint(sprintf("specificTerms <- sapply(rownames(specificDtm), simplify=FALSE, USE.NAMES=TRUE, function(x) round(chisq[x,order(abs(chisq[x,]), decreasing=TRUE)[1:%i]]))", n))
-            doItAndPrint("rm(specificDtm, expected, chisq)")
+            doItAndPrint(sprintf('specTerms <- specificTerms(meta(corpus, "%s")[[1]], dtm, p=%s, min.occ=%s, n.max=%s)',
+                                 var, p/100, occ, n))
         }
 
-        doItAndPrint("specificTerms")
+        doItAndPrint("specTerms")
 
         # Used by saveTableToOutput()
-        last.table <<- "specificTerms"
+        last.table <<- "specTerms"
         if(var == .gettext("Document"))
-            attr(specificTerms, "title") <<- .gettext("Specific terms by document")
+            attr(specTerms, "title") <<- .gettext("Specific terms by document")
         else
-            attr(specificTerms, "title") <<- sprintf(.gettext("Specific terms by %s"), var)
+            attr(specTerms, "title") <<- sprintf(.gettext("Specific terms by %s"), var)
 
         activateMenus()
 
@@ -225,11 +285,15 @@ specificTermsDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="specificTermsDlg")
-    tkgrid(labelRcmdr(top, text=.gettext("Number of terms to show:")), sliderN,
-           sticky="sw", pady=6)
     tkgrid(getFrame(varBox), columnspan="2", sticky="w", pady=6)
+    tkgrid(labelRcmdr(top, text=.gettext("Show terms with a probability below (%):")), sliderN,
+           sticky="sw", pady=6)
+    tkgrid(labelRcmdr(top, text=.gettext("Maximum number of terms to show per level:")), sliderP,
+           sticky="sw", pady=6)
+    tkgrid(labelRcmdr(top, text=.gettext("Retain terms with a number of occurrences above:")), sliderOcc,
+           sticky="sw", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
-    dialogSuffix(rows=3, columns=2)
+    dialogSuffix(rows=4, columns=2)
 }
 
 restrictTermsDlg <- function() {
