@@ -53,18 +53,18 @@
     item        vocMenu         command           "Dissimilarity table..."           dissimilarityTableDlg       "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
 
 
-### Hierarchical clustering menu ###
-    menu        clustMenu       tmMenu            ""                                 ""                          ""                    ""
-    item        clustMenu       command           "Create dendrogram..."             corpusClustDlg              "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
-    item        clustMenu       command           "Create clusters..."               createClustersDlg           "exists('corpus') && 'Corpus' %in% class(corpus) && exists('corpusClust') && class(corpusClust) == 'hclust'"         ""
-    item        tmMenu	        cascade           "Hierarchical clustering"          clustMenu                   ""                    ""
-
-
 ### Correspondence analysis menu ###
     menu        caMenu          tmMenu            ""                                 ""                          ""                    ""
     item        caMenu          command           "Run analysis..."                  corpusCaDlg                 "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
     item        caMenu          command           "Show analysis results..."         showCorpusCaDlg             "exists('corpusCa') && class(corpusCa) == 'ca'"                    ""
     item        tmMenu	        cascade           "Correspondence analysis"          caMenu                      ""                    ""
+
+
+### Hierarchical clustering menu ###
+    menu        clustMenu       tmMenu            ""                                 ""                          ""                    ""
+    item        clustMenu       command           "Run clustering..."                corpusClustDlg              "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
+    item        clustMenu       command           "Create clusters..."               createClustersDlg           "exists('corpus') && 'Corpus' %in% class(corpus) && exists('corpusClust') && class(corpusClust) == 'hclust'"         ""
+    item        tmMenu	        cascade           "Hierarchical clustering"          clustMenu                   ""                    ""
 
 
 ### Output menu ###

@@ -106,6 +106,10 @@ runCorpusCa <- function(corpus, dtm=NULL, variables=NULL, sparsity=0.9, ...) {
         names(obj$rowvars) <- origVars
     }
 
+    # This is used by corpusClustDlg() when computing distances between documents using dist()
+    rownames(obj$rowcoord) <- obj$rownames
+    rownames(obj$colcoord) <- obj$colnames
+
     attr(obj, "sparsity") <- sparsity
 
     obj
@@ -147,7 +151,7 @@ corpusCaDlg <- function() {
     updateNDocs()
 
 
-    tclDim <- tclVar(8)
+    tclDim <- tclVar(5)
     sliderDim <- tkscale(top, from=1, to=30,
                          showvalue=TRUE, variable=tclDim,
 	                 resolution=1, orient="horizontal")

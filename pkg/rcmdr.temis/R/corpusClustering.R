@@ -158,6 +158,34 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20, p=0.1, min
 corpusClustDlg <- function() {
     initializeDialog(title=.gettext("Run Hierarchical Clustering"))
 
+    haveCa <- exists("corpusCa")
+
+    setState <- function(...) {
+        if(tclvalue(tclType) == "full") {
+            caState <- "disabled"
+            fullState <- "active"
+        }
+        else {
+            caState <- "active"
+            fullState <- "disabled"
+        }
+
+        tkconfigure(sliderSparsity, state=fullState)
+        tkconfigure(sparsityLabel, state=fullState)
+        tkconfigure(labelNDocs, state=fullState)
+
+        tkconfigure(sliderDim, state=caState)
+        tkconfigure(dimLabel, state=caState)
+    }
+
+    tclType <- tclVar("full")
+    fullButton <- ttkradiobutton(top, variable=tclType,
+                                 value="full", text=.gettext("Use full document-term matrix"),
+                                 command=setState)
+    caButton <- ttkradiobutton(top, variable=tclType,
+                               value="ca", text=.gettext("Use selected dimensions of correspondence analysis"),
+                               state=if(haveCa) "active" else "disabled", command=setState)
+
     labelNDocs <- labelRcmdr(top)
 
     labels <- c(.gettext("(Terms present in at least %s documents will be retained in the analysis.)"),
@@ -182,7 +210,16 @@ corpusClustDlg <- function() {
                               showvalue=TRUE, variable=tclSparsity,
 		              resolution=1, orient="horizontal",
                               command=updateNDocs)
-     updateNDocs()
+    sparsityLabel <- labelRcmdr(top, text=.gettext("Remove terms missing from more than (% of documents):"))
+    updateNDocs()
+
+    tclDim <- tclVar(2)
+    sliderDim <- tkscale(top, from=1, to=if(haveCa) corpusCa$nd else 5,
+                         showvalue=TRUE, variable=tclDim,
+		         resolution=1, orient="horizontal",
+                         state="disabled")
+    dimLabel <- labelRcmdr(top, text=.gettext("Retain dimensions from 1 to:"), state="disabled")
+
 
     onOK <- function() {
         closeDialog()
@@ -190,10 +227,24 @@ corpusClustDlg <- function() {
         .setBusyCursor()
         on.exit(.setIdleCursor())
 
+        type <- tclvalue(tclType)
         sparsity <- as.numeric(tclvalue(tclSparsity))/100
+        dim <- tclvalue(tclDim)
 
         # removeSparseTerms() does not accept 1
-        if(sparsity < 1) {
+        if(type == "ca") {
+            doItAndPrint(sprintf('chisqDist <- dist(sweep(corpusCa$rowcoord[-corpusCa$rowvars, 1:%s, drop=FALSE], 2, corpusCa$sv[1:%s], "*"))',
+                                 dim, dim))
+
+            # Memory allocation can fail here, so avoid stacking errors
+            if(!exists("chisqDist"))
+                return()
+
+            doItAndPrint('corpusClust <- hclust(chisqDist, method="ward")')
+            doItAndPrint("rm(chisqDist)")
+            gc()
+        }
+        else if(sparsity < 1) {
             doItAndPrint(sprintf("clustDtm <- removeSparseTerms(dtm, %s)", sparsity))
 
             if(any(row_sums(clustDtm) == 0)) {
@@ -229,6 +280,7 @@ corpusClustDlg <- function() {
 
             doItAndPrint('corpusClust <- hclust(chisqDist, method="ward")')
             doItAndPrint("rm(chisqDist)")
+            gc()
         }
 
         # Do not plot all leafs if there are too many of them (can even crash!)
@@ -258,11 +310,13 @@ corpusClustDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="corpusClustDlg")
-    tkgrid(labelRcmdr(top, text=.gettext("Remove terms missing from more than (% of documents):")),
-           sliderSparsity, sticky="sw", pady=6)
-    tkgrid(labelNDocs, sticky="sw", pady=6, columnspan=2)
+    tkgrid(fullButton, sticky="sw")
+    tkgrid(sparsityLabel, sliderSparsity, sticky="sw", pady=c(0, 6), padx=c(24, 0))
+    tkgrid(labelNDocs, sticky="sw", pady=6, columnspan=2, padx=c(24, 0))
+    tkgrid(caButton, sticky="sw", pady=c(12, 0))
+    tkgrid(dimLabel, sliderDim, sticky="sw", pady=c(0, 6), padx=c(24, 0))
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
-    dialogSuffix(rows=3, columns=2)
+    dialogSuffix(rows=6, columns=2)
 }
 
 createClustersDlg <- function() {
