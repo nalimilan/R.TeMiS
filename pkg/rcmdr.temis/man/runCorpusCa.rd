@@ -5,7 +5,7 @@
 \usage{runCorpusCa(corpus, dtm = NULL, variables = NULL, sparsity = 0.9, ...)}
 \arguments{
   \item{corpus  }{A \pkg{tm} corpus.}
-  \item{dtm}{an optional document-term matrix to use; if missing, \code{\link[tm]{DocumentTermMatrix}}
+  \item{dtm}{an optional document-term matrix to use; if missing, \code{\link{DocumentTermMatrix}}
              will be called on \code{corpus} to create it.}
   \item{variables}{a character vector giving the names of meta-data variables to aggregate the
                    document-term matrix (see \dQuote{Details} below).}
