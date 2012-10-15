@@ -14,5 +14,5 @@
          When several terms are entered, the operation is simply run several times separately.
 }
 
-\seealso{\code{\link{termChistDist}}, \code{\link{DocumentTermMatrix}}, \code{\link{restrictTermsDlg}},
+\seealso{\code{\link{termChisqDist}}, \code{\link{DocumentTermMatrix}}, \code{\link{restrictTermsDlg}},
          \code{\link{listTerms}}, \code{\link{freqTermsDlg}} }

@@ -7,7 +7,7 @@
 
          If no variable is selected in the list (the default), a CA is run on the full document-term
          matrix (possibly skipping sparse terms, see below). If one or more variables are chosen,
-         the CA will be based on a staked table whose rows correspond to the levels of the variable:
+         the CA will be based on a stacked table whose rows correspond to the levels of the variable:
          each cell contains the sum of occurrences of a given term in all the documents of the level.
          Documents that contain a \code{NA} are skipped for this variable, but taken into account for
          the others, if any.

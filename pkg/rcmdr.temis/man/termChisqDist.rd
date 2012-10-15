@@ -1,9 +1,9 @@
-\name{termChistDist}
-\alias{termChistDist}
+\name{termChisqDist}
+\alias{termChisqDist}
 \title{Show terms co-occurrences}
 \description{Show terms that are the most associated with one or several reference terms.}
 \usage{
-termChistDist(term, dtm, n = 5, variable = NULL)
+termChisqDist(term, dtm, n = 5, variable = NULL)
 }
 \arguments{
   \item{term}{A character vector of length 1 corresponding to the name of a column of \code{dtm}.}

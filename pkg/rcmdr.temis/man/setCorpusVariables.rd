@@ -1,5 +1,6 @@
 \name{setCorpusVariables}
 \alias{setCorpusVariables}
+\alias{doSetCorpusVariables}
 \title{Set corpus variables}
 \description{Set corpus meta-data variables from the active data set.}
 \details{This command creates one corpus meta-data variable from each column

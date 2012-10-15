@@ -187,18 +187,18 @@ HTML.list <- function (x, file = get(".HTML.file"), first = TRUE, append = TRUE,
 # and Oleg Nenadic <onenadi at uni-goettingen.de>.
 # http://cran.r-project.org/web/packages/ca/index.html
 HTML.ca <- function(x, ...) {
-    nd0 <- length(obj$sv)
-    nd  <- obj$nd
+    nd0 <- length(x$sv)
+    nd  <- x$nd
     if (is.na(nd)){
         nd <- 2
     }
     else {
-        if (nd > length(obj$sv)) nd <- length(obj$sv)
+        if (nd > length(x$sv)) nd <- length(x$sv)
     }
 
     # Eigenvalues:
     Dimension <- 1:nd
-    Value <- round(obj$sv[1:nd]^2, 6)
+    Value <- round(x$sv[1:nd]^2, 6)
     Percentage <- paste(as.character(round(100 * Value / sum(Value), 2)), "%", sep = "")
 
     tmp <- rbind(Value = as.character(Value), Percentage = as.character(Percentage))
@@ -206,10 +206,10 @@ HTML.ca <- function(x, ...) {
     Eigenvalues <- tmp
 
     # Row Profiles:
-    tmp <- rbind(obj$rowmass, obj$rowdist, obj$rowinertia, t(obj$rowcoord[,1:nd]))
-    tmpnames <- obj$rownames
-    if (!is.na(obj$rowsup[1])) {
-        tmpnames[obj$rowsup] <- paste(tmpnames[obj$rowsup],"(*)")
+    tmp <- rbind(x$rowmass, x$rowdist, x$rowinertia, t(x$rowcoord[,1:nd]))
+    tmpnames <- x$rownames
+    if (!is.na(x$rowsup[1])) {
+        tmpnames[x$rowsup] <- paste(tmpnames[x$rowsup],"(*)")
     }
     dimnames(tmp)[[2]] <- tmpnames
     dn <- paste("Dim.", 1:nd)
@@ -217,10 +217,10 @@ HTML.ca <- function(x, ...) {
     Row.profiles <- tmp
 
     # Column Profiles:
-    tmp <- rbind(obj$colmass, obj$coldist, obj$colinertia, t(obj$colcoord[,1:nd]))
-    tmpnames <- obj$colnames
-    if (!is.na(obj$colsup[1])) {
-        tmpnames[obj$colsup] <- paste(tmpnames[obj$colsup],"(*)")
+    tmp <- rbind(x$colmass, x$coldist, x$colinertia, t(x$colcoord[,1:nd]))
+    tmpnames <- x$colnames
+    if (!is.na(x$colsup[1])) {
+        tmpnames[x$colsup] <- paste(tmpnames[x$colsup],"(*)")
     }
     dimnames(tmp)[[2]] <- tmpnames
     dn <- paste("Dim.", 1:nd)

@@ -1,5 +1,5 @@
-runCorpusCa <- function(corpus, variables=NULL, sparsity=0.9, ...) {
-    if(!exists("dtm"))
+runCorpusCa <- function(corpus, dtm=NULL, variables=NULL, sparsity=0.9, ...) {
+    if(is.null(dtm))
         dtm<-DocumentTermMatrix(corpus)
 
     if(!all(variables %in% colnames(meta(corpus))))
