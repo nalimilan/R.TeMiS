@@ -171,7 +171,7 @@ termFreqDlg <- function() {
 
         # Plot
         if(plot) {
-            col <- switch(what, term.lev=gettext("% Term/Level"), lev.term=.gettext("% Level/Term"), .gettext("Level"))
+            col <- switch(what, term.lev=.gettext("% Term/Level"), lev.term=.gettext("% Level/Term"), .gettext("Level"))
 
             if(vert) {
                 if(length(termsList) > 1)

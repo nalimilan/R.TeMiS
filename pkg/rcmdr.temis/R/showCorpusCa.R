@@ -70,7 +70,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
     tktag.configure(txt, "small", font="sans 5")
     tktag.configure(txt, "fixed", font="courier 11")
 
-    titles <- c(.gettext("Position"), .gettext("Contribution (%)"), .gettext("Quality Repr. (%)"))
+    titles <- c(.gettext("Position"), .gettext("Contribution (%)"), .gettext("Quality (%)"))
 
     tkinsert(txt, "end", paste(.gettext("Axes summary:"), "\n", sep=""), "heading")
     tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))

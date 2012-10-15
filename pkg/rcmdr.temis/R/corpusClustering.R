@@ -190,7 +190,7 @@ corpusClustDlg <- function() {
                                  value="full", text=.gettext("Use full document-term matrix"),
                                  command=setState)
     caButton <- ttkradiobutton(top, variable=tclType,
-                               value="ca", text=.gettext("Use selected dimensions of correspondence analysis"),
+                               value="ca", text=.gettext("Use dimensions of correspondence analysis"),
                                state=if(haveCa) "active" else "disabled", command=setState)
 
     labelNDocs <- labelRcmdr(top)

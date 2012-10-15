@@ -5,6 +5,8 @@
 
     item        tmMenu          command           "Import corpus..."                 importCorpusDlg             ""                    ""
 
+    item        tmMenu          command           "Show terms dictionary"            listTerms                   "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+
 
 ### Manage corpus menu ###
     menu        corpusMenu      tmMenu            ""                                 ""                          ""                    ""
@@ -17,40 +19,33 @@
     item        subsetMenu      command           "Restore saved corpus"             restoreCorpus               "exists('origCorpus') && 'Corpus' %in% class(origCorpus)"                    ""
 
     # Main items
-    item        corpusMenu      command           "Show current corpus..."           inspectCorpus               ""                    ""
+    item        corpusMenu      command           "Show current corpus"              inspectCorpus               ""                    ""
     item        corpusMenu      command           "Set corpus variables"             doSetCorpusVariables        "exists('corpus') && 'Corpus' %in% class(corpus) && activeDataSetP() && checkVariables()"          ""
     item        corpusMenu      cascade           "Subset corpus"                    subsetMenu                    ""                    ""
     item        corpusMenu      command           "Select or exclude terms..."       restrictTermsDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        corpusMenu      command           "Recode time variable"             recodeTimeVarDlg            "exists('corpus') && 'Corpus' %in% class(corpus) && activeDataSetP() && checkVariables()"          ""
+    item        corpusMenu      command           "Recode time variable..."          recodeTimeVarDlg            "exists('corpus') && 'Corpus' %in% class(corpus) && activeDataSetP() && checkVariables()"          ""
 
 
-## Documents menu ##
+## Distribution of documents menu ##
     menu        docMenu         tmMenu            ""                                 ""                          ""                    ""
-    item        tmMenu	        cascade           "Distribution of documents"        docMenu                     ""                    ""
+    item        tmMenu          cascade           "Distribution of documents"        docMenu                     ""                    ""
 
-    item        docMenu         command           "One-way table..."                 varTableDlg                 "exists('corpus') && 'Corpus' %in% class(corpus)"                    ""
-    item        docMenu         command           "Two-way table..."                 varCrossTableDlg            "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
+    item        docMenu         command           "One-way table of variable..."     varTableDlg                 "exists('corpus') && 'Corpus' %in% class(corpus)"                    ""
+    item        docMenu         command           "Two-way table of variables..."    varCrossTableDlg            "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
     item        docMenu         command           "Temporal evolution..."            varTimeSeriesDlg            "exists('corpus') && 'Corpus' %in% class(corpus)"                       ""
 
 
-### Terms menu ###
-    menu        termMenu        tmMenu            ""                                 ""                          ""                    ""
-    item        tmMenu          cascade           "Terms"                            termMenu                    ""                    ""
-
-    item        termMenu        command           "List all terms"                   listTerms                   "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu        command           "Most frequent terms..."           freqTermsDlg                "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu        command           "Terms specific of levels..."      specificTermsDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu        command           "Term frequencies..."              termFreqDlg                 "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu        command           "Term co-occurrences..."           termCoocDlg                 "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu        command           "Temporal evolution of terms..."   termTimeSeriesDlg  "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                       ""
-
-
-### Analyse vocabulary menu ###
+### Descriptive analysis of vocabulary menu ###
     menu        vocMenu         tmMenu            ""                                 ""                          ""                    ""
-    item        tmMenu          cascade           "Vocabulary"                       vocMenu                     ""                    ""
+    item        tmMenu          cascade           "Descriptive analysis of vocabulary" vocMenu                    ""                    ""
 
-    item        vocMenu         command           "Vocabulary summary..."            vocabularyDlg               ""                    ""
+    item        vocMenu         command           "Vocabulary summary..."            vocabularyDlg               "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        vocMenu         command           "Dissimilarity table..."           dissimilarityTableDlg       "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        vocMenu         command           "Most frequent terms..."           freqTermsDlg                "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        vocMenu         command           "Specific terms by levels..."      specificTermsDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        vocMenu         command           "Term frequencies..."              termFreqDlg                 "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        vocMenu         command           "Term co-occurrences..."           termCoocDlg                 "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        vocMenu         command           "Temporal evolution of terms..."   termTimeSeriesDlg  "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                       ""
 
 
 ### Correspondence analysis menu ###
