@@ -177,9 +177,9 @@ corpusCaDlg <- function() {
                     type="note")
 
         if(length(vars) == 1 && vars[1] == .gettext("None (run analysis on full matrix)"))
-            doItAndPrint(sprintf("corpusCa <- runCorpusCa(corpus, sparsity=%s, nd=%i)", sparsity/100, dim))
+            doItAndPrint(sprintf("corpusCa <- runCorpusCa(corpus, dtm, sparsity=%s, nd=%i)", sparsity/100, dim))
         else
-            doItAndPrint(sprintf('corpusCa <- runCorpusCa(corpus, c("%s"), sparsity=%s, nd=%i)',
+            doItAndPrint(sprintf('corpusCa <- runCorpusCa(corpus, dtm, c("%s"), sparsity=%s, nd=%i)',
                                   paste(vars, collapse='", "'), sparsity/100, dim))
 
         if(!is.null(corpusCa)) {

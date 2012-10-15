@@ -156,7 +156,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
             negrows <- negrows[!is.na(negrows)]
 
             df <- data.frame(row.names=corpusCa$rownames[negrows],
-                             corpusCa$rowcoord[negrows, dim[j]] * corpusCa$sv[dim[j]],,
+                             corpusCa$rowcoord[negrows, dim[j]] * corpusCa$sv[dim[j]],
                              (corpusCa$rowcoord[negrows, dim[j]] * corpusCa$sv[dim[j]] / corpusCa$rowdist[negrows])^2 * 100)
             colnames(df) <- titles[-2]
         }
