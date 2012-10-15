@@ -40,8 +40,8 @@
     item        termMenu        command           "List all terms"                   listTerms                   "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        termMenu        command           "Most frequent terms..."           freqTermsDlg                "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        termMenu        command           "Terms specific of levels..."      specificTermsDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu        command           "Term frequencies..."              termFreqDlg               "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        termMenu        command           "Term co-occurrences..."           termsCoocDlg             "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        termMenu        command           "Term frequencies..."              termFreqDlg                 "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        termMenu        command           "Term co-occurrences..."           termCoocDlg                 "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        termMenu        command           "Temporal evolution of terms..."   termTimeSeriesDlg  "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                       ""
 
 

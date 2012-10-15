@@ -1,4 +1,4 @@
-showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
+showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20, p=0.1, min.occ=5) {
     .setBusyCursor()
     on.exit(.setIdleCursor())
 
@@ -37,20 +37,14 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
     # Set by createClassesDlg()
     # It is more correct to use exactly the same matrix, and it is more efficient
     if(length(attr(corpusSubClust, "sparsity")) > 0)
-        dtm <- removeSparseTerms(dtm, attr(corpusSubClust, "sparsity"))
+        sparsity <- attr(corpusSubClust, "sparsity")
+    else
+        sparsity <- 1
 
     clusterDtm <- suppressWarnings(rollup(dtm, 1, clusters))
 
     if(nterms > 0) {
-        # Get most contributive terms for each cluster
-        # Same code as in specificTermsDlg()
-        expected <- row_sums(clusterDtm) %o% col_sums(clusterDtm)/sum(clusterDtm)
-        chisq <- sign(as.matrix(clusterDtm - expected)) *  as.matrix((clusterDtm - expected)^2/expected)
-        termsCtr <- sapply(rownames(clusterDtm), simplify=FALSE, USE.NAMES=TRUE, function(x)
-                           chisq[x,order(abs(chisq[x,]), decreasing=TRUE)[seq(1, min(nterms, length(chisq[x,])))]])
-
-        rowTot <- as.matrix(row_sums(clusterDtm))[,1]
-        colTot <- as.matrix(col_sums(clusterDtm))[,1]
+        specTerms <- specificTerms(dtm, clusters, p, nterms, sparsity, min.occ)
     }
 
     for(j in 1:ncol(val)) {
@@ -63,15 +57,8 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20) {
             tkitemconfigure(listbox, mark, background="grey")
             mark <- mark + 1
 
-            termsNames <- names(termsCtr[[j]])
-            df <- data.frame(row.names=termsNames,
-                             as.numeric(as.matrix(clusterDtm[j, termsNames])/rowTot[j] * 100),
-                             as.numeric(as.matrix(clusterDtm[j, termsNames])/colTot[termsNames] * 100),
-                             termsCtr[[j]])
-            colnames(df) <- c(.gettext("Prevalence (%)"), .gettext("Distribution (%)"), .gettext("Chi2 contr."))
-
-            tkinsert(txt, "end", paste(capture.output(format(df, nsmall=2, digits=2,
-                                                             width=max(nchar(colnames(df), "width")))),
+            tkinsert(txt, "end", paste(capture.output(print(specTerms[[j]], nsmall=2, digits=2,
+                                                             width=max(nchar(colnames(specTerms[[j]]), "width")))),
                                        collapse="\n"), "fixed")
         }
 
@@ -302,6 +289,16 @@ createClustersDlg <- function() {
                             showvalue=TRUE, variable=tclNTerms,
 		            resolution=1, orient="horizontal")
 
+    tclP <- tclVar(10)
+    sliderP <- tkscale(top, from=1, to=100,
+                       showvalue=TRUE, variable=tclP,
+	               resolution=1, orient="horizontal")
+
+    tclOcc <- tclVar(5)
+    sliderOcc <- tkscale(top, from=1, to=100,
+                       showvalue=TRUE, variable=tclOcc,
+	               resolution=1, orient="horizontal")
+
     onOK <- function() {
         closeDialog()
 
@@ -311,6 +308,8 @@ createClustersDlg <- function() {
         nclust <- as.numeric(tclvalue(tclNClust))
         ndocs <- as.numeric(tclvalue(tclNDocs))
         nterms <- as.numeric(tclvalue(tclNTerms))
+        p <- as.numeric(tclvalue(tclP))
+        occ <- as.numeric(tclvalue(tclOcc))
         height <- floor(rev(corpusClust$height)[nclust-1] * 1e4)/1e4
 
         doItAndPrint(paste("corpusSubClust <- cut(as.dendrogram(corpusClust), h=",
@@ -346,7 +345,7 @@ createClustersDlg <- function() {
         doItAndPrint(sprintf('plot(corpusSubClust$upper, nodePar=list(pch=NA, lab.cex=0.8), ylab="%s", main="%s")',
                              .gettext("Within-cluster variance"),
                              .gettext("Clusters dendrogram")))
-        doItAndPrint(sprintf("showCorpusClustering(corpusSubClust, %i, %i)", ndocs, nterms))
+        doItAndPrint(sprintf("showCorpusClustering(corpusSubClust, %i, %i, %f, %i)", ndocs, nterms, p, occ))
         doItAndPrint("rm(clusters)")
 
         tkfocus(CommanderWindow())
@@ -357,13 +356,19 @@ createClustersDlg <- function() {
            sticky="sw", pady=0)
     tkgrid(labelRcmdr(top, text=.gettext("Number of clusters to retain:")), sliderNClust,
            sticky="sw", pady=c(0, 6), padx=c(6, 0))
-    tkgrid(labelRcmdr(top, text=.gettext("Number of items to show (for each cluster):"), foreground="blue"),
+    tkgrid(labelRcmdr(top, text=.gettext("Documents specific of clusters:"), foreground="blue"),
            sticky="sw", pady=c(24, 0))
-    tkgrid(labelRcmdr(top, text=.gettext("Specific documents:")), sliderNDocs,
+    tkgrid(labelRcmdr(top, text=.gettext("Maximum number of documents to show per cluster:")), sliderNDocs,
            sticky="sw", pady=c(0, 6), padx=c(6, 0))
-    tkgrid(labelRcmdr(top, text=.gettext("Specific terms:")), sliderNTerms,
+    tkgrid(labelRcmdr(top, text=.gettext("Terms specific of clusters:"), foreground="blue"),
+           sticky="sw", pady=c(24, 0))
+    tkgrid(labelRcmdr(top, text=.gettext("Show terms with a probability below (%):")), sliderP,
+           sticky="sw", pady=6, padx=c(6, 0))
+    tkgrid(labelRcmdr(top, text=.gettext("Only retain terms with a number of occurrences above:")), sliderOcc,
+           sticky="sw", pady=6, padx=c(6, 0))
+    tkgrid(labelRcmdr(top, text=.gettext("Maximum number of terms to show per cluster:")), sliderNTerms,
            sticky="sw", pady=6, padx=c(6, 0))
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
-    dialogSuffix(rows=5, columns=2)
+    dialogSuffix(rows=8, columns=2)
 }
 

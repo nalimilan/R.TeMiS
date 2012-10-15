@@ -1,5 +1,5 @@
-\name{termsCoocDlg}
-\alias{termsCoocDlg}
+\name{termCoocDlg}
+\alias{termCoocDlg}
 \title{Show terms co-occurrences}
 \description{Show terms that are the most associated with one or several reference terms.}
 \details{This dialog allows printing the terms that are most associated with one or several

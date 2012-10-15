@@ -13,16 +13,28 @@
          the merge points with the highest position until the requested number of branches is reached.
 
          A window opens to summarize created clusters, providing information about specific documents
-         and terms for each cluster. Specific terms are those with the highest Chi-squared statistic
-         in the document-term matrix collapsed so that the rows contain for each term the sum of its
-         occurrences in the cluster's documents. Thus, the Chi-squared value reflects the deviation of the
-         term from what would be expected if vocabulary was homogeneous accross all clusters. Terms that are
-         negatively associated with the cluster are signalled by a negative Chi-squared value: this is just a
-         printing convention, as by definition Chi-squared values can only be positive. Two statistics are also
-         provided: the \dQuote{Prevalence} of the term in the cluster, i.e. the ratio of the term's occurrences
-         on the total number of terms appearing in the cluster; the \dQuote{Distribution} of occurrences of the
-         term in the cluster, i.e. the share of occurrences that appear in the considered cluster on the total
-         number of occurrences of the term.
+         and terms for each cluster. Specific terms are those whose observed frequency in the document or level
+         has the lowest probability under an hypergeometric distribution, based on their global frequencies
+         in the corpus and on the number of occurrences of all terms in the considered cluster.
+         All terms with a probability below the value chosen using the third slider are reported, ignoring
+         terms with fewer occurrences in the whole corpus than the value of the fourth slider (these terms
+         can often have a low probability but are too rare to be of interest). The last slider allows limiting
+         the number of terms that will be shown for each cluster.
+
+         The positive or negative character of the association is visible from the sign of the t value,
+         or by comparing the value of the \dQuote{\% Term/Level} column with that of the \dQuote{Global \%}
+         column. The definition of columns is:
+         \describe{
+         \item{\dQuote{\% Term/Level}:}{the percent of the term's occurrences in all terms occurrences in the level.}
+         \item{\dQuote{\% Level/Term}:}{the percent of the term's occurrences that appear in the level
+             (rather than in other levels).}
+         \item{\dQuote{Global \%}:}{the percent of the term's occurrences in all terms occurrences in the corpus.}
+         \item{\dQuote{Level}:}{the number of occurrences of the term in the level (\dQuote{internal}).}
+         \item{\dQuote{Global}:}{the number of occurrences of the term in the corpus.}
+         \item{\dQuote{t value}:}{the quantile of a normal distribution corresponding the probability \dQuote{Prob.}.}
+         \item{\dQuote{Prob.}:}{the probability of observing such an extreme (high or low) number of occurrences of
+             the term in the level, under an hypergeometric distribution.}
+         }
 
          Specific documents are selected using a different criterion than terms: documents with the smaller
          Chi-squared distance to the average vocabulary of the cluster are shown. This is a euclidean distance,

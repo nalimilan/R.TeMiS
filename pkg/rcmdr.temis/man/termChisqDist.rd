@@ -22,5 +22,5 @@ termChistDist(term, dtm, n = 5, variable = NULL)
          level, \code{NA} is returned.
 }
 
-\seealso{\code{\link{termsCoocDlg}}, \code{\link{DocumentTermMatrix}}, \code{\link{restrictTermsDlg}},
+\seealso{\code{\link{termCoocDlg}}, \code{\link{DocumentTermMatrix}}, \code{\link{restrictTermsDlg}},
          \code{\link{listTerms}}, \code{\link{freqTermsDlg}} }

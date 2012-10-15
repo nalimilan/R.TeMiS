@@ -1,22 +1,31 @@
 \name{termFreqDlg}
 \alias{termFreqDlg}
-\title{Term frequency table per document or per meta-data variable}
-\description{Build a contingency table of term occurrences per document, or over a meta-data variable
-             of a corpus.}
-\details{This dialog allows creating tables crossing terms occurrences and documents, possibly grouped
-         by the levels of a meta-data variable: for each of themn, the sum of the term occurrences
-         found in all of the documents included in it is computed. Three measures are provided:
-         \itemize{
-         \item{Row percent corresponds to the part of chosen term's occurrences over all terms
-         found in a given category (i.e., the sum of word counts of all documents from the category
-         after processing). This conceptually corresponds to line percents, except that only the
-         columns of the document-term matrix that match the given terms are shown.}
-         \item{Column percent corresponds to the part of the chosen term's occurrences that
-         appear in each of the documents from a given category. This measure corresponds to the
-         strict definition of column percents.}
-         \item{Absolute counts returns the relevant part of the document-term matrix, but summed
-         after grouping documents according to their category.}
+\title{Term frequencies in the corpus}
+\description{Study frequencies of chosen terms in the corpus, among documents, or among levels of
+         a variable.}
+\details{This dialog allows creating a table providing information about the frequency of chosen
+         terms among documents or levels of a variable. If \dQuote{None (whole corpus)} is selected,
+         the absolute frequency of the chosen terms and their percents in occurrences of all terms
+         in the corpus are returned. If \dQuote{Document} or a variable is chosen, details about the
+         association of the term with documents or levels are shown:
+         \describe{
+         \item{\dQuote{\% Term/Level}:}{the percent of the term's occurrences in all terms occurrences in the level.}
+         \item{\dQuote{\% Level/Term}:}{the percent of the term's occurrences that appear in the level
+             (rather than in other levels).}
+         \item{\dQuote{Global \%}:}{the percent of the term's occurrences in all terms occurrences in the corpus.}
+         \item{\dQuote{Level}:}{the number of occurrences of the term in the level (\dQuote{internal}).}
+         \item{\dQuote{Global}:}{the number of occurrences of the term in the corpus.}
+         \item{\dQuote{t value}:}{the quantile of a normal distribution corresponding the probability \dQuote{Prob.}.}
+         \item{\dQuote{Prob.}:}{the probability of observing such an extreme (high or low) number of occurrences of
+             the term in the level, under an hypergeometric distribution.}
          }
+
+         The probability is that of observing such extreme frequencies of the considered term in the level,
+         under an hypergeometric distribution based on its global frequency in the corpus and on the
+         number of occurrences of all terms in the document or variable level considered.
+         The positive or negative character of the association is visible from the sign of the t value,
+         or by comparing the value of the \dQuote{\% Term/Level} column with that of the \dQuote{Global \%}
+         column.
 
          The kind of plot to be drawn is automatically chosen from the selected measure. Row
          percents lead to bar plots, since the total sum of shown columns (terms) doesn't add up
@@ -29,5 +38,5 @@
          In all cases, the string \dQuote{\%V} will be replaced with the name of the selected variable.
 }
 
-\seealso{\code{\link{setCorpusVariables}}, \code{\link{meta}}, \code{\link{DocumentTermMatrix}},
-         \code{\link{table}}, \code{\link{barchart}}, \code{\link{pie}} }
+\seealso{\code{\link{termFrequencies}}, \code{\link{setCorpusVariables}}, \code{\link{meta}},
+         \code{\link{DocumentTermMatrix}}, \code{\link{barchart}}, \code{\link{pie}} }

@@ -61,6 +61,7 @@ if (getRversion() >= '2.15.1') globalVariables(c(
         scr1 <- tkscrollbar(window, repeatinterval=5,
                            command=function(...) tkyview(txt,...))
         txt <- tktext(window, bg="white", font="times", wrap="word",
+                      width=getOption("width", 80),
                       yscrollcommand=function(...) tkset(scr1, ...))
 
         tkpack(txt, side="left", fill="both", expand=TRUE)
