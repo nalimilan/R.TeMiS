@@ -124,7 +124,7 @@ vocabularyDlg <- function() {
                title=.gettext("Draw plot for:"),
                boxes=c("totalt", "unique", "hapax",
                        "totalw", "long", "vlong", "longavg"),
-               initialValues=c(0, 0, 1, 0, 0, 0, 0),
+               initialValues=c(0, 1, 0, 0, 0, 0, 0),
                labels=c(.gettext("All terms"),
                         .gettext("Unique terms"),
                         .gettext("Hapax legomena"),
