@@ -118,23 +118,30 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20, p=0.1, min
         tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
         mark <- mark + 1
 
+        # Keep in sync with corpusCa()
+
         dupLevels <- any(duplicated(unlist(lapply(meta,
             function(x) substr(unique(as.character(x[!is.na(x)])), 0, 30)))))
 
-        tab <- lapply(colnames(meta),
-                      function(var) {
+        # Just in case variables have common levels, and are truncated to the same string
+        vars <- colnames(meta)
+        vars10<-make.unique(substr(vars, 0, 10))
+        vars20<-make.unique(substr(vars, 0, 20))
+
+        tab <- lapply(1:length(vars),
+                      function(i) {
+                          var <- vars[i]
+
                           # We call factor() to drop empty levels, if any
                           mat <- with(meta(corpus), table(factor(get(var)), factor(get(.gettext("Cluster")))))
-
-                          # Keep in sync with corpusCa()
 
                           # If only one level is present, don't add the level name (e.g. YES),
                           # except if all values are the same (in which case variable is useless but is more obvious that way)
                           if(nrow(mat) == 1 && any(is.na(meta(corpus, .gettext("Cluster"))[[1]])))
-                              rownames(mat)<-substr(var, 0, 20)
+                              rownames(mat)<-vars20[i]
                           # In case of ambiguous levels of only numbers in levels, add variable names everywhere
                           else if(dupLevels || !any(is.na(suppressWarnings(as.numeric(rownames(mat))))))
-                              rownames(mat)<-make.unique(paste(substr(var, 0, 10), substr(rownames(mat), 0, 30)))
+                              rownames(mat)<-make.unique(paste(vars10[i], substr(rownames(mat), 0, 30)))
                           else # Most general case: no need to waste space with variable names
                               rownames(mat)<-substr(rownames(mat), 0, 30)
 

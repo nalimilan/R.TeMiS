@@ -43,9 +43,16 @@ runCorpusCa <- function(corpus, dtm=NULL, variables=NULL, sparsity=0.9, ...) {
     varDtm <- NULL
 
     # Create mean dummy variables as rows
+    # Keep in sync with showCorpusClustering()
+
+    # Just in case variables have common levels, and are truncated to the same string
+    vars <- colnames(meta)
+    vars10<-make.unique(substr(vars, 0, 10))
+    vars20<-make.unique(substr(vars, 0, 20))
+
     if(ncol(meta) > 0) {
         for(i in 1:ncol(meta)) {
-            var<-colnames(meta)[i]
+            var<-vars[i]
             levs<-levels(factor(meta[,i]))
             totNLevels<-nlevels(factor(oldMeta[,i]))
 
@@ -57,17 +64,16 @@ runCorpusCa <- function(corpus, dtm=NULL, variables=NULL, sparsity=0.9, ...) {
                 skippedLevs<-c(skippedLevs, var)
             }
 
-            mat<-rollup(dtm[1:ndocs, , drop=FALSE], 1, meta[i])
-
-            # Keep in sync with showCorpusClustering()
+            # suppressWarnings() is used because rollup() warns when NAs are present
+            suppressWarnings(mat<-rollup(dtm[1:ndocs, , drop=FALSE], 1, meta[i]))
 
             # If only one level is present, don't add the level name (e.g. YES),
             # except if all values are the same (in which case variable is useless but is more obvious that way)
             if(totNLevels == 1 && any(is.na(meta[,i])))
-                rownames(mat)<-substr(var, 0, 20)
+                rownames(mat)<-vars20[i]
             # In case of ambiguous levels of only numbers in levels, add variable names everywhere
             else if(dupLevels || !any(is.na(suppressWarnings(as.numeric(levs)))))
-                rownames(mat)<-make.unique(paste(substr(var, 0, 10), substr(levs, 0, 30)))
+                rownames(mat)<-make.unique(paste(vars10[i], substr(levs, 0, 30)))
             else # Most general case: no need to waste space with variable names
                 rownames(mat)<-substr(levs, 0, 30)
 
@@ -75,7 +81,6 @@ runCorpusCa <- function(corpus, dtm=NULL, variables=NULL, sparsity=0.9, ...) {
             origVars<-c(origVars, rep(var, nrow(mat)))
         }
     }
-
 
     Message(sprintf(.gettext("Running correspondence analysis using %i documents, %i terms and %i variables."),
                     ndocs, nterms, ncol(meta)),
