@@ -18,7 +18,7 @@ frequentTerms <- function(dtm, variable=NULL, n=25) {
     cs <- col_sums(dtm)
     cs.tot <- cs/tot
 
-    sapply(rownames(dtm), function(l) {
+    sapply(rownames(dtm), simplify=FALSE, function(l) {
         # rownames(dtm) == l is used below because "" is a possible level
         i <- rownames(dtm) == l
 
