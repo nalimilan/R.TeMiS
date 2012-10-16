@@ -411,10 +411,10 @@ termTimeSeriesDlg <- function() {
     entryTerms <- ttkentry(top, width="30", textvariable=tclTerms)
 
     radioButtons(name="what",
-                 buttons=c("row", "col", "absolute"),
-                 labels=c(.gettext("Row % (term prevalence in category)"),
-                          .gettext("Column % (distribution of occurrences)"),
-                          .gettext("Number of occurrences per time unit")),
+                 buttons=c("term.lev", "lev.term", "absolute"),
+                 labels=c(.gettext("Term prevalence in level (\"% Term/Level\")"),
+                          .gettext("Distribution of occurrences among levels (\"% Level/Term\")"),
+                          .gettext("Number of occurrences in level per time unit")),
                  title=.gettext("Measure:"),
                  right.buttons=FALSE)
 
@@ -438,7 +438,7 @@ termTimeSeriesDlg <- function() {
         window <- as.numeric(tclvalue(tclWindow))
         title <- tclvalue(tclTitle)
 
-        if(what == "col" && nchar(groupVar) == 0) {
+        if(what == "lev.term" && nchar(groupVar) == 0) {
             Message(message=.gettext("Plotting distribution of occurrences with only one curve does not make sense: all points would be 100%."),
                     type="error")
             return()
@@ -499,12 +499,12 @@ termTimeSeriesDlg <- function() {
             doItAndPrint("names(dimnames(absTermFreqs)) <- NULL")
 
             # Compute %
-            if(what == "row") {
+            if(what == "term.lev") {
                 doItAndPrint(sprintf('termSeries <- zoo(absTermFreqs/c(tapply(row_sums(dtm), time, sum)), order.by=as.POSIXct(strptime(rownames(absTermFreqs), "%s")))', format))
 
                 ylab <- .gettext("% of all terms")
             }
-            else if (what == "col") {
+            else if (what == "lev.term") {
                 doItAndPrint(sprintf('termSeries <- zoo(prop.table(absTermFreqs, 2) * 100, order.by=as.POSIXct(strptime(rownames(absTermFreqs), "%s")))', format))
                 ylab <- .gettext("% of occurrences")
             }

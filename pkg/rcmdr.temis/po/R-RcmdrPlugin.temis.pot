@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.temis 0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-16 10:35+0100\n"
+"POT-Creation-Date: 2012-10-16 10:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -174,7 +174,7 @@ msgstr ""
 #: R/corpusCa.R:114 R/dissimilarity.R:27 R/subsetCorpus.R:4 R/termFreq.R:142
 #: R/time.R:4 R/varFreq.R:4 R/varFreq.R:101 R/vocabulary.R:224
 #: R/termFreq.R:146 R/vocabulary.R:225 R/corpusCa.R:167 R/time.R:106
-#: R/time.R:342 R/corpusCa.R:176
+#: R/time.R:342 R/corpusCa.R:176 R/varFreq.R:94
 msgid ""
 "No corpus variables have been set. Use Text mining->Manage corpus->Set "
 "corpus variables to add them."
@@ -218,7 +218,7 @@ msgid "Cluster"
 msgstr ""
 
 #: R/corpusClustering.R:27 R/time.R:154 R/varFreq.R:53 R/varFreq.R:166
-#: R/corpusClustering.R:28 R/time.R:276
+#: R/corpusClustering.R:28 R/time.R:276 R/varFreq.R:162
 msgid "Number of documents"
 msgstr ""
 
@@ -255,7 +255,7 @@ msgid "Distribution of variables among clusters:"
 msgstr ""
 
 #: R/corpusClustering.R:126 R/varFreq.R:124 R/corpusClustering.R:128
-#: R/corpusClustering.R:115
+#: R/corpusClustering.R:115 R/varFreq.R:117
 msgid "Row %"
 msgstr ""
 
@@ -422,15 +422,15 @@ msgstr ""
 #: R/dissimilarity.R:97 R/vocabulary.R:111 R/vocabulary.R:139
 #: R/vocabulary.R:199 R/freqTerms.R:66 R/freqTerms.R:79 R/specificTerms.R:65
 #: R/specificTerms.R:92 R/specificTerms.R:105 R/termFreq.R:72 R/termFreq.R:138
-#: R/termFreq.R:149
+#: R/termFreq.R:149 R/vocabulary.R:203
 msgid "Document"
 msgstr ""
 
-#: R/dissimilarity.R:36 R/varFreq.R:115
+#: R/dissimilarity.R:36 R/varFreq.R:115 R/varFreq.R:108
 msgid "Row variable:"
 msgstr ""
 
-#: R/dissimilarity.R:40 R/varFreq.R:119
+#: R/dissimilarity.R:40 R/varFreq.R:119 R/varFreq.R:112
 msgid "Column variable:"
 msgstr ""
 
@@ -913,23 +913,14 @@ msgstr ""
 msgid "Terms Frequencies per Document"
 msgstr ""
 
-#: R/termFreq.R:9 R/termFreq.R:159 R/termFreq.R:163 R/corpusTerms.R:303
-#: R/time.R:415
-msgid "Row % (term prevalence in category)"
-msgstr ""
-
-#: R/termFreq.R:10 R/termFreq.R:160 R/termFreq.R:164 R/corpusTerms.R:304
-#: R/time.R:416
-msgid "Column % (distribution of occurrences)"
-msgstr ""
-
 #: R/termFreq.R:11 R/termFreq.R:161 R/varFreq.R:19 R/varFreq.R:126
-#: R/termFreq.R:165 R/corpusTerms.R:305
+#: R/termFreq.R:165 R/corpusTerms.R:305 R/varFreq.R:119
 msgid "Absolute counts"
 msgstr ""
 
 #: R/termFreq.R:12 R/termFreq.R:162 R/time.R:57 R/varFreq.R:20 R/varFreq.R:127
 #: R/termFreq.R:166 R/corpusTerms.R:306 R/time.R:178 R/time.R:418
+#: R/varFreq.R:120
 msgid "Measure:"
 msgstr ""
 
@@ -939,6 +930,7 @@ msgstr ""
 
 #: R/termFreq.R:21 R/termFreq.R:171 R/time.R:175 R/termFreq.R:175
 #: R/corpusTerms.R:315 R/time.R:300 R/time.R:570 R/termFreq.R:95
+#: R/varFreq.R:26 R/varFreq.R:126
 msgid "Draw plot"
 msgstr ""
 
@@ -984,7 +976,7 @@ msgstr ""
 
 #: R/termFreq.R:132 R/termFreq.R:288 R/time.R:208 R/varFreq.R:86
 #: R/varFreq.R:227 R/termFreq.R:136 R/termFreq.R:298 R/corpusTerms.R:447
-#: R/time.R:333 R/time.R:605 R/termFreq.R:216
+#: R/time.R:333 R/time.R:605 R/termFreq.R:216 R/varFreq.R:85 R/varFreq.R:218
 msgid "Title:"
 msgstr ""
 
@@ -1089,7 +1081,7 @@ msgstr ""
 msgid "Percent"
 msgstr ""
 
-#: R/varFreq.R:23
+#: R/varFreq.R:23 R/varFreq.R:31
 msgid "Distribution of documents by %V"
 msgstr ""
 
@@ -1105,31 +1097,31 @@ msgstr ""
 msgid "Pie chart"
 msgstr ""
 
-#: R/varFreq.R:88 R/varFreq.R:221
+#: R/varFreq.R:88 R/varFreq.R:221 R/varFreq.R:81 R/varFreq.R:213
 msgid "Plot:"
 msgstr ""
 
-#: R/varFreq.R:106
+#: R/varFreq.R:106 R/varFreq.R:99
 msgid "Corpus has only one variable."
 msgstr ""
 
-#: R/varFreq.R:111
+#: R/varFreq.R:111 R/varFreq.R:104
 msgid "Variable Two-Way Table"
 msgstr ""
 
-#: R/varFreq.R:125
+#: R/varFreq.R:125 R/varFreq.R:118
 msgid "Column %"
 msgstr ""
 
-#: R/varFreq.R:130
+#: R/varFreq.R:130 R/varFreq.R:134
 msgid "Distribution of documents by %V1 and %V2"
 msgstr ""
 
-#: R/varFreq.R:207
+#: R/varFreq.R:207 R/varFreq.R:200
 msgid "(row %)"
 msgstr ""
 
-#: R/varFreq.R:209
+#: R/varFreq.R:209 R/varFreq.R:202
 msgid "(column %)"
 msgstr ""
 
@@ -1239,12 +1231,12 @@ msgid "Vocabulary summary by document"
 msgstr ""
 
 #: R/vocabulary.R:212 R/vocabulary.R:343 R/vocabulary.R:213 R/vocabulary.R:349
-#: R/vocabulary.R:246
+#: R/vocabulary.R:246 R/vocabulary.R:260
 msgid "Plotting measure:"
 msgstr ""
 
 #: R/vocabulary.R:215 R/vocabulary.R:347 R/vocabulary.R:216 R/vocabulary.R:353
-#: R/vocabulary.R:250
+#: R/vocabulary.R:250 R/vocabulary.R:265
 msgid "Plot title:"
 msgstr ""
 
@@ -1268,7 +1260,7 @@ msgstr ""
 msgid "Plot global corpus value"
 msgstr ""
 
-#: R/vocabulary.R:268 R/vocabulary.R:269 R/vocabulary.R:163
+#: R/vocabulary.R:268 R/vocabulary.R:269 R/vocabulary.R:163 R/vocabulary.R:166
 msgid "Vocabulary summary by %V"
 msgstr ""
 
@@ -1373,11 +1365,11 @@ msgstr ""
 msgid "No items."
 msgstr ""
 
-#: R/vocabulary.R:337 R/vocabulary.R:234
+#: R/vocabulary.R:337 R/vocabulary.R:234 R/vocabulary.R:248
 msgid "(per-document mean)"
 msgstr ""
 
-#: R/vocabulary.R:339 R/vocabulary.R:236
+#: R/vocabulary.R:339 R/vocabulary.R:236 R/vocabulary.R:250
 msgid "(per-category sum)"
 msgstr ""
 
@@ -1679,7 +1671,7 @@ msgid "Temporal Evolution of Term Occurrences"
 msgstr ""
 
 #: R/time.R:417
-msgid "Number of occurrences per time unit"
+msgid "Number of occurrences in level per time unit"
 msgstr ""
 
 #: R/time.R:429
@@ -1736,8 +1728,7 @@ msgstr ""
 msgid "Maximum number of terms to show per cluster:"
 msgstr ""
 
-#: R/freqTerms.R:46 R/specificTerms.R:50 R/termFreq.R:12
-#: R/termFreq.R:55
+#: R/freqTerms.R:46 R/specificTerms.R:50 R/termFreq.R:12 R/termFreq.R:55
 msgid "Global"
 msgstr ""
 
@@ -1806,11 +1797,11 @@ msgstr ""
 msgid "Group results by term"
 msgstr ""
 
-#: R/termFreq.R:98
+#: R/termFreq.R:98 R/varFreq.R:29 R/varFreq.R:129 R/vocabulary.R:163
 msgid "Vertical bars"
 msgstr ""
 
-#: R/termFreq.R:101
+#: R/termFreq.R:101 R/varFreq.R:132
 msgid "Stacked bars"
 msgstr ""
 
@@ -1827,4 +1818,16 @@ msgid ""
 "%H: hour - %M: minute\n"
 "\n"
 "Click the  \"Help\" button for more codes."
+msgstr ""
+
+#: R/time.R:416 R/termFreq.R:80
+msgid "Distribution of occurrences among levels (\"% Level/Term\")"
+msgstr ""
+
+#: R/time.R:415 R/termFreq.R:79
+msgid "Term prevalence in level (\"% Term/Level\")"
+msgstr ""
+
+#: R/termFreq.R:81
+msgid "Absolute number of occurrences in level (\"Level\")"
 msgstr ""

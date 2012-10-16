@@ -76,9 +76,9 @@ termFreqDlg <- function() {
 
     radioButtons(name="what",
                  buttons=c("term.lev", "lev.term", "occ"),
-                 labels=c(.gettext('Term prevalence in level ("Term/Level")'),
-                          .gettext('Distribution of occurrences ("Level/Term")'),
-                          .gettext('Absolute number of occurrences ("Level")')),
+                 labels=c(.gettext("Term prevalence in level (\"% Term/Level\")"),
+                          .gettext("Distribution of occurrences among levels (\"% Level/Term\")"),
+                          .gettext("Absolute number of occurrences in level (\"Level\")")),
                  title=.gettext("Measure to plot:"),
                  right.buttons=FALSE)
 
