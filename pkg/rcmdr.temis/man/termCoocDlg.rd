@@ -15,4 +15,4 @@
 }
 
 \seealso{\code{\link{termChisqDist}}, \code{\link{DocumentTermMatrix}}, \code{\link{restrictTermsDlg}},
-         \code{\link{listTerms}}, \code{\link{freqTermsDlg}} }
+         \code{\link{termsDictionary}}, \code{\link{freqTermsDlg}} }

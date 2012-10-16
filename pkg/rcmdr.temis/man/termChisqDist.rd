@@ -23,4 +23,4 @@ termChisqDist(term, dtm, n = 5, variable = NULL)
 }
 
 \seealso{\code{\link{termCoocDlg}}, \code{\link{DocumentTermMatrix}}, \code{\link{restrictTermsDlg}},
-         \code{\link{listTerms}}, \code{\link{freqTermsDlg}} }
+         \code{\link{termsDictionary}}, \code{\link{freqTermsDlg}} }

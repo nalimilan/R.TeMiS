@@ -5,7 +5,7 @@
 
     item        tmMenu          command           "Import corpus..."                 importCorpusDlg             ""                    ""
 
-    item        tmMenu          command           "Show terms dictionary"            listTerms                   "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        tmMenu          command           "Show terms dictionary"            doTermsDictionary           "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
 
 
 ### Manage corpus menu ###

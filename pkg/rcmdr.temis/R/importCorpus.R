@@ -159,22 +159,33 @@ importCorpusDlg <- function() {
             # The default tokenizer does not get rid of punctuation *and of line breaks!*, which
             # get concatenated with surrounding words
             # This also avoids French articles and dash-linked words from getting concatenated with their noun
-            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, function(x) gsub(\"([\'\U2019\\n]|[[:punct:]])+\", \" \", x))")
+            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, function(x) gsub(\"([\'\U2019\\n\U202F\U2009]|[[:punct:]]|[[:space:]]|[[:cntrl:]])+\", \" \", x))")
         }
         if(numbers)
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removeNumbers)")
         if(stopwords)
             doItAndPrint(paste("dtmCorpus <- tm_map(dtmCorpus, removeWords, stopwords(\"",
                                lang, "\"))", sep=""))
-        if(stemming)
-            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, stemDocument)")
+
+        if(stemming) {
+            # Get list of words before stemming
+            doItAndPrint("words <- sort(unique(unlist(lapply(dtmCorpus, scan_tokenizer))))")
+
+            doItAndPrint(sprintf('dtmCorpus <- tm_map(dtmCorpus, stemDocument, language="%s")',
+                                 tm:::map_IETF_Snowball(lang)))
+        }
 
         if(twitter || lowercase || punctuation || numbers || stopwords || stemming) {
-            doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE))")
+            doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))")
             doItAndPrint("rm(dtmCorpus)")
         }
         else {
-            doItAndPrint("dtm <- DocumentTermMatrix(corpus, control=list(tolower=FALSE))")
+            doItAndPrint("dtm <- DocumentTermMatrix(corpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))")
+        }
+
+        if(stemming) {
+            doItAndPrint('attr(dtm, "words") <- words')
+            doItAndPrint("rm(words)")
         }
 
         doItAndPrint("corpus")

@@ -29,4 +29,4 @@
 }
 
 \seealso{\code{\link{frequentTerms}}, \code{\link{setCorpusVariables}}, \code{\link{meta}},
-         \code{\link{restrictTermsDlg}}, \code{\link{listTerms}} }
+         \code{\link{restrictTermsDlg}}, \code{\link{termsDictionary}} }

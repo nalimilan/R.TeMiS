@@ -11,4 +11,4 @@
 }
 
 \seealso{\code{\link{DocumentTermMatrix}},
-         \code{\link{listTerms}}, \code{\link{freqTermsDlg}} }
+         \code{\link{termsDictionary}}, \code{\link{freqTermsDlg}} }
