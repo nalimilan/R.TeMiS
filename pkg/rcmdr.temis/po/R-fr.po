@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.temis 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-15 18:35+0100\n"
-"PO-Revision-Date: 2012-10-15 18:35+0200\n"
+"POT-Creation-Date: 2012-10-16 10:35+0100\n"
+"PO-Revision-Date: 2012-10-16 10:35+0200\n"
 "Last-Translator: Milan Bouchet-Valat <nalimilan@club.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -443,6 +443,12 @@ msgstr "Variable en ligne :"
 #: R/dissimilarity.R:40 R/varFreq.R:119
 msgid "Column variable:"
 msgstr "Variable en colonne :"
+
+#: R/varFreq.R:167
+msgid "Cannot plot stacked bars when the table has a null margin."
+msgstr ""
+"Impossible d'utiliser des barres empilées lorsque que l'une "
+"des marges de la table est nulle."
 
 #: R/importCorpus.R:3 R/importCorpus.R:57
 msgid "Import Corpus"
@@ -1823,6 +1829,10 @@ msgstr "Global"
 #: R/termFreq.R:54
 msgid "Global %"
 msgstr "% global"
+
+#: R/freqTerms.R:5
+msgid "Global freq."
+msgstr "Occ. globales"
 
 #: R/freqTerms.R:10 R/specificTerms.R:3 R/termFreq.R:17
 msgid "Please provide a variable with at least two levels."

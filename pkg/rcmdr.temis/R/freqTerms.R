@@ -2,7 +2,7 @@ frequentTerms <- function(dtm, variable=NULL, n=25) {
     if(length(variable) == 1 && is.na(variable)) {
         counts <- sort(col_sums(dtm), decreasing=TRUE)[1:n]
         mat <- cbind(counts, counts/sum(dtm) * 100)
-        colnames(mat) <- c(.gettext("Global"), .gettext("Global %"))
+        colnames(mat) <- c(.gettext("Global freq."), .gettext("Global %"))
         return(mat)
     }
 

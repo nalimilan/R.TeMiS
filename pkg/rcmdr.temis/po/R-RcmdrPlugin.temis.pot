@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.temis 0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-15 18:35+0100\n"
+"POT-Creation-Date: 2012-10-16 10:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -432,6 +432,10 @@ msgstr ""
 
 #: R/dissimilarity.R:40 R/varFreq.R:119
 msgid "Column variable:"
+msgstr ""
+
+#: R/varFreq.R:167
+msgid "Cannot plot stacked bars when the table has a null margin."
 msgstr ""
 
 #: R/importCorpus.R:3 R/importCorpus.R:57
@@ -1732,7 +1736,7 @@ msgstr ""
 msgid "Maximum number of terms to show per cluster:"
 msgstr ""
 
-#: R/freqTerms.R:5 R/freqTerms.R:46 R/specificTerms.R:50 R/termFreq.R:12
+#: R/freqTerms.R:46 R/specificTerms.R:50 R/termFreq.R:12
 #: R/termFreq.R:55
 msgid "Global"
 msgstr ""
@@ -1740,6 +1744,10 @@ msgstr ""
 #: R/freqTerms.R:5 R/freqTerms.R:45 R/specificTerms.R:49 R/termFreq.R:12
 #: R/termFreq.R:54
 msgid "Global %"
+msgstr ""
+
+#: R/freqTerms.R:5
+msgid "Global freq."
 msgstr ""
 
 #: R/freqTerms.R:10 R/specificTerms.R:3 R/termFreq.R:17
