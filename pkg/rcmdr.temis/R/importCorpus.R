@@ -170,11 +170,11 @@ importCorpusDlg <- function() {
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, stemDocument)")
 
         if(twitter || lowercase || punctuation || numbers || stopwords || stemming) {
-            doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus)")
+            doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE))")
             doItAndPrint("rm(dtmCorpus)")
         }
         else {
-            doItAndPrint("dtm <- DocumentTermMatrix(corpus)")
+            doItAndPrint("dtm <- DocumentTermMatrix(corpus, control=list(tolower=FALSE))")
         }
 
         doItAndPrint("corpus")
