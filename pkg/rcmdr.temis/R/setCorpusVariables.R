@@ -39,17 +39,15 @@ setCorpusVariables <- function() {
     # Add new variables
     indices <- which(sapply(dset, function(x) !all(is.na(x) | x == "", na.rm=TRUE)))
 
-    # We need to call factor(as.character()) so that empty levels are dropped, and new levels are
-    # in alphabetical order. This has the drawback that manual reordering cannot be done,
-    # but that's the only solution to avoid a total mess for now.
+    # Drop empty levels, which notably happen when changing values manually
     if(length(indices) > 0) {
         if(split) {
             for(i in indices)
-               meta(corpus, colnames(dset)[i]) <<- factor(as.character(dset[meta(corpus, .gettext("Doc N"))[[1]], i]))
+               meta(corpus, colnames(dset)[i]) <<- droplevels(factor(dset[meta(corpus, .gettext("Doc N"))[[1]], i]))
         }
         else {
             for(i in indices)
-                meta(corpus, colnames(dset)[i]) <<- factor(as.character(dset[[i]]))
+                meta(corpus, colnames(dset)[i]) <<- droplevels(factor(dset[[i]]))
         }
     }
 
