@@ -159,6 +159,9 @@ vocabularyDlg <- function() {
     checkCorpusMeasure <- tkcheckbutton(top, text=.gettext("Plot global corpus value"),
                                         variable=corpusMeasureVar)
 
+    tclVertVar <- tclVar(0)
+    vertButton <- tkcheckbutton(top, text=.gettext("Vertical bars"), variable=tclVertVar)
+
     titleFrame <- tkframe(top)
     tclTitle <- tclVar(.gettext("Vocabulary summary by %V"))
     titleEntry <- ttkentry(top, width="40", textvariable=tclTitle)
@@ -176,6 +179,7 @@ vocabularyDlg <- function() {
         longavg <- tclvalue(longavgVariable) == 1
         measure <- tclvalue(measureVariable)
         corpusMeasure <- tclvalue(corpusMeasureVar) == 1
+        vert <- tclvalue(tclVertVar) == 1
 
         closeDialog()
 
@@ -217,16 +221,26 @@ vocabularyDlg <- function() {
             else
                 exclude <- sprintf(" -%s", ncol(voc))
 
-            if(sum(measures) > 1)
-                doItAndPrint(sprintf('barchart(t(voc[c(%s),%s, drop=FALSE]), stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="", main="%s", auto.key=list(space="bottom"), ylim=c(0, max(voc[c(%s), %s])*1.1))',
-                                     indexes, exclude, title, indexes, exclude))
-            else
-                doItAndPrint(sprintf('barchart(t(voc[c(%s),%s, drop=FALSE]), stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", ylim=c(0, max(voc[c(%s), %s])*1.1))',
-                                     indexes, exclude, rownames(voc)[measures], title, indexes, exclude))
+            if(vert) {
+                if(sum(measures) > 1)
+                    doItAndPrint(sprintf('barchart(t(voc[c(%s),%s, drop=FALSE]), stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="", main="%s", auto.key=list(space="bottom"))',
+                                         indexes, exclude, title, indexes, exclude))
+                else
+                    doItAndPrint(sprintf('barchart(t(voc[c(%s),%s, drop=FALSE]), stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s")',
+                                         indexes, exclude, rownames(voc)[measures], title, indexes, exclude))
+             }
+             else {
+                if(sum(measures) > 1)
+                    doItAndPrint(sprintf('barchart(t(voc[c(%s),%s, drop=FALSE]), stack=FALSE, xlab="", main="%s", auto.key=list(space="bottom"))',
+                                         indexes, exclude, title, indexes, exclude))
+                else
+                    doItAndPrint(sprintf('barchart(t(voc[c(%s),%s, drop=FALSE]), stack=FALSE, xlab="%s", main="%s")',
+                                         indexes, exclude, rownames(voc)[measures], title, indexes, exclude))
+             }
 
         }
 
-        doItAndPrint("print(round(voc, digits=1))")
+        doItAndPrint("voc")
 
         # Used by saveTableToOutput()
         last.table <<- "voc"
@@ -246,7 +260,8 @@ vocabularyDlg <- function() {
     tkgrid(labelRcmdr(measureFrame, text=.gettext("Plotting measure:")),
            measure1, measure2, sticky="w", padx=6)
     tkgrid(measureFrame, sticky="w", pady=6, columnspan=3)
-    tkgrid(checkCorpusMeasure, sticky="w", pady=6, columnspan=3)
+    tkgrid(checkCorpusMeasure, sticky="w", pady=c(6, 0), columnspan=3)
+    tkgrid(vertButton, sticky="w", pady=c(0, 6), columnspan=3)
     tkgrid(labelRcmdr(titleFrame, text=.gettext("Plot title:")), titleEntry, sticky="w", padx=6)
     tkgrid(titleFrame, sticky="w", pady=6, columnspan=3)
     tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=3)
