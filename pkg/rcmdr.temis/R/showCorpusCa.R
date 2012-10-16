@@ -406,6 +406,7 @@ showCorpusCaDlg <- function() {
                               selectmode="multiple",
                               title=.gettext("Variables to plot:"),
                               initialSelection=selection)
+    tkbind(varBox$listbox, "<<ListboxSelect>>", function(...) tclvalue(varLabelsVariable) <- 1)
 
     nFrame <- tkframe(top)
     tkgrid(labelRcmdr(nFrame, text=.gettext("Number of items to plot:"), fg="blue"), sticky="s")
