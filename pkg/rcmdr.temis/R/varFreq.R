@@ -20,23 +20,23 @@ varTableDlg <- function() {
                  title=.gettext("Measure:"),
                  right.buttons=FALSE)
 
-    tclTitle <- tclVar(.gettext("Distribution of documents by %V"))
-    titleEntry <- ttkentry(top, width="40", textvariable=tclTitle)
-
-    tclPlotType <- tclVar("barchart")
     plotFrame <- tkframe(top)
-    noneButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
-                                 value="none", text=.gettext("None"))
-    barchartButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
-                                    value="barchart", text=.gettext("Bar plot"))
-    pieButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
-                                value="pie", text=.gettext("Pie chart"))
+
+    tclPlotVar <- tclVar(1)
+    plotButton <- tkcheckbutton(plotFrame, text=.gettext("Draw plot"), variable=tclPlotVar)
+
+    tclVertVar <- tclVar(0)
+    vertButton <- tkcheckbutton(plotFrame, text=.gettext("Vertical bars"), variable=tclVertVar)
+
+    tclTitle <- tclVar(.gettext("Distribution of documents by %V"))
+    titleEntry <- ttkentry(plotFrame, width=40, textvariable=tclTitle)
 
     onOK <- function() {
         var <- getSelection(varBox)
         what <- tclvalue(whatVariable)
+        plot <- tclvalue(tclPlotVar) == 1
+        vert <- tclvalue(tclVertVar) == 1
         title <- tclvalue(tclTitle)
-        plotType <- tclvalue(tclPlotType)
 
         closeDialog()
 
@@ -53,18 +53,16 @@ varTableDlg <- function() {
             ylab <- .gettext("Number of documents")
         }
 
-        if(plotType == "barchart") {
-            doItAndPrint(sprintf('barchart(varFreqs, stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s")',
+        if(plot) {
+            if(vert)
+                doItAndPrint(sprintf('barchart(varFreqs, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
+                                     ylab, title))
+            else
+                doItAndPrint(sprintf('barchart(varFreqs, xlab="%s", main="%s", auto.key=list(space="bottom"))',
                                      ylab, title))
         }
-        else if(plotType == "pie") {
-            doItAndPrint("pie(varFreqs)")
 
-            if(title != "")
-                doItAndPrint(paste("title(main=\"", title, "\")", sep=""))
-        }
-
-        doItAndPrint("print(varFreqs)")
+        doItAndPrint("addmargins(varFreqs)")
 
         # Used by saveTableToOutput()
         last.table <<- "varFreqs"
@@ -78,18 +76,16 @@ varTableDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="varTableDlg")
-    tkgrid(getFrame(varBox), sticky="w", pady=6, columnspan=3)
-    tkgrid(whatFrame, sticky="w", pady=6, columnspan=3)
-    tkgrid(labelRcmdr(top, text=.gettext("Title:"), foreground="blue"), sticky="w")
-    tkgrid(titleEntry, sticky="w")
+    tkgrid(getFrame(varBox), sticky="w", pady=6, columnspan=2)
+    tkgrid(whatFrame, sticky="w", pady=6, columnspan=2)
     tkgrid(labelRcmdr(plotFrame, text=.gettext("Plot:"), foreground="blue"),
-           sticky="w", columnspan=3)
-    tkgrid(plotFrame, sticky="w", pady=6, columnspan=3)
-    tkgrid(noneButton, sticky="w", padx=3, column=1, row=4)
-    tkgrid(barchartButton, sticky="w", padx=3, column=2, row=4)
-    tkgrid(pieButton, sticky="w", padx=3, column=3, row=4)
-    tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=3)
-    dialogSuffix(rows=5, columns=3, focus=varBox$listbox)
+           sticky="w", columnspan=2)
+    tkgrid(plotButton, sticky="w", columnspan=2)
+    tkgrid(vertButton, sticky="w", columnspan=2)
+    tkgrid(labelRcmdr(plotFrame, text=.gettext("Title:")), titleEntry, sticky="w")
+    tkgrid(plotFrame, sticky="w", pady=6, columnspan=2)
+    tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=2)
+    dialogSuffix(rows=8, columns=2, focus=varBox$listbox)
 }
 
 varCrossTableDlg <- function() {
@@ -124,31 +120,34 @@ varCrossTableDlg <- function() {
                  title=.gettext("Measure:"),
                  right.buttons=FALSE)
 
-    tclTitle <- tclVar(.gettext("Distribution of documents by %V1 and %V2"))
-    titleEntry <- ttkentry(top, width="20", textvariable=tclTitle)
-
-    tclPlotType <- tclVar("barchart")
     plotFrame <- tkframe(top)
-    noneButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
-                                 value="none", text=.gettext("None"))
-    barchartButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
-                                    value="barchart", text=.gettext("Bar plot"))
-    pieButton <- ttkradiobutton(plotFrame, variable=tclPlotType,
-                                value="pie", text=.gettext("Pie chart"))
+
+    tclPlotVar <- tclVar(1)
+    plotButton <- tkcheckbutton(plotFrame, text=.gettext("Draw plot"), variable=tclPlotVar)
+
+    tclVertVar <- tclVar(0)
+    vertButton <- tkcheckbutton(plotFrame, text=.gettext("Vertical bars"), variable=tclVertVar)
+
+    tclStackVar <- tclVar(0)
+    stackButton <- tkcheckbutton(plotFrame, text=.gettext("Stacked bars"), variable=tclStackVar)
+
+    tclTitle <- tclVar(.gettext("Distribution of documents by %V1 and %V2"))
+    titleEntry <- ttkentry(plotFrame, width=40, textvariable=tclTitle)
 
     onOK <- function() {
         var1 <- getSelection(varBox1)
         var2 <- getSelection(varBox2)
         what <- tclvalue(whatVariable)
+        plot <- tclvalue(tclPlotVar) == 1
+        vert <- tclvalue(tclVertVar) == 1
+        stack <- tclvalue(tclStackVar) == 1
         title <- tclvalue(tclTitle)
-        plotType <- tclvalue(tclPlotType)
 
         closeDialog()
 
         title <- gsub("%V2", tolower(var2), gsub("%V1", tolower(var1), title))
 
-        doItAndPrint(paste("absVarFreqs <- table(cbind(meta(corpus, tag=\"", var1,
-                           "\"), meta(corpus, tag=\"", var2, "\")))", sep=""))
+        doItAndPrint(sprintf('absVarFreqs <- table(meta(corpus, c("%s", "%s")))', var1, var2))
 
         if(what == "row") {
             doItAndPrint("varFreqs <- prop.table(absVarFreqs, 1) * 100")
@@ -163,37 +162,37 @@ varCrossTableDlg <- function() {
             ylab <- .gettext("Number of documents")
         }
 
-        if(plotType == "barchart") {
-            if(what == "col")
-                doItAndPrint(sprintf('barchart(t(varFreqs), stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
-                                     ylab, title))
-             else
-                doItAndPrint(sprintf('barchart(varFreqs, stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
-                                     ylab, title))
+        # An empty level leads to NAs when computing %
+        if(stack && any(is.na(varFreqs))) {
+            Message(.gettext("Cannot plot stacked bars when the table has a null margin."), "error")
+            stack <- FALSE
         }
-        else if(plotType == "pie") {
-            if(what == "col") {
-                doItAndPrint(paste("opar <- par(mfrow=c(2, ", ceiling(ncol(varFreqs)/2), "))", sep=""))
-                for(i in 1:ncol(varFreqs)) {
-                    doItAndPrint(paste("pie(varFreqs[,", i, "])", sep=""))
-                    if(title != "")
-                        doItAndPrint(paste("title(main=\"", names(dimnames(varFreqs))[2], " ",
-                                           colnames(varFreqs)[i], "\")", sep=""))
-                }
-                 doItAndPrint("par(opar)")
+
+        if(plot) {
+            if(vert) {
+                if(what == "col")
+                    doItAndPrint(sprintf('barchart(t(varFreqs), stack=%s, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
+                                         stack, ylab, title))
+                 else
+                    doItAndPrint(sprintf('barchart(varFreqs, stack=%s, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
+                                         stack, ylab, title))
             }
             else {
-                doItAndPrint(paste("opar <- par(mfrow=c(2, ", ceiling(nrow(varFreqs)/2), "))", sep=""))
-                for(i in 1:nrow(varFreqs)) {
-                    doItAndPrint(paste("pie(varFreqs[", i, ",])", sep=""))
-                    doItAndPrint(paste("title(main=\"", names(dimnames(varFreqs))[1], " ",
-                                       rownames(varFreqs)[i], "\")", sep=""))
-                }
-                doItAndPrint("par(opar)")
+                if(what == "col")
+                    doItAndPrint(sprintf('barchart(t(varFreqs), stack=%s, xlab="%s", main="%s", auto.key=list(space="bottom"))',
+                                         stack, ylab, title))
+                 else
+                    doItAndPrint(sprintf('barchart(varFreqs, stack=%s, xlab="%s", main="%s", auto.key=list(space="bottom"))',
+                                         stack, ylab, title))
             }
         }
 
-        doItAndPrint("print(varFreqs)")
+        if(what == "row")
+            doItAndPrint("addmargins(varFreqs, 2)")
+        else if(what == "col")
+            doItAndPrint("addmargins(varFreqs, 1)")
+        else
+            doItAndPrint("addmargins(varFreqs)")
 
         # Used by saveTableToOutput()
         last.table <<- "varFreqs"
@@ -209,17 +208,16 @@ varCrossTableDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="varCrossTableDlg")
-    tkgrid(getFrame(varBox1), sticky="w", pady=6, columnspan=3)
-    tkgrid(getFrame(varBox2), sticky="w", pady=6, columnspan=3)
-    tkgrid(whatFrame, sticky="w", pady=6, columnspan=3)
+    tkgrid(getFrame(varBox1), getFrame(varBox2), sticky="w", pady=6)
+    tkgrid(whatFrame, sticky="w", pady=6, columnspan=2)
     tkgrid(labelRcmdr(plotFrame, text=.gettext("Plot:"), foreground="blue"),
-           sticky="w", columnspan=3)
-    tkgrid(plotFrame, sticky="w", pady=6, columnspan=3)
-    tkgrid(noneButton, sticky="w", padx=3, column=1, row=4)
-    tkgrid(barchartButton, sticky="w", padx=3, column=2, row=4)
-    tkgrid(pieButton, sticky="w", padx=3, column=3, row=4)
-    tkgrid(labelRcmdr(top, text=.gettext("Title:")), titleEntry, sticky="w")
-    tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=3)
-    dialogSuffix(rows=6, columns=3, focus=varBox1$listbox)
+           sticky="w", columnspan=2)
+    tkgrid(plotButton, sticky="w", columnspan=2)
+    tkgrid(vertButton, sticky="w", columnspan=2)
+    tkgrid(stackButton, sticky="w", columnspan=2)
+    tkgrid(labelRcmdr(plotFrame, text=.gettext("Title:")), titleEntry, sticky="w")
+    tkgrid(plotFrame, sticky="w", pady=6, columnspan=2)
+    tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=2)
+    dialogSuffix(rows=7, columns=2, focus=varBox1$listbox)
 }
 
