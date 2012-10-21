@@ -85,7 +85,7 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20, p=0.1, min
             # We need to use IDs rather than indexes to access documents in the corpus
             # since some documents may have been skipped in the clustering
             for(id in docs) {
-                tkinsert(txt, "end", paste("\n\n", id, "\n", sep=""),
+                tkinsert(txt, "end", paste("\n", id, "\n", sep=""),
                          "articlehead")
                 tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
                 mark <- mark + 1
@@ -103,7 +103,7 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20, p=0.1, min
                 if(length(origin) > 0 || length(date) > 0)
                     tkinsert(txt, "end", "\n", "small")
 
-                tkinsert(txt, "end", paste(paste(corpus[[id]], collapse="\n"), "\n\n"))
+                tkinsert(txt, "end", paste(paste(corpus[[id]], collapse="\n"), "\n"))
             }
         }
     }
