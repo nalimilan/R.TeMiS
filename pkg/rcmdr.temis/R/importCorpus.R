@@ -466,11 +466,15 @@ importCorpusFromTwitter <- function(language=NA) {
                           showvalue=TRUE, variable=tclNMess,
                           resolution=1, orient="horizontal")
 
+    tclExclRetweetsVar <- tclVar(0)
+    tclRetweets <- tkcheckbutton(top, text=.gettext("Exclude retweets"), variable=tclExclRetweetsVar)
+
     result <- tclVar()
 
     onOK <- function() {
         text <- tclvalue(tclText)
         nmess <- tclvalue(tclNMess)
+        exclRetweets <- tclvalue(tclExclRetweetsVar) == 1
 
         if(text == "") {
             Message(.gettext("Please enter valid text to search for."), type="error")
@@ -522,6 +526,13 @@ importCorpusFromTwitter <- function(language=NA) {
         doItAndPrint(sprintf('colnames(corpusVars) <- c("%s", "%s", "%s", "%s")',
                              .gettext("Author"), .gettext("Time"), .gettext("Truncated"), .gettext("StatusSource")))
 
+        doItAndPrint(sprintf('corpusVars[["%s"]] <- grepl("\\\\bRT\\\\b", corpus)', .gettext("Retweet")))
+
+        if(exclRetweets) {
+            doItAndPrint(sprintf('corpus <- corpus[!corpusVars[["%s"]]]', .gettext("Retweet")))
+            doItAndPrint(sprintf('corpusVars <- subset(corpusVars, !%s)', .gettext("Retweet")))
+        }
+
         tclvalue(result) <- "success"
 
         return(FALSE)
@@ -539,8 +550,9 @@ importCorpusFromTwitter <- function(language=NA) {
            entryText, sticky="w", pady=6)
     tkgrid(labelRcmdr(top, text=.gettext("Maximum number of tweets to download:")),
            tclNSlider, sticky="w", pady=6)
+    tkgrid(tclRetweets, sticky="w", pady=6, columnspan=2)
     tkgrid(buttonsFrame, columnspan=2, sticky="w", pady=6)
-    dialogSuffix(rows=2, columns=2, focus=entryText)
+    dialogSuffix(rows=3, columns=2, focus=entryText)
 
     return(tclvalue(result) == "success")
 }
