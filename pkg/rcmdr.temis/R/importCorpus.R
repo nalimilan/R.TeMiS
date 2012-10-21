@@ -104,14 +104,14 @@ importCorpusDlg <- function() {
 
         # Import corpus
         source <- tclvalue(sourceVariable)
-        success <- switch(source,
-                          dir=importCorpusFromDir(lang),
-                          file=importCorpusFromFile(lang),
-                          factiva=importCorpusFromFactiva(lang),
-                          twitter=importCorpusFromTwitter(lang))
+        res <- switch(source,
+                      dir=importCorpusFromDir(lang),
+                      file=importCorpusFromFile(lang),
+                      factiva=importCorpusFromFactiva(lang),
+                      twitter=importCorpusFromTwitter(lang))
 
         # If loading failed, do not add errors to errors
-        if(!success || length(corpus) == 0)
+        if(!(isTRUE(res) || is.list(res)) || length(corpus) == 0)
             return()
 
         .setBusyCursor()
@@ -151,7 +151,13 @@ importCorpusDlg <- function() {
             doItAndPrint("dtmCorpus <- corpus")
 
         if(twitter)
-            doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, function(x) gsub("http://[[:alnum:]/\\\\.\\\\-\\\\?=&#_;,]*|[@#][[:alnum:]]+|RT:", "", x))')
+            doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, function(x) gsub("http(s?)://[[:alnum:]/\\\\.\\\\-\\\\?=&#_;,]*|\\\\bRT\\\\b", "", x))')
+        if(twitter && res$removeNames)
+            doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, function(x) gsub("@.+?\\\\b", "", x))')
+        if(twitter && res$removeHashtags)
+            doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, function(x) gsub("#.+?\\\\b", "", x))')
+
+        if(twitter)
 
         if(lowercase)
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, tolower)")
@@ -466,15 +472,19 @@ importCorpusFromTwitter <- function(language=NA) {
                           showvalue=TRUE, variable=tclNMess,
                           resolution=1, orient="horizontal")
 
-    tclExclRetweetsVar <- tclVar(0)
-    tclRetweets <- tkcheckbutton(top, text=.gettext("Exclude retweets"), variable=tclExclRetweetsVar)
+    checkBoxes(frame="optionsFrame",
+               boxes=c("removeNames", "removeHashtags", "exclRetweets"),
+               initialValues=c(1, 1, 0),
+               labels=c(.gettext("Remove user names"), .gettext("Remove hashtags"),
+                        .gettext("Exclude retweets")),
+               title=.gettext("Options:"))
 
     result <- tclVar()
 
     onOK <- function() {
         text <- tclvalue(tclText)
         nmess <- tclvalue(tclNMess)
-        exclRetweets <- tclvalue(tclExclRetweetsVar) == 1
+        exclRetweets <- tclvalue(exclRetweetsVariable) == 1
 
         if(text == "") {
             Message(.gettext("Please enter valid text to search for."), type="error")
@@ -550,11 +560,15 @@ importCorpusFromTwitter <- function(language=NA) {
            entryText, sticky="w", pady=6)
     tkgrid(labelRcmdr(top, text=.gettext("Maximum number of tweets to download:")),
            tclNSlider, sticky="w", pady=6)
-    tkgrid(tclRetweets, sticky="w", pady=6, columnspan=2)
+    tkgrid(optionsFrame, sticky="w", pady=6, columnspan=2)
     tkgrid(buttonsFrame, columnspan=2, sticky="w", pady=6)
     dialogSuffix(rows=3, columns=2, focus=entryText)
 
-    return(tclvalue(result) == "success")
+    if(tclvalue(result) == "success")
+        return(list(removeNames=tclvalue(removeNamesVariable) == 1,
+                    removeHashtags=tclvalue(removeHashtagsVariable) == 1))
+    else
+        return(FALSE)
 }
 
 # Adapted version of tm's makeChunks() remembering which chunk comes from which document,

@@ -45,7 +45,12 @@
          hashtags  starting with \dQuote{#}; see \url{https://dev.twitter.com/docs/using-search} if
          you need more complex search strings. User names, hashtags, URLs and \dQuote{RT} (re-tweet)
          mentions are automatically removed from the corpus when computing the document-term matrix
-         as they generally disturb the analysis.
+         as they generally disturb the analysis. If the option to remove user names and hashtags is
+         disabled, they will be included as standard text, i.e. \dQuote{#} and \dQuote{@} will be
+         removed if the punctuation removal processing option has been enabled. The \dQuote{Exclude
+         retweets} option works by identifying tweets that contain \dQuote{RT} as a separate expression;
+         this operation can also be carried out manually later by using the \dQuote{Retweet} corpus
+         variable that is created automatically at import time.
 
          The original texts can optionally be split into smaller chunks, which will then be
          considered as the real unit (called \sQuote{documents}) for all analyses. In order
