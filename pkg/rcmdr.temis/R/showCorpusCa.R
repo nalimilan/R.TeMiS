@@ -176,7 +176,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 
         if(length(negrows) == 0) {
             tkinsert(txt, "end",
-                     sprintf(.gettext("None among the %i most contributive documents."), nrows))
+                     sprintf(.gettext("None among the %i most contributive documents."), ndocs))
         }
         else {
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
@@ -276,7 +276,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 
         if(length(posrows) == 0) {
             tkinsert(txt, "end",
-                     sprintf(.gettext("None among the %i most contributive documents."), nrows))
+                     sprintf(.gettext("None among the %i most contributive documents."), ndocs))
         }
         else {
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
