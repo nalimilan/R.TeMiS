@@ -21,6 +21,8 @@ setOutputFile <- function() {
     # The openOutputFile menu needs to notice the new file
     activateMenus()
 
+    doItAndPrint("browseURL(.HTML.file)")
+
     return(TRUE)
 }
 
