@@ -30,13 +30,10 @@ specificTerms <- function(dtm, variable=NULL, p=0.1, n.max=25, sparsity=0.95, mi
 
         # As this is a discrete distribution, we need to subtract one
         # to include the value when switching sides
-        counts <- ifelse(sup, counts - 1, counts)
-
-        p.val <- phyper(counts, rs[l], tot - rs[l], cs)
+        p.val <- phyper(ifelse(sup, counts - 1, counts), rs[l], tot - rs[l], cs)
         t.val <- qnorm(p.val)
 
         p.val[sup] <- 1 - p.val[sup]
-        p.val <- 2 * p.val
 
         keep <- which(p.val <= p)
 
