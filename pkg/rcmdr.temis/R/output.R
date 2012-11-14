@@ -88,6 +88,9 @@ copyTableToOutput <- function() {
     if(!(html.on || setOutputFile()))
         return()
 
+    # Needed when copying CA, HTML.ca() is too late to update the GUI
+    .setBusyCursor()
+    on.exit(.setIdleCursor())
 
     title <- attr(get(last.table), "title")
     if(length(title) > 0)
@@ -201,56 +204,121 @@ HTML.list <- function (x, file = get(".HTML.file"), first = TRUE, append = TRUE,
         sep = "\n")
 }
 
-# This function is a slightly modified version of print.ca() from package ca.
+# This function uses parts from summary.ca() from package ca, version 0.53.
 # Released under the GPL (no version specified), Copyright Michael Greenacre
 # and Oleg Nenadic <onenadi at uni-goettingen.de>.
 # http://cran.r-project.org/web/packages/ca/index.html
 HTML.ca <- function(x, ...) {
-    nd0 <- length(x$sv)
-    nd  <- x$nd
-    if (is.na(nd)){
-        nd <- 2
-    }
-    else {
-        if (nd > length(x$sv)) nd <- length(x$sv)
-    }
+  object <- summary.ca(x)
 
-    # Eigenvalues:
-    Dimension <- 1:nd
-    Value <- round(x$sv[1:nd]^2, 6)
-    Percentage <- paste(as.character(round(100 * Value / sum(Value), 2)), "%", sep = "")
+  if (!is.na(object$scree)[1]){
+    cat("\n")
+   # init:
+    nchars <- 25
+    Dim    <- object$scree[,1]
+    ev     <- object$scree[,2]
+    rev    <- object$scree[,3]
+    crev   <- object$scree[,4]
+    Value  <- ev[Dim]
+    EV     <- rev[Dim]
+    CUMEV  <- crev[Dim]
+    if (length(rev)>1) {
+      st <- round(nchars * (rev - min(rev)) / diff(range(rev)), 0)
+      } else {
+      st <- nchars
+      }
 
-    tmp <- rbind(Value = as.character(Value), Percentage = as.character(Percentage))
-    dimnames(tmp)[[2]] <- Dimension
-    Eigenvalues <- tmp
+    scree <- character(length(Dim))
+    for (q in Dim) {
+      s1 <- paste(rep("*", st[q]), collapse = "")
+      s2 <- paste(rep(" ", nchars - st[q]), collapse = "")
+      scree[q] <- paste(" ", s1, s2, sep = "")
+      }
+    temp0 <- c(" "," ------"," "," "," ")
+    temp1 <- c("Total:", sum(EV), "", "", "")
+   # some processing:
+    Value0 <- round(Value, 6)
+    Value1 <- round(sum(Value), 6)
+    EV1    <- round(EV, 1)
+    EV2    <- round(sum(EV), 1)
+    gluezero <- function(item, dig = 8, point = NA){
+      item0 <- paste(item, paste(rep(0, dig), collapse=""), sep = "")
+      item1 <- strsplit(item0,"", fixed = TRUE)
+      pastebit <- function(x, digits = dig, poin = point){
+        if(!is.na(poin)) { 
+          x[poin] <- "."
+          }
+        paste(x[1:dig], collapse = "")
+        }
+      unlist(lapply(item1, pastebit))
+      }
+    remzero <- function(x, doub = FALSE){
+      x0 <- strsplit(x, "", fixed = TRUE)
+      pastebit2 <- function(x, doubl = doub){
+        if (doubl){
+           if (x[1]==0 & x[2]==0){
+             x[1] <- " "
+             x[2] <- " "
+             }
+          }
+        if (x[1]==0) x[1] <- " "
+        paste(x, collapse = "")
+        }
+      unlist(lapply(x0, pastebit2))
+      }
+    EV.1 <- floor(log(EV1, base = 10))
+    EV.1[EV.1 < 0] <- 0
+    EV.2 <- as.character(EV.1)
+    EV.2[EV.1 == 1] <- ""
+    EV.2[EV.1 == 0] <- "0"
+    EV1 <- remzero(gluezero(paste(EV.2, EV1, sep = ""), 4, 3))
+    EV.sp <- paste(rep(" ", ifelse(max(EV.1==2), 0, 1)), collapse = "", 
+                   sep = "")
+    EV1    <- paste(EV.sp, EV1, sep = "")
+    CUMEV1 <- round(CUMEV, 1)
+    CUMEV.1 <- floor(log(CUMEV1, base = 10))
+    CUMEV.1[CUMEV.1 < 0] <- 0
+    CUMEV.2 <- as.character(CUMEV.1)
+    CUMEV.2[CUMEV.1 == 2] <- ""
+    CUMEV.2[CUMEV.1 == 1] <- "0"
+    CUMEV.2[CUMEV.1 == 0] <- "00"
+    CUMEV1 <- remzero(gluezero(paste(CUMEV.2, CUMEV1, sep = ""), 5, 4), 
+                      doub = TRUE)
 
-    # Row Profiles:
-    tmp <- rbind(x$rowmass, x$rowdist, x$rowinertia, t(x$rowcoord[,1:nd]))
-    tmpnames <- x$rownames
-    if (!is.na(x$rowsup[1])) {
-        tmpnames[x$rowsup] <- paste(tmpnames[x$rowsup],"(*)")
-    }
-    dimnames(tmp)[[2]] <- tmpnames
-    dn <- paste("Dim.", 1:nd)
-    dimnames(tmp)[[1]] <- c("Mass", "ChiDist", "Inertia", dn)
-    Row.profiles <- tmp
 
-    # Column Profiles:
-    tmp <- rbind(x$colmass, x$coldist, x$colinertia, t(x$colcoord[,1:nd]))
-    tmpnames <- x$colnames
-    if (!is.na(x$colsup[1])) {
-        tmpnames[x$colsup] <- paste(tmpnames[x$colsup],"(*)")
-    }
-    dimnames(tmp)[[2]] <- tmpnames
-    dn <- paste("Dim.", 1:nd)
-    dimnames(tmp)[[1]] <- c("Mass", "ChiDist", "Inertia", dn)
-    Column.profiles <- tmp
+    scree.out <- data.frame(Dim   = c(Dim, "", "Total:"), 
+                            Value = c(gluezero(Value0), "--------", 
+                                      gluezero(Value1)), 
+                            EV    = c(EV1, "-----", gluezero(EV2, 5, 4)), 
+                            CUMEV = c(CUMEV1, "", ""), 
+                            scree = c(scree, "", ""))
 
-    HTML("Principal inertias (eigenvalues):")
-    HTML(Eigenvalues, ...)
-    HTML("Documents and variables:")
-    HTML(Row.profiles, ...)
-    HTML("Terms:")
-    HTML(Column.profiles, ...)
+    colnames(scree.out) <- c(.gettext("Dimension"), .gettext("Value"), .gettext("%"),
+                             .gettext("Cum. %"), "")
+    HTML(.gettext("Principal inertias (eigenvalues):\n\n"))
+    scree.out <- as.matrix(scree.out)
+   # colnames(scree.out) <- rep(1, dim(scree.out)[1])
+   # print(as.matrix(scree.out), quote = FALSE)
+   # fix for rownames showing up in scree-plot
+   # dimnames(scree.out)[[1]] <- rep("", length(dimnames(scree.out)[[1]]))
+    rownames(scree.out) <- rep("", nrow(scree.out))
+    HTML(scree.out, ...)
+  }
+
+  rownames(object$row) <- object$row[[1]]
+  rownames(object$col) <- object$col[[1]]
+
+  object$row <- object$row[-1]
+  object$col <- object$col[-1]
+
+  names(object$row) <- names(object$col) <- c(.gettext("Mass"), .gettext("Quality"), .gettext("Inertia"),
+                                              outer(c(.gettext("Coord"), .gettext("Quality"), .gettext("Contr")),
+                                                    seq(x$nd), paste, sep=""))
+
+  HTML(.gettext("Documents and variables:"))
+  HTML(object$row,  ...)
+
+  HTML(.gettext("Terms:"))
+  HTML(object$col, ...)
 }
 
