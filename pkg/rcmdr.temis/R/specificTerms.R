@@ -69,21 +69,21 @@ specificTermsDlg <- function() {
                        showvalue=TRUE, variable=tclP,
 	               resolution=1, orient="horizontal")
 
-    tclN <- tclVar(25)
-    sliderN <- tkscale(top, from=1, to=100,
-                       showvalue=TRUE, variable=tclN,
-	               resolution=1, orient="horizontal")
-
     tclOcc <- tclVar(5)
     sliderOcc <- tkscale(top, from=1, to=50,
                          showvalue=TRUE, variable=tclOcc,
 	                 resolution=1, orient="horizontal")
 
+    tclN <- tclVar(25)
+    sliderN <- tkscale(top, from=1, to=100,
+                       showvalue=TRUE, variable=tclN,
+	               resolution=1, orient="horizontal")
+
     onOK <- function() {
         var <- getSelection(varBox)
-        n <- as.numeric(tclvalue(tclN))
         p <- as.numeric(tclvalue(tclP))
         occ <- as.numeric(tclvalue(tclOcc))
+        n <- as.numeric(tclvalue(tclN))
         closeDialog()
 
         if(var == .gettext("Document")) {
@@ -111,11 +111,11 @@ specificTermsDlg <- function() {
 
     OKCancelHelp(helpSubject="specificTermsDlg")
     tkgrid(getFrame(varBox), columnspan="2", sticky="w", pady=6)
-    tkgrid(labelRcmdr(top, text=.gettext("Show terms with a probability below (%):")), sliderN,
+    tkgrid(labelRcmdr(top, text=.gettext("Show terms with a probability below (%):")), sliderP,
            sticky="sw", pady=6)
     tkgrid(labelRcmdr(top, text=.gettext("Only retain terms with a number of occurrences above:")), sliderOcc,
            sticky="sw", pady=6)
-    tkgrid(labelRcmdr(top, text=.gettext("Maximum number of terms to show per level:")), sliderP,
+    tkgrid(labelRcmdr(top, text=.gettext("Maximum number of terms to show per level:")), sliderN,
            sticky="sw", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
     dialogSuffix(rows=4, columns=2)
