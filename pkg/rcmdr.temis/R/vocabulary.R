@@ -127,9 +127,9 @@ vocabularyDlg <- function() {
 
     radioButtons(name="unit",
                  buttons=c("doc", "global"),
-                 labels=c(.gettext("Document (mean)"),
-                          .gettext("Category (sum)")),
-                 title=.gettext("Unit:"),
+                 labels=c(.gettext("Document (mean over individual documents)"),
+                          .gettext("Level (sum inside levels considered as a whole)")),
+                 title=.gettext("Unit of analysis:"),
                  right.buttons=FALSE)
 
     checkBoxes(frame="whatFrame",

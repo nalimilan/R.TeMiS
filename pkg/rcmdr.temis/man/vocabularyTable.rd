@@ -11,7 +11,7 @@ vocabularyTable(termsDtm, wordsDtm, variable = NULL, unit = c("document", "globa
   \item{variable}{A vector of the same length as \code{lengthDtm} giving indexes according
                   to which categories should be defined. If \code{NULL}, per-document measures
                   are returned.}
-  \item{unit}{When \code{variable} is not \code{NULL}, defines the way measures are agregated
+  \item{unit}{When \code{variable} is not \code{NULL}, defines the way measures are aggregated
               (see below).}
 }
 \details{This dialog allows creating tables providing several vocabulary measures

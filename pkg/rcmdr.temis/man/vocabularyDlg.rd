@@ -29,17 +29,16 @@
          numbers and punctuation are removed, but no other changes are done to the text.
 
          Two different units can be selected for the analysis. If \dQuote{Document} is selected, values
-         reported for each category correspond to the mean of the values for each of its documents;
-         a mean column for the whole corpus is also provided. If \dQuote{Category} is selected, these values
+         reported for each level correspond to the mean of the values for each of its documents;
+         a mean column for the whole corpus is also provided. If \dQuote{Level} is selected, these values
          correspond to the sum of the number of terms for each of the categories' documents,
          to the percentage of terms (ratio of the summed numbers of terms) and the average word
-         length of the category when taken as a single document. Both versions of this measure are
-         legitimate, but prompt different interpretations that should not be confused (though they
-         are usually very close); on the contrary, interpretation of the summed or mean number of
-         (long) terms is immediate.
+         length of the level when taken as a single document. Both versions of this measure are
+         legitimate, but prompt different interpretations that should not be confused; on the contrary,
+         interpretation of the summed or mean number of (long) terms is immediate.
 
          This distinction does not make sense when documents (not levels of a variable) are used as the
-         unit of analysis: in this case, \dQuote{category} in the above explanation corresponds to
+         unit of analysis: in this case, \dQuote{level} in the above explanation corresponds to
          \dQuote{document}, and two columns are provided about the whole corpus. \dQuote{Corpus mean}
          is simply the average value of measures over all documents; \dQuote{Corpus total} is the sum
          of the number of terms, the percentage of terms  (ratio of the summed numbers of terms)
