@@ -1,7 +1,15 @@
 \name{termsDictionary}
 \alias{termsDictionary}
-\alias{doTermsDictionary}
+\alias{termsDictionaryAlpha}
+\alias{termsDictionaryOcc}
 \title{Dictionary of terms found in a corpus}
+\usage{
+termsDictionary(dtm, order = c("alphabetic", "occurrences"))
+}
+\arguments{
+  \item{dtm}{a document-term matrix.}
+  \item{order}{whether to sort words alphabetically, or by number of (stemmed) occurrences.}
+}
 \description{List all of the words that were found in the corpus, and stemmed terms present
              in the document-term matrix, together with their number of occurrences.}
 \details{Words found in the corpus before stopwords removal and stemming are printed, together with

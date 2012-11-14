@@ -5,7 +5,14 @@
 
     item        tmMenu          command           "Import corpus..."                 importCorpusDlg             ""                    ""
 
-    item        tmMenu          command           "Show terms dictionary"            doTermsDictionary           "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        tmMenu          command           "Show current corpus"              inspectCorpus               "exists('corpus') && 'Corpus' %in% class(corpus)"                    ""
+
+### Dictionary menu ###
+    menu        dictMenu        tmMenu            ""                                 ""                          ""                    ""
+    item        tmMenu          cascade           "Terms dictionary"                 dictMenu                    ""                    ""
+
+    item        dictMenu        command           "Sorted alphabetically"            termsDictionaryAlpha        "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"          ""
+    item        dictMenu        command           "Sorted by number of occurrences"  termsDictionaryOcc          "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"          ""
 
 
 ### Manage corpus menu ###
@@ -19,7 +26,6 @@
     item        subsetMenu      command           "Restore saved corpus"             restoreCorpus               "exists('origCorpus') && 'Corpus' %in% class(origCorpus)"                    ""
 
     # Main items
-    item        corpusMenu      command           "Show current corpus"              inspectCorpus               ""                    ""
     item        corpusMenu      command           "Set corpus variables"             doSetCorpusVariables        "exists('corpus') && 'Corpus' %in% class(corpus) && activeDataSetP() && checkVariables()"          ""
     item        corpusMenu      cascade           "Subset corpus"                    subsetMenu                    ""                    ""
     item        corpusMenu      command           "Select or exclude terms..."       restrictTermsDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""

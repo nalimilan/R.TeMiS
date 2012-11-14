@@ -1,8 +1,14 @@
-doTermsDictionary <- function() {
-    doItAndPrint("termsDictionary(dtm)")
+termsDictionaryAlpha <- function() {
+    doItAndPrint('termsDictionary(dtm)')
 }
 
-termsDictionary <- function(dtm) {
+termsDictionaryOcc <- function() {
+    doItAndPrint('termsDictionary(dtm, "occurrences")')
+}
+
+termsDictionary <- function(dtm, order=c("alphabetic", "occurrences")) {
+    order <- match.arg(order)
+
     .setBusyCursor()
     on.exit(.setIdleCursor())
 
@@ -25,6 +31,12 @@ termsDictionary <- function(dtm) {
                                  ifelse(!names(words) %in% Terms(dtm), .gettext("Removed"), ""))
 
         names(dictionary) <- c(.gettext("Occurrences"), .gettext("Stopword?"), .gettext("Removed?"))
+
+
+        if(order == "occurrences")
+            dictionary[order(dictionary[, 1], decreasing=TRUE),]
+        else
+            dictionary
     }
     else {
         terms <- SnowballStemmer(names(words), control=RWeka::Weka_control(S=lang))
@@ -38,7 +50,10 @@ termsDictionary <- function(dtm) {
 
         names(dictionary) <- c(.gettext("Occurrences"), .gettext("Stemmed term"), .gettext("Stemmed occ."),
                                .gettext("Stopword?"), .gettext("Removed?"))
-    }
 
-    dictionary
+        if(order == "occurrences")
+            dictionary[order(dictionary[, 3], decreasing=TRUE),]
+        else
+            dictionary
+    }
 }

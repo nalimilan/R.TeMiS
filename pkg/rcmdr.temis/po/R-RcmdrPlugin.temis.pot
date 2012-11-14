@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.temis 0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-16 10:49+0200\n"
+"POT-Creation-Date: 2012-11-14 13:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,7 +32,13 @@ msgstr ""
 msgid "Import corpus..."
 msgstr ""
 
-msgid "Show terms dictionary"
+msgid "Terms dictionary"
+msgstr ""
+
+msgid "Sorted alphabetically"
+msgstr ""
+
+msgid "Sorted by number of occurrences"
 msgstr ""
 
 msgid "Manage corpus"
