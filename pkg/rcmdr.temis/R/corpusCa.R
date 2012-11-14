@@ -187,13 +187,13 @@ corpusCaDlg <- function() {
 
             last.table <<- "corpusCa"
             attr(corpusCa, "title") <<- .gettext("Correspondence analysis")
+
+            showCorpusCaDlg()
         }
 
         activateMenus()
 
         tkfocus(CommanderWindow())
-
-        showCorpusCaDlg()
     }
 
     OKCancelHelp(helpSubject=corpusCaDlg)
