@@ -46,7 +46,8 @@ specificTerms <- function(dtm, variable=NULL, p=0.1, n.max=25, sparsity=0.95, mi
         colnames(ret) <- c(.gettext("% Term/Level"), .gettext("% Level/Term"), .gettext("Global %"),
                            .gettext("Level"), .gettext("Global"),
                            .gettext("t value"), .gettext("Prob."))
-        ret
+
+        ret[order(-sign(ret[, 6]), ret[, 7]),]
     })
 }
 
