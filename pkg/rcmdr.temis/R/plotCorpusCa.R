@@ -90,8 +90,8 @@ plotCorpusCa <- function (x, dim = c(1, 2), map = "symmetric",
         xn.act <- x.names
     }
     else {
-        sup.x <- x[obj$rowsup, ]
-        act.x <- x[-obj$rowsup, ]
+        sup.x <- x[obj$rowsup, , drop=FALSE]
+        act.x <- x[-obj$rowsup, , drop=FALSE]
         pch.x[obj$rowsup] <- pch[2]
         coltext.x[obj$rowsup] <- col.text[2]
         font.x[obj$rowsup] <- font[2]
@@ -105,8 +105,8 @@ plotCorpusCa <- function (x, dim = c(1, 2), map = "symmetric",
         yn.act <- y.names
     }
     else {
-        sup.y <- y[obj$colsup, ]
-        act.y <- y[-obj$colsup, ]
+        sup.y <- y[obj$colsup, , drop=FALSE]
+        act.y <- y[-obj$colsup, , drop=FALSE]
         pch.y[obj$colsup] <- pch[4]
         coltext.y[obj$colsup] <- col.text[4]
         font.y[obj$colsup] <- font[4]
@@ -143,13 +143,13 @@ plotCorpusCa <- function (x, dim = c(1, 2), map = "symmetric",
     x.font <- fontlut[[pri[pr == what[1]]]][[1]]
     y.font <- fontlut[[pri[pr == what[2]]]][[2]]
     if (is.matrix(x)) {
-        x <- x[, dim]
+        x <- x[, dim, drop=FALSE]
     }
     else {
         x <- matrix(x[dim], ncol = length(dim), nrow = 1)
     }
     if (is.matrix(y)) {
-        y <- y[, dim]
+        y <- y[, dim, drop=FALSE]
     }
     else {
         y <- matrix(y[dim], ncol = length(dim), nrow = 1)
