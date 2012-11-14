@@ -44,6 +44,23 @@ initOutputFile <- function(file) {
 
     .HTML.file <<- file
     HTML.title(title, 1, append=TRUE)
+
+    HTML(sprintf(.gettext("Corpus imported on %s. Language: %s."),
+                 strftime(meta(corpus, type="corpus", tag="timestamp"), "%c"),
+                 meta(corpus, type="corpus", tag="language")))
+    HTML(sprintf(.gettext("Source: %s."), meta(corpus, type="corpus", tag="source")))
+    HTML(sprintf(.gettext("%i documents and %i terms."), nrow(dtm), ncol(dtm)))
+
+    cat(.gettext("Processing options:\n"), file=.HTML.file, append=TRUE)
+    processing <- meta(corpus, type="corpus", tag="processing")
+    # Keep in sync with strings in importCorpusDlg()
+    HTMLli(paste(c(.gettext("Ignore case"), .gettext("Remove punctuation"),
+                   .gettext("Remove digits"), .gettext("Remove stopwords"),
+                   .gettext("Apply stemming")),
+                 .gettext(": "),
+                 ifelse(processing[c("lowercase", "punctuation", "digits", "stopwords", "stemming")],
+                        .gettext("enabled"), .gettext("disabled")),
+                 ".", sep=""))
 }
 
 openOutputFile <- function() {

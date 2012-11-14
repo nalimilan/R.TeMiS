@@ -69,8 +69,9 @@ importCorpusDlg <- function() {
     tclLang <- tclVar(.gettext("en"))
     entryLang <- ttkentry(top, width="12", textvariable=tclLang)
     checkBoxes(frame="processingFrame",
-               boxes=c("lowercase", "punctuation", "numbers", "stopwords", "stemming"),
+               boxes=c("lowercase", "punctuation", "digits", "stopwords", "stemming"),
                initialValues=rep(1, 5),
+               # Keep in sync with strings in initOutputFile()
                labels=c(.gettext("Ignore case"), .gettext("Remove punctuation"),
                         .gettext("Remove digits"), .gettext("Remove stopwords"),
                         .gettext("Apply stemming")),
@@ -145,11 +146,11 @@ importCorpusDlg <- function() {
         twitter <- source == "twitter"
         lowercase <- tclvalue(lowercaseVariable) == 1
         punctuation <- tclvalue(punctuationVariable) == 1
-        numbers <- tclvalue(numbersVariable) == 1
+        digits <- tclvalue(digitsVariable) == 1
         stopwords <- tclvalue(stopwordsVariable) == 1
         stemming <- tclvalue(stemmingVariable) == 1
 
-        if(twitter || lowercase || punctuation || numbers || stopwords || stemming)
+        if(twitter || lowercase || punctuation || digits || stopwords || stemming)
             doItAndPrint("dtmCorpus <- corpus")
 
         if(twitter)
@@ -169,7 +170,7 @@ importCorpusDlg <- function() {
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, function(x) gsub(\"([\'\U2019\\n\U202F\U2009]|[[:punct:]]|[[:space:]]|[[:cntrl:]])+\", \" \", x))")
         }
 
-        if(numbers)
+        if(digits)
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removeNumbers)")
 
         if(stopwords || stemming) {
@@ -186,7 +187,7 @@ importCorpusDlg <- function() {
             doItAndPrint(sprintf('dtmCorpus <- tm_map(dtmCorpus, stemDocument, language="%s")',
                                  tm:::map_IETF_Snowball(lang)))
 
-        if(twitter || lowercase || punctuation || numbers || stopwords || stemming) {
+        if(twitter || lowercase || punctuation || digits || stopwords || stemming) {
             doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))")
             doItAndPrint("rm(dtmCorpus)")
         }
@@ -199,12 +200,16 @@ importCorpusDlg <- function() {
         # Language is used again when creating the dtm to analyse word lengths
         doItAndPrint(sprintf('meta(corpus, type="corpus", tag="language") <- attr(dtm, "language") <- "%s"', lang))
 
+        # tm's create_date tag is wrong because it uses GMT by default
+        doItAndPrint('meta(corpus, type="corpus", tag="timestamp") <- as.POSIXlt(Sys.time())')
+        doItAndPrint(sprintf('meta(corpus, type="corpus", tag="source") <- "%s"', res$source))
+
         if(stopwords || stemming) {
             doItAndPrint('attr(dtm, "words") <- words')
             doItAndPrint("rm(words)")
         }
-        doItAndPrint(sprintf('attr(dtm, "processing") <- c(lowercase=%s, punctuation=%s, numbers=%s, stopwords=%s, stemming=%s)',
-                             lowercase, punctuation, numbers, stopwords, stemming))
+        doItAndPrint(sprintf('meta(corpus, type="corpus", tag="processing") <- attr(dtm, "processing") <- c(lowercase=%s, punctuation=%s, digits=%s, stopwords=%s, stemming=%s)',
+                             lowercase, punctuation, digits, stopwords, stemming))
 
         doItAndPrint("corpus")
         doItAndPrint("dtm")
@@ -241,7 +246,8 @@ importCorpusFromDir <- function(language=NA) {
 
     doItAndPrint(sprintf('corpus <- Corpus(DirSource("%s", encoding=""), readerControl=list(language=%s))', dir, language))
 
-    return(TRUE)
+
+    list(source=sprintf("directory %s", dir))
 }
 
 # Choose a CSV file to load texts and variables from
@@ -382,7 +388,8 @@ importCorpusFromFile <- function(language=NA) {
     if(ncol(corpusDataset) > 1)
         doItAndPrint("corpusVars <- corpusDataset[-1]")
 
-    return(TRUE)
+
+    list(source=sprintf("spreadsheet file %s", file))
 }
 
 # Choose a Factiva XML or HTML file to load texts and variables from
@@ -461,7 +468,8 @@ importCorpusFromFactiva <- function(language=NA) {
 
     assign("corpusVars", vars, envir=.GlobalEnv)
 
-    return(TRUE)
+    list(source=sprintf(.ngettext(length(files), "Factiva file %s", "Factiva files %s"),
+                        paste(files, collapse=", ")))
 }
 
 # Choose a Twitter hashtag to search for messages
@@ -577,7 +585,8 @@ importCorpusFromTwitter <- function(language=NA) {
     dialogSuffix(rows=3, columns=2, focus=entryText)
 
     if(tclvalue(result) == "success")
-        return(list(removeNames=tclvalue(removeNamesVariable) == 1,
+        return(list(source=sprintf(.gettext("Twitter search for %s"), tclvalue(tclText)),
+                    removeNames=tclvalue(removeNamesVariable) == 1,
                     removeHashtags=tclvalue(removeHashtagsVariable) == 1))
     else
         return(FALSE)
