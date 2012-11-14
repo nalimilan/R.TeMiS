@@ -22,6 +22,10 @@ specificTerms <- function(dtm, variable=NULL, p=0.1, n.max=25, sparsity=0.95, mi
         # rownames(dtm) == l is used below because "" is a possible level
         i <- rownames(dtm) == l
 
+        # Empty documents create errors
+        if(rs[i] == 0)
+            return(numeric(0))
+
         rp <- as.matrix(dtm[l,]/rs[l])[1,]
         cp <- as.matrix(dtm[l,])[1,]/cs
         sup <- rp > cs.tot
