@@ -149,11 +149,12 @@ vocabularyDlg <- function() {
         var <- getSelection(varBox)
 
         if(var == .gettext("Document")) {
-            tkinvoke(docButton)
             tkconfigure(globalButton, state="disabled")
+            tkinvoke(docButton)
         }
         else {
             tkconfigure(globalButton, state="enabled")
+            tkinvoke(globalButton)
         }
     }
 
