@@ -2,15 +2,16 @@ vocabularyTable <- function(termsDtm, wordsDtm, variable=NULL, unit=c("document"
     unit <- match.arg(unit)
     var <- meta(corpus, tag=variable)
 
-    termsMat <- as.matrix(termsDtm)
-    totaltPerDoc <- row_sums(termsDtm)
-    uniquePerDoc <- rowSums(termsMat > 0)
-    hapaxPerDoc <- rowSums(termsMat == 1)
+    if(is.null(variable) || unit == "document") {
+        totaltPerDoc <- row_sums(termsDtm)
+        uniquePerDoc <- row_sums(termsDtm > 0)
+        hapaxPerDoc <- row_sums(termsDtm == 1)
+    }
+
     totalwPerDoc <- row_sums(wordsDtm)
     longPerDoc <- row_sums(wordsDtm[,nchar(colnames(wordsDtm)) >= 7])
     veryLongPerDoc <- row_sums(wordsDtm[,nchar(colnames(wordsDtm)) >= 10])
     weightedLengths <- rowSums(sweep(as.matrix(wordsDtm), 2, nchar(colnames(wordsDtm)), "*"))
-    rm(termsMat)
 
     # Per-document statistics
     if(is.null(variable)) {
@@ -22,6 +23,9 @@ vocabularyTable <- function(termsDtm, wordsDtm, variable=NULL, unit=c("document"
                      veryLongPerDoc, veryLongPerDoc/totalwPerDoc*100,
                      weightedLengths/totalwPerDoc)
 
+        uniquet <- sum(col_sums(dtm) > 0)
+        hapaxt <- sum(col_sums(dtm) == 1)
+
         voc <- cbind(voc, c(mean(totaltPerDoc),
                             mean(uniquePerDoc), mean(uniquePerDoc/totaltPerDoc, na.rm=TRUE)*100,
                             mean(hapaxPerDoc), mean(hapaxPerDoc/totaltPerDoc, na.rm=TRUE)*100,
@@ -30,8 +34,8 @@ vocabularyTable <- function(termsDtm, wordsDtm, variable=NULL, unit=c("document"
                             mean(veryLongPerDoc), mean(veryLongPerDoc/totalwPerDoc, na.rm=TRUE)*100,
                             mean(weightedLengths/totalwPerDoc, na.rm=TRUE)),
                           c(sum(totaltPerDoc),
-                            sum(uniquePerDoc), sum(uniquePerDoc)/sum(totaltPerDoc)*100,
-                            sum(hapaxPerDoc), sum(hapaxPerDoc)/sum(totaltPerDoc)*100,
+                            sum(uniquet), sum(uniquet)/sum(totaltPerDoc)*100,
+                            sum(hapaxt), sum(hapaxt)/sum(totaltPerDoc)*100,
                             sum(totalwPerDoc),
                             sum(longPerDoc), sum(longPerDoc)/sum(totalwPerDoc)*100,
                             sum(veryLongPerDoc), sum(veryLongPerDoc)/sum(totalwPerDoc)*100,
@@ -50,11 +54,13 @@ vocabularyTable <- function(termsDtm, wordsDtm, variable=NULL, unit=c("document"
         veryLong <- tapply(veryLongPerDoc, var, mean)
         avgLengthPerDoc <- weightedLengths/totalwPerDoc
         avgLength <- tapply(avgLengthPerDoc, var, mean, na.rm=TRUE)
+
         voc <- rbind(totalt, unique, unique/totalt*100,
                              hapax, hapax/totalt*100,
                      totalw, long, long/totalw*100,
                              veryLong, veryLong/totalw*100,
                              avgLength)
+
         voc <- cbind(voc, c(mean(totalt),
                             mean(uniquePerDoc), mean(uniquePerDoc/totaltPerDoc, na.rm=TRUE)*100,
                             mean(hapaxPerDoc), mean(hapaxPerDoc/totaltPerDoc, na.rm=TRUE)*100,
@@ -62,28 +68,34 @@ vocabularyTable <- function(termsDtm, wordsDtm, variable=NULL, unit=c("document"
                             mean(longPerDoc), mean(longPerDoc/totalwPerDoc, na.rm=TRUE)*100,
                             mean(veryLongPerDoc), mean(veryLongPerDoc/totalwPerDoc, na.rm=TRUE)*100,
                             mean(avgLengthPerDoc, na.rm=TRUE)))
-        colnames(voc)[ncol(voc)] <- .gettext("Corpus")
+
+        colnames(voc)[ncol(voc)] <- .gettext("Corpus mean")
         lab <- .gettext("Per document mean:")
     }
     else {
-        totalt <- tapply(totaltPerDoc, var, sum)
-        unique <- tapply(uniquePerDoc, var, sum)
-        hapax <- tapply(hapaxPerDoc, var, sum)
+        totalt <- row_sums(rollup(dtm, 1, var, sum))
+        unique <- row_sums(rollup(dtm, 1, var, sum) > 0)
+        hapax <- row_sums(rollup(dtm, 1, var, sum) == 1)
         totalw <- tapply(totalwPerDoc, var, sum)
         long <- tapply(longPerDoc, var, sum)
         veryLong <- tapply(veryLongPerDoc, var, sum)
-        avgLength <- tapply(weightedLengths, var, sum, na.rm=TRUE)/totalw
+        weightedLengths <- tapply(weightedLengths, var, sum)
+
+        uniquet <- sum(col_sums(dtm) > 0)
+        hapaxt <- sum(col_sums(dtm) == 1)
+
         voc <- rbind(totalt, unique, unique/totalt*100,
                              hapax, hapax/totalt*100,
                      totalw, long, long/totalw*100,
                              veryLong, veryLong/totalw*100,
-                             avgLength)
-        voc <- cbind(voc, c(sum(totalt), sum(unique), sum(unique)/sum(totalt)*100,
-                                         sum(hapax), sum(hapax)/sum(totalt)*100,
+                             weightedLengths/totalw)
+
+        voc <- cbind(voc, c(sum(totalt), uniquet, uniquet/sum(totalt)*100,
+                                         hapaxt, hapaxt/sum(totalt)*100,
                             sum(totalw), sum(long), sum(long)/sum(totalw)*100,
                                          sum(veryLong), sum(veryLong)/sum(totalw)*100,
                                          sum(weightedLengths)/sum(totalw)))
-        colnames(voc)[ncol(voc)] <- .gettext("Corpus")
+        colnames(voc)[ncol(voc)] <- .gettext("Corpus total")
         lab <- .gettext("Per category total:")
     }
 
