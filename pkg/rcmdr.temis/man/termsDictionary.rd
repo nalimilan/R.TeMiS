@@ -3,15 +3,16 @@
 \alias{doTermsDictionary}
 \title{Dictionary of terms found in a corpus}
 \description{List all of the words that were found in the corpus, and stemmed terms present
-             in the document-term matrix.}
-\details{If stemming was not enabled, this command simply returns the names of the columns of
-         the document-term matrix corresponding to the corpus. If stemming was enabled, words
-         found in the corpus before stemming are printed together with the corresponding stemmed
-         term that was eventually added to the document-term matrix.
+             in the document-term matrix, together with their number of occurrences.}
+\details{Words found in the corpus before stopwords removal and stemming are printed, together with
+         the corresponding stemmed term that was eventually added to the document-term matrix, if stemming
+         was enabled. Occurrences found before and after stemming are also shown.
 
-         Words that were removed via processing at import time (stopwords, numbers) are not shown,
-         but those removed manually via the Text mining ->Terms->Exclude terms from analysis... menu,
-         are listed even if they have been removed from the document-term matrix.
+         The column \dQuote{Stopword?} indicates whether the corresponding word is present in the list
+         of stopwords for the corpus language. Words that were actually removed, either automatically by
+         stopwords removal at import time, or manually via the Text mining->Terms->Exclude terms from analysis...
+         menu, are signalled in the \dQuote{Removed?} column. All other words are present in the final
+         document-term matrix, in their original or in their stemmed form.
 }
 \seealso{\code{\link{DocumentTermMatrix}}, \code{\link{restrictTermsDlg}}, \code{\link{freqTermsDlg}},
          \code{\link{termCoocDlg}} }

@@ -130,9 +130,6 @@ importCorpusDlg <- function() {
         doItAndPrint('activeDataSet("corpusVars")')
         doItAndPrint("setCorpusVariables()")
 
-        # Language is used again when creating the dtm to analyse word lengths
-        doItAndPrint(sprintf('meta(corpus, type="corpus", tag="language") <- "%s"', lang))
-
         # Create chunks
         if(tclvalue(tclChunks) == 1) {
             doItAndPrint(sprintf("corpus <- splitTexts(corpus, %s)", tclvalue(tclNParagraphs)))
@@ -157,29 +154,32 @@ importCorpusDlg <- function() {
         if(twitter && res$removeHashtags)
             doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, function(x) gsub("#.+?\\\\b", "", x))')
 
-        if(twitter)
-
         if(lowercase)
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, tolower)")
+
         if(punctuation) {
             # The default tokenizer does not get rid of punctuation *and of line breaks!*, which
             # get concatenated with surrounding words
             # This also avoids French articles and dash-linked words from getting concatenated with their noun
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, function(x) gsub(\"([\'\U2019\\n\U202F\U2009]|[[:punct:]]|[[:space:]]|[[:cntrl:]])+\", \" \", x))")
         }
+
         if(numbers)
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removeNumbers)")
+
+        if(stopwords || stemming) {
+            # Get list of words before stemming and stopwords removal
+            doItAndPrint("words <- col_sums(DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf))))")
+            gc()
+        }
+
         if(stopwords)
             doItAndPrint(paste("dtmCorpus <- tm_map(dtmCorpus, removeWords, stopwords(\"",
                                lang, "\"))", sep=""))
 
-        if(stemming) {
-            # Get list of words before stemming
-            doItAndPrint("words <- sort(unique(unlist(lapply(dtmCorpus, scan_tokenizer))))")
-
+        if(stemming)
             doItAndPrint(sprintf('dtmCorpus <- tm_map(dtmCorpus, stemDocument, language="%s")',
                                  tm:::map_IETF_Snowball(lang)))
-        }
 
         if(twitter || lowercase || punctuation || numbers || stopwords || stemming) {
             doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))")
@@ -188,11 +188,18 @@ importCorpusDlg <- function() {
         else {
             doItAndPrint("dtm <- DocumentTermMatrix(corpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))")
         }
+        gc()
 
-        if(stemming) {
+
+        # Language is used again when creating the dtm to analyse word lengths
+        doItAndPrint(sprintf('meta(corpus, type="corpus", tag="language") <- attr(dtm, "language") <- "%s"', lang))
+
+        if(stopwords || stemming) {
             doItAndPrint('attr(dtm, "words") <- words')
             doItAndPrint("rm(words)")
         }
+        doItAndPrint(sprintf('attr(dtm, "processing") <- c(lowercase=%s, punctuation=%s, numbers=%s, stopwords=%s, stemming=%s)',
+                             lowercase, punctuation, numbers, stopwords, stemming))
 
         doItAndPrint("corpus")
         doItAndPrint("dtm")
