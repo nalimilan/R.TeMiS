@@ -86,6 +86,15 @@ importCorpusDlg <- function() {
     
 
     onOK <- function() {
+        lang <- tclvalue(tclLang)
+        snowballLang <- tm:::map_IETF_Snowball(lang)
+
+        if(is.na(snowballLang) || snowballLang == "porter") {
+            Message(.gettext('Unsupported language code: please click the "Help" button to get a list of supported codes.'),
+                    "error")
+            return()
+        }
+
         closeDialog()
 
         # Remove objects left from a previous analysis to avoid confusion
@@ -97,10 +106,6 @@ importCorpusDlg <- function() {
             doItAndPrint(paste("rm(", paste(objects[sapply(objects, exists)], collapse=", "), ")", sep=""))
             gc()
         }
-
-
-        # Set language
-        lang <- tclvalue(tclLang)
 
         # Import corpus
         source <- tclvalue(sourceVariable)
