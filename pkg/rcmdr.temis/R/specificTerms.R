@@ -1,6 +1,6 @@
 specificTerms <- function(dtm, variable=NULL, p=0.1, n.max=25, sparsity=0.95, min.occ=5) {
     if(!is.null(variable) && length(unique(variable)) < 2)
-        stop("Please provide a variable with at least two levels.")
+        stop(.gettext("Please provide a variable with at least two levels."))
 
     if(!is.null(variable))
         dtm <- rollup(dtm, 1, variable)
@@ -85,6 +85,12 @@ specificTermsDlg <- function() {
         p <- as.numeric(tclvalue(tclP))
         occ <- as.numeric(tclvalue(tclOcc))
         n <- as.numeric(tclvalue(tclN))
+
+        if(var != .gettext("Document") && length(unique(meta(corpus, var)[[1]])) < 2) {
+            Message(.gettext("Please choose a variable with at least two levels."), "error")
+            return()
+        }
+
         closeDialog()
 
         if(var == .gettext("Document")) {
