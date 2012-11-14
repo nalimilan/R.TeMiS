@@ -72,8 +72,8 @@ importCorpusDlg <- function() {
                boxes=c("lowercase", "punctuation", "numbers", "stopwords", "stemming"),
                initialValues=rep(1, 5),
                labels=c(.gettext("Ignore case"), .gettext("Remove punctuation"),
-                        .gettext("Remove numbers"), .gettext("Remove stopwords"),
-                        .gettext("Stem words")),
+                        .gettext("Remove digits"), .gettext("Remove stopwords"),
+                        .gettext("Apply stemming")),
                title=.gettext("Text processing:"))
 
     chunksFrame <- tkframe(top)
