@@ -1,6 +1,6 @@
 \name{termCoocDlg}
 \alias{termCoocDlg}
-\title{Show terms co-occurrences}
+\title{Show co-occurrent terms}
 \description{Show terms that are the most associated with one or several reference terms.}
 \details{This dialog allows printing the terms that are most associated with one or several
          given terms, according to the document-term matrix of the corpus. Co-occurrence is measured

@@ -50,7 +50,7 @@
     item        vocMenu         command           "Most frequent terms..."           freqTermsDlg                "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        vocMenu         command           "Specific terms by levels..."      specificTermsDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        vocMenu         command           "Term frequencies..."              termFreqDlg                 "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        vocMenu         command           "Term co-occurrences..."           termCoocDlg                 "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        vocMenu         command           "Co-occurrent terms..."            termCoocDlg                 "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        vocMenu         command           "Temporal evolution of terms..."   termTimeSeriesDlg  "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                       ""
 
 
