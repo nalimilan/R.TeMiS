@@ -548,7 +548,7 @@ showCorpusCaDlg <- function() {
     tkgrid(labelRcmdr(dimFrame, text=.gettext("Vertical axis:")), ySlider, sticky="w")
     tkgrid(dimFrame, sticky="w", pady=6, columnspan=2)
     tkgrid(labelsFrame, pointsFrame, sticky="w", pady=6, padx=c(0, 6))
-    if(actDocs || length(corpusCa$rowsup) > 0)
+    if(!actDocs || length(corpusCa$rowsup) > 0)
         tkgrid(getFrame(varBox), columnspan=2, sticky="we", pady=6)
     if(actDocs)
         tkgrid(labelRcmdr(nFrame, text=.gettext("Documents:")), docsSlider, sticky="w")
