@@ -14,7 +14,9 @@ if (getRversion() >= '2.15.1') globalVariables(c(
     "coocs", "specTerms", "varFreqs", "docSeries", "docButton",
     "globalButton", "unitVariable", "totaltVariable", "uniqueVariable",
     "hapaxVariable", "totalwVariable", "longVariable", "vlongVariable",
-    "longavgVariable", "voc", "unitFrame"
+    "longavgVariable", "voc", "unitFrame", "digitsVariable",
+    "exclRetweetsVariable", "removeNamesVariable", "removeHashtagsVariable",
+    "optionsFrame"
     ))
 
 

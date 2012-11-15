@@ -568,7 +568,7 @@ showCorpusCaDlg <- function() {
     tkwm.resizable(top, 0, 0)
     tkbind(top, "<Return>", onShow)
     tkbind(top, "<Escape>", onClose)
-    if (getRcmdr("double.click") && (!preventDoubleClick)) tkbind(window, "<Double-ButtonPress-1>", onOK)
+    if (getRcmdr("double.click") && (!preventDoubleClick)) tkbind(window, "<Double-ButtonPress-1>", onShow)
     tkwm.deiconify(top)
     tkfocus(top)
     if (getRcmdr("crisp.dialogs")) tclServiceMode(on=TRUE)
