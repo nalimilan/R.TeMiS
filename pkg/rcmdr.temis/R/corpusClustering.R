@@ -196,20 +196,17 @@ corpusClustDlg <- function() {
     labelNDocs <- labelRcmdr(top)
 
     labels <- c(.gettext("(Terms present in at least %s documents will be retained in the analysis.)"),
-                .gettext("(Terms present in at least one document will be retained in the analysis.)"),
                 .gettext("(All terms will be retained in the analysis.)"))
 
     tkconfigure(labelNDocs, width=max(nchar(labels)))
 
     updateNDocs <- function(...) {
-        ndocs <- floor((1 - as.numeric(tclvalue(tclSparsity))/100) * nrow(dtm))
+        ndocs <- ceiling((1 - as.numeric(tclvalue(tclSparsity))/100) * nrow(dtm))
 
         if(ndocs > 1)
             tkconfigure(labelNDocs, text=sprintf(labels[1], ndocs))
-        else if(ndocs == 1)
-            tkconfigure(labelNDocs, text=labels[2])
         else
-            tkconfigure(labelNDocs, text=labels[3])
+            tkconfigure(labelNDocs, text=labels[2])
     }
 
     tclSparsity <- tclVar(95)
