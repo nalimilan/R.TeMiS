@@ -51,7 +51,7 @@ specificTerms <- function(dtm, variable=NULL, p=0.1, n.max=25, sparsity=0.95, mi
                            .gettext("Level"), .gettext("Global"),
                            .gettext("t value"), .gettext("Prob."))
 
-        ret[order(-sign(ret[, 6]), ret[, 7]),]
+        ret[order(-sign(ret[, 6]), ret[, 7]), , drop=FALSE]
     })
 }
 
