@@ -82,6 +82,8 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20, p=0.1, min
 
             tkinsert(txt, "end", paste(capture.output(format(df, nsmall=1, digits=2)), collapse="\n"), "fixed")
 
+            tkinsert(txt, "end", "\n", "heading")
+
             # We need to use IDs rather than indexes to access documents in the corpus
             # since some documents may have been skipped in the clustering
             for(id in docs) {
