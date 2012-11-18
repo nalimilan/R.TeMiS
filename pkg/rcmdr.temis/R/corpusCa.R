@@ -145,7 +145,7 @@ corpusCaDlg <- function() {
                               title=.gettext("Aggregate document-term matrix by variables:"),
                               initialSelection=0)
 
-    tclSparsity <- tclVar(95)
+    tclSparsity <- tclVar(100 - ceiling(1/nrow(dtm) * 100))
     sliderSparsity <- tkscale(top, from=1, to=100,
                               showvalue=TRUE, variable=tclSparsity,
 		              resolution=1, orient="horizontal",
