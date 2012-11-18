@@ -227,7 +227,7 @@ varTimeSeriesDlg <- function() {
             doItAndPrint("docSeries <- zoo(tab, order.by=time)")
         }
         else {
-            doItAndPrint(sprintf('tab <- table(as.character(strptime(meta(corpus, "%s")[[1]], "%s"), meta(corpus, "%s")[[1]]))',
+            doItAndPrint(sprintf('tab <- table(as.character(strptime(meta(corpus, "%s")[[1]], "%s")), meta(corpus, "%s")[[1]])',
                                                timeVar, format, groupVar))
 
             if(what == "percent")
