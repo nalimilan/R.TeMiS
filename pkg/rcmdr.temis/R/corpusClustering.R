@@ -11,12 +11,6 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20, p=0.1, min
 
     mark <- 0
 
-    tktag.configure(txt, "heading", font="sans 13 bold")
-    tktag.configure(txt, "articlehead", font="sans 12 bold")
-    tktag.configure(txt, "details", font="sans 10 italic")
-    tktag.configure(txt, "small", font="sans 5")
-    tktag.configure(txt, "fixed", font="courier 11")
-
     tkinsert(txt, "end", paste(.gettext("Clusters summary:"), "\n", sep=""), "heading")
     tkmark.set(txt, paste("mark", mark, sep=""), tkindex(txt, "insert-1c"))
     tkinsert(listbox, "end", .gettext("Clusters summary"))
@@ -105,7 +99,7 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20, p=0.1, min
                 if(length(origin) > 0 || length(date) > 0)
                     tkinsert(txt, "end", "\n", "small")
 
-                tkinsert(txt, "end", paste(paste(corpus[[id]], collapse="\n"), "\n"))
+                tkinsert(txt, "end", paste(paste(corpus[[id]], collapse="\n"), "\n"), "body")
             }
         }
     }

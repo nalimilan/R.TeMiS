@@ -62,9 +62,16 @@ if (getRversion() >= '2.15.1') globalVariables(c(
         tkwm.geometry(window, "-0+20")
         scr1 <- tkscrollbar(window, repeatinterval=5,
                            command=function(...) tkyview(txt,...))
-        txt <- tktext(window, bg="white", font="times", wrap="word",
+        txt <- tktext(window, bg="white", font="courier 11", wrap="word",
                       width=getOption("width", 80),
                       yscrollcommand=function(...) tkset(scr1, ...))
+
+        tktag.configure(txt, "body", font="times")
+        tktag.configure(txt, "heading", font="sans 13 bold")
+        tktag.configure(txt, "articlehead", font="sans 12 bold")
+        tktag.configure(txt, "details", font="sans 10 italic")
+        tktag.configure(txt, "small", font="sans 5")
+        tktag.configure(txt, "fixed", font="courier 11")
 
         tkpack(txt, side="left", fill="both", expand=TRUE)
         tkpack(scr1, side="left", fill="y")

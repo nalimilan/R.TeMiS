@@ -64,12 +64,6 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 
     mark <- 0
 
-    tktag.configure(txt, "heading", font="sans 13 bold")
-    tktag.configure(txt, "articlehead", font="sans 12 bold")
-    tktag.configure(txt, "details", font="sans 10 italic")
-    tktag.configure(txt, "small", font="sans 5")
-    tktag.configure(txt, "fixed", font="courier 11")
-
     titles <- c(.gettext("Position"), .gettext("Contribution (%)"), .gettext("Quality (%)"))
 
     tkinsert(txt, "end", paste(.gettext("Axes summary:"), "\n", sep=""), "heading")
@@ -118,7 +112,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
         negcols <- cols[corpusCa$colcoord[cols, dim[j]] < 0]
         if(length(negcols) == 0) {
             tkinsert(txt, "end",
-                     sprintf(.gettext("None among the %i most contributive terms."), nterms))
+                     sprintf(.gettext("None among the %i most contributive terms."), nterms), "body")
         }
         else {
             df <- data.frame(row.names=corpusCa$colnames[negcols],
@@ -176,7 +170,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 
         if(length(negrows) == 0) {
             tkinsert(txt, "end",
-                     sprintf(.gettext("None among the %i most contributive documents."), ndocs))
+                     sprintf(.gettext("None among the %i most contributive documents."), ndocs), "body")
         }
         else {
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
@@ -205,7 +199,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
                 if(length(origin) > 0 || length(date) > 0)
                     tkinsert(txt, "end", "\n", "small")
 
-                tkinsert(txt, "end", paste(paste(corpus[[id]], collapse="\n"), "\n"))
+                tkinsert(txt, "end", paste(paste(corpus[[id]], collapse="\n"), "\n"), "body")
             }
         }
 
@@ -222,7 +216,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
         poscols <- cols[corpusCa$colcoord[cols, dim[j]] >= 0]
         if(length(poscols) == 0) {
             tkinsert(txt, "end",
-                     sprintf(.gettext("None among the %i most contributive terms."), nterms))
+                     sprintf(.gettext("None among the %i most contributive terms."), nterms), "body")
         }
         else {
             df <- data.frame(row.names=corpusCa$colnames[poscols],
@@ -278,7 +272,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 
         if(length(posrows) == 0) {
             tkinsert(txt, "end",
-                     sprintf(.gettext("None among the %i most contributive documents."), ndocs))
+                     sprintf(.gettext("None among the %i most contributive documents."), ndocs), "body")
         }
         else {
             tkinsert(txt, "end", paste(capture.output(format(df)), collapse="\n"), "fixed")
@@ -307,7 +301,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
                 if(length(origin) > 0 || length(date) > 0)
                     tkinsert(txt, "end", "\n", "small")
 
-                tkinsert(txt, "end", paste(paste(corpus[[id]], collapse="\n"), "\n"))
+                tkinsert(txt, "end", paste(paste(corpus[[id]], collapse="\n"), "\n"), "body")
             }
         }
 
