@@ -27,7 +27,7 @@ termCoocDlg <- function() {
         return()
     }
 
-    initializeDialog(title=.gettext("Show Co-occurrent Terms"))
+    initializeDialog(title=.gettext("Terms Co-occurring With Chosen Terms"))
 
     tclTerms <- tclVar("")
     entryTerms <- ttkentry(top,  width="35", textvariable=tclTerms)

@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.temis 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-14 19:40+0200\n"
-"PO-Revision-Date: 2012-11-14 19:40+0200\n"
+"POT-Creation-Date: 2012-11-17 17:30+0200\n"
+"PO-Revision-Date: 2012-11-17 17:30+0200\n"
 "Last-Translator: Milan Bouchet-Valat <nalimilan@club.fr>\n"
 "Language-Team: fr <none>\n"
 "Language: fr\n"
@@ -89,19 +89,19 @@ msgstr "Bilan lexical..."
 msgid "Most frequent terms..."
 msgstr "Termes les plus fréquents..."
 
-msgid "Specific terms by levels..."
-msgstr "Termes spécifiques par modalité..."
+msgid "Terms specific of levels..."
+msgstr "Termes spécifiques de modalités..."
 
-msgid "Term frequencies..."
-msgstr "Fréquence de termes..."
+msgid "Analysis of chosen terms..."
+msgstr "Analyse de termes choisis..."
 
-msgid "Co-occurrent terms.."
-msgstr "Termes co-occurrents..."
+msgid "Terms co-occurring with chosen terms..."
+msgstr "Termes co-occurrents de termes choisis..."
 
-msgid "Temporal evolution of terms..."
-msgstr "Évolution temporelle de termes..."
+msgid "Temporal evolution of chosen terms..."
+msgstr "Évolution temporelle de termes choisis..."
 
-#: R/corpusCa.R:189
+#: R/corpusCa.R:189 R/corpusCa.R:186
 msgid "Correspondence analysis"
 msgstr "Analyse des correspondances"
 
@@ -186,7 +186,7 @@ msgstr "Réaliser une analyse des correspondances"
 #: R/corpusCa.R:114 R/dissimilarity.R:27 R/subsetCorpus.R:4 R/termFreq.R:142
 #: R/time.R:4 R/varFreq.R:4 R/varFreq.R:101 R/vocabulary.R:224
 #: R/termFreq.R:146 R/vocabulary.R:225 R/corpusCa.R:167 R/time.R:106
-#: R/time.R:342 R/corpusCa.R:176 R/varFreq.R:94
+#: R/time.R:342 R/corpusCa.R:176 R/varFreq.R:94 R/corpusCa.R:173
 msgid ""
 "No corpus variables have been set. Use Text mining->Manage corpus->Set "
 "corpus variables to add them."
@@ -196,10 +196,12 @@ msgstr ""
 
 #: R/corpusCa.R:132 R/corpusClustering.R:223 R/corpusCa.R:136 R/corpusCa.R:192
 #: R/corpusClustering.R:274 R/corpusCa.R:201 R/corpusClustering.R:220
+#: R/corpusCa.R:198 R/corpusClustering.R:217
 msgid "Remove terms missing from more than (% of documents):"
 msgstr "Supprimer les termes absents de plus de (en % des documents) :"
 
 #: R/corpusCa.R:134 R/corpusCa.R:138 R/corpusCa.R:195 R/corpusCa.R:204
+#: R/corpusCa.R:201
 msgid "Number of dimensions to retain:"
 msgstr "Nombre de dimensions à retenir :"
 
@@ -226,7 +228,8 @@ msgstr "Résumé des classes"
 #: R/corpusClustering.R:338 R/corpusClustering.R:339 R/setCorpusVariables.R:35
 #: R/corpusClustering.R:136 R/corpusClustering.R:154 R/corpusClustering.R:385
 #: R/corpusClustering.R:388 R/corpusClustering.R:394 R/corpusClustering.R:395
-#: R/corpusClustering.R:398 R/corpusClustering.R:399
+#: R/corpusClustering.R:398 R/corpusClustering.R:399 R/corpusClustering.R:382
+#: R/corpusClustering.R:391 R/corpusClustering.R:392 R/corpusClustering.R:396
 msgid "Cluster"
 msgstr "Classe"
 
@@ -290,7 +293,8 @@ msgstr "Réaliser une classification ascendante hiérarchique"
 #: R/corpusClustering.R:212 R/corpusClustering.R:295 R/corpusClustering.R:27
 #: R/corpusClustering.R:28 R/corpusClustering.R:255 R/corpusClustering.R:261
 #: R/corpusClustering.R:347 R/corpusClustering.R:301 R/corpusClustering.R:307
-#: R/corpusClustering.R:407
+#: R/corpusClustering.R:407 R/corpusClustering.R:298 R/corpusClustering.R:304
+#: R/corpusClustering.R:404
 msgid "Within-cluster variance"
 msgstr "Variance intra-classe"
 
@@ -299,11 +303,13 @@ msgid "Full cluster dendrogram"
 msgstr "Dendrogramme de classification complet"
 
 #: R/corpusClustering.R:231 R/corpusClustering.R:283 R/corpusClustering.R:331
+#: R/corpusClustering.R:328
 msgid "Please run a hierarchical clustering on the corpus first."
 msgstr ""
 "Vous devez d'abord réaliser une classification ascendante hiérarchique."
 
 #: R/corpusClustering.R:236 R/corpusClustering.R:288 R/corpusClustering.R:336
+#: R/corpusClustering.R:333
 msgid "Create Clusters"
 msgstr "Créer des classes"
 
@@ -312,10 +318,12 @@ msgid "Cluster dendrogram"
 msgstr "Dendrogramme de classification"
 
 #: R/corpusClustering.R:305 R/corpusClustering.R:356 R/corpusClustering.R:416
+#: R/corpusClustering.R:413
 msgid "Clusters creation:"
 msgstr "Création des classes :"
 
 #: R/corpusClustering.R:307 R/corpusClustering.R:358 R/corpusClustering.R:418
+#: R/corpusClustering.R:415
 msgid "Number of clusters to retain:"
 msgstr "Nombre de classes à retenir :"
 
@@ -348,7 +356,7 @@ msgstr "Afficher les termes les plus fréquents"
 #: R/corpusTerms.R:127 R/corpusTerms.R:155 R/freqTerms.R:66 R/freqTerms.R:77
 #: R/freqTerms.R:89 R/termCooc.R:40 R/termCooc.R:72 R/termCooc.R:100
 #: R/termFreq.R:135 R/termFreq.R:146 R/freqTerms.R:67 R/freqTerms.R:81
-#: R/freqTerms.R:93
+#: R/freqTerms.R:93 R/termFreq.R:134 R/termFreq.R:145
 msgid "None (whole corpus)"
 msgstr "Aucune (ensemble du corpus)"
 
@@ -372,7 +380,7 @@ msgstr "Afficher les associations de termes"
 #: R/termFreq.R:185 R/termFreq.R:189 R/corpusTerms.R:85 R/corpusTerms.R:223
 #: R/corpusTerms.R:106 R/corpusTerms.R:251 R/corpusTerms.R:328
 #: R/subsetCorpus.R:124 R/time.R:454 R/restrictTerms.R:17 R/termCooc.R:51
-#: R/termFreq.R:113
+#: R/termFreq.R:113 R/subsetCorpus.R:123 R/termFreq.R:112
 msgid "Please enter at least one term."
 msgstr "Vous devez entrer au moins un terme."
 
@@ -380,7 +388,7 @@ msgstr "Vous devez entrer au moins un terme."
 #: R/termFreq.R:195 R/termFreq.R:199 R/corpusTerms.R:95 R/corpusTerms.R:233
 #: R/corpusTerms.R:116 R/corpusTerms.R:261 R/corpusTerms.R:338
 #: R/subsetCorpus.R:134 R/time.R:463 R/restrictTerms.R:27 R/termCooc.R:61
-#: R/termFreq.R:7 R/termFreq.R:123
+#: R/termFreq.R:7 R/termFreq.R:123 R/subsetCorpus.R:133 R/termFreq.R:122
 msgid "', '"
 msgstr " », « "
 
@@ -440,7 +448,7 @@ msgstr "Dissimilarité entre documents/variables"
 #: R/termFreq.R:149 R/vocabulary.R:203 R/freqTerms.R:67 R/freqTerms.R:83
 #: R/specificTerms.R:67 R/specificTerms.R:93 R/specificTerms.R:103
 #: R/specificTerms.R:116 R/vocabulary.R:123 R/vocabulary.R:151
-#: R/vocabulary.R:216
+#: R/vocabulary.R:216 R/termFreq.R:71 R/termFreq.R:137 R/termFreq.R:148
 msgid "Document"
 msgstr "Document"
 
@@ -935,42 +943,42 @@ msgstr "Les plus contributifs :"
 msgid "Subset Corpus by Variable"
 msgstr "Restreindre le corpus à partir d'une variable"
 
-#: R/subsetCorpus.R:41 R/subsetCorpus.R:115
+#: R/subsetCorpus.R:41 R/subsetCorpus.R:115 R/subsetCorpus.R:114
 msgid "Save original corpus to restore it later"
 msgstr "Enregistrer le corpus actuel pour le restaurer plus tard"
 
-#: R/subsetCorpus.R:92
+#: R/subsetCorpus.R:92 R/subsetCorpus.R:91
 msgid "Select a variable and one or more levels to retain:"
 msgstr "Choisissez une variable et une ou plusieurs modalités à conserver :"
 
 #: R/subsetCorpus.R:94 R/termFreq.R:154 R/varFreq.R:13 R/vocabulary.R:233
 #: R/termFreq.R:158 R/vocabulary.R:234 R/corpusTerms.R:298 R/vocabulary.R:113
-#: R/termFreq.R:74 R/vocabulary.R:125
+#: R/termFreq.R:74 R/vocabulary.R:125 R/subsetCorpus.R:93 R/termFreq.R:73
 msgid "Variable:"
 msgstr "Variable :"
 
-#: R/subsetCorpus.R:96
+#: R/subsetCorpus.R:96 R/subsetCorpus.R:95
 msgid "Levels:"
 msgstr "Modalités :"
 
-#: R/subsetCorpus.R:106
+#: R/subsetCorpus.R:106 R/subsetCorpus.R:105
 msgid "Subset Corpus by Terms"
 msgstr "Restreindre le corpus à partir de termes"
 
-#: R/subsetCorpus.R:140
+#: R/subsetCorpus.R:140 R/subsetCorpus.R:139
 msgid "Specified conditions would exclude all documents from the corpus."
 msgstr "Les conditions spécifiées exclueraient tous les documents du corpus."
 
-#: R/subsetCorpus.R:192 R/subsetCorpus.R:194
+#: R/subsetCorpus.R:192 R/subsetCorpus.R:194 R/subsetCorpus.R:193
 msgid "Keep documents with terms (space-separated):"
 msgstr ""
 "Conserver les documents contenant les termes (séparés par une espace) :"
 
-#: R/subsetCorpus.R:195 R/subsetCorpus.R:197
+#: R/subsetCorpus.R:195 R/subsetCorpus.R:197 R/subsetCorpus.R:196
 msgid "Exclude documents with terms (space-separated):"
 msgstr "Exclure les documents contenant les termes (séparés par une espace) :"
 
-#: R/subsetCorpus.R:205 R/subsetCorpus.R:209
+#: R/subsetCorpus.R:205 R/subsetCorpus.R:209 R/subsetCorpus.R:208
 msgid "No saved corpus to restore was found."
 msgstr "Aucun corpus sauvegardé à restaurer n'a été trouvé."
 
@@ -995,7 +1003,7 @@ msgstr "Occurrences du terme %T par document"
 
 #: R/termFreq.R:21 R/termFreq.R:171 R/time.R:175 R/termFreq.R:175
 #: R/corpusTerms.R:315 R/time.R:300 R/time.R:570 R/termFreq.R:95
-#: R/varFreq.R:26 R/varFreq.R:126
+#: R/varFreq.R:26 R/varFreq.R:126 R/termFreq.R:94
 msgid "Draw plot"
 msgstr "Créer un graphique"
 
@@ -1004,44 +1012,45 @@ msgid "Transpose table"
 msgstr "Transposer le tableau"
 
 #: R/termFreq.R:58 R/termFreq.R:214 R/termFreq.R:218 R/corpusTerms.R:366
-#: R/time.R:505 R/termFreq.R:159
+#: R/time.R:505 R/termFreq.R:159 R/termFreq.R:158
 msgid "% of all terms"
 msgstr "% de tous les termes"
 
 #: R/termFreq.R:66 R/termFreq.R:222 R/termFreq.R:226 R/corpusTerms.R:374
-#: R/time.R:509 R/termFreq.R:161
+#: R/time.R:509 R/termFreq.R:161 R/termFreq.R:160
 msgid "% of occurrences"
 msgstr "% des occurrences"
 
 #: R/termFreq.R:70 R/termFreq.R:226 R/vocabulary.R:129 R/vocabulary.R:261
 #: R/termFreq.R:230 R/vocabulary.R:262 R/corpusTerms.R:378 R/time.R:513
-#: R/vocabulary.R:156 R/termFreq.R:163 R/vocabulary.R:169
+#: R/vocabulary.R:156 R/termFreq.R:163 R/vocabulary.R:169 R/termFreq.R:162
 msgid "Number of occurrences"
 msgstr "Nombre d'occurrences"
 
 #: R/termFreq.R:117 R/termFreq.R:272 R/termFreq.R:121 R/termFreq.R:282
-#: R/corpusTerms.R:430 R/termFreq.R:199
+#: R/corpusTerms.R:430 R/termFreq.R:199 R/termFreq.R:198
 msgid "(% of all terms)"
 msgstr "(en % de tous les termes)"
 
 #: R/termFreq.R:119 R/termFreq.R:274 R/termFreq.R:123 R/termFreq.R:284
-#: R/corpusTerms.R:432 R/termFreq.R:201
+#: R/corpusTerms.R:432 R/termFreq.R:201 R/termFreq.R:200
 msgid "(% of occurrences)"
 msgstr "(en % des occurrences)"
 
 #: R/termFreq.R:128 R/termFreq.R:283 R/termFreq.R:132 R/termFreq.R:293
-#: R/corpusTerms.R:442 R/time.R:598 R/termFreq.R:211
+#: R/corpusTerms.R:442 R/time.R:598 R/termFreq.R:211 R/termFreq.R:210
 msgid "Terms to show (space-separated):"
 msgstr "Termes à afficher (séparés par une espace) :"
 
 #: R/termFreq.R:131 R/termFreq.R:287 R/termFreq.R:135 R/termFreq.R:297
-#: R/corpusTerms.R:446 R/termFreq.R:215
+#: R/corpusTerms.R:446 R/termFreq.R:215 R/termFreq.R:214
 msgid "Display:"
 msgstr "Afficher :"
 
 #: R/termFreq.R:132 R/termFreq.R:288 R/time.R:208 R/varFreq.R:86
 #: R/varFreq.R:227 R/termFreq.R:136 R/termFreq.R:298 R/corpusTerms.R:447
 #: R/time.R:333 R/time.R:605 R/termFreq.R:216 R/varFreq.R:85 R/varFreq.R:218
+#: R/termFreq.R:215
 msgid "Title:"
 msgstr "Titre :"
 
@@ -1050,6 +1059,7 @@ msgid "Terms Frequencies per Variable"
 msgstr "Fréquence des termes par variable"
 
 #: R/termFreq.R:167 R/termFreq.R:171 R/corpusTerms.R:311 R/termFreq.R:87
+#: R/termFreq.R:86
 msgid "Occurrences of term %T by %V"
 msgstr "Occurrences du terme %T par %V"
 
@@ -1342,7 +1352,7 @@ msgid "Vocabulary summary by %V"
 msgstr "Bilan lexical par %V"
 
 #: R/corpusCa.R:18 R/corpusClustering.R:189 R/corpusCa.R:21
-#: R/corpusClustering.R:214 R/corpusClustering.R:259
+#: R/corpusClustering.R:214 R/corpusClustering.R:259 R/corpusClustering.R:256
 #, c-format
 msgid ""
 "Document %s has been skipped because it does not include any occurrence of "
@@ -1365,7 +1375,7 @@ msgstr[1] ""
 #: R/termFreq.R:192 R/termFreq.R:196 R/corpusTerms.R:92 R/corpusTerms.R:230
 #: R/corpusTerms.R:113 R/corpusTerms.R:258 R/corpusTerms.R:335
 #: R/subsetCorpus.R:131 R/time.R:460 R/restrictTerms.R:24 R/termCooc.R:58
-#: R/termFreq.R:5 R/termFreq.R:120
+#: R/termFreq.R:5 R/termFreq.R:120 R/subsetCorpus.R:130 R/termFreq.R:119
 #, c-format
 msgid "Term '%s' does not exist in the corpus."
 msgid_plural "Terms '%s' do not exist in the corpus."
@@ -1466,7 +1476,7 @@ msgstr "(somme par catégorie)"
 msgid "# Prefer fixed to scientific notation"
 msgstr "# Préférer la notation fixe à la notation scientifique"
 
-#: R/common.R:109 R/common.R:110
+#: R/common.R:109 R/common.R:110 R/common.R:112
 msgid ""
 "Package not available. Please check your Internet connection, restart R and "
 "try again."
@@ -1497,15 +1507,16 @@ msgstr ""
 "l'analyse.)"
 
 #: R/corpusCa.R:121 R/corpusClustering.R:178 R/corpusCa.R:130
-#: R/corpusClustering.R:200
+#: R/corpusClustering.R:200 R/corpusCa.R:129 R/corpusClustering.R:199
 msgid "(All terms will be retained in the analysis.)"
 msgstr "(Tous les termes seront retenus dans l'analyse.)"
 
 #: R/corpusCa.R:136 R/corpusCa.R:170 R/corpusCa.R:145 R/corpusCa.R:179
+#: R/corpusCa.R:142 R/corpusCa.R:176
 msgid "None (run analysis on full matrix)"
 msgstr "Aucune (analyse sur le tableau lexical entier)"
 
-#: R/corpusCa.R:139 R/corpusCa.R:148
+#: R/corpusCa.R:139 R/corpusCa.R:148 R/corpusCa.R:145
 msgid "Aggregate document-term matrix by variables:"
 msgstr "Agréger le tableau lexical selon des variables :"
 
@@ -1523,15 +1534,15 @@ msgstr "Documents spécifiques de la classe %i :"
 msgid "Chi2 dist. to centroid"
 msgstr "Dist. du Khi2 au centroïde"
 
-#: R/corpusClustering.R:256 R/corpusClustering.R:302
+#: R/corpusClustering.R:256 R/corpusClustering.R:302 R/corpusClustering.R:299
 msgid "Upper part of documents dendrogram"
 msgstr "Partie supérieure du dengrogramme des documents"
 
-#: R/corpusClustering.R:262 R/corpusClustering.R:308
+#: R/corpusClustering.R:262 R/corpusClustering.R:308 R/corpusClustering.R:305
 msgid "Full documents dendrogram"
 msgstr "Dendrogramme complet des documents"
 
-#: R/corpusClustering.R:348 R/corpusClustering.R:408
+#: R/corpusClustering.R:348 R/corpusClustering.R:408 R/corpusClustering.R:405
 msgid "Clusters dendrogram"
 msgstr "Dendrogramme des documents"
 
@@ -1717,7 +1728,7 @@ msgstr ""
 "Représenter à la fois les documents et les variables oblige actuellement à "
 "dessiner des étiquettes pour tous les deux, ou pas du tout."
 
-#: R/subsetCorpus.R:200
+#: R/subsetCorpus.R:200 R/subsetCorpus.R:199
 msgid ""
 "(Only documents matching both conditions will be retained in the new corpus.)"
 msgstr ""
@@ -1818,41 +1829,43 @@ msgstr "Utiliser le tableau lexical entier"
 msgid "Use dimensions of correspondence analysis"
 msgstr "Utiliser des dimensions"
 
-#: R/corpusClustering.R:228
+#: R/corpusClustering.R:228 R/corpusClustering.R:225
 msgid "Retain dimensions from 1 to:"
 msgstr "Retenir les dimensions 1 à :"
 
-#: R/corpusClustering.R:420
+#: R/corpusClustering.R:420 R/corpusClustering.R:417
 msgid "Documents specific of clusters:"
 msgstr "Documents spécifiques des classes :"
 
-#: R/corpusClustering.R:422
+#: R/corpusClustering.R:422 R/corpusClustering.R:419
 msgid "Maximum number of documents to show per cluster:"
 msgstr "Nombre maximal de documents à afficher par classe :"
 
-#: R/corpusClustering.R:424
+#: R/corpusClustering.R:424 R/corpusClustering.R:421
 msgid "Terms specific of clusters:"
 msgstr "Termes spécifiques des classes :"
 
 #: R/corpusClustering.R:426 R/specificTerms.R:117 R/specificTerms.R:128
+#: R/corpusClustering.R:423
 msgid "Show terms with a probability below (%):"
 msgstr "Afficher les termes qui ont une probabilité inférieure à (%) :"
 
 #: R/corpusClustering.R:428 R/specificTerms.R:119 R/specificTerms.R:130
+#: R/corpusClustering.R:425
 msgid "Only retain terms with a number of occurrences above:"
 msgstr "Ne retenir que les termes avec un nombre d'occurrences supérieur à :"
 
-#: R/corpusClustering.R:430
+#: R/corpusClustering.R:430 R/corpusClustering.R:427
 msgid "Maximum number of terms to show per cluster:"
 msgstr "Nombre maximal de termes à afficher par classe :"
 
 #: R/freqTerms.R:46 R/specificTerms.R:50 R/termFreq.R:12 R/termFreq.R:55
-#: R/freqTerms.R:47 R/specificTerms.R:51
+#: R/freqTerms.R:47 R/specificTerms.R:51 R/termFreq.R:54
 msgid "Global"
 msgstr "Global"
 
 #: R/freqTerms.R:5 R/freqTerms.R:45 R/specificTerms.R:49 R/termFreq.R:12
-#: R/termFreq.R:54 R/freqTerms.R:46 R/specificTerms.R:50
+#: R/termFreq.R:54 R/freqTerms.R:46 R/specificTerms.R:50 R/termFreq.R:53
 msgid "Global %"
 msgstr "% global"
 
@@ -1865,27 +1878,27 @@ msgid "Please provide a variable with at least two levels."
 msgstr "Veuillez fournir une variable avec au moins deux modalités."
 
 #: R/freqTerms.R:45 R/specificTerms.R:49 R/termFreq.R:54 R/termFreq.R:174
-#: R/freqTerms.R:46 R/specificTerms.R:50
+#: R/freqTerms.R:46 R/specificTerms.R:50 R/termFreq.R:53 R/termFreq.R:173
 msgid "% Term/Level"
 msgstr "% terme/mod."
 
 #: R/freqTerms.R:45 R/specificTerms.R:49 R/termFreq.R:54 R/termFreq.R:174
-#: R/freqTerms.R:46 R/specificTerms.R:50
+#: R/freqTerms.R:46 R/specificTerms.R:50 R/termFreq.R:53 R/termFreq.R:173
 msgid "% Level/Term"
 msgstr "% mod./terme"
 
 #: R/freqTerms.R:46 R/specificTerms.R:50 R/termFreq.R:55 R/termFreq.R:174
-#: R/freqTerms.R:47 R/specificTerms.R:51
+#: R/freqTerms.R:47 R/specificTerms.R:51 R/termFreq.R:54 R/termFreq.R:173
 msgid "Level"
 msgstr "Modalité"
 
 #: R/freqTerms.R:47 R/specificTerms.R:51 R/termFreq.R:56 R/freqTerms.R:48
-#: R/specificTerms.R:52
+#: R/specificTerms.R:52 R/termFreq.R:55
 msgid "t value"
 msgstr "Valeur t"
 
 #: R/freqTerms.R:47 R/specificTerms.R:51 R/termFreq.R:56 R/freqTerms.R:48
-#: R/specificTerms.R:52
+#: R/specificTerms.R:52 R/termFreq.R:55
 msgid "Prob."
 msgstr "Proba."
 
@@ -1909,24 +1922,24 @@ msgstr "Afficher les termes spécifiques des modalités de la variable :"
 msgid "Maximum number of terms to show per level:"
 msgstr "Nombre maximal de termes à afficher par modalité :"
 
-#: R/termFreq.R:67
+#: R/termFreq.R:67 R/termFreq.R:66
 msgid "Term Frequencies"
 msgstr "Fréquence de termes"
 
-#: R/termFreq.R:82
+#: R/termFreq.R:82 R/termFreq.R:81
 msgid "Measure to plot:"
 msgstr "Mesure à représenter :"
 
-#: R/termFreq.R:92
+#: R/termFreq.R:92 R/termFreq.R:91
 msgid "Group results by term"
 msgstr "Grouper les résultats par terme"
 
 #: R/termFreq.R:98 R/varFreq.R:29 R/varFreq.R:129 R/vocabulary.R:163
-#: R/vocabulary.R:176
+#: R/vocabulary.R:176 R/termFreq.R:97
 msgid "Vertical bars"
 msgstr "Barres verticales"
 
-#: R/termFreq.R:101 R/varFreq.R:132
+#: R/termFreq.R:101 R/varFreq.R:132 R/termFreq.R:100
 msgid "Stacked bars"
 msgstr "Barres empilées"
 
@@ -1952,15 +1965,15 @@ msgstr ""
 "\n"
 "Cliquez sur le bouton « Aide » pour plus de codes."
 
-#: R/time.R:416 R/termFreq.R:80
+#: R/time.R:416 R/termFreq.R:80 R/termFreq.R:79
 msgid "Distribution of occurrences among levels (\"% Level/Term\")"
 msgstr "Distribution des occurrences entre les modalités (« % mod./terme »)"
 
-#: R/time.R:415 R/termFreq.R:79
+#: R/time.R:415 R/termFreq.R:79 R/termFreq.R:78
 msgid "Term prevalence in level (\"% Term/Level\")"
 msgstr "Prévalence du terme dans la modalité (« % terme/mod. »)"
 
-#: R/termFreq.R:81
+#: R/termFreq.R:81 R/termFreq.R:80
 msgid "Absolute number of occurrences in level (\"Level\")"
 msgstr "Nombre absolu d'occurrences dans la modalité (« Modalité »)"
 
@@ -2124,3 +2137,7 @@ msgstr "Modalité (somme par modalités prises globalement)"
 #: R/vocabulary.R:132
 msgid "Unit of analysis:"
 msgstr "Unité d'analyse :"
+
+#: R/termCooc.R:30
+msgid "Terms Co-occurring With Chosen Terms"
+msgstr "Termes co-occurrents de termes choisis"

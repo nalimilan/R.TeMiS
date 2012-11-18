@@ -48,10 +48,10 @@
     item        vocMenu         command           "Vocabulary summary..."            vocabularyDlg               "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        vocMenu         command           "Dissimilarity table..."           dissimilarityTableDlg       "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
     item        vocMenu         command           "Most frequent terms..."           freqTermsDlg                "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        vocMenu         command           "Specific terms by levels..."      specificTermsDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        vocMenu         command           "Term frequencies..."              termFreqDlg                 "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        vocMenu         command           "Co-occurrent terms..."            termCoocDlg                 "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        vocMenu         command           "Temporal evolution of terms..."   termTimeSeriesDlg  "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                       ""
+    item        vocMenu         command           "Terms specific of levels..."      specificTermsDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        vocMenu         command           "Analysis of chosen terms..."      termFreqDlg                 "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        vocMenu         command           "Terms co-occurring with chosen terms..." termCoocDlg          "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        vocMenu         command           "Temporal evolution of chosen terms..." termTimeSeriesDlg      "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                       ""
 
 
 ### Correspondence analysis menu ###
