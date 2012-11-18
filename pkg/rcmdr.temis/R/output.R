@@ -48,7 +48,8 @@ initOutputFile <- function(file) {
     HTML.title(title, 1, append=TRUE)
 
     HTML(sprintf(.gettext("Corpus imported on %s. Language: %s."),
-                 strftime(meta(corpus, type="corpus", tag="timestamp"), "%c"),
+                 # c() is needed to get rid of the timezone attribute, set to GMT by tm
+                 format(c(meta(corpus, type="corpus", tag="create_date")), "%c"),
                  meta(corpus, type="corpus", tag="language")))
     HTML(sprintf(.gettext("Source: %s."), meta(corpus, type="corpus", tag="source")))
     HTML(sprintf(.gettext("%i documents and %i terms."), nrow(dtm), ncol(dtm)))

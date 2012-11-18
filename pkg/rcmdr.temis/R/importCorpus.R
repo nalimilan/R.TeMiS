@@ -200,8 +200,6 @@ importCorpusDlg <- function() {
         # Language is used again when creating the dtm to analyse word lengths
         doItAndPrint(sprintf('meta(corpus, type="corpus", tag="language") <- attr(dtm, "language") <- "%s"', lang))
 
-        # tm's create_date tag is wrong because it uses GMT by default
-        doItAndPrint('meta(corpus, type="corpus", tag="timestamp") <- as.POSIXlt(Sys.time())')
         doItAndPrint(sprintf('meta(corpus, type="corpus", tag="source") <- "%s"', res$source))
 
         if(stopwords || stemming) {
