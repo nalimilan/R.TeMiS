@@ -366,7 +366,7 @@ createClustersDlg <- function() {
         nclust <- as.numeric(tclvalue(tclNClust))
         ndocs <- as.numeric(tclvalue(tclNDocs))
         nterms <- as.numeric(tclvalue(tclNTerms))
-        p <- as.numeric(tclvalue(tclP))
+        p <- as.numeric(tclvalue(tclP))/100
         occ <- as.numeric(tclvalue(tclOcc))
         height <- floor(rev(corpusClust$height)[nclust-1] * 1e4)/1e4
 
