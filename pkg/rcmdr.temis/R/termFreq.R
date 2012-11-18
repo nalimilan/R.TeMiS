@@ -46,7 +46,6 @@ termFrequencies <- function(dtm, terms, variable=NULL, n=25, by.term=FALSE) {
         t.val <- qnorm(p.val)
 
         p.val[sup] <- 1 - p.val[sup]
-        p.val <- 2 * p.val
 
         ret <- cbind(term.clus=rp * 100, clus.term=cp * 100,
                      p.global=cs/tot * 100, n.int=counts, n.global=cs,
