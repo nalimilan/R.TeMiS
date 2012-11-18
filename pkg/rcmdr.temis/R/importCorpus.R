@@ -56,6 +56,21 @@ importCorpusDlg <- function() {
     # Let the user select processing options
     initializeDialog(title=.gettext("Import Corpus"))
 
+    setState <- function(...) {
+        if(tclvalue(sourceVariable) %in% c("dir", "file")) {
+            tkconfigure(entryEnc, state="active")
+
+            if(tclvalue(tclEnc) == "UTF-8")
+                tclvalue(tclEnc) <- nativeEnc
+        }
+        else {
+            tkconfigure(entryEnc, state="disabled")
+
+            if(tclvalue(tclEnc) == nativeEnc)
+                tclvalue(tclEnc) <- "UTF-8"
+        }
+    }
+
     radioButtons(name="source",
                  buttons=c("dir", "file", "factiva", "twitter"),
                  labels=c(.gettext("Directory containing plain text files"),
@@ -63,11 +78,17 @@ importCorpusDlg <- function() {
                           .gettext("Factiva XML or HTML file(s)"),
                           .gettext("Twitter search")),
                  title=.gettext("Load corpus from:"),
-                 right.buttons=FALSE)
+                 right.buttons=FALSE,
+                 command=setState)
 
     # TRANSLATORS: replace 'en' with your language's ISO 639 two-letter code
     tclLang <- tclVar(.gettext("en"))
-    entryLang <- ttkentry(top, width="12", textvariable=tclLang)
+    entryLang <- ttkentry(top, width=20, textvariable=tclLang)
+
+    nativeEnc <- sprintf(.gettext("native (%s)"), localeToCharset()[1])
+    tclEnc <- tclVar(nativeEnc)
+    entryEnc <- ttkentry(top, width=20, textvariable=tclEnc)
+
     checkBoxes(frame="processingFrame",
                boxes=c("lowercase", "punctuation", "digits", "stopwords", "stemming"),
                initialValues=rep(1, 5),
@@ -96,6 +117,15 @@ importCorpusDlg <- function() {
             return()
         }
 
+        enc <- tclvalue(tclEnc)
+        if(enc == nativeEnc) enc <- ""
+
+        if(enc != "" && !enc %in% iconvlist()) {
+            Message(.gettext('Unsupported encoding: use the iconvlist() function to get a list of supported encodings.'),
+                    "error")
+            return()
+        }
+
         closeDialog()
 
         # Remove objects left from a previous analysis to avoid confusion
@@ -111,8 +141,8 @@ importCorpusDlg <- function() {
         # Import corpus
         source <- tclvalue(sourceVariable)
         res <- switch(source,
-                      dir=importCorpusFromDir(lang),
-                      file=importCorpusFromFile(lang),
+                      dir=importCorpusFromDir(lang, enc),
+                      file=importCorpusFromFile(lang, enc),
                       factiva=importCorpusFromFactiva(lang),
                       twitter=importCorpusFromTwitter(lang))
 
@@ -219,7 +249,8 @@ importCorpusDlg <- function() {
 
     OKCancelHelp(helpSubject="importCorpusDlg")
     tkgrid(sourceFrame, columnspan="2", sticky="w", pady=6)
-    tkgrid(labelRcmdr(top, text=.gettext("Language of texts in the corpus:")), entryLang, sticky="w")
+    tkgrid(labelRcmdr(top, text=.gettext("Language of texts in the corpus:")), entryLang, sticky="w", pady=6)
+    tkgrid(labelRcmdr(top, text=.gettext("File encoding:")), entryEnc, sticky="w", pady=6)
     tkgrid(labelRcmdr(chunksFrame, text=.gettext("Text splitting:"), fg="blue"), sticky="ws")
     tkgrid(chunksButton, columnspan="2", sticky="w", pady=6)
     tkgrid(labelRcmdr(chunksFrame, text=.gettext("Size of new documents (in paragraphs):")),
@@ -227,11 +258,11 @@ importCorpusDlg <- function() {
     tkgrid(chunksFrame, columnspan="2", sticky="w", pady=6)
     tkgrid(processingFrame, columnspan="2", sticky="w", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
-    dialogSuffix(rows=6, columns=2, focus=entryLang)
+    dialogSuffix(rows=7, columns=2, focus=entryLang)
 }
 
 # Choose a directory to load texts from
-importCorpusFromDir <- function(language=NA) {
+importCorpusFromDir <- function(language=NA, encoding="") {
     dir <- tclvalue(tkchooseDirectory(initialdir=getwd(),
                                       parent=CommanderWindow()))
     if (dir == "") return(FALSE)
@@ -242,14 +273,21 @@ importCorpusFromDir <- function(language=NA) {
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
 
+    oldEnc <- getOption("encoding", "")
+
+    if(oldEnc != encoding)
+        doItAndPrint(sprintf('options(encoding="%s")', encoding))
+
     doItAndPrint(sprintf('corpus <- Corpus(DirSource("%s", encoding=""), readerControl=list(language=%s))', dir, language))
 
+    if(oldEnc != encoding)
+        doItAndPrint(sprintf('options(encoding="%s")', oldEnc))
 
     list(source=sprintf("directory %s", dir))
 }
 
 # Choose a CSV file to load texts and variables from
-importCorpusFromFile <- function(language=NA) {
+importCorpusFromFile <- function(language=NA, encoding="") {
     file <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.csv .CSV .tsv .TSV .dbf .DBF .ods .ODS .xls .XLS .xlsx .XLSX .mdb .MDB .accdb .ACCDB}} {{%s} {.csv .CSV}} {{%s} {.tsv .txt .dat .TSV .TXT .DAT}} {{%s} {.dbf .DBF}} {{%s} {.ods .ODS}} {{%s} {.xls .XLS}} {{%s} {.xlsx .XLSX}} {{%s} {.mdb .MDB}} {{%s} {.accdb .ACCDB}} {{%s} {*}}",
                                                      .gettext("All supported types"),
                                                      .gettext("Comma-separated values (CSV) file"),
@@ -283,12 +321,12 @@ importCorpusFromFile <- function(language=NA) {
         n2 <- sum(sapply(gregexpr(";", excerpt), length))
 
         if(n1 > n2)
-            doItAndPrint(paste("corpusDataset <- read.csv(\"", file, "\")", sep=""))
+            doItAndPrint(sprintf('corpusDataset <- read.csv("%s", fileEncoding="%s")', file, encoding))
         else
-            doItAndPrint(paste("corpusDataset <- read.csv2(\"", file, "\")", sep=""))
+            doItAndPrint(sprintf('corpusDataset <- read.csv2("%s", fileEncoding="%s")', file, encoding))
     }
     else if(ext %in% c("tsv", "txt", "dat")) {
-        doItAndPrint(paste("corpusDataset <- read.delim(\"", file, "\")", sep=""))
+        doItAndPrint(sprintf('corpusDataset <- read.delim("%s", fileEncoding="%s")', file, encoding))
     }
     else if(ext == "dbf") {
         Library(foreign)

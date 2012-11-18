@@ -79,6 +79,11 @@
          Norwegian (\sQuote{no}), Portuguese (\sQuote{pt}), Russian (\sQuote{ru}), Spanish (\sQuote{es}),
          and Swedish (\sQuote{sv}) - to specifify via their ISO 639 two-letter code.
 
+         By default, plain text (usually .txt) and comma/tab-separated values files (.csv, .tsv, .dat...)
+         are assumed to be in the native encoding, which is shown in the \dQuote{File encoding:} entry.
+         If you know this is not the case, you can change the value of this field to one of the encodings
+         returned by the \code{iconvlist()} function.
+
          Once the corpus has been imported, its document-term matrix is extracted.
 }
 \references{Ingo Feinerer, Kurt Hornik, and David Meyer. Text mining infrastructure in R. Journal of Statistical Software, 25(5):1-54, March 2008. Available at \url{http://www.jstatsoft.org/v25/i05}.\cr\cr
