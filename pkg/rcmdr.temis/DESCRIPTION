@@ -5,7 +5,7 @@ Version: 0.5
 Date: 2012-07-02
 Authors@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr", role=c("aut", "cre")),
              person("Gilles", "Bastin", email="gilles.bastin@sciencespo-grenoble.fr", role=c("aut")))
-Depends: Rcmdr (>= 1.4-0), tm, ca, slam, R2HTML, lattice, latticeExtra, zoo
+Depends: Rcmdr (>= 1.9-0), tm, ca, slam, R2HTML, lattice, latticeExtra, zoo
 Suggests: Snowball, RWeka, ROpenOffice, RODBC, tm.plugin.factiva, twitteR
 Description: An Rcommander plug-in providing an integrated solution to perform
     a series of text mining tasks such as importing and cleaning a corpus, and
