@@ -12,8 +12,8 @@
          Documents that contain a \code{NA} are skipped for this variable, but taken into account for
          the others, if any.
 
-         In all cases, variables that have not been selected are added as passive rows. If at least one variable
-         is selected, documents are also passive rows, while they are active otherwise.
+         In all cases, variables that have not been selected are added as supplementary rows. If at least one
+         variable is selected, documents are also supplementary rows, while they are active otherwise.
 
          The first slider ('sparsity') allows skipping less significant terms to use less memory, especially
          with large corpora. The second slider ('dimensions to retain') allows choosing the number of

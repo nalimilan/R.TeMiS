@@ -77,7 +77,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
     val <- rbind(values, values2)
     rownames(val) <- c(.gettext("Inertia (%)"), .gettext("Cumulated inertia (%)"))
     colnames(val) <- seq.int(ncol(val))
-    names(dimnames(val)) <- c("", "Axis")
+    names(dimnames(val)) <- c("", .gettext("Axis"))
     tkinsert(txt, "end", paste(capture.output(val), collapse="\n"), "fixed")
 
     # Contributions to both axes
@@ -310,7 +310,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
         suprows <- intersect(corpusCa$rowvars, corpusCa$rowsup)
         if(length(suprows) > 0) {
             tkinsert(txt, "end",
-                      paste("\n\n", sprintf(.gettext("Situation of passive variables on axis %i:"), dim[j]), "\n", sep=""),
+                      paste("\n\n", sprintf(.gettext("Situation of supplementary variables on axis %i:"), dim[j]), "\n", sep=""),
                      "heading")
             tkinsert(listbox, "end", sprintf(.gettext("Axis %i - Variables"), dim[j]))
             tkitemconfigure(listbox, mark, background="grey")

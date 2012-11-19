@@ -296,7 +296,7 @@ HTML.ca <- function(x, ...) {
 
     colnames(scree.out) <- c(.gettext("Dimension"), .gettext("Value"), .gettext("%"),
                              .gettext("Cum. %"), "")
-    HTML(.gettext("Principal inertias (eigenvalues):\n\n"))
+    HTML(.gettext("Axes inertias (eigenvalues):\n"))
     scree.out <- as.matrix(scree.out)
    # colnames(scree.out) <- rep(1, dim(scree.out)[1])
    # print(as.matrix(scree.out), quote = FALSE)

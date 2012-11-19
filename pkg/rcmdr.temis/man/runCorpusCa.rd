@@ -25,8 +25,8 @@
          all the documents of the level. Documents that contain a \code{NA} are skipped for this
          variable, but taken into account for the others, if any.
 
-         In all cases, variables that have not been selected are added as passive rows. If at least
-         one variable is passed, documents are also passive rows, while they are active otherwise.
+         In all cases, variables that have not been selected are added as supplementary rows. If at least
+         one variable is passed, documents are also supplementary rows, while they are active otherwise.
 
          The \code{sparsity} argument is passed to \code{\link{removeSparseTerms}}
          to remove less significant terms from the document-term matrix. This is
