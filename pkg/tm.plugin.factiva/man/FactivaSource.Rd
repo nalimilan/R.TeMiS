@@ -78,9 +78,10 @@
 }
 \examples{
 \dontrun{
-    ## Load an XML file
+    ## For an XML file
     library(tm)
-    file <- system.file("factiva_test.xml", package = "tm.plugin.factiva")
+    file <- system.file("texts", "reut21578-factiva.xml",
+                        package = "tm.plugin.factiva")
     source <- FactivaSource(file)
     corpus <- Corpus(source, readerControl = list(language = NA))
 
@@ -93,7 +94,8 @@
 
     ## For an HTML file
     library(tm)
-    file <- system.file("factiva_test.html", package = "tm.plugin.factiva")
+    file <- system.file("texts", "factiva_test.html", 
+                        package = "tm.plugin.factiva")
     source <- FactivaSource(file)
     corpus <- Corpus(source, readerControl = list(language = NA))
 

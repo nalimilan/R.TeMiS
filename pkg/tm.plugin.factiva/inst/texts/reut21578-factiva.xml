@@ -1,0 +1,910 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PPSResponse>
+  <ppsArticleResponse xmlns="http://global.factiva.com/pps/2.0">
+    <ppsarticleResultSet count="20">
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870226-0001</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870226-0001</reference>
+
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">DIAMOND SHAMROCK (DIA) CUTS CRUDE PRICES</paragraph>
+          </headline>
+          <leadParagraph>
+Diamond Shamrock Corp said that
+effective today it had cut its contract prices for crude oil by
+1.50 dlrs a barrel.
+    The reduction brings its posted price for West Texas
+Intermediate to 16.00 dlrs a barrel, the copany said.
+    "The price reduction today was made in the light of falling
+oil product prices and a weak crude oil market," a company
+spokeswoman said.
+    Diamond is the latest in a line of U.S. oil companies that
+have cut its contract, or posted, prices over the last two days
+citing weak oil markets.
+           </leadParagraph>
+          <publicationDate>
+            <date>1987-02-26</date>
+          </publicationDate>
+          <region code="usa">
+            <name>United States</name>
+          </region>
+          <region code="namz">
+            <name>North America</name>
+          </region>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870226-0002</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870226-0002</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">OPEC MAY HAVE TO MEET TO FIRM PRICES - ANALYSTS</paragraph>
+          </headline>
+          <leadParagraph>
+OPEC may be forced to meet before a
+scheduled June session to readdress its production cutting
+agreement if the organization wants to halt the current slide
+in oil prices, oil industry analysts said.
+    "The movement to higher oil prices was never to be as easy
+as OPEC thought. They may need an emergency meeting to sort out
+the problems," said Daniel Yergin, director of Cambridge Energy
+Research Associates, CERA.
+    Analysts and oil industry sources said the problem OPEC
+faces is excess oil supply in world oil markets.
+    "OPEC's problem is not a price problem but a production
+issue and must be addressed in that way," said Paul Mlotok, oil
+analyst with Salomon Brothers Inc.
+    He said the market's earlier optimism about OPEC and its
+ability to keep production under control have given way to a
+pessimistic outlook that the organization must address soon if
+it wishes to regain the initiative in oil prices.
+    But some other analysts were uncertain that even an
+emergency meeting would address the problem of OPEC production
+above the 15.8 mln bpd quota set last December.
+    "OPEC has to learn that in a buyers market you cannot have
+deemed quotas, fixed prices and set differentials," said the
+regional manager for one of the major oil companies who spoke
+on condition that he not be named. "The market is now trying to
+teach them that lesson again," he added.
+    David T. Mizrahi, editor of Mideast reports, expects OPEC
+to meet before June, although not immediately. However, he is
+not optimistic that OPEC can address its principal problems.
+    "They will not meet now as they try to take advantage of the
+winter demand to sell their oil, but in late March and April
+when demand slackens," Mizrahi said.
+    But Mizrahi said that OPEC is unlikely to do anything more
+than reiterate its agreement to keep output at 15.8 mln bpd."
+    Analysts said that the next two months will be critical for
+OPEC's ability to hold together prices and output.
+    "OPEC must hold to its pact for the next six to eight weeks
+since buyers will come back into the market then," said Dillard
+Spriggs of Petroleum Analysis Ltd in New York.
+    But Bijan Moussavar-Rahmani of Harvard University's Energy
+and Environment Policy Center said that the demand for OPEC oil
+has been rising through the first quarter and this may have
+prompted excesses in its production.
+    "Demand for their (OPEC) oil is clearly above 15.8 mln bpd
+and is probably closer to 17 mln bpd or higher now so what we
+are seeing characterized as cheating is OPEC meeting this
+demand through current production," he told Reuters in a
+telephone interview.
+           </leadParagraph>
+          <publicationDate>
+            <date>1987-02-26</date>
+          </publicationDate>
+          <region code="usa">
+            <name>United States</name>
+          </region>
+          <region code="namz">
+            <name>North America</name>
+          </region>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870226-0003</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870226-0003</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">TEXACO CANADA (TXC) LOWERS CRUDE POSTINGS</paragraph>
+          </headline>
+          <leadParagraph>
+Texaco Canada said it lowered the
+contract price it will pay for crude oil 64 Canadian cts a
+barrel, effective today.
+    The decrease brings the company's posted price for the
+benchmark grade, Edmonton/Swann Hills Light Sweet, to 22.26
+Canadian dlrs a bbl.
+    Texaco Canada last changed its crude oil postings on Feb
+19.
+           </leadParagraph>
+          <publicationDate>
+            <date>1987-02-26</date>
+          </publicationDate>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870226-0004</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870226-0004</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">MARATHON PETROLEUM REDUCES CRUDE POSTINGS</paragraph>
+          </headline>
+          <leadParagraph>
+Marathon Petroleum Co said it reduced
+the contract price it will pay for all grades of crude oil one
+dlr a barrel, effective today.
+    The decrease brings Marathon's posted price for both West
+Texas Intermediate and West Texas Sour to 16.50 dlrs a bbl. The
+South Louisiana Sweet grade of crude was reduced to 16.85 dlrs
+a bbl.
+    The company last changed its crude postings on Jan 12.
+           </leadParagraph>
+          <publicationDate>
+            <date>1987-02-26</date>
+          </publicationDate>
+          <region code="can">
+            <name>Canada</name>
+          </region>
+          <region code="namz">
+            <name>North America</name>
+          </region>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870226-0005</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870226-0005</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">HOUSTON OIL (HO) RESERVES STUDY COMPLETED</paragraph>
+          </headline>
+          <leadParagraph>
+Houston Oil Trust said that independent
+petroleum engineers completed an annual study that estimates
+the trust's future net revenues from total proved reserves at
+88 mln dlrs and its discounted present value of the reserves at
+64 mln dlrs.
+    Based on the estimate, the trust said there may be no money
+available for cash distributions to unitholders for the
+remainder of the year.
+    It said the estimates reflect a decrease of about 44 pct in
+net reserve revenues and 39 pct in discounted present value
+compared with the study made in 1985.
+           </leadParagraph>
+          <publicationDate>
+            <date>1987-02-26</date>
+          </publicationDate>
+          <region code="usa">
+            <name>United States</name>
+          </region>
+          <region code="namz">
+            <name>North America</name>
+          </region>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870226-0006</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870226-0006</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">KUWAIT SAYS NO PLANS FOR EMERGENCY OPEC TALKS</paragraph>
+          </headline>
+          <leadParagraph>
+Kuwait"s Oil Minister, in remarks
+published today, said there were no plans for an emergency OPEC
+meeting to review oil policies after recent weakness in world
+oil prices.
+    Sheikh Ali al-Khalifa al-Sabah was quoted by the local
+daily al-Qabas as saying: "None of the OPEC members has asked
+for such a meeting."
+    He denied Kuwait was pumping above its quota of 948,000
+barrels of crude daily (bpd) set under self-imposed production
+limits of the 13-nation organisation.
+    Traders and analysts in international oil markets estimate
+OPEC is producing up to one mln bpd above a ceiling of 15.8 mln
+bpd agreed in Geneva last December.
+    They named Kuwait and the United Arab Emirates, along with
+the much smaller producer Ecuador, among those producing above
+quota. Kuwait, they said, was pumping 1.2 mln bpd.
+    "This rumour is baseless. It is based on reports which said
+Kuwait has the ability to exceed its share. They suppose that
+because Kuwait has the ability, it will do so," the minister
+said.
+    Sheikh Ali has said before that Kuwait had the ability to
+produce up to 4.0 mln bpd.
+    "If we can sell more than our quota at official prices,
+while some countries are suffering difficulties marketing their
+share, it means we in Kuwait are unusually clever," he said.
+    He was referring apparently to the Gulf state of qatar,
+which industry sources said was selling less than 180,000 bpd
+of its 285,000 bpd quota, because buyers were resisting
+official prices restored by OPEC last month pegged to a marker
+of 18 dlrs per barrel.
+    Prices in New York last week dropped to their lowest levels
+this year and almost three dollars below a three-month high of
+19 dollars a barrel.
+    Sheikh Ali also delivered "a challenge to any international
+oil company that declared Kuwait sold below official prices."
+    Because it was charging its official price, of 16.67 dlrs a
+barrel, it had lost custom, he said but did not elaborate.
+    However, Kuwait had guaranteed markets for its oil because
+of its local and international refining facilities and its own
+distribution network abroad, he added.
+    He reaffirmed that the planned meeting March 7 of OPEC"s
+differentials committee has been postponed until the start of
+April at the request of certain of the body"s members.
+    Ecuador"s deputy energy minister Fernando Santos Alvite said
+last Wednesday his debt-burdened country wanted OPEC to assign
+a lower official price for its crude, and was to seek this at
+talks this month of opec"s pricing committee.
+    Referring to pressure by oil companies on OPEC members, in
+apparent reference to difficulties faced by Qatar, he said: "We
+expected such pressure. It will continue through March and
+April." But he expected the situation would later improve.
+           </leadParagraph>
+          <publicationDate>
+            <date>1987-03-01</date>
+          </publicationDate>
+          <region code="usa">
+            <name>United States</name>
+          </region>
+          <region code="namz">
+            <name>North America</name>
+          </region>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870301-0007</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870301-0007</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">INDONESIA SEEN AT CROSSROADS OVER ECONOMIC CHANGE</paragraph>
+          </headline>
+          <leadParagraph>
+Indonesia appears to be nearing a
+political crossroads over measures to deregulate its protected
+economy, the U.S. Embassy says in a new report.
+    To counter falling oil revenues, the government has
+launched a series of measures over the past nine months to
+boost exports outside the oil sector and attract new
+investment.
+    Indonesia, the only Asian member of OPEC and a leading
+primary commodity producer, has been severely hit by last year"s
+fall in world oil prices, which forced it to devalue its
+currency by 31 pct in September.
+    But the U.S. Embassy report says President Suharto"s
+government appears to be divided over what direction to lead
+the economy.
+    "(It) appears to be nearing a crossroads with regard to
+deregulation, both as it pertains to investments and imports,"
+the report says. It primarily assesses Indonesia"s agricultural
+sector, but also reviews the country"s general economic
+performance.
+    It says that while many government officials and advisers
+are recommending further relaxation, "there are equally strong
+pressures being exerted to halt all such moves."
+    "This group strongly favours an import substitution economy,"
+the report says.
+    Indonesia"s economic changes have been welcomed by the World
+Bank and international bankers as steps in the right direction,
+though they say crucial areas of the economy like plastics and
+steel remain highly protected, and virtual monopolies.
+    Three sets of measures have been announced since last May,
+which broadened areas for foreign investment, reduced trade
+restrictions and liberalised imports.
+    The report says Indonesia"s economic growth in calendar 1986
+was probably about zero, and the economy may even have
+contracted a bit. "This is the lowest rate of growth since the
+mid-1960s," the report notes.
+    Indonesia, the largest country in South-East Asia with a
+population of 168 million, is facing general elections in
+April.
+    But the report hold out little hope for swift improvement
+in the economic outlook. "For 1987 early indications point to a
+slightly positive growth rate not exceeding one pct. Economic
+activity continues to suffer due to the sharp fall in export
+earnings from the petroleum industry."
+    "Growth in the non-oil sector is low because of weak
+domestic demand coupled with excessive plant capacity, real
+declines in construction and trade, and a reduced level of
+growth in agriculture," the report states.
+    Bankers say continuation of present economic reforms is
+crucial for the government to get the international lending its
+needs.
+    A new World Bank loan of 300 mln dlrs last month in balance
+of payments support was given partly to help the government
+maintain the momentum of reform, the Bank said.
+           </leadParagraph>
+          <publicationDate>
+            <date>1987-03-01</date>
+          </publicationDate>
+          <region code="ec">
+            <name>Ecuador</name>
+          </region>
+          <region code="samz">
+            <name>South America</name>
+          </region>
+          <region code="kw">
+            <name>Kuwait</name>
+          </region>
+          <region code="meast">
+            <name>Middle East</name>
+          </region>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870301-0008</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870301-0008</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">SAUDI RIYAL DEPOSIT RATES REMAIN FIRM</paragraph>
+          </headline>
+          <leadParagraph>
+Saudi riyal interbank deposits were
+steady at yesterday's higher levels in a quiet market.
+    Traders said they were reluctant to take out new positions
+amidst uncertainty over whether OPEC will succeed in halting
+the current decline in oil prices.
+    Oil industry sources said yesterday several Gulf Arab
+producers had had difficulty selling oil at official OPEC
+prices but Kuwait has said there are no plans for an emergency
+meeting of the 13-member organisation.
+    A traditional Sunday lull in trading due to the European
+weekend also contributed to the lack of market activity.
+    Spot-next and one-week rates were put at 6-1/4, 5-3/4 pct
+after quotes ranging between seven, six yesterday.
+    One, three, and six-month deposits were quoted unchanged at
+6-5/8, 3/8, 7-1/8, 6-7/8 and 7-3/8, 1/8 pct respectively.
+    The spot riyal was quietly firmer at 3.7495/98 to the
+dollar after quotes of 3.7500/03 yesterday.
+           </leadParagraph>
+          <publicationDate>
+            <date>1987-03-01</date>
+          </publicationDate>
+          <region code="usa">
+            <name>United States</name>
+          </region>
+          <region code="namz">
+            <name>North America</name>
+          </region>
+          <region code="indo">
+            <name>Indonesia</name>
+          </region>
+          <region code="asiaz">
+            <name>Asia</name>
+          </region>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870301-0009</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870301-0009</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">QATAR UNVEILS BUDGET FOR FISCAL 1987/88</paragraph>
+          </headline>
+          <leadParagraph>
+The Gulf oil state of Qatar, recovering
+slightly from last year's decline in world oil prices,
+announced its first budget since early 1985 and projected a
+deficit of 5.472 billion riyals.
+    The deficit compared with a shortfall of 7.3 billion riyals
+in the last published budget for 1985/86.
+    In a statement outlining the budget for the fiscal year
+1987/88 beginning today, Finance and Petroleum Minister Sheikh
+Abdul-Aziz bin Khalifa al-Thani said the government expected to
+spend 12.217 billion riyals in the period.
+    Projected expenditure in the 1985/86 budget had been 15.6
+billion riyals.
+    Sheikh Abdul-Aziz said government revenue would be about
+6.745 billion riyals, down by about 30 pct on the 1985/86
+projected revenue of 9.7 billion.
+    The government failed to publish a 1986/87 budget due to
+uncertainty surrounding oil revenues.
+    Sheikh Abdul-Aziz said that during that year the government
+decided to limit recurrent expenditure each month to
+one-twelfth of the previous fiscal year's allocations minus 15
+pct.
+    He urged heads of government departments and public
+institutions to help the government rationalise expenditure. He
+did not say how the 1987/88 budget shortfall would be covered.
+    Sheikh Abdul-Aziz said plans to limit expenditure in
+1986/87 had been taken in order to relieve the burden placed on
+the country's foreign reserves.
+    He added in 1987/88 some 2.766 billion riyals had been
+allocated for major projects including housing and public
+buildings, social services, health, education, transport and
+communications, electricity and water, industry and
+agriculture.
+    No figure was revealed for expenditure on defence and
+security. There was also no projection for oil revenue.
+    Qatar, an OPEC member, has an output ceiling of 285,000
+barrels per day.
+    Sheikh Abdul-Aziz said: "Our expectations of positive signs
+regarding (oil) price trends, foremost among them OPEC's
+determination to shoulder its responsibilites and protect its
+wealth, have helped us make reasonable estimates for the coming
+year's revenue on the basis of our assigned quota."
+           </leadParagraph>
+          <publicationDate>
+            <date>1987-03-01</date>
+          </publicationDate>
+          <region code="bhr">
+            <name>Bahrain</name>
+          </region>
+          <region code="sar">
+            <name>Saudi Arabia</name>
+          </region>
+          <region code="meast">
+            <name>Middle East</name>
+          </region>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870301-0010</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870301-0010</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">SAUDI ARABIA REITERATES COMMITMENT TO OPEC PACT</paragraph>
+          </headline>
+          <leadParagraph>
+Saudi Arabian Oil Minister Hisham Nazer
+reiterated the kingdom's commitment to last December's OPEC
+accord to boost world oil prices and stabilise the market, the
+official Saudi Press Agency SPA said.
+    Asked by the agency about the recent fall in free market
+oil prices, Nazer said Saudi Arabia "is fully adhering by the
+... Accord and it will never sell its oil at prices below the
+pronounced prices under any circumstance."
+    Nazer, quoted by SPA, said recent pressure on free market
+prices "may be because of the end of the (northern hemisphere)
+winter season and the glut in the market."
+    Saudi Arabia was a main architect of the December accord,
+under which OPEC agreed to lower its total output ceiling by
+7.25 pct to 15.8 mln barrels per day (bpd) and return to fixed
+prices of around 18 dlrs a barrel.
+    The agreement followed a year of turmoil on oil markets,
+which saw prices slump briefly to under 10 dlrs a barrel in
+mid-1986 from about 30 dlrs in late 1985. Free market prices
+are currently just over 16 dlrs.
+    Nazer was quoted by the SPA as saying Saudi Arabia's
+adherence to the accord was shown clearly in the oil market.
+    He said contacts among members of OPEC showed they all
+wanted to stick to the accord.
+    In Jamaica, OPEC President Rilwanu Lukman, who is also
+Nigerian Oil Minister, said the group planned to stick with the
+pricing agreement.
+    "We are aware of the negative forces trying to manipulate
+the operations of the market, but we are satisfied that the
+fundamentals exist for stable market conditions," he said.
+    Kuwait's Oil Minister, Sheikh Ali al-Khalifa al-Sabah, said
+in remarks published in the emirate's daily Al-Qabas there were
+no plans for an emergency OPEC meeting to review prices.
+    Traders and analysts in international oil markets estimate
+OPEC is producing up to one mln bpd above the 15.8 mln ceiling.
+    They named Kuwait and the United Arab Emirates, along with
+the much smaller producer Ecuador, among those producing above
+quota. Sheikh Ali denied that Kuwait was over-producing.
+           </leadParagraph>
+          <publicationDate>
+            <date>1987-03-01</date>
+          </publicationDate>
+          <region code="qat">
+            <name>Qatar</name>
+          </region>
+          <region code="meast">
+            <name>Middle East</name>
+          </region>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870302-0011</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870302-0011</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">SAUDI FEBRUARY CRUDE OUTPUT PUT AT 3.5 MLN BPD</paragraph>
+          </headline>
+          <leadParagraph>
+Saudi crude oil output last month fell
+to an average of 3.5 mln barrels per day (bpd) from 3.8 mln bpd
+in January, Gulf oil sources said.
+    They said exports from the Ras Tanurah and Ju'aymah
+terminals in the Gulf fell to an average 1.9 mln bpd last month
+from 2.2 mln in January because of lower liftings by some
+customers.
+    But the drop was much smaller than expected after Gulf
+exports rallied in the fourth week of February to 2.5 mln bpd
+from 1.2 mln in the third week, the sources said.
+    The production figures include neutral zone output but not
+sales from floating storage, which are generally considered
+part of a country's output for Opec purposes.
+    Saudi Arabia has an Opec quota of 4.133 mln bpd under a
+production restraint scheme approved by the 13-nation group
+last December to back new official oil prices averaging 18 dlrs
+a barrel.
+    The sources said the two-fold jump in exports last week
+appeared to be the result of buyers rushing to lift February
+entitlements before the month-end.
+    Last week's high export levels appeared to show continued
+support for official Opec prices from Saudi Arabia's main crude
+customers, the four ex-partners of Aramco, the sources said.
+    The four -- Exxon Corp (XON), Mobil Corp (MOB), Texaco Inc
+(TX) and Chevron Corp (CHV) -- signed a long-term agreement
+last month to buy Saudi crude for 17.52 dlrs a barrel.
+    However the sources said the real test of Saudi Arabia's
+ability to sell crude at official prices in a weak market will
+come this month, when demand for petroleum products
+traditionally tapers off. Spot prices have fallen in recent
+weeks to more than one dlr below Opec levels.
+    Saudi Arabian oil minister Hisham Nazer yesterday
+reiterated the kingdom's commitment to the December OPEC accord
+and said it would never sell below official prices.
+    The sources said total Saudi refinery throughput fell
+slightly in February to an average 1.1 mln bpd from 1.2 mln in
+January because of cuts at the Yanbu and Jubail export
+refineries.
+    They put crude oil exports through Yanbu at 100,000 bpd
+last month, compared to zero in January, while throughput at
+Bahrain's refinery and neutral zone production remained steady
+at around 200,000 bpd each.
+           </leadParagraph>
+          <publicationDate>
+            <date>1987-03-02</date>
+          </publicationDate>
+          <region code="sar">
+            <name>Saudi Arabia</name>
+          </region>
+          <region code="bhr">
+            <name>Bahrain</name>
+          </region>
+          <region code="meast">
+            <name>Middle East</name>
+          </region>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870302-0012</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870302-0012</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">GULF ARAB DEPUTY OIL MINISTERS TO MEET IN BAHRAIN</paragraph>
+          </headline>
+          <leadParagraph>
+Deputy oil ministers from six Gulf
+Arab states will meet in Bahrain today to discuss coordination
+of crude oil marketing, the official Emirates news agency WAM
+reported.
+    WAM said the officials would be discussing implementation
+of last Sunday's agreement in Doha by Gulf Cooperation Council
+(GCC) oil ministers to help each other market their crude oil.
+    Four of the GCC states - Saudi Arabia, the United Arab
+Emirates (UAE), Kuwait and Qatar - are members of the
+Organiaation of Petroleum Exporting Countries (OPEC) and some
+face stiff buyer resistance to official OPEC prices.
+           </leadParagraph>
+          <publicationDate>
+            <date>1987-03-02</date>
+          </publicationDate>
+          <region code="sar">
+            <name>Saudi Arabia</name>
+          </region>
+          <region code="uae">
+            <name>United Arab Emirates</name>
+          </region>
+          <region code="meast">
+            <name>Middle East</name>
+          </region>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870302-0013</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870302-0013</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">SAUDI ARABIA REITERATES COMMITMENT TO OPEC ACCORD</paragraph>
+          </headline>
+          <leadParagraph>
+Saudi Arabian Oil Minister Hisham Nazer
+reiterated the kingdom's commitment to last December's OPEC
+accord to boost world oil prices and stabilize the market, the
+official Saudi Press Agency SPA said.
+    Asked by the agency about the recent fall in free market
+oil prices, Nazer said Saudi Arabia "is fully adhering by the
+... accord and it will never sell its oil at prices below the
+pronounced prices under any circumstance."
+    Saudi Arabia was a main architect of December pact under
+which OPEC agreed to cut its total oil output ceiling by 7.25
+pct and return to fixed prices of around 18 dollars a barrel.
+           </leadParagraph>
+          <publicationDate>
+            <date>1987-03-02</date>
+          </publicationDate>
+          <region code="bhr">
+            <name>Bahrain</name>
+          </region>
+          <region code="kw">
+            <name>Kuwait</name>
+          </region>
+          <region code="sar">
+            <name>Saudi Arabia</name>
+          </region>
+          <region code="uae">
+            <name>United Arab Emirates</name>
+          </region>
+          <region code="meast">
+            <name>Middle East</name>
+          </region>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870302-0014</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870302-0014</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">KUWAIT MINISTER SAYS NO EMERGENCY OPEC TALKS SET</paragraph>
+          </headline>
+          <leadParagraph>
+Kuwait's oil minister said in a newspaper
+interview that there were no plans for an emergency OPEC
+meeting after the recent weakness in world oil prices.
+    Sheikh Ali al-Khalifa al-Sabah was quoted by the local
+daily al-Qabas as saying that "none of the OPEC members has
+asked for such a meeting."
+    He also denied that Kuwait was pumping above its OPEC quota
+of 948,000 barrels of crude daily (bpd).
+    Crude oil prices fell sharply last week as international
+oil traders and analysts estimated the 13-nation OPEC was
+pumping up to one million bpd over its self-imposed limits.
+           </leadParagraph>
+          <publicationDate>
+            <date>1987-03-02</date>
+          </publicationDate>
+          <region code="bhr">
+            <name>Bahrain</name>
+          </region>
+          <region code="sar">
+            <name>Saudi Arabia</name>
+          </region>
+          <region code="meast">
+            <name>Middle East</name>
+          </region>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870302-0015</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870302-0015</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">PHILADELPHIA PORT CLOSED BY TANKER CRASH</paragraph>
+          </headline>
+          <leadParagraph>
+The port of Philadelphia was closed
+when a Cypriot oil tanker, Seapride II, ran aground after
+hitting a 200-foot tower supporting power lines across the
+river, a Coast Guard spokesman said.
+    He said there was no oil spill but the ship is lodged on
+rocks opposite the Hope Creek nuclear power plant in New
+Jersey.
+    He said the port would be closed until today when they
+hoped to refloat the ship on the high tide.
+    After delivering oil to a refinery in Paulsboro, New
+Jersey, the ship apparently lost its steering and hit the power
+transmission line carrying power from the nuclear plant to the
+state of Delaware.
+           </leadParagraph>
+          <publicationDate>
+            <date>1987-03-02</date>
+          </publicationDate>
+          <region code="kw">
+            <name>Kuwait</name>
+          </region>
+          <region code="meast">
+            <name>Middle East</name>
+          </region>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870302-0016</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870302-0016</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">STUDY GROUP URGES INCREASED U.S. OIL RESERVES</paragraph>
+          </headline>
+          <leadParagraph>
+A study group said the United States
+should increase its strategic petroleum reserve to one mln
+barrels as one way to deal with the present and future impact
+of low oil prices on the domestic oil industry.
+    U.S. policy now is to raise the strategic reserve to 750
+mln barrels, from its present 500 mln, to help protect the
+economy from an overseas embargo or a sharp price rise.
+    The Aspen Institute for Humanistic Studies, a private
+group, also called for new research for oil exploration and
+development techniques.
+    It predicted prices would remain at about 15-18 dlrs a
+barrel for several years and then rise to the mid 20s, with
+imports at about 30 pct of U.S. consumption.
+    It said instead that such moves as increasing oil reserves
+and more exploration and development research would help to
+guard against or mitigate the risks of increased imports.
+           </leadParagraph>
+          <publicationDate>
+            <date>1987-03-02</date>
+          </publicationDate>
+          <region code="usa">
+            <name>United States</name>
+          </region>
+          <region code="namz">
+            <name>North America</name>
+          </region>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870302-0017</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870302-0017</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">UNOCAL (UCL) UNIT CUTS CRUDE OIL POSTED PRICES</paragraph>
+          </headline>
+          <leadParagraph>
+Unocal Corp's Union Oil Co said it
+lowered its posted prices for crude oil one to 1.50 dlrs a
+barrel in the eastern region of the U.S., effective Feb 26.
+    Union said a 1.50 dlrs cut brings its posted price for the
+U.S. benchmark grade, West Texas Intermediate, to 16 dlrs.
+Louisiana Sweet also was lowered 1.50 dlrs to 16.35 dlrs, the
+company said.
+    No changes were made in Union's posted prices for West
+Coast grades of crude oil, the company said.
+           </leadParagraph>
+          <publicationDate>
+            <date>1987-03-02</date>
+          </publicationDate>
+          <region code="usa">
+            <name>United States</name>
+          </region>
+          <region code="namz">
+            <name>North America</name>
+          </region>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870302-0018</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870302-0018</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">NYMEX WILL EXPAND OFF-HOUR TRADING APRIL ON</paragraph>
+          </headline>
+          <leadParagraph>
+The New York Mercantile Exchange set
+April one for the debut of a new procedure in the energy
+complex that will increase the use of energy futures worldwide.
+     On April one, NYMEX will allow oil traders that do not
+hold a futures position to initiate, after the exchange closes,
+a transaction that can subsequently be hedged in the futures
+market, according to an exchange spokeswoman.
+    "This will change the way oil is transacted in the real
+world," said said Thomas McKiernan, McKiernan and Co chairman.
+    Foreign traders will be able to hedge trades against NYMEX
+prices before the exchange opens and negotiate prices at a
+differential to NYMEX prices, McKiernan explained.
+     The expanded program "will serve the industry because the
+oil market does not close when NYMEX does," said Frank Capozza,
+secretary of Century Resources Inc.
+     The rule change, which has already taken effect for
+platinum futures on NYMEX, is expected to increase the open
+interest and liquidity in U.S. energy futures, according to
+traders and analysts.
+    Currently, at least one trader in this transaction, called
+an exchange for physical or EFP, must hold a futures position
+before entering into the transaction.
+    Under the new arrangement, neither party has to hold a
+futures position before entering into an EFP and one or both
+parties can offset their cash transaction with a futures
+contract the next day, according to exchange officials.
+    When NYMEX announced its proposed rule change in December,
+NYMEX President Rosemary McFadden, said, "Expansion of the EFP
+provision will add to globalization of the energy markets by
+providing for, in effect, 24-hour trading."
+    The Commodity Futures Trading Commission approved the rule
+change in February, according to a CFTC spokeswoman.
+           </leadParagraph>
+          <publicationDate>
+            <date>1987-03-02</date>
+          </publicationDate>
+          <region code="usa">
+            <name>United States</name>
+          </region>
+          <region code="namz">
+            <name>North America</name>
+          </region>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+      <ppsarticle>
+        <article>
+          <accessionNo>REUT00019870302-0019</accessionNo>
+          <reference>distdoc:archive/ArchiveDoc::Article/REUT00019870302-0019</reference>
+          <baseLanguage>EN</baseLanguage>
+          <copyright>Copyright 1987 Reuters</copyright>
+          <headline>
+            <paragraph display="Proportional" truncation="None" lang="EN">ARGENTINE OIL PRODUCTION DOWN IN JANUARY 1987</paragraph>
+          </headline>
+          <leadParagraph>
+Argentine crude oil production was
+down 10.8 pct in January 1987 to 12.32 mln barrels, from 13.81
+mln barrels in January 1986, Yacimientos Petroliferos Fiscales
+said.
+    January 1987 natural gas output totalled 1.15 billion cubic
+metrers, 3.6 pct higher than 1.11 billion cubic metres produced
+in January 1986, Yacimientos Petroliferos Fiscales added.
+ Reuter
+          </leadParagraph>
+          <publicationDate>
+            <date>1987-03-02</date>
+          </publicationDate>
+          <region code="arg">
+            <name>Argentina</name>
+          </region>
+          <region code="samz">
+            <name>South America</name>
+          </region>
+          <sourceName>Reuters-21578</sourceName>
+        </article>
+      </ppsarticle>
+    </ppsarticleResultSet>
+  </ppsArticleResponse>
+</PPSResponse>
+
