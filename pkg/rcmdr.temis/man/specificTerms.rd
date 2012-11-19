@@ -4,7 +4,7 @@
 \description{List terms most associated (positively or negatively) with each document or each
              of a variable's levels.}
 \usage{
-specificTerms(dtm, variable, p = 0.1, n.max = 25, sparsity = 0.95, min.occ = 1)
+specificTerms(dtm, variable, p = 0.1, n.max = 25, sparsity = 0.95, min.occ = 2)
 }
 \arguments{
   \item{dtm}{a document-term matrix.}

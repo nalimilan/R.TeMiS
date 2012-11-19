@@ -348,7 +348,7 @@ createClustersDlg <- function() {
                        showvalue=TRUE, variable=tclP,
 	               resolution=1, orient="horizontal")
 
-    tclOcc <- tclVar(1)
+    tclOcc <- tclVar(2)
     sliderOcc <- tkscale(top, from=1, to=100,
                        showvalue=TRUE, variable=tclOcc,
 	               resolution=1, orient="horizontal")

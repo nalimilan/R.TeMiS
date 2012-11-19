@@ -1,4 +1,4 @@
-specificTerms <- function(dtm, variable=NULL, p=0.1, n.max=25, sparsity=0.95, min.occ=1) {
+specificTerms <- function(dtm, variable=NULL, p=0.1, n.max=25, sparsity=0.95, min.occ=2) {
     if(!is.null(variable) && length(unique(variable)) < 2)
         stop(.gettext("Please provide a variable with at least two levels."))
 
@@ -74,7 +74,7 @@ specificTermsDlg <- function() {
                        showvalue=TRUE, variable=tclP,
 	               resolution=1, orient="horizontal")
 
-    tclOcc <- tclVar(1)
+    tclOcc <- tclVar(2)
     sliderOcc <- tkscale(top, from=1, to=50,
                          showvalue=TRUE, variable=tclOcc,
 	                 resolution=1, orient="horizontal")
