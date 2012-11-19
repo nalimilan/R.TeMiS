@@ -113,6 +113,7 @@ if (getRversion() >= '2.15.1') globalVariables(c(
 
                 if(package %in% available.packages()[,1]) {
                     install.packages(package)
+                    library(package, character.only=TRUE)
                     return(TRUE)
                 }
                 else {

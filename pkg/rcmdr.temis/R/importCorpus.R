@@ -343,10 +343,13 @@ importCorpusFromFile <- function(language=NA, encoding="") {
             response <- tkmessageBox(message=.gettext("Loading OpenDocument spreadsheets (.ods) requires the ROpenOffice package.\nDo you want to install it?"),
                                      icon="question", type="yesno")
 
-            if (tclvalue(response) == "yes")
+            if (tclvalue(response) == "yes") {
 	        install.packages("ROpenOffice", repos="http://www.omegahat.org/R", type="source")
-            else
+                library("ROpenOffice")
+            }
+            else {
                 return(FALSE)
+            }
         }
 
         doItAndPrint(paste("corpusDataset <- read.ods(\"", file, "\")", sep=""))
