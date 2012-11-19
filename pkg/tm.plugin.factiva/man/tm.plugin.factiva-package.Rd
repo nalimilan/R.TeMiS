@@ -8,7 +8,7 @@
 \description{
   This package provides a tm Source to create corpora from
   articles exported from Dow Jones's Factiva content provider as
-  \acronym{XML} files.
+  \acronym{XML} or \acronym{HTML} files.
 }
 \details{
 \tabular{ll}{
@@ -18,8 +18,8 @@
   Date: \tab 2012-02-03\cr
   License: \tab GPL (>= 2)\cr
 }
-  Typical usage is to create a corpus from an \acronym{XML} file exported
-  from Factiva (here called \code{myFactivaArticles.xml}). Setting
+  Typical usage is to create a corpus from a \acronym{XML} or \acronym{HTML} files
+  exported from Factiva (here called \code{myFactivaArticles.xml}). Setting
   \code{language=NA} allows the language to be set automatically from the
   information provided by Factiva:
 
@@ -35,6 +35,8 @@
     inspect(corpus[1])
     meta(corpus[[1]])
   }
+
+  See \code{link{FactivaSource}} for more details and real examples.
 }
 \author{
   Milan Bouchet-Valat <nalimilan@club.fr>
