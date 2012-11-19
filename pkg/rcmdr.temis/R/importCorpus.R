@@ -136,6 +136,8 @@ importCorpusDlg <- function() {
         if(any(sapply(objects, exists))) {
             doItAndPrint(paste("rm(", paste(objects[sapply(objects, exists)], collapse=", "), ")", sep=""))
             gc()
+
+            activateMenus()
         }
 
         # Import corpus
