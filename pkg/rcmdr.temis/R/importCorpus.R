@@ -108,6 +108,14 @@ importCorpusDlg <- function() {
     
 
     onOK <- function() {
+        source <- tclvalue(sourceVariable)
+        twitter <- source == "twitter"
+        lowercase <- tclvalue(lowercaseVariable) == 1
+        punctuation <- tclvalue(punctuationVariable) == 1
+        digits <- tclvalue(digitsVariable) == 1
+        stopwords <- tclvalue(stopwordsVariable) == 1
+        stemming <- tclvalue(stemmingVariable) == 1
+
         lang <- tclvalue(tclLang)
         snowballLang <- tm:::map_IETF_Snowball(lang)
 
@@ -128,6 +136,13 @@ importCorpusDlg <- function() {
 
         closeDialog()
 
+        .setBusyCursor()
+        on.exit(.setIdleCursor())
+
+        # If we do not close the dialog first, the CRAN mirror chooser will not respond
+	if(stemming && !.checkAndInstall("Snowball", .gettext("The Snowball package is needed to perform stemming.\nDo you want to install it?")))
+            return()
+
         # Remove objects left from a previous analysis to avoid confusion
         # (we assume later existing objects match the current corpus)
         objects <- c("corpus", "corpusVars", "dtm", "wordsDtm", "lengthsDtm", "voc", "lengths", "coocs",
@@ -141,7 +156,6 @@ importCorpusDlg <- function() {
         }
 
         # Import corpus
-        source <- tclvalue(sourceVariable)
         res <- switch(source,
                       dir=importCorpusFromDir(lang, enc),
                       file=importCorpusFromFile(lang, enc),
@@ -151,9 +165,6 @@ importCorpusDlg <- function() {
         # If loading failed, do not add errors to errors
         if(!(isTRUE(res) || is.list(res)) || length(corpus) == 0)
             return()
-
-        .setBusyCursor()
-        on.exit(.setIdleCursor())
 
         # If source-specific functions load variables, they create corpusVars; else, create an empty data frame
         if(exists("corpusVars")) {
@@ -175,13 +186,6 @@ importCorpusDlg <- function() {
         }
 
         # Process texts
-        twitter <- source == "twitter"
-        lowercase <- tclvalue(lowercaseVariable) == 1
-        punctuation <- tclvalue(punctuationVariable) == 1
-        digits <- tclvalue(digitsVariable) == 1
-        stopwords <- tclvalue(stopwordsVariable) == 1
-        stemming <- tclvalue(stemmingVariable) == 1
-
         if(twitter || lowercase || punctuation || digits || stopwords || stemming)
             doItAndPrint("dtmCorpus <- corpus")
 
