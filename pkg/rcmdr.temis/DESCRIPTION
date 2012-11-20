@@ -2,7 +2,7 @@ Package: RcmdrPlugin.temis
 Type: Package
 Title: Graphical user interface providing an integrated text mining solution
 Version: 0.5
-Date: 2012-07-02
+Date: 2012-11-20
 Authors@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr", role=c("aut", "cre")),
              person("Gilles", "Bastin", email="gilles.bastin@sciencespo-grenoble.fr", role=c("aut")))
 Depends: Rcmdr (>= 1.9-0), tm, ca, slam, R2HTML, lattice, latticeExtra, zoo
