@@ -39,7 +39,11 @@ termsDictionary <- function(dtm, order=c("alphabetic", "occurrences")) {
             dictionary
     }
     else {
-        terms <- SnowballStemmer(names(words), control=RWeka::Weka_control(S=lang))
+        if(suppressWarnings(require("Rstem", quietly=TRUE)))
+           terms <- Rstem::wordStem(names(words), language=lang)
+        else
+            terms <- SnowballStemmer(names(words), control=RWeka::Weka_control(S=lang))
+
         dictionary <- data.frame(row.names=names(words), words,
                                  terms, col_sums(dtm)[ifelse(terms %in% Terms(dtm), terms, NA)],
                                  ifelse(stopword, .gettext("Stopword"), ""),

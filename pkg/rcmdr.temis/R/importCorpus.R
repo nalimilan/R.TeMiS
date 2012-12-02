@@ -116,10 +116,14 @@ importCorpusDlg <- function() {
         stopwords <- tclvalue(stopwordsVariable) == 1
         stemming <- tclvalue(stemmingVariable) == 1
 
-        lang <- tclvalue(tclLang)
-        snowballLang <- tm:::map_IETF_Snowball(lang)
+        if(stemming)
+            haveRstem <- suppressWarnings(require("Rstem", quietly=TRUE))
 
-        if(is.na(snowballLang) || snowballLang == "porter") {
+        lang <- tclvalue(tclLang)
+        stemLang <- tm:::map_IETF_Snowball(lang)
+
+        if(is.na(stemLang) || stemLang == "porter" ||
+           (haveRstem && !stemLang %in% Rstem::getStemLanguages())) {
             Message(.gettext('Unsupported language code: please click the "Help" button to get a list of supported codes.'),
                     "error")
             return()
@@ -139,8 +143,10 @@ importCorpusDlg <- function() {
         .setBusyCursor()
         on.exit(.setIdleCursor())
 
+
         # If we do not close the dialog first, the CRAN mirror chooser will not respond
-	if(stemming && !.checkAndInstall("Snowball", .gettext("The Snowball package is needed to perform stemming.\nDo you want to install it?")))
+	if(stemming && !haveRstem &&
+           !.checkAndInstall("Snowball", .gettext("The Snowball package is needed to perform stemming.\nDo you want to install it?")))
             return()
 
         # Remove objects left from a previous analysis to avoid confusion
@@ -220,7 +226,8 @@ importCorpusDlg <- function() {
                                lang, "\"))", sep=""))
 
         if(stemming)
-            doItAndPrint(sprintf('dtmCorpus <- tm_map(dtmCorpus, stemDocument, language="%s")',
+            doItAndPrint(sprintf('dtmCorpus <- tm_map(dtmCorpus, %s, language="%s")',
+                                 if(haveRstem) "stemDocumentRstem" else "stemDocument",
                                  tm:::map_IETF_Snowball(lang)))
 
         if(twitter || lowercase || punctuation || digits || stopwords || stemming) {
