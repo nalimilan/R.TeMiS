@@ -236,7 +236,9 @@ importCorpusDlg <- function() {
         # Language is used again when creating the dtm to analyse word lengths
         doItAndPrint(sprintf('meta(corpus, type="corpus", tag="language") <- attr(dtm, "language") <- "%s"', lang))
 
-        doItAndPrint(sprintf('meta(corpus, type="corpus", tag="source") <- "%s"', res$source))
+        # Do not call doItAndPrint() until the bug in Rcmdr is fixed (long quoted strings create problems
+        # when splitting commands when more than one pair of quotes is present)
+        justDoIt(sprintf('meta(corpus, type="corpus", tag="source") <- "%s"', res$source))
 
         if(stopwords || stemming) {
             doItAndPrint('attr(dtm, "words") <- words')
