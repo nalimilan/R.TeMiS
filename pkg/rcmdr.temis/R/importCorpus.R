@@ -116,17 +116,19 @@ importCorpusDlg <- function() {
         stopwords <- tclvalue(stopwordsVariable) == 1
         stemming <- tclvalue(stemmingVariable) == 1
 
-        if(stemming)
-            haveRstem <- suppressWarnings(require("Rstem", quietly=TRUE))
-
         lang <- tclvalue(tclLang)
         stemLang <- tm:::map_IETF_Snowball(lang)
 
-        if(is.na(stemLang) || stemLang == "porter" ||
-           (haveRstem && !stemLang %in% Rstem::getStemLanguages())) {
-            Message(.gettext('Unsupported language code: please click the "Help" button to get a list of supported codes.'),
-                    "error")
-            return()
+
+        if(stemming) {
+            haveRstem <- suppressWarnings(require("Rstem", quietly=TRUE))
+
+            if(is.na(stemLang) || stemLang == "porter" ||
+               (haveRstem && !stemLang %in% Rstem::getStemLanguages())) {
+                Message(.gettext('Unsupported language code: please click the "Help" button to get a list of supported codes.'),
+                        "error")
+                return()
+            }
         }
 
         enc <- tclvalue(tclEnc)
