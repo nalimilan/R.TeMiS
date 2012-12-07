@@ -129,11 +129,11 @@ if (getRversion() >= '2.15.1') globalVariables(c(
     if(!require(package, character.only=TRUE)) {
         if(package == "Snowball")
             tkmessageBox(title=.gettext("Could not load package"),
-                         message=.gettext('Package Snowball could not be loaded. See errors in the "Messages" area.\n\nThis is usually due to Java problems. Please download the most recent version of Java, and that you are using the 32-bit version of R if you have a 32-bit Java, or the 64-bit version otherwise.\n\nIf this problem persists, install the Rstem package, which will replace Snowball automatically.'),
+                         message=.gettext("Package Snowball could not be loaded. See errors in the \"Messages\" area.\n\nThis is usually due to Java problems. Please download the most recent version of Java, and check that you are using the 32-bit version of R if you have a 32-bit Java, and the 64-bit version otherwise.\n\nIf this problem persists, install the Rstem package, which will replace Snowball automatically."),
                          icon="error", type="ok")
         else
             tkmessageBox(title=.gettext("Could not load package"),
-                         message=sprintf(.gettext('Package %s could not be loaded. See errors in the "Messages" area.')),
+                         message=sprintf(.gettext("Package %s could not be loaded. See errors in the \"Messages\" area.")),
                          icon="error", type="ok")
 
         return(FALSE)

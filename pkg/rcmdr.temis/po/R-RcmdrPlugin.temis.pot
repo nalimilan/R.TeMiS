@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.temis 0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-19 18:00+0200\n"
+"POT-Creation-Date: 2012-12-07 16:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-# ## MENUS: added by hand
+## MENUS: added by hand
 msgid "Text mining"
 msgstr ""
 
@@ -144,7 +144,7 @@ msgstr ""
 msgid "Export results to report"
 msgstr ""
 
-# # END OF MENUS
+## END OF MENUS
 
 
 #: R/corpusCa.R:28 R/corpusCa.R:31
@@ -526,17 +526,17 @@ msgid "Split texts into smaller documents"
 msgstr ""
 
 #: R/importCorpus.R:115 R/importCorpus.R:120 R/importCorpus.R:190
-#: R/importCorpus.R:224 R/importCorpus.R:258
+#: R/importCorpus.R:224 R/importCorpus.R:258 R/importCorpus.R:269
 msgid "Language of texts in the corpus:"
 msgstr ""
 
 #: R/importCorpus.R:116 R/importCorpus.R:121 R/importCorpus.R:191
-#: R/importCorpus.R:225 R/importCorpus.R:260
+#: R/importCorpus.R:225 R/importCorpus.R:260 R/importCorpus.R:271
 msgid "Text splitting:"
 msgstr ""
 
 #: R/importCorpus.R:118 R/importCorpus.R:123 R/importCorpus.R:193
-#: R/importCorpus.R:227 R/importCorpus.R:262
+#: R/importCorpus.R:227 R/importCorpus.R:262 R/importCorpus.R:273
 msgid "Size of new documents (in paragraphs):"
 msgstr ""
 
@@ -549,7 +549,7 @@ msgid "TSV file"
 msgstr ""
 
 #: R/importCorpus.R:152 R/importCorpus.R:156 R/importCorpus.R:224
-#: R/importCorpus.R:259 R/importCorpus.R:301
+#: R/importCorpus.R:259 R/importCorpus.R:301 R/importCorpus.R:312
 msgid "dBase file"
 msgstr ""
 
@@ -558,32 +558,32 @@ msgid "ODS file"
 msgstr ""
 
 #: R/importCorpus.R:154 R/importCorpus.R:158 R/importCorpus.R:226
-#: R/importCorpus.R:261 R/importCorpus.R:303
+#: R/importCorpus.R:261 R/importCorpus.R:303 R/importCorpus.R:314
 msgid "Excel file"
 msgstr ""
 
 #: R/importCorpus.R:155 R/importCorpus.R:159 R/importCorpus.R:227
-#: R/importCorpus.R:262 R/importCorpus.R:304
+#: R/importCorpus.R:262 R/importCorpus.R:304 R/importCorpus.R:315
 msgid "Excel 2007 file"
 msgstr ""
 
 #: R/importCorpus.R:156 R/importCorpus.R:160 R/importCorpus.R:228
-#: R/importCorpus.R:263 R/importCorpus.R:305
+#: R/importCorpus.R:263 R/importCorpus.R:305 R/importCorpus.R:316
 msgid "Access database"
 msgstr ""
 
 #: R/importCorpus.R:157 R/importCorpus.R:161 R/importCorpus.R:229
-#: R/importCorpus.R:264 R/importCorpus.R:306
+#: R/importCorpus.R:264 R/importCorpus.R:306 R/importCorpus.R:317
 msgid "Access 2007 database"
 msgstr ""
 
 #: R/importCorpus.R:158 R/importCorpus.R:153 R/importCorpus.R:221
-#: R/importCorpus.R:256 R/importCorpus.R:298
+#: R/importCorpus.R:256 R/importCorpus.R:298 R/importCorpus.R:309
 msgid "All supported types"
 msgstr ""
 
 #: R/importCorpus.R:183 R/importCorpus.R:196 R/importCorpus.R:267
-#: R/importCorpus.R:302 R/importCorpus.R:344
+#: R/importCorpus.R:302 R/importCorpus.R:344 R/importCorpus.R:355
 msgid ""
 "Loading OpenDocument spreadsheets (.ods) is not supported on your system.\n"
 "You should save your data set as a CSV file or as an Excel spreadsheet (."
@@ -591,14 +591,14 @@ msgid ""
 msgstr ""
 
 #: R/importCorpus.R:188 R/importCorpus.R:201 R/importCorpus.R:272
-#: R/importCorpus.R:307 R/importCorpus.R:349
+#: R/importCorpus.R:307 R/importCorpus.R:349 R/importCorpus.R:360
 msgid ""
 "Loading OpenDocument spreadsheets (.ods) requires the ROpenOffice package.\n"
 "Do you want to install it?"
 msgstr ""
 
 #: R/importCorpus.R:201 R/importCorpus.R:214 R/importCorpus.R:285
-#: R/importCorpus.R:320 R/importCorpus.R:365
+#: R/importCorpus.R:320 R/importCorpus.R:365 R/importCorpus.R:376
 msgid ""
 "Loading Excel and Access files is only supported on Windows.\n"
 "You should save your data set as a CSV file or as an OpenDocument "
@@ -606,21 +606,21 @@ msgid ""
 msgstr ""
 
 #: R/importCorpus.R:206 R/importCorpus.R:218 R/importCorpus.R:289
-#: R/importCorpus.R:324 R/importCorpus.R:369
+#: R/importCorpus.R:324 R/importCorpus.R:369 R/importCorpus.R:380
 msgid ""
 "The RODBC package is needed to read Excel and Access files.\n"
 "Do you want to install it?"
 msgstr ""
 
 #: R/importCorpus.R:215 R/importCorpus.R:222 R/importCorpus.R:293
-#: R/importCorpus.R:328 R/importCorpus.R:373
+#: R/importCorpus.R:328 R/importCorpus.R:373 R/importCorpus.R:384
 msgid ""
 "No ODBC driver for this file type was found.\n"
 "You probably need to install Excel or Access, or separate ODBC drivers."
 msgstr ""
 
 #: R/importCorpus.R:290 R/importCorpus.R:298 R/importCorpus.R:362
-#: R/importCorpus.R:398 R/importCorpus.R:443
+#: R/importCorpus.R:398 R/importCorpus.R:443 R/importCorpus.R:454
 msgid ""
 "The tm.plugin.factiva package is needed to import corpora from Factiva "
 "files.\n"
@@ -628,12 +628,13 @@ msgid ""
 msgstr ""
 
 #: R/importCorpus.R:300 R/importCorpus.R:302 R/importCorpus.R:366
-#: R/importCorpus.R:402 R/importCorpus.R:447
+#: R/importCorpus.R:402 R/importCorpus.R:447 R/importCorpus.R:458
 msgid "Factiva XML and HTML files"
 msgstr ""
 
 #: R/importCorpus.R:320 R/importCorpus.R:325 R/importCorpus.R:326
 #: R/importCorpus.R:393 R/importCorpus.R:429 R/importCorpus.R:474
+#: R/importCorpus.R:485
 msgid ""
 "Reading the specified file failed. Are you sure this file is in the correct "
 "format?"
@@ -642,23 +643,26 @@ msgstr ""
 #: R/importCorpus.R:345 R/time.R:13 R/time.R:28 R/importCorpus.R:350
 #: R/importCorpus.R:349 R/time.R:37 R/time.R:115 R/time.R:147 R/time.R:351
 #: R/time.R:383 R/importCorpus.R:416 R/importCorpus.R:452 R/importCorpus.R:497
+#: R/importCorpus.R:508
 msgid "Date"
 msgstr ""
 
 #: R/importCorpus.R:345 R/importCorpus.R:350 R/importCorpus.R:349
 #: R/importCorpus.R:416 R/importCorpus.R:452 R/importCorpus.R:497
+#: R/importCorpus.R:508
 msgid "Origin"
 msgstr ""
 
 #: R/importCorpus.R:345 R/importCorpus.R:350 R/importCorpus.R:349
 #: R/importCorpus.R:433 R/importCorpus.R:416 R/importCorpus.R:512
 #: R/importCorpus.R:452 R/importCorpus.R:557 R/importCorpus.R:497
-#: R/importCorpus.R:602
+#: R/importCorpus.R:602 R/importCorpus.R:508 R/importCorpus.R:613
 msgid "Author"
 msgstr ""
 
 #: R/importCorpus.R:345 R/importCorpus.R:350 R/importCorpus.R:349
 #: R/importCorpus.R:416 R/importCorpus.R:452 R/importCorpus.R:497
+#: R/importCorpus.R:508
 msgid "Section"
 msgstr ""
 
@@ -666,7 +670,7 @@ msgstr ""
 #: R/setCorpusVariables.R:64 R/importCorpus.R:417 R/importCorpus.R:517
 #: R/setCorpusVariables.R:35 R/setCorpusVariables.R:62 R/importCorpus.R:594
 #: R/importCorpus.R:652 R/setCorpusVariables.R:55 R/setCorpusVariables.R:60
-#: R/importCorpus.R:697
+#: R/importCorpus.R:697 R/importCorpus.R:708
 msgid "Doc ID"
 msgstr ""
 
@@ -676,7 +680,7 @@ msgstr ""
 #: R/setCorpusVariables.R:26 R/setCorpusVariables.R:35
 #: R/setCorpusVariables.R:48 R/setCorpusVariables.R:61 R/importCorpus.R:595
 #: R/importCorpus.R:653 R/setCorpusVariables.R:46 R/setCorpusVariables.R:59
-#: R/setCorpusVariables.R:60 R/importCorpus.R:698
+#: R/setCorpusVariables.R:60 R/importCorpus.R:698 R/importCorpus.R:709
 msgid "Doc N"
 msgstr ""
 
@@ -1586,62 +1590,63 @@ msgid "Twitter search"
 msgstr ""
 
 #: R/importCorpus.R:154 R/importCorpus.R:222 R/importCorpus.R:257
-#: R/importCorpus.R:299
+#: R/importCorpus.R:299 R/importCorpus.R:310
 msgid "Comma-separated values (CSV) file"
 msgstr ""
 
 #: R/importCorpus.R:155 R/importCorpus.R:223 R/importCorpus.R:258
-#: R/importCorpus.R:300
+#: R/importCorpus.R:300 R/importCorpus.R:311
 msgid "Tab-separated values (TSV) file"
 msgstr ""
 
 #: R/importCorpus.R:157 R/importCorpus.R:225 R/importCorpus.R:260
-#: R/importCorpus.R:302
+#: R/importCorpus.R:302 R/importCorpus.R:313
 msgid "Open Document Spreadsheet file"
 msgstr ""
 
 #: R/importCorpus.R:162 R/importCorpus.R:303 R/importCorpus.R:230
 #: R/importCorpus.R:367 R/importCorpus.R:265 R/importCorpus.R:403
-#: R/importCorpus.R:307 R/importCorpus.R:448
+#: R/importCorpus.R:307 R/importCorpus.R:448 R/importCorpus.R:318
+#: R/importCorpus.R:459
 msgid "All files"
 msgstr ""
 
 #: R/importCorpus.R:250 R/importCorpus.R:321 R/importCorpus.R:356
-#: R/importCorpus.R:401
+#: R/importCorpus.R:401 R/importCorpus.R:412
 msgid "Select one table"
 msgstr ""
 
 #: R/importCorpus.R:255 R/importCorpus.R:326 R/importCorpus.R:361
-#: R/importCorpus.R:406
+#: R/importCorpus.R:406 R/importCorpus.R:417
 msgid "No table selected"
 msgstr ""
 
 #: R/importCorpus.R:268 R/importCorpus.R:339 R/importCorpus.R:374
-#: R/importCorpus.R:419
+#: R/importCorpus.R:419 R/importCorpus.R:430
 msgid ""
 "File has unknown extension, assuming it is in the tab-separated values "
 "format."
 msgstr ""
 
 #: R/importCorpus.R:376 R/importCorpus.R:441 R/importCorpus.R:478
-#: R/importCorpus.R:523
+#: R/importCorpus.R:523 R/importCorpus.R:534
 msgid ""
 "The twitteR package is needed to import corpora from Twitter.\n"
 "Do you want to install it?"
 msgstr ""
 
 #: R/importCorpus.R:382 R/importCorpus.R:447 R/importCorpus.R:484
-#: R/importCorpus.R:529
+#: R/importCorpus.R:529 R/importCorpus.R:540
 msgid "Import Corpus From Twitter"
 msgstr ""
 
 #: R/importCorpus.R:400 R/importCorpus.R:465 R/importCorpus.R:510
-#: R/importCorpus.R:555
+#: R/importCorpus.R:555 R/importCorpus.R:566
 msgid "Please enter valid text to search for."
 msgstr ""
 
 #: R/importCorpus.R:413 R/importCorpus.R:481 R/importCorpus.R:526
-#: R/importCorpus.R:571
+#: R/importCorpus.R:571 R/importCorpus.R:582
 #, c-format
 msgid ""
 "No recent tweets match the specified search criteria in the chosen language "
@@ -1649,32 +1654,33 @@ msgid ""
 msgstr ""
 
 #: R/importCorpus.R:425 R/importCorpus.R:504 R/importCorpus.R:549
-#: R/importCorpus.R:594
+#: R/importCorpus.R:594 R/importCorpus.R:605
 msgid "Retrieving messages from Twitter failed."
 msgstr ""
 
 #: R/importCorpus.R:433 R/time.R:14 R/time.R:116 R/time.R:151 R/time.R:352
 #: R/time.R:387 R/importCorpus.R:512 R/importCorpus.R:557 R/importCorpus.R:602
+#: R/importCorpus.R:613
 msgid "Time"
 msgstr ""
 
 #: R/importCorpus.R:433 R/importCorpus.R:512 R/importCorpus.R:557
-#: R/importCorpus.R:602
+#: R/importCorpus.R:602 R/importCorpus.R:613
 msgid "Truncated"
 msgstr ""
 
 #: R/importCorpus.R:433 R/importCorpus.R:512 R/importCorpus.R:557
-#: R/importCorpus.R:602
+#: R/importCorpus.R:602 R/importCorpus.R:613
 msgid "StatusSource"
 msgstr ""
 
 #: R/importCorpus.R:450 R/importCorpus.R:527 R/importCorpus.R:579
-#: R/importCorpus.R:624
+#: R/importCorpus.R:624 R/importCorpus.R:635
 msgid "Text to search for:"
 msgstr ""
 
 #: R/importCorpus.R:452 R/importCorpus.R:529 R/importCorpus.R:581
-#: R/importCorpus.R:626
+#: R/importCorpus.R:626 R/importCorpus.R:637
 msgid "Maximum number of tweets to download:"
 msgstr ""
 
@@ -1948,31 +1954,31 @@ msgstr ""
 msgid "Absolute number of occurrences in level (\"Level\")"
 msgstr ""
 
-#: R/dictionary.R:30 R/dictionary.R:45
+#: R/dictionary.R:30 R/dictionary.R:45 R/dictionary.R:49
 msgid "Stopword"
 msgstr ""
 
-#: R/dictionary.R:31 R/dictionary.R:49
+#: R/dictionary.R:31 R/dictionary.R:49 R/dictionary.R:53
 msgid "Removed"
 msgstr ""
 
-#: R/dictionary.R:33 R/dictionary.R:51
+#: R/dictionary.R:33 R/dictionary.R:51 R/dictionary.R:55
 msgid "Occurrences"
 msgstr ""
 
-#: R/dictionary.R:33 R/dictionary.R:52
+#: R/dictionary.R:33 R/dictionary.R:52 R/dictionary.R:56
 msgid "Stopword?"
 msgstr ""
 
-#: R/dictionary.R:33 R/dictionary.R:52
+#: R/dictionary.R:33 R/dictionary.R:52 R/dictionary.R:56
 msgid "Removed?"
 msgstr ""
 
-#: R/dictionary.R:51
+#: R/dictionary.R:51 R/dictionary.R:55
 msgid "Stemmed term"
 msgstr ""
 
-#: R/dictionary.R:51
+#: R/dictionary.R:51 R/dictionary.R:55
 msgid "Stemmed occ."
 msgstr ""
 
@@ -1984,35 +1990,37 @@ msgstr ""
 msgid "Apply stemming"
 msgstr ""
 
-#: R/importCorpus.R:471 R/importCorpus.R:516
+#: R/importCorpus.R:471 R/importCorpus.R:516 R/importCorpus.R:527
 #, c-format
 msgid "Factiva file %s"
 msgid_plural "Factiva files %s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: R/importCorpus.R:498 R/importCorpus.R:543
+#: R/importCorpus.R:498 R/importCorpus.R:543 R/importCorpus.R:554
 msgid "Remove user names"
 msgstr ""
 
-#: R/importCorpus.R:498 R/importCorpus.R:543
+#: R/importCorpus.R:498 R/importCorpus.R:543 R/importCorpus.R:554
 msgid "Remove hashtags"
 msgstr ""
 
-#: R/importCorpus.R:499 R/importCorpus.R:544
+#: R/importCorpus.R:499 R/importCorpus.R:544 R/importCorpus.R:555
 msgid "Exclude retweets"
 msgstr ""
 
-#: R/importCorpus.R:500 R/importCorpus.R:545
+#: R/importCorpus.R:500 R/importCorpus.R:545 R/importCorpus.R:556
 msgid "Options:"
 msgstr ""
 
 #: R/importCorpus.R:559 R/importCorpus.R:562 R/importCorpus.R:563
 #: R/importCorpus.R:604 R/importCorpus.R:607 R/importCorpus.R:608
+#: R/importCorpus.R:615 R/importCorpus.R:618 R/importCorpus.R:619
+#, c-format
 msgid "Retweet"
 msgstr ""
 
-#: R/importCorpus.R:588 R/importCorpus.R:633
+#: R/importCorpus.R:588 R/importCorpus.R:633 R/importCorpus.R:644
 #, c-format
 msgid "Twitter search for %s"
 msgstr ""
@@ -2065,8 +2073,7 @@ msgid "Cum. %"
 msgstr ""
 
 #: R/output.R:298 R/output.R:299
-msgid ""
-"Axes inertias (eigenvalues):\n"
+msgid "Axes inertias (eigenvalues):\n"
 msgstr ""
 
 #: R/output.R:314 R/output.R:315
@@ -2118,13 +2125,13 @@ msgstr ""
 msgid "native (%s)"
 msgstr ""
 
-#: R/importCorpus.R:143
+#: R/importCorpus.R:143 R/importCorpus.R:151
 msgid ""
 "The Snowball package is needed to perform stemming.\n"
 "Do you want to install it?"
 msgstr ""
 
-#: R/importCorpus.R:259
+#: R/importCorpus.R:259 R/importCorpus.R:270
 msgid "File encoding:"
 msgstr ""
 
@@ -2135,4 +2142,40 @@ msgstr ""
 #: R/showCorpusCa.R:313
 #, c-format
 msgid "Situation of supplementary variables on axis %i:"
+msgstr ""
+
+#: R/common.R:108
+msgid "Package required"
+msgstr ""
+
+#: R/common.R:121
+msgid "Package not available"
+msgstr ""
+
+#: R/common.R:122
+#, c-format
+msgid ""
+"Package %s is not available. Please check your Internet connection, restart "
+"R and try again."
+msgstr ""
+
+#: R/common.R:131 R/common.R:135
+msgid "Could not load package"
+msgstr ""
+
+#: R/common.R:132
+msgid ""
+"Package Snowball could not be loaded. See errors in the \"Messages\" area.\n"
+"\n"
+"This is usually due to Java problems. Please download the most recent "
+"version of Java, and check that you are using the 32-bit version of R if you "
+"have a 32-bit Java, and the 64-bit version otherwise.\n"
+"\n"
+"If this problem persists, install the Rstem package, which will replace "
+"Snowball automatically."
+msgstr ""
+
+#: R/common.R:136
+#, c-format
+msgid "Package %s could not be loaded. See errors in the \"Messages\" area."
 msgstr ""
