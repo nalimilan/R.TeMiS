@@ -4,6 +4,7 @@
         plugins <- Rcmdr$plugins
         if ((!pkgname %in% plugins) && !getRcmdr("autoRestart")) {
                 Rcmdr$plugins <- c(plugins, pkgname)
+                Rcmdr$ask.on.exit <- FALSE
                 options(Rcmdr=Rcmdr)
                 closeCommander(ask=FALSE, ask.save=TRUE)
 
@@ -21,8 +22,6 @@
                 }
 
                 Commander()
-
-                options(ask.on.exit=FALSE)
 
                 # HTML.matrix() does not allow passing scientific separately,
                 # and vocabulary summary tables often end up printed in scientific notation
