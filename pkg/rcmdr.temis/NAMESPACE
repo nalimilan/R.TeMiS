@@ -1,4 +1,4 @@
-import(Rcmdr, stats, tm, ca, slam, R2HTML, lattice, latticeExtra, zoo)
+import(Rcmdr, stats, utils, tm, ca, slam, R2HTML, lattice, latticeExtra, zoo)
 importFrom(tcltk,
            .Tcl, tcl, tclRequire, tclServiceMode, "tclvalue<-",
            tclVar, tkbind, tkcget, tkcheckbutton, tkconfigure,
