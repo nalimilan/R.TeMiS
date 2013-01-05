@@ -3,13 +3,14 @@ importFrom(tcltk,
            .Tcl, tcl, tclRequire, tclServiceMode, "tclvalue<-",
            tclVar, tkbind, tkcget, tkcheckbutton, tkconfigure,
            tkchooseDirectory, tkcurselection, tkdelete, tkdestroy,
-           tkframe, tkgrab.release, tkgetOpenFile, tkgetSaveFile,
-           tkgrid, tkgrid.columnconfigure, tkindex, tkinsert,
+           tkframe, tkgrab.release, tkgrab.set, tkgetOpenFile, tkgetSaveFile,
+           tkgrid, tkgrid.columnconfigure, tkgrid.rowconfigure,
+           tkindex, tkinsert,
            tkinvoke, tkitemconfigure, tklabel, tklistbox, tkmark.set,
            tkmessageBox, tkpack, tkradiobutton, tkraise, tkscale,
            tkscrollbar, tk_select.list, tkselection.clear,
            tkselection.set, tkset, tktag.configure, tktext, tktoplevel,
-           tkwm.deiconify, tkwm.geometry, tkwm.protocol,
-           tkwm.resizable, tkwm.title, tkyview)
+           tkwait.window, tkwm.deiconify, tkwm.geometry, tkwm.protocol,
+           tkwm.resizable, tkwm.title, tkwm.transient, tkyview)
 
 exportPattern("^[^\\.]")
