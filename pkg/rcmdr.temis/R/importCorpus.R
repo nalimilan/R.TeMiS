@@ -151,6 +151,12 @@ importCorpusDlg <- function() {
            !.checkAndInstall("Snowball", .gettext("The Snowball package is needed to perform stemming.\nDo you want to install it?")))
             return()
 
+        # Loading rJava with Java 7 currently changes the locale including LC_NUMERIC, which
+        # triggers bugs when generating commands (could be fixed) but also in the Tk file chooser,
+        # at least on Linux.
+        if(stemming && !haveRstem && Sys.getlocale("LC_NUMERIC") != "C")
+            suppressWarnings(Sys.setlocale("LC_NUMERIC", "C"))
+
         # Remove objects left from a previous analysis to avoid confusion
         # (we assume later existing objects match the current corpus)
         objects <- c("corpus", "corpusVars", "dtm", "wordsDtm", "lengthsDtm", "voc", "lengths", "coocs",
