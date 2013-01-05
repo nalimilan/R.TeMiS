@@ -233,8 +233,12 @@ corpusClustDlg <- function() {
 
         # removeSparseTerms() does not accept 1
         if(type == "ca") {
-            doItAndPrint(sprintf('chisqDist <- dist(sweep(corpusCa$rowcoord[-corpusCa$rowvars, 1:%s, drop=FALSE], 2, corpusCa$sv[1:%s], "*"))',
-                                 dim, dim))
+            if(is.null(corpusCa$rowvars))
+                doItAndPrint(sprintf('chisqDist <- dist(sweep(corpusCa$rowcoord[, 1:%s, drop=FALSE], 2, corpusCa$sv[1:%s], "*"))',
+                                     dim, dim))
+            else
+                doItAndPrint(sprintf('chisqDist <- dist(sweep(corpusCa$rowcoord[-corpusCa$rowvars, 1:%s, drop=FALSE], 2, corpusCa$sv[1:%s], "*"))',
+                                     dim, dim))
 
             # Memory allocation can fail here, so avoid stacking errors
             if(!exists("chisqDist"))
