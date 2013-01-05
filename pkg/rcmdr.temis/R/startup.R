@@ -29,6 +29,9 @@
           }
       }
       else {
+          if(packageVersion("Rcmdr") < "1.9-3")
+              stop(.gettext("This package requires Rcmdr version 1.9-3 or higher."))
+
           Commander()
       }
   }
