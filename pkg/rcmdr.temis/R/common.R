@@ -49,8 +49,8 @@ if (getRversion() >= '2.15.1') globalVariables(c(
 }
 
 .getCorpusWindow <- function() {
-    if(exists("corpusTxt", "RcmdrEnv") &&
-       !is.null(get("corpusTxt", "RcmdrEnv"))) {
+    if(exists("corpusTxt", envir=Rcmdr:::.RcmdrEnv) &&
+       !is.null(getRcmdr("corpusTxt"))) {
         window <- getRcmdr("corpusWindow")
         txt <- getRcmdr("corpusTxt")
         listbox <- getRcmdr("corpusList")
