@@ -144,7 +144,10 @@ subsetCorpusByTermsDlg <- function() {
 
             return()
         }
-        else if(!any(row_sums(dtm[,keepList]) > 0 & row_sums(dtm[,excludeList]) == 0)) {
+        else if((length(keepList) > 0 && length(excludeList) > 0 &&
+                 !any(row_sums(dtm[,keepList]) > 0 & row_sums(dtm[,excludeList]) == 0)) ||
+                (length(keepList) > 0 && length(excludeList) == 0 && !any(row_sums(dtm[,keepList]) > 0)) ||
+                (length(keepList) == 0 && length(excludeList) > 0 && !any(row_sums(dtm[,excludeList]) == 0))) {
             Message(.gettext("Specified conditions would exclude all documents from the corpus."),
                     "error")
 
