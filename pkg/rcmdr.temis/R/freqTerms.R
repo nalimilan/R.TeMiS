@@ -39,7 +39,7 @@ frequentTerms <- function(dtm, variable=NULL, n=25) {
 
         p.val[sup] <- 1 - p.val[sup]
 
-        ord <- head(intersect(order(counts, decreasing=TRUE), keep), n)
+        ord <- head(order(counts, decreasing=TRUE), n)
         ret <- cbind(term.clus=rp[ord] * 100, clus.term=cp[ord] * 100,
                      p.global=cs[ord]/tot * 100, n.int=counts[ord], n.global=cs[ord],
                      t.value=t.val[ord], p.value=round(p.val[ord], 4))
