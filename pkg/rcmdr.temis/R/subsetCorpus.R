@@ -81,7 +81,7 @@ subsetCorpusByVarDlg <- function() {
             doItAndPrint("wordsDtm <- wordsDtm[,col_sums(wordsDtm) > 0]")
         }
 
-        doItAndPrint("corpusVars <- corpusVars[keep,]")
+        doItAndPrint("corpusVars <- corpusVars[keep,, drop=FALSE]")
 
         # Remove objects left from a previous analysis on the old corpus to avoid confusion
         # (we assume later existing objects match the current corpus)
@@ -194,7 +194,7 @@ subsetCorpusByTermsDlg <- function() {
             doItAndPrint("wordsDtm <- wordsDtm[,col_sums(wordsDtm) > 0]")
         }
 
-        doItAndPrint("corpusVars <- corpusVars[keep,]")
+        doItAndPrint("corpusVars <- corpusVars[keep,, drop=FALSE]")
 
         # Remove objects left from a previous analysis on the old corpus to avoid confusion
         # (we assume later existing objects match the current corpus)
