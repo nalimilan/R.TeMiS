@@ -91,7 +91,7 @@ importCorpusDlg <- function() {
 
     checkBoxes(frame="processingFrame",
                boxes=c("lowercase", "punctuation", "digits", "stopwords", "stemming"),
-               initialValues=rep(1, 5),
+               initialValues=c(1, 1, 1, 0, 1),
                # Keep in sync with strings in initOutputFile()
                labels=c(.gettext("Ignore case"), .gettext("Remove punctuation"),
                         .gettext("Remove digits"), .gettext("Remove stopwords"),
