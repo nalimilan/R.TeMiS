@@ -57,11 +57,20 @@ subsetCorpusByVarDlg <- function() {
         doItAndPrint("corpus <- corpus[keep]")
 
         if(exists("dtm")) {
+            processTexts(meta(corpus, type="corpus", tag="processing"),
+                         meta(corpus, type="corpus", tag="language"),
+                         wordsOnly=TRUE)
+
+            doItAndPrint("dtmAttr <- attributes(dtm)")
+            doItAndPrint("dtmAttr$words <- words")
+
             if(save)
                 doItAndPrint("origDtm <- dtm")
 
             doItAndPrint("dtm <- dtm[keep,]")
             doItAndPrint("dtm <- dtm[,col_sums(dtm) > 0]")
+            doItAndPrint("attributes(dtm) <- dtmAttr")
+            doItAndPrint("rm(dtmCorpus, dtmAttr, words)")
         }
 
         if(exists("wordsDtm")) {
@@ -158,11 +167,20 @@ subsetCorpusByTermsDlg <- function() {
         doItAndPrint("corpus <- corpus[keep]")
 
         if(exists("dtm")) {
+            processTexts(meta(corpus, type="corpus", tag="processing"),
+                         meta(corpus, type="corpus", tag="language"),
+                         wordsOnly=TRUE)
+
+            doItAndPrint("dtmAttr <- attributes(dtm)")
+            doItAndPrint("dtmAttr$words <- words")
+
             if(save)
                 doItAndPrint("origDtm <- dtm")
 
             doItAndPrint("dtm <- dtm[keep,]")
             doItAndPrint("dtm <- dtm[,col_sums(dtm) > 0]")
+            doItAndPrint("attributes(dtm) <- dtmAttr")
+            doItAndPrint("rm(dtmCorpus, dtmAttr, words)")
         }
 
         if(exists("wordsDtm")) {

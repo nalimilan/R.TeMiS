@@ -52,6 +52,52 @@
     return(tclvalue(result) == "success")
 }
 
+# Run all processing steps and extract words list
+processTexts <- function(options, lang, wordsOnly,
+                         haveRstem=suppressWarnings(require("Rstem", quietly=TRUE))) {
+        if(any(options))
+            doItAndPrint("dtmCorpus <- corpus")
+
+        if(options["twitter"])
+            doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, function(x) gsub("http(s?)://[[:alnum:]/\\\\.\\\\-\\\\?=&#_;,]*|\\\\bRT\\\\b", "", x))')
+        if(options["twitter"] && options["removeNames"])
+            doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, function(x) gsub("@.+?\\\\b", "", x))')
+        if(options["twitter"] && options["removeHashtags"])
+            doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, function(x) gsub("#.+?\\\\b", "", x))')
+
+        if(options["lowercase"])
+            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, tolower)")
+
+        if(options["punctuation"]) {
+            # The default tokenizer does not get rid of punctuation *and of line breaks!*, which
+            # get concatenated with surrounding words
+            # This also avoids French articles and dash-linked words from getting concatenated with their noun
+            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, function(x) gsub(\"([\'\U2019\\n\U202F\U2009]|[[:punct:]]|[[:space:]]|[[:cntrl:]])+\", \" \", x))")
+        }
+
+        if(options["digits"])
+            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removeNumbers)")
+
+        if(options["stopwords"] || options["stemming"]) {
+            # Get list of words before stemming and stopwords removal
+            doItAndPrint("words <- col_sums(DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf))))")
+            gc()
+        }
+
+        # Used when subsetting corpus, we do not need to recompute the full dtm
+        if(wordsOnly)
+            return()
+
+        if(options["stopwords"])
+            doItAndPrint(paste("dtmCorpus <- tm_map(dtmCorpus, removeWords, stopwords(\"",
+                               lang, "\"))", sep=""))
+
+        if(options["stemming"])
+            doItAndPrint(sprintf('dtmCorpus <- tm_map(dtmCorpus, %s, language="%s")',
+                                 if(haveRstem) "stemDocumentRstem" else "stemDocument",
+                                 tm:::map_IETF_Snowball(lang)))
+}
+
 importCorpusDlg <- function() {
     # Let the user select processing options
     initializeDialog(title=.gettext("Import Corpus"))
@@ -200,43 +246,10 @@ importCorpusDlg <- function() {
         }
 
         # Process texts
-        if(twitter || lowercase || punctuation || digits || stopwords || stemming)
-            doItAndPrint("dtmCorpus <- corpus")
-
-        if(twitter)
-            doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, function(x) gsub("http(s?)://[[:alnum:]/\\\\.\\\\-\\\\?=&#_;,]*|\\\\bRT\\\\b", "", x))')
-        if(twitter && res$removeNames)
-            doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, function(x) gsub("@.+?\\\\b", "", x))')
-        if(twitter && res$removeHashtags)
-            doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, function(x) gsub("#.+?\\\\b", "", x))')
-
-        if(lowercase)
-            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, tolower)")
-
-        if(punctuation) {
-            # The default tokenizer does not get rid of punctuation *and of line breaks!*, which
-            # get concatenated with surrounding words
-            # This also avoids French articles and dash-linked words from getting concatenated with their noun
-            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, function(x) gsub(\"([\'\U2019\\n\U202F\U2009]|[[:punct:]]|[[:space:]]|[[:cntrl:]])+\", \" \", x))")
-        }
-
-        if(digits)
-            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removeNumbers)")
-
-        if(stopwords || stemming) {
-            # Get list of words before stemming and stopwords removal
-            doItAndPrint("words <- col_sums(DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf))))")
-            gc()
-        }
-
-        if(stopwords)
-            doItAndPrint(paste("dtmCorpus <- tm_map(dtmCorpus, removeWords, stopwords(\"",
-                               lang, "\"))", sep=""))
-
-        if(stemming)
-            doItAndPrint(sprintf('dtmCorpus <- tm_map(dtmCorpus, %s, language="%s")',
-                                 if(haveRstem) "stemDocumentRstem" else "stemDocument",
-                                 tm:::map_IETF_Snowball(lang)))
+        processTexts(c(twitter=twitter, lowercase=lowercase, punctuation=punctuation,
+                       digits=digits, stopwords=stopwords, stemming=stemming,
+                       removeHashtags=res$removeHashtags, removeNames=res$removeNames),
+                     lang, FALSE, haveRstem)
 
         if(twitter || lowercase || punctuation || digits || stopwords || stemming) {
             doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))")
@@ -259,8 +272,11 @@ importCorpusDlg <- function() {
             doItAndPrint('attr(dtm, "words") <- words')
             doItAndPrint("rm(words)")
         }
-        doItAndPrint(sprintf('meta(corpus, type="corpus", tag="processing") <- attr(dtm, "processing") <- c(lowercase=%s, punctuation=%s, digits=%s, stopwords=%s, stemming=%s)',
-                             lowercase, punctuation, digits, stopwords, stemming))
+        doItAndPrint(sprintf('meta(corpus, type="corpus", tag="processing") <- attr(dtm, "processing") <- c(lowercase=%s, punctuation=%s, digits=%s, stopwords=%s, stemming=%s, twitter=%s, removeHashtags=%s, removeNames=%s)',
+                             lowercase, punctuation,
+                             digits, stopwords, stemming, twitter,
+                             ifelse(is.null(res$removeHashtags), NA, res$removeHashtags),
+                             ifelse(is.null(res$removeNames), NA, res$removeNames)))
 
         doItAndPrint("corpus")
         doItAndPrint("dtm")
