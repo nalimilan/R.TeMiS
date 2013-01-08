@@ -62,7 +62,10 @@ subsetCorpusByVarDlg <- function() {
                          wordsOnly=TRUE)
 
             doItAndPrint("dtmAttr <- attributes(dtm)")
-            doItAndPrint("dtmAttr$words <- words")
+
+            # Not created when stemming is disabled
+            if(exists("words"))
+                doItAndPrint("dtmAttr$words <- words")
 
             if(save)
                 doItAndPrint("origDtm <- dtm")
@@ -70,7 +73,11 @@ subsetCorpusByVarDlg <- function() {
             doItAndPrint("dtm <- dtm[keep,]")
             doItAndPrint("dtm <- dtm[,col_sums(dtm) > 0]")
             doItAndPrint("attributes(dtm) <- dtmAttr")
-            doItAndPrint("rm(dtmCorpus, dtmAttr, words)")
+
+            if(exists("words"))
+                doItAndPrint("rm(dtmCorpus, dtmAttr, words)")
+            else
+                doItAndPrint("rm(dtmCorpus, dtmAttr)")
         }
 
         if(exists("wordsDtm")) {
@@ -175,7 +182,10 @@ subsetCorpusByTermsDlg <- function() {
                          wordsOnly=TRUE)
 
             doItAndPrint("dtmAttr <- attributes(dtm)")
-            doItAndPrint("dtmAttr$words <- words")
+
+            # Not created when stemming is disabled
+            if(exists("words"))
+                doItAndPrint("dtmAttr$words <- words")
 
             if(save)
                 doItAndPrint("origDtm <- dtm")
@@ -183,7 +193,11 @@ subsetCorpusByTermsDlg <- function() {
             doItAndPrint("dtm <- dtm[keep,]")
             doItAndPrint("dtm <- dtm[,col_sums(dtm) > 0]")
             doItAndPrint("attributes(dtm) <- dtmAttr")
-            doItAndPrint("rm(dtmCorpus, dtmAttr, words)")
+
+            if(exists("words"))
+                doItAndPrint("rm(dtmCorpus, dtmAttr, words)")
+            else
+                doItAndPrint("rm(dtmCorpus, dtmAttr)")
         }
 
         if(exists("wordsDtm")) {
