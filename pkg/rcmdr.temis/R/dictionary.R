@@ -1,9 +1,23 @@
 termsDictionaryAlpha <- function() {
-    doItAndPrint('termsDictionary(dtm)')
+    doItAndPrint('dict <- termsDictionary(dtm)')
+    doItAndPrint("dict")
+
+    # Used by saveTableToOutput()
+    last.table <<- "dict"
+    attr(dict, "title") <<- .gettext("Terms dictionary in alphabetical order")
+
+    activateMenus()
 }
 
 termsDictionaryOcc <- function() {
-    doItAndPrint('termsDictionary(dtm, "occurrences")')
+    doItAndPrint('dict <- termsDictionary(dtm, "occurrences")')
+    doItAndPrint("dict")
+
+    # Used by saveTableToOutput()
+    last.table <<- "dict"
+    attr(dict, "title") <<- .gettext("Terms dictionary by number of occurrences")
+
+    activateMenus()
 }
 
 termsDictionary <- function(dtm, order=c("alphabetic", "occurrences")) {
