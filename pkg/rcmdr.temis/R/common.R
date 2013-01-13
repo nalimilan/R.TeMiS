@@ -77,7 +77,7 @@ if (getRversion() >= '2.15.1') globalVariables(c(
         tkpack(scr1, side="left", fill="y")
 
         scr2 <- tkscrollbar(window, repeatinterval=5,
-                            command=function(...) tkyview(tl,...))
+                            command=function(...) tkyview(listbox, ...))
         listbox <- tklistbox(window, selectmode="single",
                              yscrollcommand=function(...) tkset(scr2,...))
         tkpack(listbox, side="left", fill="y")
