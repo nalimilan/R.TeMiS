@@ -18,7 +18,7 @@ inspectCorpus <- function() {
     tktag.configure(txt, "fixed", font="courier 11")
 
     tkinsert(txt, "end", paste(sprintf(.gettext("Current corpus contains %i documents and %i terms."),
-                                       nrow(dtm), ncol(dtm)), "\n\n", sep=""))
+                                       nrow(dtm), ncol(dtm)), "\n\n", sep=""), "body")
 
     for(i in seq_along(corpus)) {
         id <- names(corpus)[i]
@@ -40,7 +40,7 @@ inspectCorpus <- function() {
          if(length(origin) > 0 || length(date) > 0)
             tkinsert(txt, "end", "\n", "small")
 
-        tkinsert(txt, "end", paste(paste(corpus[[id]], collapse="\n"), "\n\n"))
+        tkinsert(txt, "end", paste(paste(corpus[[id]], collapse="\n"), "\n\n"), "body")
     }
 
     # Only raise the window when we're done, as filling it may take some time
