@@ -48,6 +48,9 @@ subsetCorpusByVarDlg <- function() {
 
         closeDialog()
 
+        .setBusyCursor()
+        on.exit(.setIdleCursor())
+
         doItAndPrint(sprintf('keep <- meta(corpus, "%s")[[1]] %%in%% c("%s")',
                              var, paste(levs, collapse='", "')))
 

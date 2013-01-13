@@ -222,6 +222,9 @@ importCorpusDlg <- function() {
                       factiva=importCorpusFromFactiva(lang),
                       twitter=importCorpusFromTwitter(lang))
 
+        # Needed because functions above set it to idle on exit
+        .setBusyCursor()
+
         # If loading failed, do not add errors to errors
         if(!(isTRUE(res) || is.list(res)) || length(corpus) == 0)
             return()
