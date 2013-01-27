@@ -180,10 +180,9 @@ corpusCaDlg <- function() {
                                   paste(vars, collapse='", "'), sparsity/100, dim))
 
         if(!is.null(corpusCa)) {
-            doItAndPrint("print(corpusCa)")
+            setLastTable("corpusCa", .gettext("Correspondence analysis"))
 
-            last.table <<- "corpusCa"
-            attr(corpusCa, "title") <<- .gettext("Correspondence analysis")
+            doItAndPrint("corpusCa")
 
             showCorpusCaDlg()
         }

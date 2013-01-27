@@ -253,14 +253,12 @@ vocabularyDlg <- function() {
 
         }
 
-        doItAndPrint("voc")
-
-        # Used by saveTableToOutput()
-        last.table <<- "voc"
         if(unit == "doc")
-            attr(voc, "title") <<- paste(title, .gettext("(per-document mean)"))
+            setLastTable("voc", paste(title, .gettext("(per-document mean)")))
         else
-            attr(voc, "title") <<- paste(title, .gettext("(per-category sum)"))
+            setLastTable("voc", paste(title, .gettext("(per-category sum)")))
+
+        doItAndPrint("voc")
 
         activateMenus()
         tkfocus(CommanderWindow())

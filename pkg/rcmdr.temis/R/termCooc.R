@@ -75,8 +75,6 @@ termCoocDlg <- function() {
             else
                 doItAndPrint(sprintf('coocs <- sapply(c("%s"), termChisqDist, dtm, %i, simplify=FALSE)',
                                      paste(termsList, collapse='", "'), n))
-
-            doItAndPrint("coocs")
         }
         else {
             if(length(termsList) == 1)
@@ -85,12 +83,8 @@ termCoocDlg <- function() {
             else
                 doItAndPrint(sprintf('coocs <- sapply(c("%s"), termChisqDist, dtm, %i, meta(corpus, "%s")[[1]], simplify=FALSE)',
                                      paste(termsList, collapse='", "'), n, var))
-
-            doItAndPrint("coocs")
         }
 
-        # Used by saveTableToOutput()
-        last.table <<- "coocs"
         title <- sprintf(.ngettext(length(termsList),
                                    "Terms associated with term \"%s\" according to Chi-squared distance",
                                    "Terms associated with terms \"%s\" according to Chi-squared distance"),
@@ -98,12 +92,13 @@ termCoocDlg <- function() {
                          paste(termsList, collapse=.gettext("\", \"")), n)
 
        if(var != .gettext("None (whole corpus)"))
-           attr(coocs, "title") <<- paste(title, sprintf(.gettext("(for %s)"),
-                                                              paste(levels(factor(meta(corpus, var)[[1]])),
-                                                                    collapse=", ")))
+           setLastTable("coocs", paste(title, sprintf(.gettext("(for %s)"),
+                                     paste(levels(factor(meta(corpus, var)[[1]])),
+                                           collapse=", "))))
        else
-           attr(coocs, "title") <<- title
+           setLastTable("coocs", title)
 
+        doItAndPrint("coocs")
 
         activateMenus()
         tkfocus(CommanderWindow())

@@ -86,14 +86,12 @@ freqTermsDlg <- function() {
             doItAndPrint(sprintf('freqTerms <- frequentTerms(dtm, meta(corpus, "%s")[[1]], %i)',
                                  var, n))
 
-        doItAndPrint("freqTerms")
-
-        # Used by saveTableToOutput()
-        last.table <<- "freqTerms"
         if(var == .gettext("None (whole corpus)"))
-            attr(freqTerms, "title") <<- .gettext("Most frequent terms in the corpus")
+            setLastTable("freqTerms", .gettext("Most frequent terms in the corpus"))
         else
-            attr(freqTerms, "title") <<- sprintf(.gettext("Most frequent terms by %s"), var)
+            setLastTable("freqTerms", sprintf(.gettext("Most frequent terms by %s"), var))
+
+        doItAndPrint("freqTerms")
 
         activateMenus()
         tkfocus(CommanderWindow())

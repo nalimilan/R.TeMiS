@@ -190,17 +190,14 @@ termFreqDlg <- function() {
             }
         }
 
-        doItAndPrint("termFreqs")
-
-        # Used by saveTableToOutput()
-        last.table <<- "termFreqs"
         if(what == "term.lev")
-            attr(termFreqs, "title") <<- paste(title, .gettext("(% of all terms)"))
+            setLastTable("termFreqs", paste(title, .gettext("(% of all terms)")))
         else if(what == "lev.term")
-            attr(termFreqs, "title") <<- paste(title, .gettext("(% of occurrences)"))
+            setLastTable("termFreqs", paste(title, .gettext("(% of occurrences)")))
         else
-            attr(termFreqs, "title") <<- title
+            setLastTable("termFreqs", title)
 
+        doItAndPrint("termFreqs")
 
         activateMenus()
         tkfocus(CommanderWindow())

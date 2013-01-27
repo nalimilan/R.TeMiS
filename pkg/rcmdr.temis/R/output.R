@@ -79,8 +79,15 @@ openOutputFile <- function() {
     doItAndPrint("browseURL(.HTML.file)")
 }
 
+setLastTable <- function(name, title=NULL) {
+  putRcmdr("last.table", name)
+
+  if(!is.null(title))
+      doItAndPrint(sprintf('attr(%s, "title") <- "%s"', name, title))
+}
+
 copyTableToOutput <- function() {
-    if(!exists("last.table") || !exists(last.table)) {
+    if(!exists("last.table", envir=Rcmdr:::.RcmdrEnv) || !exists(last.table)) {
         Message(.gettext("No table has been built yet. Please create a table first."), type="error")
         return()
     }
@@ -93,15 +100,17 @@ copyTableToOutput <- function() {
     .setBusyCursor()
     on.exit(.setIdleCursor())
 
-    title <- attr(get(last.table), "title")
+    tab <- getRcmdr("last.table")
+    title <- attr(tab, "title")
+
     if(length(title) > 0)
-        doItAndPrint(sprintf("HTML.title('%s', 3)", title))
+        doItAndPrint(sprintf("HTML.title('%s', 3)", attr(tab, "title")))
 
     # zoo objects are printed as plain text by default
-    if(inherits(get(last.table), "zoo"))
+    if(inherits(tab, "zoo"))
         doItAndPrint(sprintf('HTML(as.matrix(%s), Border=NULL, align="left", scientific=4)', last.table))
     # Arrays returned by tapply() (i.e. freqTerms) are not printed correclty by HTML.array
-    else if(class(get(last.table)) == "array")
+    else if(class(tab) == "array")
         doItAndPrint(sprintf('HTML(c(%s), Border=NULL, align="left", scientific=4)', last.table))
     else
         doItAndPrint(sprintf('HTML(%s, Border=NULL, align="left", scientific=4)', last.table))

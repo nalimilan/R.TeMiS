@@ -109,14 +109,12 @@ specificTermsDlg <- function() {
                                  var, p/100, occ, n))
         }
 
-        doItAndPrint("specTerms")
-
-        # Used by saveTableToOutput()
-        last.table <<- "specTerms"
         if(var == .gettext("Document"))
-            attr(specTerms, "title") <<- .gettext("Specific terms by document")
+            setLastTable("specTerms", .gettext("Specific terms by document"))
         else
-            attr(specTerms, "title") <<- sprintf(.gettext("Specific terms by %s"), var)
+            setLastTable("specTerms", sprintf(.gettext("Specific terms by %s"), var))
+
+        doItAndPrint("specTerms")
 
         activateMenus()
 

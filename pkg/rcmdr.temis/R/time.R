@@ -283,14 +283,9 @@ varTimeSeriesDlg <- function() {
 
         doItAndPrint("rm(tab, time)")
 
-        if(what == "number")
-            doItAndPrint("print(docSeries)")
-        else
-            doItAndPrint("print(docSeries, digits=2)")
+        setLastTable("docSeries", paste(title, " (", ylab, " ", unit, ")", sep=""))
 
-        # Used by saveTableToOutput()
-        last.table <<- "docSeries"
-        attr(docSeries, "title") <<- paste(title, " (", ylab, " ", unit, ")", sep="")
+        doItAndPrint("docSeries")
 
         activateMenus()
         tkfocus(CommanderWindow())
@@ -553,14 +548,9 @@ termTimeSeriesDlg <- function() {
 
         doItAndPrint("rm(absTermFreqs, time)")
 
-        if(what == "number")
-            doItAndPrint("print(termSeries)")
-        else
-            doItAndPrint("print(termSeries, digits=2)")
+        setLastTable("termSeries", paste(title, " (", ylab, " ", unit, ")", sep=""))
 
-        # Used by saveTableToOutput()
-        last.table <<- "termSeries"
-        attr(termSeries, "title") <<- paste(title, " (", ylab, " ", unit, ")", sep="")
+        doItAndPrint("termSeries")
 
         activateMenus()
         tkfocus(CommanderWindow())

@@ -62,14 +62,14 @@ varTableDlg <- function() {
                                      ylab, title))
         }
 
-        doItAndPrint("addmargins(varFreqs)")
+        doItAndPrint("varFreqs <- addmargins(varFreqs)")
 
-        # Used by saveTableToOutput()
-        last.table <<- "varFreqs"
         if(what == "percent")
-            attr(varFreqs, "title") <<- paste(title, "(%)")
+            setLastTable("varFreqs", paste(title, "(%)"))
         else
-            attr(varFreqs, "title") <<- title
+            setLastTable("varFreqs", title)
+
+        doItAndPrint("varFreqs")
 
         activateMenus()
         tkfocus(CommanderWindow())
@@ -188,20 +188,20 @@ varCrossTableDlg <- function() {
         }
 
         if(what == "row")
-            doItAndPrint("addmargins(varFreqs, 2)")
+            doItAndPrint("varFreqs <- addmargins(varFreqs, 2)")
         else if(what == "col")
-            doItAndPrint("addmargins(varFreqs, 1)")
+            doItAndPrint("varFreqs <- addmargins(varFreqs, 1)")
         else
-            doItAndPrint("addmargins(varFreqs)")
+            doItAndPrint("varFreqs <- addmargins(varFreqs)")
 
-        # Used by saveTableToOutput()
-        last.table <<- "varFreqs"
         if(what == "row")
-            attr(varFreqs, "title") <<- paste(title, .gettext("(row %)"))
+            setLastTable("varFreqs", paste(title, .gettext("(row %)")))
         else if(what == "col")
-            attr(varFreqs, "title") <<- paste(title, .gettext("(column %)"))
+            setLastTable("varFreqs", paste(title, .gettext("(column %)")))
         else
-            attr(varFreqs, "title") <<- title
+            setLastTable("varFreqs", title)
+
+        doItAndPrint("varFreqs")
 
         activateMenus()
         tkfocus(CommanderWindow())
