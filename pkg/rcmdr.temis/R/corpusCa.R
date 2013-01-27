@@ -15,7 +15,7 @@ runCorpusCa <- function(corpus, dtm=NULL, variables=NULL, sparsity=0.9, ...) {
     invalid<-which(apply(dtm,1,sum)==0)
     if(length(invalid) > 0) {
         dtm<-dtm[-invalid, , drop=FALSE]
-        meta<-oldMeta[-invalid,]
+        meta<-oldMeta[-invalid, , drop=FALSE]
         corpus<-corpus[-invalid]
         msg<-sprintf(.ngettext(length(invalid),
                      "Document %s has been skipped because it does not include any occurrence of the terms retained in the final document-term matrix.\nIncrease the value of the 'sparsity' parameter to fix this warning.",
