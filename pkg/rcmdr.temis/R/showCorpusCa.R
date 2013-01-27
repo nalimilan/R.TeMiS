@@ -62,6 +62,28 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
     # Are active rows documents, rather than variables?
     actDocs<-length(corpusCa$rowvars) == length(corpusCa$rowsup)
 
+    if(actDocs) {
+        tndocs <- nrow(corpusCa$rowcoord) - length(corpusCa$rowsup)
+        tnterms <- nrow(corpusCa$colcoord)
+        tnvars <- length(unique(names(corpusCa$rowvars)))
+
+        tkinsert(txt, "end", sprintf(.gettext("Correspondence analysis of %i documents, %i terms and %i supplementary variables."),
+                                     tndocs, tnterms, tnvars),
+                 "body")
+    }
+    else {
+        tnactvars <- length(unique(names(corpusCa$rowvars)[!corpusCa$rowvars %in% corpusCa$rowsup]))
+        tndocs <-  nrow(corpusCa$rowcoord) - length(corpusCa$rowvars)
+        tnterms <- nrow(corpusCa$colcoord)
+        tnsupvars <- length(unique(names(corpusCa$rowvars)[corpusCa$rowvars %in% corpusCa$rowsup]))
+
+        tkinsert(txt, "end", sprintf(.gettext("Correspondence analysis of %i active variable(s) (aggregating %i documents), %i terms and %i supplementary variable(s)."),
+                                     tnactvars, tndocs, tnterms, tnsupvars),
+                 "body")
+    }
+
+    tkinsert(txt, "end", "\n\n", "heading")
+
     mark <- 0
 
     titles <- c(.gettext("Position"), .gettext("Contribution (%)"), .gettext("Quality (%)"))
