@@ -8,6 +8,7 @@
 \alias{disableBlackAndWhite}
 \alias{HTML.list}
 \alias{HTML.ca}
+\alias{summary.ca}
 \title{Output results to HTML file}
 \description{Functions to output tables and plots resulting from analysis of the corpus to an
              \acronym{HTML file}.}
@@ -30,6 +31,9 @@
          readability before exporting it.
 
          \code{HTML.list} outputs a list to the HTML report, printing each element of the list right after
-         its name. \code{HTML.ca} outputs a correspondence analysis object of class \code{ca} to the HTML report.
+         its name. \code{HTML.ca} outputs a correspondence analysis object of class \code{ca} to the HTML
+         report. \code{summary.ca} is a slightly modified version of \code{\link[ca]{summary.ca}} from the
+         \dQuote{ca} package to accept non-ASCII characters and not abbreviate document names and terms;
+         it is used by \code{HTML.ca} internally.
 }
 
