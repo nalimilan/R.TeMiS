@@ -44,7 +44,7 @@ initOutputFile <- function(file) {
                       enc, title)
     writeLines(header, file)
 
-    .HTML.file <<- file
+    assign(".HTML.file", file, envir=.GlobalEnv)
     HTML.title(title, 1, append=TRUE)
 
     HTML(sprintf(.gettext("Corpus imported on %s. Language: %s."),

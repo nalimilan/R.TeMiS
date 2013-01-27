@@ -66,9 +66,9 @@ setCorpusVariables <- function() {
         # Update the names of the dtm since it affects all operations and cannot be done manually
         # We assume the dtm corresponds to the current corpus if names were identical
         if(identical(corpusNames, rownames(dtm)))
-            rownames(dtm) <<- names(corpus)
+            justDoIt("rownames(dtm) <- names(corpus)")
 
         if(exists("wordsDtm") && identical(corpusNames, rownames(wordsDtm)))
-            rownames(wordsDtm) <<- names(corpus)
+            justDoIt("rownames(wordsDtm) <- names(corpus)")
     }
 }
