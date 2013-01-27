@@ -60,9 +60,9 @@ subsetCorpusByVarDlg <- function() {
         doItAndPrint("corpus <- corpus[keep]")
 
         if(exists("dtm")) {
-            processTexts(meta(corpus, type="corpus", tag="processing"),
-                         meta(corpus, type="corpus", tag="language"),
-                         wordsOnly=TRUE)
+            .processTexts(meta(corpus, type="corpus", tag="processing"),
+                          meta(corpus, type="corpus", tag="language"),
+                          wordsOnly=TRUE)
 
             doItAndPrint("dtmAttr <- attributes(dtm)")
 
@@ -180,9 +180,9 @@ subsetCorpusByTermsDlg <- function() {
         doItAndPrint("corpus <- corpus[keep]")
 
         if(exists("dtm")) {
-            processTexts(meta(corpus, type="corpus", tag="processing"),
-                         meta(corpus, type="corpus", tag="language"),
-                         wordsOnly=TRUE)
+            .processTexts(meta(corpus, type="corpus", tag="processing"),
+                          meta(corpus, type="corpus", tag="language"),
+                          wordsOnly=TRUE)
 
             doItAndPrint("dtmAttr <- attributes(dtm)")
 

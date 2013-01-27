@@ -53,8 +53,8 @@
 }
 
 # Run all processing steps and extract words list
-processTexts <- function(options, lang, wordsOnly,
-                         haveRstem=suppressWarnings(require("Rstem", quietly=TRUE))) {
+.processTexts <- function(options, lang, wordsOnly,
+                          haveRstem=suppressWarnings(require("Rstem", quietly=TRUE))) {
         if(any(options))
             doItAndPrint("dtmCorpus <- corpus")
 
@@ -249,10 +249,10 @@ importCorpusDlg <- function() {
         }
 
         # Process texts
-        processTexts(c(twitter=twitter, lowercase=lowercase, punctuation=punctuation,
-                       digits=digits, stopwords=stopwords, stemming=stemming,
-                       removeHashtags=res$removeHashtags, removeNames=res$removeNames),
-                     lang, FALSE, haveRstem)
+        .processTexts(c(twitter=twitter, lowercase=lowercase, punctuation=punctuation,
+                        digits=digits, stopwords=stopwords, stemming=stemming,
+                        removeHashtags=res$removeHashtags, removeNames=res$removeNames),
+                      lang, FALSE, haveRstem)
 
         if(twitter || lowercase || punctuation || digits || stopwords || stemming) {
             doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))")
