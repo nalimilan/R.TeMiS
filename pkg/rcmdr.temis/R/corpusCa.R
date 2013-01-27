@@ -82,6 +82,12 @@ runCorpusCa <- function(corpus, dtm=NULL, variables=NULL, sparsity=0.9, ...) {
         }
     }
 
+    if(!is.null(variables) && sum(origVars %in% variables) < 2) {
+        Message(.gettext("Please select active variables so that at least two levels are present in the retained documents."),
+                type="error")
+        return()
+    }
+
     Message(sprintf(.gettext("Running correspondence analysis using %i documents, %i terms and %i variables."),
                     ndocs, nterms, ncol(meta)),
             type="note")
