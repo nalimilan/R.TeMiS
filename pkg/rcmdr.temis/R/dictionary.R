@@ -4,7 +4,7 @@ termsDictionaryAlpha <- function() {
 
     # Used by saveTableToOutput()
     last.table <<- "dict"
-    attr(dict, "title") <<- .gettext("Terms dictionary in alphabetical order")
+    attr(dict, "title") <<- .gettext("Terms dictionary sorted alphabetically")
 
     activateMenus()
 }
@@ -15,7 +15,7 @@ termsDictionaryOcc <- function() {
 
     # Used by saveTableToOutput()
     last.table <<- "dict"
-    attr(dict, "title") <<- .gettext("Terms dictionary by number of occurrences")
+    attr(dict, "title") <<- .gettext("Terms dictionary sorted by number of occurrences")
 
     activateMenus()
 }

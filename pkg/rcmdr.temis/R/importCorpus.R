@@ -325,7 +325,7 @@ importCorpusFromDir <- function(language=NA, encoding="") {
     if(oldEnc != encoding)
         doItAndPrint(sprintf('options(encoding="%s")', oldEnc))
 
-    list(source=sprintf("directory %s", dir))
+    list(source=sprintf(.gettext("directory %s"), dir))
 }
 
 # Choose a CSV file to load texts and variables from
@@ -470,7 +470,7 @@ importCorpusFromFile <- function(language=NA, encoding="") {
         doItAndPrint("corpusVars <- corpusDataset[-1]")
 
 
-    list(source=sprintf("spreadsheet file %s", file))
+    list(source=sprintf(.gettext("spreadsheet file %s"), file))
 }
 
 # Choose a Factiva XML or HTML file to load texts and variables from
