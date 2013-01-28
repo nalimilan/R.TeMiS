@@ -143,7 +143,7 @@ summary.ca <- function(object, scree = TRUE, ...){
     values     <- obj$sv^2
     values2    <- 100*(obj$sv^2)/sum(obj$sv^2)
     values3    <- cumsum(100*(obj$sv^2)/sum(obj$sv^2))
-    scree.out  <- cbind(1:length(obj$sv), values, values2, values3)
+    scree.out  <- cbind(1:length(obj$sv), values, values2, values3)[seq(min(length(obj$sv), max(nd, 15))),]
     } else {
     scree.out <- NA
     }
