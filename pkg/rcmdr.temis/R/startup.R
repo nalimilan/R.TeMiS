@@ -44,6 +44,7 @@
   doItAndPrint("")
   doItAndPrint(.gettext("# Print numbers with two significant digits"))
   doItAndPrint('options(digits=2)')
+  doItAndPrint('options(R2HTML.format.digits=2)')
 
   # Keep in sync with disableBlackAndWhite()
   doItAndPrint("")
