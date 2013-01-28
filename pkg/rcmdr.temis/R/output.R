@@ -80,14 +80,14 @@ openOutputFile <- function() {
 }
 
 setLastTable <- function(name, title=NULL) {
-  putRcmdr("last.table", name)
+  assign("last.table", name, envir=.GlobalEnv)
 
   if(!is.null(title))
       doItAndPrint(sprintf('attr(%s, "title") <- "%s"', name, title))
 }
 
 copyTableToOutput <- function() {
-    if(!exists("last.table", envir=Rcmdr:::.RcmdrEnv) || !exists(last.table)) {
+    if(!exists("last.table") || !exists(last.table)) {
         Message(.gettext("No table has been built yet. Please create a table first."), type="error")
         return()
     }
@@ -100,7 +100,7 @@ copyTableToOutput <- function() {
     .setBusyCursor()
     on.exit(.setIdleCursor())
 
-    tab <- getRcmdr("last.table")
+    tab <- get(last.table)
     title <- attr(tab, "title")
 
     if(length(title) > 0)
