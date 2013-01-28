@@ -36,7 +36,7 @@ summary.ca <- function(object, scree = TRUE, ...){
     foo  <- paste(foo1[foo2], collapse = "")
     return(foo)
     }
-  r.names <- unlist(lapply(obj$rownames, strnascii))
+  r.names <- make.unique(unlist(lapply(obj$rownames, strnascii)))
   sr          <- obj$rowsup
   if (!is.na(sr[1])) r.names[sr] <- paste("(*)", r.names[sr], sep = "")
   r.mass <- obj$rowmass
@@ -87,7 +87,7 @@ summary.ca <- function(object, scree = TRUE, ...){
 
  # columns:
 # 2009_11:
-  c.names <- unlist(lapply(obj$colnames, strnascii))
+  c.names <- make.unique(unlist(lapply(obj$colnames, strnascii)))
   sc      <- obj$colsup
   if (!is.na(sc[1])) c.names[sc] <- paste("(*)", c.names[sc], sep = "")
   c.mass  <- obj$colmass
