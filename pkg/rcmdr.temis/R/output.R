@@ -1,4 +1,4 @@
-setOutputFile <- function() {
+setOutputFile <- function(browse=TRUE) {
     if(exists(".HTML.file"))
         dir <- dirname(.HTML.file)
     else
@@ -21,7 +21,8 @@ setOutputFile <- function() {
     # The openOutputFile menu needs to notice the new file
     activateMenus()
 
-    doItAndPrint("browseURL(.HTML.file)")
+    if(browse)
+        doItAndPrint("browseURL(.HTML.file)")
 
     return(TRUE)
 }
@@ -93,7 +94,7 @@ copyTableToOutput <- function() {
     }
 
     html.on <- exists(".HTML.file") && file.exists(.HTML.file)
-    if(!(html.on || setOutputFile()))
+    if(!(html.on || setOutputFile(browse=FALSE)))
         return()
 
     # Needed when copying CA, HTML.ca() is too late to update the GUI
@@ -130,7 +131,7 @@ copyPlotToOutput <- function() {
     }
 
     html.on <- exists(".HTML.file") && file.exists(.HTML.file)
-    if(!(html.on || setOutputFile()))
+    if(!(html.on || setOutputFile(browse=FALSE)))
         return()
 
     # Only the filename within the folder is needed, this allows moving HTML and PNG files to another folder
