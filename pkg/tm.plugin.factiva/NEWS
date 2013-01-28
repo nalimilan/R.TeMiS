@@ -1,3 +1,10 @@
+Version 1.2 - 2013-01-28
+    * Extract Subject and Coverage meta-data.
+    * Add Reuters21578 example.
+    * Fix handling of articles with no header or body.
+    * Split lead paragraphs into separate lines.
+    * Fix package help page to mention HTML.
+
 Version 1.1 - 2012-06-30
     * Add support for HTML files since Factiva no longer allows exporting to XML.
     * Work around encoding issues on Windows (for HTML only).
