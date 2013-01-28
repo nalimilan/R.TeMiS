@@ -546,8 +546,9 @@ importCorpusFromFactiva <- function(language=NA) {
         if(length(levs) == 0)
             next
 
+        # We remove the identifier before ":"
         for(lev in levs)
-            vars[[make.names(lev)]] <- sapply(var, function(x) lev %in% x)
+            vars[[make.names(gsub("^[[:alnum:]]+ : ", "", lev))]] <- sapply(var, function(x) lev %in% x)
     }
 
     rownames(vars) <- names(corpus)
