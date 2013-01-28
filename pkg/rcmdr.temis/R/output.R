@@ -54,7 +54,7 @@ initOutputFile <- function(file) {
     HTML(sprintf(.gettext("Source: %s."), meta(corpus, type="corpus", tag="source")))
     HTML(sprintf(.gettext("%i documents and %i terms."), nrow(dtm), ncol(dtm)))
 
-    cat(.gettext("Processing options:\n"), file=.HTML.file, append=TRUE)
+    cat(.gettext("Processing options:"), "\n", sep="", file=.HTML.file, append=TRUE)
     processing <- meta(corpus, type="corpus", tag="processing")
     # Keep in sync with strings in importCorpusDlg()
     HTMLli(paste(c(.gettext("Ignore case"), .gettext("Remove punctuation"),
@@ -305,7 +305,7 @@ HTML.ca <- function(x, ...) {
 
     colnames(scree.out) <- c(.gettext("Dimension"), .gettext("Value"), .gettext("%"),
                              .gettext("Cum. %"), "")
-    HTML(.gettext("Axes inertias (eigenvalues):\n"), ...)
+    HTML(paste(.gettext("Axes inertias (eigenvalues):"), "\n", sep=""), ...)
     scree.out <- as.matrix(scree.out)
    # colnames(scree.out) <- rep(1, dim(scree.out)[1])
    # print(as.matrix(scree.out), quote = FALSE)
