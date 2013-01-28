@@ -54,7 +54,7 @@
 
 # Run all processing steps and extract words list
 .processTexts <- function(options, lang, wordsOnly,
-                          haveRstem=suppressWarnings(require("Rstem", quietly=TRUE))) {
+                          useRstem=suppressWarnings(require("Rstem", quietly=TRUE))) {
         if(any(options))
             doItAndPrint("dtmCorpus <- corpus")
 
@@ -94,7 +94,7 @@
 
         if(options["stemming"])
             doItAndPrint(sprintf('dtmCorpus <- tm_map(dtmCorpus, %s, language="%s")',
-                                 if(haveRstem) "stemDocumentRstem" else "stemDocument",
+                                 if(useRstem) "stemDocumentRstem" else "stemDocument",
                                  tm:::map_IETF_Snowball(lang)))
 }
 
@@ -167,10 +167,15 @@ importCorpusDlg <- function() {
 
 
         if(stemming) {
+            # Only use Rstem as a fallback, or when activated explicitly
             haveRstem <- suppressWarnings(require("Rstem", quietly=TRUE))
+            haveSnowball <- suppressWarnings(require("Snowball", quietly=TRUE))
+            useRstem <- haveRstem && (getOption("Rtemis.stemmer", "Snowball") == "Rstem" ||
+                                      !haveSnowball)
+                         
 
             if(is.na(stemLang) || stemLang == "porter" ||
-               (haveRstem && !stemLang %in% Rstem::getStemLanguages())) {
+               (useRstem && !stemLang %in% Rstem::getStemLanguages())) {
                 Message(.gettext('Unsupported language code: please click the "Help" button to get a list of supported codes.'),
                         "error")
                 return()
@@ -193,14 +198,14 @@ importCorpusDlg <- function() {
 
 
         # If we do not close the dialog first, the CRAN mirror chooser will not respond
-	if(stemming && !haveRstem &&
+	if(stemming && !useRstem &&
            !.checkAndInstall("Snowball", .gettext("The Snowball package is needed to perform stemming.\nDo you want to install it?")))
             return()
 
         # Loading rJava with Java 7 currently changes the locale including LC_NUMERIC, which
         # triggers bugs when generating commands (could be fixed) but also in the Tk file chooser,
         # at least on Linux.
-        if(stemming && !haveRstem && Sys.getlocale("LC_NUMERIC") != "C")
+        if(stemming && !useRstem && Sys.getlocale("LC_NUMERIC") != "C")
             suppressWarnings(Sys.setlocale("LC_NUMERIC", "C"))
 
         # Remove objects left from a previous analysis to avoid confusion
@@ -252,7 +257,7 @@ importCorpusDlg <- function() {
         .processTexts(c(twitter=twitter, lowercase=lowercase, punctuation=punctuation,
                         digits=digits, stopwords=stopwords, stemming=stemming,
                         removeHashtags=res$removeHashtags, removeNames=res$removeNames),
-                      lang, FALSE, haveRstem)
+                      lang, FALSE, useRstem)
 
         if(twitter || lowercase || punctuation || digits || stopwords || stemming) {
             doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))")
