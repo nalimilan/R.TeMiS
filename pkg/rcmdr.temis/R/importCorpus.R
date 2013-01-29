@@ -478,6 +478,40 @@ importCorpusFromFile <- function(language=NA, encoding="") {
     list(source=sprintf(.gettext("spreadsheet file %s"), file))
 }
 
+# Extract local per-document meta-data and return a data frame
+extractFactivaMetadata <- function(corpus) {
+    dates <- lapply(corpus, meta, "DateTimeStamp")
+    dates <- sapply(dates, function(x) if(length(x) > 0) as.character(x) else NA)
+    vars <- data.frame(Origin=NA, Date=dates, Author=NA, Section=NA)
+
+    tags <- c("Origin", "Author", "Section")
+    for(tag in tags) {
+        var <- lapply(corpus, meta, tag)
+        var <- lapply(var, function(x) if(length(x) > 0) x else NA)
+        vars[[tag]] <- unlist(var)
+    }
+
+    colnames(vars) <- c(.gettext("Origin"), .gettext("Date"), .gettext("Author"), .gettext("Section"))
+
+    tags <- c("Subject", "Coverage")
+    for(tag in tags) {
+        var <- lapply(corpus, meta, tag)
+        levs <- unique(unlist(var))
+        levs <- levs[!is.na(levs)]
+
+        if(length(levs) == 0)
+            next
+
+        # We remove the identifier before ":"
+        for(lev in levs)
+            vars[[make.names(gsub("^[[:alnum:]]+ : ", "", lev))]] <- sapply(var, function(x) lev %in% x)
+    }
+
+    rownames(vars) <- names(corpus)
+
+    vars
+}
+
 # Choose a Factiva XML or HTML file to load texts and variables from
 importCorpusFromFactiva <- function(language=NA) {
     if(!.checkAndInstall("tm.plugin.factiva",
@@ -523,37 +557,7 @@ importCorpusFromFactiva <- function(language=NA) {
     # In rare cases, duplicated IDs can happen since Factiva plugin truncates them: ensure they are unique
     doItAndPrint("names(corpus) <- make.unique(sapply(corpus, ID))")
 
-    # Extract local per-document meta-data
-    dates <- lapply(corpus, meta, "DateTimeStamp")
-    dates <- sapply(dates, function(x) if(length(x) > 0) as.character(x) else NA)
-    vars <- data.frame(Origin=NA, Date=dates, Author=NA, Section=NA)
-
-    tags <- c("Origin", "Author", "Section")
-    for(tag in tags) {
-        var <- lapply(corpus, meta, tag)
-        var <- lapply(var, function(x) if(length(x) > 0) x else NA)
-        vars[[tag]] <- unlist(var)
-    }
-
-    colnames(vars) <- c(.gettext("Origin"), .gettext("Date"), .gettext("Author"), .gettext("Section"))
-
-    tags <- c("Subject", "Coverage")
-    for(tag in tags) {
-        var <- lapply(corpus, meta, tag)
-        levs <- unique(unlist(var))
-        levs <- levs[!is.na(levs)]
-
-        if(length(levs) == 0)
-            next
-
-        # We remove the identifier before ":"
-        for(lev in levs)
-            vars[[make.names(gsub("^[[:alnum:]]+ : ", "", lev))]] <- sapply(var, function(x) lev %in% x)
-    }
-
-    rownames(vars) <- names(corpus)
-
-    assign("corpusVars", vars, envir=.GlobalEnv)
+    doItAndPrint("corpusVars <- extractFactivaMetadata(corpus)")
 
     list(source=sprintf(.ngettext(length(files), "Factiva file %s", "Factiva files %s"),
                         paste(files, collapse=", ")))
