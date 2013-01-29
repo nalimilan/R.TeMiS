@@ -236,7 +236,7 @@ vocabularyDlg <- function() {
 
             if(vert) {
                 if(sum(measures) > 1)
-                    doItAndPrint(sprintf('barchart(t(voc[c(%s),%s, drop=FALSE]), stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="", main="%s", auto.key=list(space="bottom"))',
+                    doItAndPrint(sprintf('barchart(t(voc[c(%s),%s, drop=FALSE]), stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="", main="%s", auto.key=TRUE)',
                                          indexes, exclude, title, indexes, exclude))
                 else
                     doItAndPrint(sprintf('barchart(t(voc[c(%s),%s, drop=FALSE]), stack=FALSE, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s")',
@@ -244,7 +244,7 @@ vocabularyDlg <- function() {
              }
              else {
                 if(sum(measures) > 1)
-                    doItAndPrint(sprintf('barchart(t(voc[c(%s),%s, drop=FALSE]), stack=FALSE, xlab="", main="%s", auto.key=list(space="bottom"))',
+                    doItAndPrint(sprintf('barchart(t(voc[c(%s),%s, drop=FALSE]), stack=FALSE, xlab="", main="%s", auto.key=TRUE)',
                                          indexes, exclude, title, indexes, exclude))
                 else
                     doItAndPrint(sprintf('barchart(t(voc[c(%s),%s, drop=FALSE]), stack=FALSE, xlab="%s", main="%s")',

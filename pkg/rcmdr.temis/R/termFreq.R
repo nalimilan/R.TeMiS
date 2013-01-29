@@ -174,7 +174,7 @@ termFreqDlg <- function() {
 
             if(vert) {
                 if(length(termsList) > 1)
-                    doItAndPrint(sprintf('barchart(t(termFreqs[, "%s",]), horizontal=%s, stack=%s, %s="%s", main="%s", auto.key=list(space="bottom"), scales=list(rot=90))',
+                    doItAndPrint(sprintf('barchart(t(termFreqs[, "%s",]), horizontal=%s, stack=%s, %s="%s", main="%s", auto.key=TRUE, scales=list(rot=90))',
                                          col, !vert, stack, if(vert) "ylab" else "xlab", lab, title))
                 else
                     doItAndPrint(sprintf('barchart(cbind(termFreqs[, "%s",]), horizontal=%s, %s="%s", main="%s", scales=list(rot=90))',
@@ -182,7 +182,7 @@ termFreqDlg <- function() {
             }
             else {
                 if(length(termsList) > 1)
-                    doItAndPrint(sprintf('barchart(t(termFreqs[, "%s",]), stack=%s, xlab="%s", main="%s", auto.key=list(space="bottom"))',
+                    doItAndPrint(sprintf('barchart(t(termFreqs[, "%s",]), stack=%s, xlab="%s", main="%s", auto.key=TRUE)',
                                          col, stack, lab, title))
                 else
                     doItAndPrint(sprintf('barchart(termFreqs[, "%s",], xlab="%s", main="%s")',

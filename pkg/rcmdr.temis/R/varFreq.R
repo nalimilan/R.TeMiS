@@ -55,10 +55,10 @@ varTableDlg <- function() {
 
         if(plot) {
             if(vert)
-                doItAndPrint(sprintf('barchart(varFreqs, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
+                doItAndPrint(sprintf('barchart(varFreqs, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=TRUE)',
                                      ylab, title))
             else
-                doItAndPrint(sprintf('barchart(varFreqs, xlab="%s", main="%s", auto.key=list(space="bottom"))',
+                doItAndPrint(sprintf('barchart(varFreqs, xlab="%s", main="%s", auto.key=TRUE)',
                                      ylab, title))
         }
 
@@ -171,18 +171,18 @@ varCrossTableDlg <- function() {
         if(plot) {
             if(vert) {
                 if(what == "col")
-                    doItAndPrint(sprintf('barchart(t(varFreqs), stack=%s, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
+                    doItAndPrint(sprintf('barchart(t(varFreqs), stack=%s, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=TRUE)',
                                          stack, ylab, title))
                  else
-                    doItAndPrint(sprintf('barchart(varFreqs, stack=%s, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=list(space="bottom"))',
+                    doItAndPrint(sprintf('barchart(varFreqs, stack=%s, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=TRUE)',
                                          stack, ylab, title))
             }
             else {
                 if(what == "col")
-                    doItAndPrint(sprintf('barchart(t(varFreqs), stack=%s, xlab="%s", main="%s", auto.key=list(space="bottom"))',
+                    doItAndPrint(sprintf('barchart(t(varFreqs), stack=%s, xlab="%s", main="%s", auto.key=TRUE)',
                                          stack, ylab, title))
                  else
-                    doItAndPrint(sprintf('barchart(varFreqs, stack=%s, xlab="%s", main="%s", auto.key=list(space="bottom"))',
+                    doItAndPrint(sprintf('barchart(varFreqs, stack=%s, xlab="%s", main="%s", auto.key=TRUE)',
                                          stack, ylab, title))
             }
         }

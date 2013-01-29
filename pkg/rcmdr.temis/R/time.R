@@ -277,7 +277,7 @@ varTimeSeriesDlg <- function() {
         if(length(docSeries) > 1)
             doItAndPrint(sprintf('xyplot(docSeries, superpose=TRUE, xlab="", ylab="%s", main="%s", auto.key=%s, par.settings=simpleTheme(lwd=1.5))',
                                  paste(ylab, unit), title,
-                                 if(NCOL(docSeries) > 1) 'list(space="bottom")' else "NULL"))
+                                 if(NCOL(docSeries) > 1) 'TRUE' else "NULL"))
         else
             Message(.gettext("Only one time point present, no plot can be drawn."), "warning")
 
@@ -542,7 +542,7 @@ termTimeSeriesDlg <- function() {
         if(length(termSeries) > 1)
             doItAndPrint(sprintf('xyplot(termSeries, superpose=TRUE, xlab="", ylab="%s", main="%s", auto.key=%s, par.settings=simpleTheme(lwd=1.5))',
                                  paste(ylab, unit), title,
-                                 if(NCOL(termSeries) > 1) 'list(space="bottom")' else "NULL"))
+                                 if(NCOL(termSeries) > 1) 'TRUE' else "NULL"))
         else
             Message(.gettext("Only one time point present, no plot can be drawn."), "warning")
 
