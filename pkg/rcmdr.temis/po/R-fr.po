@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: RcmdrPlugin.temis 0.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-01-28 10:34+0100\n"
-"PO-Revision-Date: 2013-01-28 10:34+0100\n"
+"PO-Revision-Date: 2013-02-09 16:47+0100\n"
 "Last-Translator: Milan Bouchet-Valat <nalimilan@club.fr>\n"
 "Language-Team: fr <none>\n"
 "Language: fr\n"
@@ -381,7 +381,7 @@ msgstr "Utiliser le tableau lexical entier"
 
 #: R/corpusClustering.R:189
 msgid "Use dimensions of correspondence analysis"
-msgstr "Utiliser des dimensions"
+msgstr "Utiliser des dimensions de l'analyse des correspondances"
 
 #: R/corpusClustering.R:221
 msgid "Retain dimensions from 1 to:"
@@ -389,7 +389,7 @@ msgstr "Retenir les dimensions 1 à :"
 
 #: R/corpusClustering.R:299
 msgid "Upper part of documents dendrogram"
-msgstr "Partie supérieure du dengrogramme des documents"
+msgstr "Partie supérieure du dendrogramme des documents"
 
 #: R/corpusClustering.R:305
 msgid "Full documents dendrogram"
