@@ -45,7 +45,7 @@ initOutputFile <- function(file) {
                       enc, title)
     writeLines(header, file)
 
-    assign(".HTML.file", file, envir=.GlobalEnv)
+    justDoIt(sprintf('.HTML.file <- "%s"', file))
     HTML.title(title, 1, append=TRUE)
 
     HTML(sprintf(.gettext("Corpus imported on %s. Language: %s."),
@@ -81,7 +81,7 @@ openOutputFile <- function() {
 }
 
 setLastTable <- function(name, title=NULL) {
-  assign("last.table", name, envir=.GlobalEnv)
+  justDoIt(sprintf('last.table <- "%s"', name))
 
   if(!is.null(title))
       doItAndPrint(sprintf('attr(%s, "title") <- "%s"', name, title))
