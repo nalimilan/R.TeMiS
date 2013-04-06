@@ -128,12 +128,19 @@ importCorpusDlg <- function() {
                  command=setState)
 
     # TRANSLATORS: replace 'en' with your language's ISO 639 two-letter code
-    tclLang <- tclVar(.gettext("en"))
-    entryLang <- ttkentry(top, width=20, textvariable=tclLang)
+    languages <- c(da="Dansk (da)", de="Deutsch (de)", en="English (en)", es="Español (es)",
+                   fi="Suomi (fi)", fr="Français (fr)", hu="Magyar (hu)", it="Italiano (it)",
+                   nl="Nederlands (nl)", no="Norsk (no)", pt="Português (pt)",
+                   ru="русский язык (ru)", sv="Svenska (sv)")
+    tclLang <- tclVar(languages[.gettext("en")])
+    comboLang <- ttkcombobox(top, width=20, textvariable=tclLang, state="readonly", values=languages)
 
     nativeEnc <- sprintf(.gettext("native (%s)"), localeToCharset()[1])
     tclEnc <- tclVar(nativeEnc)
-    entryEnc <- ttkentry(top, width=20, textvariable=tclEnc)
+    # Do not use state="readonly" since it may be easier to type the encoding name by hand
+    # than choose it in the long list
+    comboEnc <- ttkcombobox(top, width=20, textvariable=tclEnc,
+                            values=c(nativeEnc, iconvlist()))
 
     checkBoxes(frame="processingFrame",
                boxes=c("lowercase", "punctuation", "digits", "stopwords", "stemming"),
@@ -162,7 +169,7 @@ importCorpusDlg <- function() {
         stopwords <- tclvalue(stopwordsVariable) == 1
         stemming <- tclvalue(stemmingVariable) == 1
 
-        lang <- tclvalue(tclLang)
+        lang <- names(languages)[tclvalue(tclLang) == languages]
         stemLang <- tm:::map_IETF_Snowball(lang)
 
 
@@ -172,11 +179,10 @@ importCorpusDlg <- function() {
             haveSnowball <- suppressWarnings(require("Snowball", quietly=TRUE))
             useRstem <- haveRstem && (getOption("Rtemis.stemmer", "Snowball") == "Rstem" ||
                                       !haveSnowball)
-                         
 
-            if(is.na(stemLang) || stemLang == "porter" ||
-               (useRstem && !stemLang %in% Rstem::getStemLanguages())) {
-                Message(.gettext('Unsupported language code: please click the "Help" button to get a list of supported codes.'),
+            if(useRstem && !stemLang %in% Rstem::getStemLanguages()) {
+                Message(sprintf(.gettext("Language %s is not supported by Rstem: you need to use the Snowball stemmer."),
+                                tclvalue(tclLang)),
                         "error")
                 return()
             }
@@ -186,7 +192,7 @@ importCorpusDlg <- function() {
         if(enc == nativeEnc) enc <- ""
 
         if(enc != "" && !enc %in% iconvlist()) {
-            Message(.gettext('Unsupported encoding: use the iconvlist() function to get a list of supported encodings.'),
+            Message(.gettext('Unsupported encoding: please select an encoding from the list.'),
                     "error")
             return()
         }
@@ -296,8 +302,8 @@ importCorpusDlg <- function() {
 
     OKCancelHelp(helpSubject="importCorpusDlg")
     tkgrid(sourceFrame, columnspan="2", sticky="w", pady=6)
-    tkgrid(labelRcmdr(top, text=.gettext("Language of texts in the corpus:")), entryLang, sticky="w", pady=6)
-    tkgrid(labelRcmdr(top, text=.gettext("File encoding:")), entryEnc, sticky="w", pady=6)
+    tkgrid(labelRcmdr(top, text=.gettext("Language of texts in the corpus:")), comboLang, sticky="w", pady=6)
+    tkgrid(labelRcmdr(top, text=.gettext("File encoding:")), comboEnc, sticky="w", pady=6)
     tkgrid(labelRcmdr(chunksFrame, text=.gettext("Text splitting:"), fg="blue"), sticky="ws")
     tkgrid(chunksButton, columnspan="2", sticky="w", pady=6)
     tkgrid(labelRcmdr(chunksFrame, text=.gettext("Size of new documents (in paragraphs):")),
@@ -305,7 +311,7 @@ importCorpusDlg <- function() {
     tkgrid(chunksFrame, columnspan="2", sticky="w", pady=6)
     tkgrid(processingFrame, columnspan="2", sticky="w", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
-    dialogSuffix(rows=7, columns=2, focus=entryLang)
+    dialogSuffix(rows=7, columns=2, focus=comboLang)
 }
 
 # Choose a directory to load texts from

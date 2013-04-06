@@ -74,11 +74,7 @@
          The dialog also provides a few processing options that will most likely be
          all run in order to get a meaningful set of terms from a text corpus.
          Among them, stopwords removal and stemming require you to select the
-         language used in the corpus: at the moment supported languages are
-         Danish (\sQuote{da}), Dutch (\sQuote{nl}), English (\sQuote{en}), Finnish (\sQuote{fi}),
-         French (\sQuote{fr}), German (\sQuote{de}), Hungarian (\sQuote{hu}), Italian (\sQuote{it}),
-         Norwegian (\sQuote{no}), Portuguese (\sQuote{pt}), Russian (\sQuote{ru}), Spanish (\sQuote{es}),
-         and Swedish (\sQuote{sv}) - to specifify via their ISO 639 two-letter code.
+         language used in the corpus.
 
          By default, plain text (usually .txt) and comma/tab-separated values files (.csv, .tsv, .dat...)
          are assumed to be in the native encoding, which is shown in the \dQuote{File encoding:} entry.
