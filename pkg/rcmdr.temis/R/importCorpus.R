@@ -104,13 +104,13 @@ importCorpusDlg <- function() {
 
     setState <- function(...) {
         if(tclvalue(sourceVariable) %in% c("dir", "file")) {
-            tkconfigure(entryEnc, state="active")
+            tkconfigure(comboEnc, state="normal")
 
             if(tclvalue(tclEnc) == "UTF-8")
                 tclvalue(tclEnc) <- nativeEnc
         }
         else {
-            tkconfigure(entryEnc, state="disabled")
+            tkconfigure(comboEnc, state="disabled")
 
             if(tclvalue(tclEnc) == nativeEnc)
                 tclvalue(tclEnc) <- "UTF-8"
@@ -128,10 +128,11 @@ importCorpusDlg <- function() {
                  command=setState)
 
     # TRANSLATORS: replace 'en' with your language's ISO 639 two-letter code
-    languages <- c(da="Dansk (da)", de="Deutsch (de)", en="English (en)", es="Español (es)",
-                   fi="Suomi (fi)", fr="Français (fr)", hu="Magyar (hu)", it="Italiano (it)",
-                   nl="Nederlands (nl)", no="Norsk (no)", pt="Português (pt)",
-                   ru="русский язык (ru)", sv="Svenska (sv)")
+    languages <- c(da="Dansk (da)", de="Deutsch (de)", en="English (en)", es="Espa\u00F1ol (es)",
+                   fi="Suomi (fi)", fr="Fran\u00E7ais (fr)", hu="Magyar (hu)", it="Italiano (it)",
+                   nl="Nederlands (nl)", no="Norsk (no)", pt="Portugu\u0EAs (pt)",
+                   ru="\u0440\u0443\u0441\u0441\u043A\u0438\u0439 \u044F\u0437\u044B\u043A (ru)",
+                   sv="Svenska (sv)")
     tclLang <- tclVar(languages[.gettext("en")])
     comboLang <- ttkcombobox(top, width=20, textvariable=tclLang, state="readonly", values=languages)
 
