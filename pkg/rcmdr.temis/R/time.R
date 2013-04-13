@@ -163,8 +163,9 @@ varTimeSeriesDlg <- function() {
         if(var == "")
             return()
 
-        levs <- unique(meta(corpus, var)[[1]])
-        for(level in levs) tkinsert(levelsBox, "end", level)
+        levs <- if(is.factor(meta(corpus, var)[[1]])) levels(droplevels(meta(corpus, var)[[1]]))
+                else sort(unique(meta(corpus, var)[[1]]))
+        for(level in as.character(levs[!is.na(levs)])) tkinsert(levelsBox, "end", level)
 
         tkselection.set(levelsBox, 0, "end")
     }
@@ -394,8 +395,9 @@ termTimeSeriesDlg <- function() {
         if(var == "")
             return()
 
-        levs <- unique(meta(corpus, var)[[1]])
-        for(level in levs) tkinsert(levelsBox, "end", level)
+        levs <- if(is.factor(meta(corpus, var)[[1]])) levels(droplevels(meta(corpus, var)[[1]]))
+                else sort(unique(meta(corpus, var)[[1]]))
+        for(level in as.character(levs[!is.na(levs)])) tkinsert(levelsBox, "end", level)
 
         tkselection.set(levelsBox, 0, "end")
     }
