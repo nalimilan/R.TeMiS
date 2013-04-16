@@ -102,7 +102,7 @@ if (getRversion() >= '2.15.1') globalVariables(c(
     list(window=window, txt=txt, listbox=listbox)
 }
 
-.checkAndInstall <- function(package, message) {
+.checkAndInstall <- function(package, message, repos=NULL) {
     if(!package %in% rownames(installed.packages())) {
             # Create a function because dialog does not close until function returns
             msgbox <- function() tkmessageBox(title=.gettext("Package required"), message=message,
@@ -114,8 +114,9 @@ if (getRversion() >= '2.15.1') globalVariables(c(
             .setBusyCursor()
             on.exit(.setIdleCursor())
 
-            if(package %in% available.packages()[,1]) {
-                install.packages(package)
+            # If repos is specified, assumed the caller knows that the package is available
+            if(!is.null(repos) || package %in% available.packages()[,1]) {
+                install.packages(package, repos=if(is.null(repos)) getOption("repos") else repos)
             }
             else {
                 tkmessageBox(title=.gettext("Package not available"),
@@ -129,7 +130,7 @@ if (getRversion() >= '2.15.1') globalVariables(c(
     if(!require(package, character.only=TRUE)) {
         if(package == "Snowball")
             tkmessageBox(title=.gettext("Could not load package"),
-                         message=.gettext("Package Snowball could not be loaded. See errors in the \"Messages\" area.\n\nThis is usually due to Java problems. Please download the most recent version of Java, and check that you are using the 32-bit version of R if you have a 32-bit Java, and the 64-bit version otherwise.\n\nIf this problem persists, install the Rstem package, and call options(Rtemis.stemmer=\"Rstem\") on start to use it."),
+                         message=.gettext("Package Snowball could not be loaded. See errors in the \"Messages\" area.\n\nThis is usually due to Java problems. Please download the most recent version of Java, and check that you are using the 32-bit version of R if you have a 32-bit Java, and the 64-bit version otherwise."),
                          icon="error", type="ok")
         else
             tkmessageBox(title=.gettext("Could not load package"),

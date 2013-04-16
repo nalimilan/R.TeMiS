@@ -143,23 +143,55 @@ importCorpusDlg <- function() {
     comboEnc <- ttkcombobox(top, width=20, textvariable=tclEnc,
                             values=c(nativeEnc, iconvlist()))
 
-    checkBoxes(frame="processingFrame",
-               boxes=c("lowercase", "punctuation", "digits", "stopwords", "stemming"),
-               initialValues=c(1, 1, 1, 0, 1),
-               # Keep in sync with strings in initOutputFile()
-               labels=c(.gettext("Ignore case"), .gettext("Remove punctuation"),
-                        .gettext("Remove digits"), .gettext("Remove stopwords"),
-                        .gettext("Apply stemming")),
-               title=.gettext("Text processing:"))
 
-    chunksFrame <- tkframe(top)
     tclChunks <- tclVar(0)
     tclNParagraphs <- tclVar(1)
-    chunksButton <- tkcheckbutton(chunksFrame, variable=tclChunks,
-                                  text=.gettext("Split texts into smaller documents"))
-    chunksSlider <- tkscale(chunksFrame, from=1, to=20, showvalue=TRUE, variable=tclNParagraphs,
-		            resolution=1, orient="horizontal")
-    
+    chunksButton <- ttkcheckbutton(top, variable=tclChunks,
+                                   text=.gettext("Split texts into smaller documents"),
+                                    command=function() {
+                                        if(tclvalue(tclChunks) == 1)
+                                            tkconfigure(chunksSlider, state="active")
+                                        else
+                                            tkconfigure(chunksSlider, state="disabled")
+                                    })
+    chunksSlider <- tkscale(top, from=1, to=20, showvalue=TRUE, variable=tclNParagraphs,
+		            resolution=1, orient="horizontal", state="disabled")
+
+
+    lowercaseVariable <- tclVar(1)
+    punctuationVariable <- tclVar(1)
+    digitsVariable <- tclVar(1)
+    stopwordsVariable <- tclVar(0)
+    stemmingVariable <- tclVar(1)
+
+    # Keep text in sync with strings in initOutputFile()
+    lowercaseCheck <- ttkcheckbutton(top, variable=lowercaseVariable,
+                                     text=.gettext("Ignore case"))
+    punctuationCheck <- ttkcheckbutton(top, variable=punctuationVariable,
+                                       text=.gettext("Remove punctuation"))
+    digitsCheck <- ttkcheckbutton(top, variable=digitsVariable,
+                                  text=.gettext("Remove digits"))
+    stopwordsCheck <- ttkcheckbutton(top, variable=stopwordsVariable,
+                                     text=.gettext("Remove stopwords"))
+    stemmingCheck <- ttkcheckbutton(top, variable=stemmingVariable,
+                                    text=.gettext("Apply stemming using:"),
+                                    command=function() {
+                                        if(tclvalue(stemmingVariable) == 1) {
+                                            tkconfigure(stemmingRstemRadio, state="active")
+                                            tkconfigure(stemmingSnowballRadio, state="active")
+                                        }
+                                        else {
+                                            tkconfigure(stemmingRstemRadio, state="disabled")
+                                            tkconfigure(stemmingSnowballRadio, state="disabled")
+                                        }
+                                    })
+
+    stemmingEngineVariable <- tclVar("Rstem")
+    stemmingRstemRadio <- ttkradiobutton(top, variable=stemmingEngineVariable,
+                                         value="Rstem", text="Rstem")
+    stemmingSnowballRadio <- ttkradiobutton(top, variable=stemmingEngineVariable,
+                                            value="Snowball", text="Snowball")
+
 
     onOK <- function() {
         source <- tclvalue(sourceVariable)
@@ -169,24 +201,16 @@ importCorpusDlg <- function() {
         digits <- tclvalue(digitsVariable) == 1
         stopwords <- tclvalue(stopwordsVariable) == 1
         stemming <- tclvalue(stemmingVariable) == 1
+        stemmingEngine <- tclvalue(stemmingEngineVariable)
 
         lang <- names(languages)[tclvalue(tclLang) == languages]
         stemLang <- tm:::map_IETF_Snowball(lang)
 
 
         if(stemming) {
-            # Only use Rstem as a fallback, or when activated explicitly
-            haveRstem <- suppressWarnings(require("Rstem", quietly=TRUE))
-            haveSnowball <- suppressWarnings(require("Snowball", quietly=TRUE))
-            useRstem <- haveRstem && (getOption("Rtemis.stemmer", "Snowball") == "Rstem" ||
-                                      !haveSnowball)
-
-            if(useRstem && !stemLang %in% Rstem::getStemLanguages()) {
-                Message(sprintf(.gettext("Language %s is not supported by Rstem: you need to use the Snowball stemmer."),
-                                tclvalue(tclLang)),
-                        "error")
-                return()
-            }
+            haveRstem <- "Rstem" %in% rownames(installed.packages())
+            haveSnowball <- "Snowball" %in% rownames(installed.packages())
+            useRstem <- stemmingEngine == "Rstem"
         }
 
         enc <- tclvalue(tclEnc)
@@ -203,17 +227,26 @@ importCorpusDlg <- function() {
         .setBusyCursor()
         on.exit(.setIdleCursor())
 
+	if(stemming) {
+            # If we do not close the dialog first, the CRAN mirror chooser will not respond
+	    if(((useRstem && !.checkAndInstall("Rstem", .gettext("You have chosen to perform stemming using the Rstem package.\nDo you want to install it?"),
+                                           repos="http://www.omegahat.org/R")) ||
+               (!useRstem && !.checkAndInstall("Snowball", .gettext("You have chosen to perform stemming using the Snowball package.\nDo you want to install Snowball? This requires Java to work properly.")))))
+                return()
 
-        # If we do not close the dialog first, the CRAN mirror chooser will not respond
-	if(stemming && !useRstem &&
-           !.checkAndInstall("Snowball", .gettext("The Snowball package is needed to perform stemming.\nDo you want to install it?")))
-            return()
+            # Loading rJava with Java 7 currently changes the locale including LC_NUMERIC, which
+            # triggers bugs when generating commands (could be fixed) but also in the Tk file chooser,
+            # at least on Linux.
+            if(stemming && !useRstem && Sys.getlocale("LC_NUMERIC") != "C")
+                suppressWarnings(Sys.setlocale("LC_NUMERIC", "C"))
 
-        # Loading rJava with Java 7 currently changes the locale including LC_NUMERIC, which
-        # triggers bugs when generating commands (could be fixed) but also in the Tk file chooser,
-        # at least on Linux.
-        if(stemming && !useRstem && Sys.getlocale("LC_NUMERIC") != "C")
-            suppressWarnings(Sys.setlocale("LC_NUMERIC", "C"))
+            if(useRstem && !stemLang %in% Rstem::getStemLanguages()) {
+                Message(sprintf(.gettext("Language %s is not supported by Rstem: you need to use the Snowball stemmer."),
+                                tclvalue(tclLang)),
+                        "error")
+                return()
+            }
+        }
 
         # Remove objects left from a previous analysis to avoid confusion
         # (we assume later existing objects match the current corpus)
@@ -302,16 +335,22 @@ importCorpusDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="importCorpusDlg")
-    tkgrid(sourceFrame, columnspan="2", sticky="w", pady=6)
-    tkgrid(labelRcmdr(top, text=.gettext("Language of texts in the corpus:")), comboLang, sticky="w", pady=6)
-    tkgrid(labelRcmdr(top, text=.gettext("File encoding:")), comboEnc, sticky="w", pady=6)
-    tkgrid(labelRcmdr(chunksFrame, text=.gettext("Text splitting:"), fg="blue"), sticky="ws")
-    tkgrid(chunksButton, columnspan="2", sticky="w", pady=6)
-    tkgrid(labelRcmdr(chunksFrame, text=.gettext("Size of new documents (in paragraphs):")),
-           chunksSlider, sticky="w", pady=6, padx=6)
-    tkgrid(chunksFrame, columnspan="2", sticky="w", pady=6)
-    tkgrid(processingFrame, columnspan="2", sticky="w", pady=6)
-    tkgrid(buttonsFrame, columnspan="2", sticky="w", pady=6)
+    tkgrid(sourceFrame, columnspan=3, sticky="w", pady=6)
+    tkgrid(labelRcmdr(top, text=.gettext("Language of texts in the corpus:")), sticky="w", pady=6)
+    tkgrid(comboLang, sticky="ew", pady=6, row=1, column=1, columnspan=2)
+    tkgrid(labelRcmdr(top, text=.gettext("File encoding:")), sticky="w", pady=6)
+    tkgrid(comboEnc, sticky="ew", pady=6, row=2, column=1, columnspan=2)
+    tkgrid(labelRcmdr(top, text=.gettext("Text splitting:"), fg="blue"), sticky="ws", pady=c(12, 6))
+    tkgrid(chunksButton, sticky="w", pady=6, columnspan=3)
+    tkgrid(labelRcmdr(top, text=.gettext("Size of new documents:")),
+           chunksSlider, labelRcmdr(top, text=.gettext("paragraphs")), sticky="w", pady=6)
+    tkgrid(labelRcmdr(top, text=.gettext("Text processing:"), fg="blue"), sticky="ws", pady=c(12, 6))
+    tkgrid(lowercaseCheck, sticky="w", pady=6)
+    tkgrid(punctuationCheck, sticky="w", pady=6)
+    tkgrid(digitsCheck, sticky="w", pady=6)
+    tkgrid(stopwordsCheck, sticky="w", pady=6)
+    tkgrid(stemmingCheck, stemmingRstemRadio, stemmingSnowballRadio, sticky="w", pady=6)
+    tkgrid(buttonsFrame, columnspan=3, sticky="w", pady=6)
     dialogSuffix(rows=7, columns=2, focus=comboLang)
 }
 

@@ -1,4 +1,4 @@
 import(Rcmdr, stats, utils, tm, ca, slam, R2HTML, lattice, latticeExtra, zoo)
-importFrom(tcltk, ttkcombobox)
+importFrom(tcltk, ttkcombobox, ttkcheckbutton)
 
 exportPattern("^[^\\.]")
