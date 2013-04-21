@@ -10,10 +10,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: RcmdrPlugin.temis 0.6\n"
+"Project-Id-Version: RcmdrPlugin.temis 0.6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-28 10:34+0100\n"
-"PO-Revision-Date: 2013-02-09 16:47+0100\n"
+"POT-Creation-Date: 2013-04-16 14:22+0200\n"
+"PO-Revision-Date: 2013-04-16 14:22+0200\n"
 "Last-Translator: Milan Bouchet-Valat <nalimilan@club.fr>\n"
 "Language-Team: fr <none>\n"
 "Language: fr\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-## MENUS: added by hand
+# # MENUS: added by hand
 msgid "Text mining"
 msgstr "Analyse textuelle"
 
@@ -148,11 +148,11 @@ msgstr "Exporter des résultats dans le rapport"
 msgid "Package required"
 msgstr "Paquet nécessaire"
 
-#: R/common.R:121
+#: R/common.R:121 R/common.R:122
 msgid "Package not available"
 msgstr "Paquet non disponible"
 
-#: R/common.R:122
+#: R/common.R:122 R/common.R:123
 #, c-format
 msgid ""
 "Package %s is not available. Please check your Internet connection, restart "
@@ -161,32 +161,26 @@ msgstr ""
 "Le paquet %s n'est pas disponible. Vérifiez votre connexion à Internet, "
 "redémarrez R et essayez à nouveau."
 
-#: R/common.R:131 R/common.R:135
+#: R/common.R:131 R/common.R:135 R/common.R:132 R/common.R:136
 msgid "Could not load package"
 msgstr "Impossible de charger le paquet"
 
-#: R/common.R:132
+#: R/common.R:133
 msgid ""
 "Package Snowball could not be loaded. See errors in the \"Messages\" area.\n"
 "\n"
 "This is usually due to Java problems. Please download the most recent "
 "version of Java, and check that you are using the 32-bit version of R if you "
-"have a 32-bit Java, and the 64-bit version otherwise.\n"
-"\n"
-"If this problem persists, install the Rstem package, and call "
-"options(Rtemis.stemmer=\"Rstem\") on start to use it."
+"have a 32-bit Java, and the 64-bit version otherwise."
 msgstr ""
 "Le paquet Snowball n'a pas pu être chargé. Lisez les erreurs dans la zone "
 "« Messages ».\n"
 "\n"
 "Ceci est généralement dû à des problèmes avec Java. Téléchargez la dernière "
 "version de Java, et vérifiez que vous utilisez la version 32 bits de R si "
-"vous disposez de Java 32 bits, et la version 64 bits dans le cas contraire.\n"
-"\n"
-"Si ce problème persiste, installez le paquet Rstem, et lancez au démarrage "
-"la commande options(Rtemis.stemmer=\"Rstem\") pour l'utiliser."
+"vous disposez de Java 32 bits, et la version 64 bits dans le cas contraire."
 
-#: R/common.R:136
+#: R/common.R:136 R/common.R:137
 #, c-format
 msgid "Package %s could not be loaded. See errors in the \"Messages\" area."
 msgstr ""
@@ -230,8 +224,9 @@ msgstr ""
 msgid ""
 "Please select active variables so that at least two levels are present in "
 "the retained documents."
-msgstr "Veuillez choisir les variables actives de manière à ce qu'au moins "
-"deux modalités soient présentes dans les documents retenus."
+msgstr ""
+"Veuillez choisir les variables actives de manière à ce qu'au moins deux "
+"modalités soient présentes dans les documents retenus."
 
 #: R/corpusCa.R:91
 #, c-format
@@ -285,7 +280,7 @@ msgid "Aggregate document-term matrix by variables:"
 msgstr "Agréger le tableau lexical selon des variables :"
 
 #: R/corpusCa.R:179 R/dissimilarity.R:27 R/subsetCorpus.R:4 R/time.R:4
-#: R/time.R:106 R/time.R:337 R/varFreq.R:4 R/varFreq.R:94
+#: R/time.R:106 R/time.R:337 R/varFreq.R:4 R/varFreq.R:94 R/time.R:338
 msgid ""
 "No corpus variables have been set. Use Text mining->Manage corpus->Set "
 "corpus variables to add them."
@@ -305,6 +300,26 @@ msgstr "Nombre de dimensions à retenir :"
 msgid "Hierarchical Clustering"
 msgstr "Classification ascendante hiérarchique"
 
+#: R/corpusClustering.R:16
+#, c-format
+msgid ""
+"Hierarchical clustering of %i documents using %i terms (Ward's method with "
+"Chi-squared distance)."
+msgstr ""
+"Classification ascendante hiérarchique de %i documents en utilisant %i termes "
+"(méthode de Ward avec une distance du Khi-deux)."
+
+#: R/corpusClustering.R:23
+#, c-format
+msgid ""
+"Hierarchical clustering of %i documents using %i terms (Ward's method with "
+"Chi-squared distance based on the %i first dimensions of the correspondence "
+"analysis)."
+msgstr ""
+"Classification ascendante hiérarchique de %i documents en utilisant %i termes "
+"(méthode de Ward avec une distance du Khi-deux fondée sur les %i premières "
+"dimensions de l'analyse des correspondances)."
+
 #: R/corpusClustering.R:14
 msgid "Clusters summary:"
 msgstr "Résumé des classes :"
@@ -322,11 +337,12 @@ msgid "Cluster"
 msgstr "Classe"
 
 #: R/corpusClustering.R:22 R/time.R:276 R/varFreq.R:53 R/varFreq.R:162
+#: R/time.R:277
 msgid "Number of documents"
 msgstr "Nombre de documents"
 
 #: R/corpusClustering.R:22 R/time.R:276 R/varFreq.R:49 R/varFreq.R:154
-#: R/varFreq.R:158
+#: R/varFreq.R:158 R/time.R:277
 msgid "% of documents"
 msgstr "% des documents"
 
@@ -632,40 +648,40 @@ msgstr "Recherche sur Twitter"
 msgid "Load corpus from:"
 msgstr "Importer un corpus à partir d'un :"
 
-#: R/importCorpus.R:131
+#: R/importCorpus.R:131 R/importCorpus.R:136
 msgid "en"
 msgstr "fr"
 
-#: R/importCorpus.R:134
+#: R/importCorpus.R:134 R/importCorpus.R:139
 #, c-format
 msgid "native (%s)"
 msgstr "natif (%s)"
 
-#: R/importCorpus.R:142 R/output.R:60
+#: R/importCorpus.R:142 R/output.R:60 R/importCorpus.R:169 R/output.R:61
 msgid "Ignore case"
 msgstr "Ignorer la casse"
 
-#: R/importCorpus.R:142 R/output.R:60
+#: R/importCorpus.R:142 R/output.R:60 R/importCorpus.R:171 R/output.R:61
 msgid "Remove punctuation"
 msgstr "Supprimer la ponctuation"
 
-#: R/importCorpus.R:143 R/output.R:61
+#: R/importCorpus.R:143 R/output.R:61 R/importCorpus.R:173 R/output.R:62
 msgid "Remove digits"
 msgstr "Supprimer les chiffres"
 
-#: R/importCorpus.R:143 R/output.R:61
+#: R/importCorpus.R:143 R/output.R:61 R/importCorpus.R:175 R/output.R:62
 msgid "Remove stopwords"
 msgstr "Supprimer les mots vides"
 
-#: R/importCorpus.R:144 R/output.R:62
+#: R/importCorpus.R:144 R/output.R:62 R/output.R:63
 msgid "Apply stemming"
 msgstr "Extraire les radicaux (racinisation)"
 
-#: R/importCorpus.R:145
+#: R/importCorpus.R:145 R/importCorpus.R:347
 msgid "Text processing:"
 msgstr "Traitement des textes :"
 
-#: R/importCorpus.R:151
+#: R/importCorpus.R:151 R/importCorpus.R:150
 msgid "Split texts into smaller documents"
 msgstr "Découper les textes en documents plus petits"
 
@@ -677,15 +693,15 @@ msgstr ""
 "Le paquet Snowball est nécessaire pour extraire les radicaux des mots.\n"
 "Voulez-vous l'installer ?"
 
-#: R/importCorpus.R:294
+#: R/importCorpus.R:294 R/importCorpus.R:339
 msgid "Language of texts in the corpus:"
 msgstr "Langue des textes du corpus :"
 
-#: R/importCorpus.R:295
+#: R/importCorpus.R:295 R/importCorpus.R:341
 msgid "File encoding:"
 msgstr "Encodage des fichiers :"
 
-#: R/importCorpus.R:296
+#: R/importCorpus.R:296 R/importCorpus.R:343
 msgid "Text splitting:"
 msgstr "Découpage des textes :"
 
@@ -693,52 +709,53 @@ msgstr "Découpage des textes :"
 msgid "Size of new documents (in paragraphs):"
 msgstr "Longueur des nouveaux documents (en paragraphes) :"
 
-#: R/importCorpus.R:328
+#: R/importCorpus.R:328 R/importCorpus.R:379
 #, c-format
 msgid "directory %s"
 msgstr "répertoire %s"
 
-#: R/importCorpus.R:334
+#: R/importCorpus.R:334 R/importCorpus.R:385
 msgid "All supported types"
 msgstr "Tous les types pris en charge"
 
-#: R/importCorpus.R:335
+#: R/importCorpus.R:335 R/importCorpus.R:386
 msgid "Comma-separated values (CSV) file"
 msgstr "Fichier de valeurs séparées par des virgules (CSV)"
 
-#: R/importCorpus.R:336
+#: R/importCorpus.R:336 R/importCorpus.R:387
 msgid "Tab-separated values (TSV) file"
 msgstr "Fichier de valeurs séparées par des tabulations (TSV)"
 
-#: R/importCorpus.R:337
+#: R/importCorpus.R:337 R/importCorpus.R:388
 msgid "dBase file"
 msgstr "Fichier dBase"
 
-#: R/importCorpus.R:338
+#: R/importCorpus.R:338 R/importCorpus.R:389
 msgid "Open Document Spreadsheet file"
 msgstr "Tableur Open Document"
 
-#: R/importCorpus.R:339
+#: R/importCorpus.R:339 R/importCorpus.R:390
 msgid "Excel file"
 msgstr "Fichier Excel"
 
-#: R/importCorpus.R:340
+#: R/importCorpus.R:340 R/importCorpus.R:391
 msgid "Excel 2007 file"
 msgstr "Fichier Excel 2007"
 
-#: R/importCorpus.R:341
+#: R/importCorpus.R:341 R/importCorpus.R:392
 msgid "Access database"
 msgstr "Base de données Access"
 
-#: R/importCorpus.R:342
+#: R/importCorpus.R:342 R/importCorpus.R:393
 msgid "Access 2007 database"
 msgstr "Base de données Access 2007"
 
-#: R/importCorpus.R:343 R/importCorpus.R:484
+#: R/importCorpus.R:343 R/importCorpus.R:484 R/importCorpus.R:394
+#: R/importCorpus.R:569
 msgid "All files"
 msgstr "Tous les fichiers"
 
-#: R/importCorpus.R:380
+#: R/importCorpus.R:380 R/importCorpus.R:431
 msgid ""
 "Loading OpenDocument spreadsheets (.ods) is not supported on your system.\n"
 "You should save your data set as a CSV file or as an Excel spreadsheet (."
@@ -749,7 +766,7 @@ msgstr ""
 "Vous devriez enregistrer votre jeu de données dans un fichier CSV ou dans "
 "une feuille de calcul Excel (.xls)."
 
-#: R/importCorpus.R:385
+#: R/importCorpus.R:385 R/importCorpus.R:436
 msgid ""
 "Loading OpenDocument spreadsheets (.ods) requires the ROpenOffice package.\n"
 "Do you want to install it?"
@@ -758,7 +775,7 @@ msgstr ""
 "OpenDocument (.ods).\n"
 "Voulez-vous l'installer ?"
 
-#: R/importCorpus.R:401
+#: R/importCorpus.R:401 R/importCorpus.R:452
 msgid ""
 "Loading Excel and Access files is only supported on Windows.\n"
 "You should save your data set as a CSV file or as an OpenDocument "
@@ -769,7 +786,7 @@ msgstr ""
 "Vous devriez enregistrer votre jeu de données dans un fichier CSV ou dans "
 "une feuille de calcul OpenDocument (.ods)."
 
-#: R/importCorpus.R:405
+#: R/importCorpus.R:405 R/importCorpus.R:456
 msgid ""
 "The RODBC package is needed to read Excel and Access files.\n"
 "Do you want to install it?"
@@ -777,7 +794,7 @@ msgstr ""
 "Le paquet RODBC est nécessaire pour charger des fichiers Excel et Access.\n"
 "Voulez-vous l'installer ?"
 
-#: R/importCorpus.R:409
+#: R/importCorpus.R:409 R/importCorpus.R:460
 msgid ""
 "No ODBC driver for this file type was found.\n"
 "You probably need to install Excel or Access, or separate ODBC drivers."
@@ -786,15 +803,15 @@ msgstr ""
 "Vous devez probablement installer Excel ou Access, ou des pilotes ODBC "
 "séparés."
 
-#: R/importCorpus.R:437
+#: R/importCorpus.R:437 R/importCorpus.R:488
 msgid "Select one table"
 msgstr "Sélectionnez une table"
 
-#: R/importCorpus.R:442
+#: R/importCorpus.R:442 R/importCorpus.R:493
 msgid "No table selected"
 msgstr "Aucune table sélectionnée"
 
-#: R/importCorpus.R:455
+#: R/importCorpus.R:455 R/importCorpus.R:506
 msgid ""
 "File has unknown extension, assuming it is in the tab-separated values "
 "format."
@@ -802,11 +819,12 @@ msgstr ""
 "Le fichier a une extension inconnue, on suppose qu'il contient des valeurs "
 "séparées par des virgules."
 
-#: R/importCorpus.R:473
+#: R/importCorpus.R:473 R/importCorpus.R:524
+#, c-format
 msgid "spreadsheet file %s"
 msgstr "fichier tableur %s"
 
-#: R/importCorpus.R:479
+#: R/importCorpus.R:479 R/importCorpus.R:564
 msgid ""
 "The tm.plugin.factiva package is needed to import corpora from Factiva "
 "files.\n"
@@ -816,11 +834,11 @@ msgstr ""
 "d'un fichier Factiva.\n"
 "Voulez-vous l'installer ?"
 
-#: R/importCorpus.R:483
+#: R/importCorpus.R:483 R/importCorpus.R:568
 msgid "Factiva XML and HTML files"
 msgstr "Fichiers XML et HTML Factiva"
 
-#: R/importCorpus.R:510
+#: R/importCorpus.R:510 R/importCorpus.R:595
 msgid ""
 "Reading the specified file failed. Are you sure this file is in the correct "
 "format?"
@@ -828,31 +846,33 @@ msgstr ""
 "La lecture du fichier spécifié a échoué. Êtes-vous sûr que ce fichier est "
 "dans le bon format?"
 
-#: R/importCorpus.R:533
+#: R/importCorpus.R:533 R/importCorpus.R:540
 msgid "Origin"
 msgstr "Origine"
 
 #: R/importCorpus.R:533 R/time.R:13 R/time.R:37 R/time.R:115 R/time.R:147
-#: R/time.R:346 R/time.R:378
+#: R/time.R:346 R/time.R:378 R/importCorpus.R:540 R/time.R:347 R/time.R:379
 msgid "Date"
 msgstr "Date"
 
-#: R/importCorpus.R:533 R/importCorpus.R:638
+#: R/importCorpus.R:533 R/importCorpus.R:638 R/importCorpus.R:540
+#: R/importCorpus.R:694
+#, c-format
 msgid "Author"
 msgstr "Auteur"
 
-#: R/importCorpus.R:533
+#: R/importCorpus.R:533 R/importCorpus.R:540
 msgid "Section"
 msgstr "Section"
 
-#: R/importCorpus.R:552
+#: R/importCorpus.R:552 R/importCorpus.R:608
 #, c-format
 msgid "Factiva file %s"
 msgid_plural "Factiva files %s"
 msgstr[0] "Fichier Factiva %s"
 msgstr[1] "Fichiers Factiva %s"
 
-#: R/importCorpus.R:559
+#: R/importCorpus.R:559 R/importCorpus.R:615
 msgid ""
 "The twitteR package is needed to import corpora from Twitter.\n"
 "Do you want to install it?"
@@ -861,31 +881,31 @@ msgstr ""
 "Twitter.\n"
 "Voulez-vous l'installer ?"
 
-#: R/importCorpus.R:565
+#: R/importCorpus.R:565 R/importCorpus.R:621
 msgid "Import Corpus From Twitter"
 msgstr "Importer un corpus à partir de Twitter"
 
-#: R/importCorpus.R:579
+#: R/importCorpus.R:579 R/importCorpus.R:635
 msgid "Remove user names"
 msgstr "Supprimer les noms d'utilisateur"
 
-#: R/importCorpus.R:579
+#: R/importCorpus.R:579 R/importCorpus.R:635
 msgid "Remove hashtags"
 msgstr "Supprimer les hashtags"
 
-#: R/importCorpus.R:580
+#: R/importCorpus.R:580 R/importCorpus.R:636
 msgid "Exclude retweets"
 msgstr "Exclure les retweets"
 
-#: R/importCorpus.R:581
+#: R/importCorpus.R:581 R/importCorpus.R:637
 msgid "Options:"
 msgstr "Options :"
 
-#: R/importCorpus.R:591
+#: R/importCorpus.R:591 R/importCorpus.R:647
 msgid "Please enter valid text to search for."
 msgstr "Veuillez saisir une texte de recherche valide."
 
-#: R/importCorpus.R:607
+#: R/importCorpus.R:607 R/importCorpus.R:663
 #, c-format
 msgid ""
 "No recent tweets match the specified search criteria in the chosen language "
@@ -894,48 +914,49 @@ msgstr ""
 "Aucun tweet récent ne correspond aux critères de recherche spécifiés dans la "
 "langue choisie (%s)."
 
-#: R/importCorpus.R:630
+#: R/importCorpus.R:630 R/importCorpus.R:686
 msgid "Retrieving messages from Twitter failed."
 msgstr "La récupération des messages à partir de Twitter a échoué."
 
 #: R/importCorpus.R:638 R/time.R:14 R/time.R:116 R/time.R:151 R/time.R:347
-#: R/time.R:382
+#: R/time.R:382 R/importCorpus.R:694 R/time.R:348 R/time.R:383
 msgid "Time"
 msgstr "Temps"
 
-#: R/importCorpus.R:638
+#: R/importCorpus.R:638 R/importCorpus.R:694
 msgid "Truncated"
 msgstr "Tronqué"
 
-#: R/importCorpus.R:638
+#: R/importCorpus.R:638 R/importCorpus.R:694
 msgid "StatusSource"
 msgstr "Source"
 
 #: R/importCorpus.R:640 R/importCorpus.R:643 R/importCorpus.R:644
+#: R/importCorpus.R:696 R/importCorpus.R:699 R/importCorpus.R:700
 msgid "Retweet"
 msgstr "Retweet"
 
-#: R/importCorpus.R:660
+#: R/importCorpus.R:660 R/importCorpus.R:716
 msgid "Text to search for:"
 msgstr "Texte à rechercher :"
 
-#: R/importCorpus.R:662
+#: R/importCorpus.R:662 R/importCorpus.R:718
 msgid "Maximum number of tweets to download:"
 msgstr "Nombre de tweets à télécharger :"
 
-#: R/importCorpus.R:669
+#: R/importCorpus.R:669 R/importCorpus.R:725
 #, c-format
 msgid "Twitter search for %s"
 msgstr "Recherche de %s sur Twitter"
 
 #: R/importCorpus.R:733 R/setCorpusVariables.R:35 R/setCorpusVariables.R:55
-#: R/setCorpusVariables.R:60
+#: R/setCorpusVariables.R:60 R/importCorpus.R:789
 msgid "Doc ID"
 msgstr "Doc ID"
 
 #: R/importCorpus.R:734 R/setCorpusVariables.R:26 R/setCorpusVariables.R:35
 #: R/setCorpusVariables.R:46 R/setCorpusVariables.R:59
-#: R/setCorpusVariables.R:60
+#: R/setCorpusVariables.R:60 R/importCorpus.R:790
 msgid "Doc N"
 msgstr "Doc N"
 
@@ -960,62 +981,62 @@ msgstr "Fichier HTML"
 msgid "."
 msgstr ","
 
-#: R/output.R:30
+#: R/output.R:30 R/output.R:31
 msgid "Text Mining Analysis Results"
 msgstr "Résultats de l'analyse textuelle"
 
-#: R/output.R:50
+#: R/output.R:50 R/output.R:51
 #, c-format
 msgid "Corpus imported on %s. Language: %s."
 msgstr "Corpus importé le %s. Langue : %s."
 
-#: R/output.R:54
+#: R/output.R:54 R/output.R:55
 #, c-format
 msgid "Source: %s."
 msgstr "Source : %s."
 
-#: R/output.R:55
+#: R/output.R:55 R/output.R:56
 #, c-format
 msgid "%i documents and %i terms."
 msgstr "%i documents et %i termes."
 
-#: R/output.R:57
+#: R/output.R:57 R/output.R:58
 msgid "Processing options:"
 msgstr "Options de traitement :"
 
-#: R/output.R:63
+#: R/output.R:63 R/output.R:64
 msgid ": "
 msgstr " : "
 
-#: R/output.R:65
+#: R/output.R:65 R/output.R:66
 msgid "enabled"
 msgstr "activé"
 
-#: R/output.R:65
+#: R/output.R:65 R/output.R:66
 msgid "disabled"
 msgstr "désactivé"
 
-#: R/output.R:71
+#: R/output.R:71 R/output.R:72
 msgid "No report file has been created yet."
 msgstr "Aucun fichier de rapport n'a encore été créé."
 
-#: R/output.R:75
+#: R/output.R:75 R/output.R:76
 msgid "Report file does not exist (it was probably removed)."
 msgstr "Le fichier de rapport n'existe pas (il a probablement été supprimé)."
 
-#: R/output.R:91
+#: R/output.R:91 R/output.R:92
 msgid "No table has been built yet. Please create a table first."
 msgstr "Aucune table n'a encore été construite. Commencez par en créer une."
 
-#: R/output.R:128
+#: R/output.R:128 R/output.R:129
 msgid "No plot has been drawn yet. Please create a plot first."
 msgstr "Aucun graphique n'a encore été représenté. Commencez par en créer un."
 
-#: R/output.R:139 R/output.R:145
+#: R/output.R:139 R/output.R:145 R/output.R:140 R/output.R:146
 msgid " - plot %Y-%m-%d %H-%M"
 msgstr " - graphique %d-%m-%Y %Hh %M"
 
-#: R/output.R:209
+#: R/output.R:209 R/output.R:210
 msgid "No items."
 msgstr "Aucun élément."
 
@@ -1023,47 +1044,47 @@ msgstr "Aucun élément."
 msgid "Dimension"
 msgstr "Dimension"
 
-#: R/output.R:306
+#: R/output.R:306 R/output.R:256
 msgid "Value"
 msgstr "Valeur"
 
-#: R/output.R:306
+#: R/output.R:306 R/output.R:256
 msgid "%"
 msgstr "%"
 
-#: R/output.R:307
+#: R/output.R:307 R/output.R:256
 msgid "Cum. %"
 msgstr "% cum."
 
-#: R/output.R:308
+#: R/output.R:308 R/output.R:257
 msgid "Axes inertias (eigenvalues):"
 msgstr "Inertie des axes (valeurs propres) :"
 
-#: R/output.R:324
+#: R/output.R:324 R/output.R:273
 msgid "Mass"
 msgstr "Masse"
 
-#: R/output.R:324 R/output.R:325
+#: R/output.R:324 R/output.R:325 R/output.R:273 R/output.R:274
 msgid "Quality"
 msgstr "Qualité"
 
-#: R/output.R:324
+#: R/output.R:324 R/output.R:273
 msgid "Inertia"
 msgstr "Inertie"
 
-#: R/output.R:325
+#: R/output.R:325 R/output.R:274
 msgid "Coord"
 msgstr "Coord"
 
-#: R/output.R:325
+#: R/output.R:325 R/output.R:274
 msgid "Contr"
 msgstr "Contr"
 
-#: R/output.R:328
+#: R/output.R:328 R/output.R:277
 msgid "Documents and variables:"
 msgstr "Documents et variables :"
 
-#: R/output.R:331 R/showCorpusCa.R:574
+#: R/output.R:331 R/showCorpusCa.R:574 R/output.R:280
 msgid "Terms:"
 msgstr "Termes :"
 
@@ -1080,12 +1101,12 @@ msgid "Exclude these terms"
 msgstr "Exclure ces termes"
 
 #: R/restrictTerms.R:17 R/subsetCorpus.R:142 R/termCooc.R:51 R/termFreq.R:112
-#: R/time.R:449
+#: R/time.R:449 R/time.R:451
 msgid "Please enter at least one term."
 msgstr "Vous devez entrer au moins un terme."
 
 #: R/restrictTerms.R:24 R/subsetCorpus.R:149 R/termCooc.R:58 R/termFreq.R:5
-#: R/termFreq.R:119 R/time.R:455
+#: R/termFreq.R:119 R/time.R:455 R/time.R:457
 #, c-format
 msgid "Term '%s' does not exist in the corpus."
 msgid_plural "Terms '%s' do not exist in the corpus."
@@ -1093,7 +1114,7 @@ msgstr[0] "Le terme « %s » n'existe pas dans le corpus."
 msgstr[1] "Les termes « %s » n'existent pas dans le corpus."
 
 #: R/restrictTerms.R:27 R/subsetCorpus.R:152 R/termCooc.R:61 R/termFreq.R:7
-#: R/termFreq.R:122 R/time.R:458
+#: R/termFreq.R:122 R/time.R:458 R/time.R:460
 msgid "', '"
 msgstr " », « "
 
@@ -1137,8 +1158,8 @@ msgid ""
 "Correspondence analysis of %i active variable(s) (aggregating %i documents), "
 "%i terms and %i supplementary variable(s)."
 msgstr ""
-"Analyse des correspondances portant sur %i variable(s) active(s) (agrégeant %i "
-"documents), %i termes et %i variable(s) supplémentaire(s)."
+"Analyse des correspondances portant sur %i variable(s) active(s) (agrégeant "
+"%i documents), %i termes et %i variable(s) supplémentaire(s)."
 
 #: R/showCorpusCa.R:89
 msgid "Position"
@@ -1314,7 +1335,7 @@ msgstr "Dimension %s (%.1f %%)"
 msgid "Show"
 msgstr "Afficher"
 
-#: R/showCorpusCa.R:554 R/time.R:301 R/time.R:566
+#: R/showCorpusCa.R:554 R/time.R:301 R/time.R:566 R/time.R:302 R/time.R:568
 msgid "Close"
 msgstr "Fermer"
 
@@ -1371,7 +1392,7 @@ msgstr "# Préférer la notation fixe à la notation scientifique"
 msgid "# Print numbers with two significant digits"
 msgstr "# Afficher les nombres avec deux chiffres significatifs"
 
-#: R/startup.R:50
+#: R/startup.R:50 R/startup.R:51
 msgid "# Set a nice color palette for plots"
 msgstr "# Choix d'une palette de couleurs agréable pour les graphiques"
 
@@ -1456,11 +1477,11 @@ msgstr "Termes de référence (séparés par une espace) :"
 msgid "Term Frequencies"
 msgstr "Fréquence de termes"
 
-#: R/termFreq.R:78 R/time.R:410
+#: R/termFreq.R:78 R/time.R:410 R/time.R:412
 msgid "Term prevalence in level (\"% Term/Level\")"
 msgstr "Prévalence du terme dans la modalité (« % terme/mod. »)"
 
-#: R/termFreq.R:79 R/time.R:411
+#: R/termFreq.R:79 R/time.R:411 R/time.R:413
 msgid "Distribution of occurrences among levels (\"% Level/Term\")"
 msgstr "Distribution des occurrences entre les modalités (« % mod./terme »)"
 
@@ -1481,6 +1502,7 @@ msgid "Group results by term"
 msgstr "Grouper les résultats par terme"
 
 #: R/termFreq.R:94 R/time.R:295 R/time.R:560 R/varFreq.R:26 R/varFreq.R:126
+#: R/time.R:296 R/time.R:562
 msgid "Draw plot"
 msgstr "Créer un graphique"
 
@@ -1492,15 +1514,15 @@ msgstr "Barres verticales"
 msgid "Stacked bars"
 msgstr "Barres empilées"
 
-#: R/termFreq.R:158 R/time.R:500
+#: R/termFreq.R:158 R/time.R:500 R/time.R:502
 msgid "% of all terms"
 msgstr "% de tous les termes"
 
-#: R/termFreq.R:160 R/time.R:504
+#: R/termFreq.R:160 R/time.R:504 R/time.R:506
 msgid "% of occurrences"
 msgstr "% des occurrences"
 
-#: R/termFreq.R:162 R/time.R:508 R/vocabulary.R:169
+#: R/termFreq.R:162 R/time.R:508 R/vocabulary.R:169 R/time.R:510
 msgid "Number of occurrences"
 msgstr "Nombre d'occurrences"
 
@@ -1512,7 +1534,7 @@ msgstr "(en % de tous les termes)"
 msgid "(% of occurrences)"
 msgstr "(en % des occurrences)"
 
-#: R/termFreq.R:207 R/time.R:588
+#: R/termFreq.R:207 R/time.R:588 R/time.R:590
 msgid "Terms to show (space-separated):"
 msgstr "Termes à afficher (séparés par une espace) :"
 
@@ -1521,6 +1543,7 @@ msgid "Display:"
 msgstr "Afficher :"
 
 #: R/termFreq.R:212 R/time.R:328 R/time.R:595 R/varFreq.R:85 R/varFreq.R:218
+#: R/time.R:329 R/time.R:597
 msgid "Title:"
 msgstr "Titre :"
 
@@ -1541,7 +1564,7 @@ msgstr ""
 "Format ou variable de temps incorrects en entrée : aucune valeur de « %s » "
 "n'a pu être convertie en repère temporel."
 
-#: R/time.R:69 R/time.R:220 R/time.R:476
+#: R/time.R:69 R/time.R:220 R/time.R:476 R/time.R:221 R/time.R:478
 #, c-format
 msgid ""
 "Some values of \"%s\" could not be converted to a time index and will be "
@@ -1584,35 +1607,36 @@ msgstr ""
 msgid "Corpus Temporal Evolution"
 msgstr "Évolution temporelle du corpus"
 
-#: R/time.R:122 R/time.R:353
+#: R/time.R:122 R/time.R:353 R/time.R:354
 msgid "Date/time variable:"
 msgstr "Variable de date/heure :"
 
-#: R/time.R:134 R/time.R:365
+#: R/time.R:134 R/time.R:365 R/time.R:366
 msgid "None (one curve)"
 msgstr "Aucune (une seule courbe)"
 
-#: R/time.R:176
+#: R/time.R:176 R/time.R:177
 msgid "Number of documents per time unit"
 msgstr "Nombre de documents par unité de temps"
 
-#: R/time.R:177
+#: R/time.R:177 R/time.R:178
 msgid "% of documents per time unit"
 msgstr "% des documents par unité de temps"
 
-#: R/time.R:178 R/time.R:413 R/varFreq.R:20 R/varFreq.R:120
+#: R/time.R:178 R/time.R:413 R/varFreq.R:20 R/varFreq.R:120 R/time.R:179
+#: R/time.R:415
 msgid "Measure:"
 msgstr "Mesure :"
 
-#: R/time.R:182 R/time.R:417
+#: R/time.R:182 R/time.R:417 R/time.R:183 R/time.R:419
 msgid "Apply rolling mean"
 msgstr "Appliquer une moyenne glissante"
 
-#: R/time.R:189
+#: R/time.R:189 R/time.R:190
 msgid "Temporal evolution of the corpus"
 msgstr "Évolution temporelle du corpus"
 
-#: R/time.R:201
+#: R/time.R:201 R/time.R:202
 msgid ""
 "Plotting percents of documents with only one curve does not make sense: all "
 "points would be 100%."
@@ -1620,7 +1644,7 @@ msgstr ""
 "Représenter les pourcentages de documents avec une seule courbe n'a pas de "
 "sens : tous les points seraient à 100 %."
 
-#: R/time.R:215 R/time.R:471
+#: R/time.R:215 R/time.R:471 R/time.R:216 R/time.R:473
 #, c-format
 msgid ""
 "Incorrect time format or variable: no values of \"%s\" could be converted to "
@@ -1629,27 +1653,27 @@ msgstr ""
 "Format ou variable de temps incorrects : aucune valeur de « %s » n'a pu être "
 "convertie en repère temporel."
 
-#: R/time.R:252 R/time.R:517
+#: R/time.R:252 R/time.R:517 R/time.R:253 R/time.R:519
 msgid "per second"
 msgstr "par seconde"
 
-#: R/time.R:252 R/time.R:517
+#: R/time.R:252 R/time.R:517 R/time.R:253 R/time.R:519
 msgid "per minute"
 msgstr "par minute"
 
-#: R/time.R:252 R/time.R:517
+#: R/time.R:252 R/time.R:517 R/time.R:253 R/time.R:519
 msgid "per hour"
 msgstr "par heure"
 
-#: R/time.R:253 R/time.R:518
+#: R/time.R:253 R/time.R:518 R/time.R:254 R/time.R:520
 msgid "per day"
 msgstr "par jour"
 
-#: R/time.R:253 R/time.R:518
+#: R/time.R:253 R/time.R:518 R/time.R:254 R/time.R:520
 msgid "per week"
 msgstr "par semaine"
 
-#: R/time.R:269 R/time.R:534
+#: R/time.R:269 R/time.R:534 R/time.R:270 R/time.R:536
 msgid ""
 "Chosen roll mean window is longer than the range of the time variable, "
 "rolling mean was not applied."
@@ -1657,15 +1681,15 @@ msgstr ""
 "La fenêtre choisie pour la moyenne glissante est plus large que l'étendue de "
 "la variable temporelle : la moyenne glissante n'a pas été appliquée."
 
-#: R/time.R:282 R/time.R:547
+#: R/time.R:282 R/time.R:547 R/time.R:283 R/time.R:549
 msgid "Only one time point present, no plot can be drawn."
 msgstr "Un seul repère temporel présent, impossible de dessiner un graphique."
 
-#: R/time.R:314 R/time.R:579
+#: R/time.R:314 R/time.R:579 R/time.R:315 R/time.R:581
 msgid "Time format:"
 msgstr "Format de temps :"
 
-#: R/time.R:316 R/time.R:581
+#: R/time.R:316 R/time.R:581 R/time.R:317 R/time.R:583
 msgid ""
 "%Y: year - %m: month - %d: day\n"
 "%H: hour - %M: minute\n"
@@ -1675,35 +1699,35 @@ msgstr ""
 "%H : heure - %M : minute\n"
 "Cliquez sur le bouton « Aide » pour d'autres codes."
 
-#: R/time.R:318 R/time.R:583
+#: R/time.R:318 R/time.R:583 R/time.R:319 R/time.R:585
 msgid "Group by variable:"
 msgstr "Grouper selon la variable :"
 
-#: R/time.R:321 R/time.R:586
+#: R/time.R:321 R/time.R:586 R/time.R:322 R/time.R:588
 msgid "Only plot levels:"
 msgstr "Représenter seulement les modalités :"
 
-#: R/time.R:324 R/time.R:591
+#: R/time.R:324 R/time.R:591 R/time.R:325 R/time.R:593
 msgid "Rolling mean:"
 msgstr "Moyenne glissante :"
 
-#: R/time.R:326 R/time.R:593
+#: R/time.R:326 R/time.R:593 R/time.R:327 R/time.R:595
 msgid "Time window for mean (in time units):"
 msgstr "Fenêtre à utiliser (en unités de temps) :"
 
-#: R/time.R:342
+#: R/time.R:342 R/time.R:343
 msgid "Temporal Evolution of Term Occurrences"
 msgstr "Évolution temporelle des occurrences de termes"
 
-#: R/time.R:412
+#: R/time.R:412 R/time.R:414
 msgid "Number of occurrences in level per time unit"
 msgstr "Nombre d'occurrences dans la modalité par unité de temps"
 
-#: R/time.R:424
+#: R/time.R:424 R/time.R:426
 msgid "Temporal evolution of occurrences"
 msgstr "Évolution temporelle des occurrences"
 
-#: R/time.R:437
+#: R/time.R:437 R/time.R:439
 msgid ""
 "Plotting distribution of occurrences with only one curve does not make "
 "sense: all points would be 100%."
@@ -1711,7 +1735,7 @@ msgstr ""
 "Représenter la distribution des occurrences avec une seule courbe n'a pas de "
 "sens : tous les points seraient à 100 %."
 
-#: R/time.R:443
+#: R/time.R:443 R/time.R:445
 msgid "Only one term can be used when a grouping variable is selected."
 msgstr ""
 "Seul un terme peut être utilisé lorsqu'une variable de regroupement est "
@@ -1894,3 +1918,42 @@ msgstr "Mesure à représenter :"
 #: R/vocabulary.R:276
 msgid "Plot title:"
 msgstr "Titre du graphique :"
+
+#: R/importCorpus.R:177
+msgid "Apply stemming using:"
+msgstr "Extraire les radicaux (racinisation) en utilisant :"
+
+#: R/importCorpus.R:232
+msgid ""
+"You have chosen to perform stemming using the Rstem package.\n"
+"Do you want to install it?"
+msgstr ""
+"Vous avez choisi d'extraire les radicaux des mots en utilisant le paquet Rstem.\n"
+"Voulez-vous l'installer ?"
+
+#: R/importCorpus.R:234
+msgid ""
+"You have chosen to perform stemming using the Snowball package.\n"
+"Do you want to install Snowball? This requires Java to work properly."
+msgstr ""
+"Vous avez choisi d'extraire les radicaux des mots en utilisant le paquet Snowball.\n"
+"Voulez-vous l'installer ? Cette opération exige que Java fonctionne correctement."
+
+#: R/importCorpus.R:244
+#, c-format
+msgid ""
+"Language %s is not supported by Rstem: you need to use the Snowball stemmer."
+msgstr "La langue %s n'est pas prise en charge par Rstem: vous devez utiliser "
+"Snowball pour la racinisation."
+
+#: R/importCorpus.R:345
+msgid "Size of new documents:"
+msgstr "Longueur des nouveaux documents :"
+
+#: R/importCorpus.R:346
+msgid "paragraphs"
+msgstr "paragraphes"
+
+#: R/output.R:263
+msgid "Total:"
+msgstr "Total :"
