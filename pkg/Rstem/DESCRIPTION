@@ -6,15 +6,15 @@ Title: Interface to Snowball implementation of Porter's word stemming
 Description: An R interface to the C code that implements Porter's
   word stemming algorithm for collapsing words to a common root
   to aid comparison of texts.  There is code to for different
-  languages (i.e. danish, dutch, english, finnish, french, german,
-  norwegian, portuguese, russian, spanish, swedish).
+  languages (i.e. Danish, Dutch, English, Finnish, French, German,
+  Norwegian, Portuguese, Russian, Spanish, Swedish).
   However, these may not be applicable if the words require 
   UTF encoding.
   This is extensible by allowing different routines to be specified to 
   create the C routines used in the stemming, permitting debugging, 
   profiling, pool management, caching, etc.
-Author: Duncan Temple Lang <duncan@wald.ucdavis.edu>
-Maintainer: Duncan Temple Lang <duncan@wald.ucdavis.edu>
+Authors@R: c(person("Duncan Temple Lang", email="duncan@wald.ucdavis.edu", role=c("aut")),
+             person("Milan Bouchet-Valat", email="nalimilan@club.fr", role="cre"))
 Acknowledgements: The stemming code is taken directly from Dr Martin Porter's 
       distribution, available at
         http://snowball.tartarus.org
@@ -26,4 +26,3 @@ Note: This package is setup to support stemming for languages other than English
    and includes it in the distribution.  Support for Unicode is needed in R.
 Copyright: Duncan Temple Lang, 2004. 
 License: BSD
-Packaged: 2011-08-18 21:28:45 UTC; duncan
