@@ -1,7 +1,5 @@
-
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <R.h>
 
 #include "header.h"
 
@@ -258,9 +256,8 @@ static void slice_check(struct SN_env * z)
           z->ket <= z->l &&
           z->l <= SIZE(z->p)))   /* this line could be removed */
     {
-        fprintf(stderr, "faulty slice operation:\n");
+        Rf_error("faulty slice operation.");
         debug(z, -1, 0);
-        exit(1);
     }
 }
 
@@ -310,19 +307,19 @@ extern symbol * assign_to(struct SN_env * z, symbol * p)
 extern void debug(struct SN_env * z, int number, int line_count)
 {   int i;
     int limit = SIZE(z->p);
-    /*if (number >= 0) printf("%3d (line %4d): '", number, line_count);*/
-    if (number >= 0) printf("%3d (line %4d): [%d]'", number, line_count,limit);
+    /*if (number >= 0) REprintf("%3d (line %4d): '", number, line_count);*/
+    if (number >= 0) REprintf("%3d (line %4d): [%d]'", number, line_count,limit);
     for (i = 0; i <= limit; i++)
-    {   if (z->lb == i) printf("{");
-        if (z->bra == i) printf("[");
-        if (z->c == i) printf("|");
-        if (z->ket == i) printf("]");
-        if (z->l == i) printf("}");
+    {   if (z->lb == i) REprintf("{");
+        if (z->bra == i) REprintf("[");
+        if (z->c == i) REprintf("|");
+        if (z->ket == i) REprintf("]");
+        if (z->l == i) REprintf("}");
         if (i < limit)
         {   int ch = z->p[i];
             if (ch == 0) ch = '#';
-            printf("%c", ch);
+            REprintf("%c", ch);
         }
     }
-    printf("'\n");
+    REprintf("'\n");
 }
