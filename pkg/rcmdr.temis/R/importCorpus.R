@@ -351,6 +351,9 @@ importCorpusDlg <- function() {
     tkgrid(stopwordsCheck, sticky="w", pady=6)
     tkgrid(stemmingCheck, stemmingRstemRadio, stemmingSnowballRadio, sticky="w", pady=6)
     tkgrid(buttonsFrame, columnspan=3, sticky="w", pady=6)
+    tkgrid.columnconfigure(top, 0, pad=12)
+    tkgrid.columnconfigure(top, 1, pad=12)
+    tkgrid.columnconfigure(top, 2, pad=12)
     dialogSuffix(rows=7, columns=2, focus=comboLang)
 }
 
