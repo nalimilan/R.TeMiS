@@ -1,0 +1,3 @@
+SNOWBALL=../Snowball
+INCLUDES=.   $(SNOWBALL)/q 
+PKG_CPPFLAGS=$(INCLUDES:%=-I%)

@@ -1,0 +1,92 @@
+#!/bin/sh
+
+# Call this from the top-level  Rstem directory
+#
+#  cd Rstem
+#  ./inst/scripts/download
+#
+
+#
+# Downloads the stem.c and stem.h files for the different languages
+# supported by  Snowball and also creates a header file for
+# inclusion to make these available. 
+#
+
+   # The directory to which the data (i.e. .txt) files should be written
+outdir=`pwd`/inst/words
+
+   # Directory where the source files (<language>_stem.[ch] and Languages.h) will go
+srcdir=`pwd`/src
+
+while test -n "${1}" ; do
+  case ${1} in
+    -d) 
+        outdir=${2}; shift;;
+    --source_directory)
+        srcdir=${2}; shift;;
+    --no-download)
+        NO_DOWNLOAD="yes";; 
+   --no-data)
+        NO_DATA="yes";;
+  esac
+  shift
+done
+
+#LANGUAGES=${LANGUAGES-"french english"}
+LANGUAGES=${LANGUAGES-"french english spanish portuguese german dutch swedish norwegian danish russian finnish"}
+
+URL=${URL-"http://snowball.tartarus.org"}
+
+if ! test -d $srcdir/src ; then
+  mkdir $srcdir
+fi
+
+LANG="${srcdir}/Languages.h"
+
+if test -r $LANG ; then
+ rm -f $LANG
+fi
+
+
+DECLRATIONS=""
+CONTENTS=""
+
+for d in  $LANGUAGES ; do
+
+  if test -z "${NO_DOWNLOAD}" ; then
+
+    if test -z "${NO_DATA}" ; then
+      echo "Creating ${outdir}/${d}"
+      mkdir ${outdir}/$d
+  
+      for f in voc.txt output.txt stop.txt ; do
+        wget --quiet ${URL}/$d/$f --output-document=$outdir/$d/$f
+      done
+    fi
+
+
+    for f in stem.c stem.h ; do
+      echo "Downloading $srcdir/${d}_${f}"
+      wget --quiet ${URL}/$d/$f --output-document=$srcdir/${d}_${f}
+    done
+  fi
+ 
+  DECLRATIONS="${DECLRATIONS}
+extern SN_env *${d}_create_env(void);
+extern void ${d}_close_env(SN_env*);
+extern int ${d}_stem(struct SN_env *);"
+  CONTENTS="${CONTENTS}
+{\"$d\", &${d}_create_env, &${d}_close_env, &${d}_stem},"  >> $LANG
+
+done  # end of loop over LANGUAGES.
+
+
+# Output the code we generated to the LANG file.
+
+echo "Generating $LANG"
+
+echo "$DECLRATIONS" > $LANG 
+echo "StemLanguage languages[] = {" >> $LANG
+echo  "$CONTENTS" >> $LANG 
+echo "};"  >> $LANG
+

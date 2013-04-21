@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Rstem Package</title>
+</head>
+
+<body>
+<h1>Rstem Package</h1>
+
+<p align=right><a href="Rstem_0.3-0.tar.gz">Rstem_0.3-0.tar.gz</a></p>
+<p align=right><a href="stemming.pdf">Package document</a></p>
+
+
+The <a href="Rstem_0.3-0.tar.gz">Rstem</a> package provides R language
+bindings to the word stemming facilities provided by Martin Porter's <a
+href="http://snowball.tartarus.org/">Snowball</a>.  The package
+provides a simple way to compute the stems of each word in a character
+vector via the the function <code>wordStem()</code>.  This is
+important in text analysis such as documents and email.
+
+<p>
+The package provides stemming for different languages.
+One can query the supported languages via the
+function <code>getStemLanguages()</code>.
+<i>Note that certain languages require UTF support</i>. 
+
+<p>
+The package is extensible in two ways.
+<ul>
+  <li> The caller can specify C routines to use to create and destroy
+      the stemming context used by the Snowball code.  This can be
+      used
+      to provide support for other languages,
+       or to implement different approaches to managing contexts.
+
+  <li> Code for additional languages can be retrieved from the
+      Snowball Web site and incorporated into this source package.
+      A script in this package provides the mechanism to perform
+      the downloads and update the C code to be aware of these
+      languages.
+      This is a convenient way to add new languages or simply
+      update the code for the existing languages.
+</ul>
+
+
+<h4>S-Plus</h4>
+
+The package currently is written for R.  However, it is relatively
+straightforward to transform it to work with S-Plus (5.0 or greater).
+
+
+<hr>
+<address><a href="http://www.stat.ucdavis.edu/~duncan">Duncan Temple Lang</a>
+<a href=mailto:duncan@wald.ucdavis.edu>&lt;duncan@wald.ucdavis.edu&gt;</a></address>
+<!-- hhmts start -->
+Last modified: Sat Jan  6 07:49:04 PST 2007
+<!-- hhmts end -->
+</body> </html>

@@ -1,0 +1,4 @@
+useDynLib(Rstem)
+
+export(wordStem, getStemLanguages)
+

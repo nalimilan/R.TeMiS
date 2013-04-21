@@ -1,0 +1,9 @@
+The code is easy to make into an S-Plus chapter.  The S code does not need to be changed
+other than removing the PACKAGE argument in the .Call() invocations.  The C code 
+can be easily shared by R and S-Plus using the Omegahat macros.  
+
+Please contact me if you are interested in using this package in S-Plus.
+
+Duncan Temple Lang
+duncan at wald dot ucdavis dot edu
+
