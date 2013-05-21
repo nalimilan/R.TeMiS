@@ -230,7 +230,9 @@ importCorpusDlg <- function() {
 	if(stemming) {
             # If we do not close the dialog first, the CRAN mirror chooser will not respond
 	    if(((useRstem && !.checkAndInstall("Rstem", .gettext("You have chosen to perform stemming using the Rstem package.\nDo you want to install it?"),
-                                           repos="http://R-Forge.R-project.org")) ||
+                                           repos=c(getOption("repos"),
+                                                   "http://www.omegahat.org/R",
+                                                   "http://R-Forge.R-project.org"))) ||
                (!useRstem && !.checkAndInstall("Snowball", .gettext("You have chosen to perform stemming using the Snowball package.\nDo you want to install Snowball? This requires Java to work properly.")))))
                 return()
 
