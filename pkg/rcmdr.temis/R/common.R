@@ -134,7 +134,7 @@ if (getRversion() >= '2.15.1') globalVariables(c(
                          icon="error", type="ok")
         else
             tkmessageBox(title=.gettext("Could not load package"),
-                         message=sprintf(.gettext("Package %s could not be loaded. See errors in the \"Messages\" area.")),
+                         message=sprintf(.gettext("Package %s could not be loaded. See errors in the \"Messages\" area."), package),
                          icon="error", type="ok")
 
         return(FALSE)
