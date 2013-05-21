@@ -39,7 +39,7 @@ R_stemWords(SEXP words, SEXP language)
 
     for(i = 0; i < n; i++) {
         s = stemString(stemmer, translateCharUTF8(STRING_ELT(words, i)));
-        SET_STRING_ELT(result, i, COPY_TO_USER_STRING((char *) s));
+        SET_STRING_ELT(result, i, mkCharCE((char *) s, CE_UTF8));
     }
 
     sb_stemmer_delete(stemmer);
