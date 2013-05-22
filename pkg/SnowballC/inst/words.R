@@ -20,3 +20,12 @@ for(lang in getStemLanguages()) {
     save(voc, file=file.path("words", paste0(lang, ".RData")), compress="xz")
 }
 
+# Only keep a subsample of words to reduce space needed for CRAN releases
+for(lang in getStemLanguages()) {
+    load(file.path("words", paste0(lang, ".RData")))
+
+    voc <- voc[seq(1, nrow(voc), by=80),]
+
+    save(voc, file=file.path("words", paste0(lang, ".RData")), compress="xz")
+}
+
