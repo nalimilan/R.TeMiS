@@ -5,6 +5,8 @@ for(lang in getStemLanguages()) {
     voc <- scan(file.path("words", lang, "diffs.txt"),
                 list("character", "character"), quote="\"", quiet=TRUE)
 
+    voc <- data.frame(word=voc[[1]], stem=voc[[2]], stringsAsFactors=FALSE)
+
     stopifnot(all(wordStem(voc[[1]], lang) == voc[[2]]))
 }
 
@@ -12,6 +14,8 @@ for(lang in getStemLanguages()) {
 for(lang in getStemLanguages()) {
     voc <- scan(file.path("words", lang, "diffs.txt"),
                 list("character", "character"), quote="\"", quiet=TRUE)
+
+    voc <- data.frame(word=voc[[1]], stem=voc[[2]], stringsAsFactors=FALSE)
 
     save(voc, file=file.path("words", paste0(lang, ".RData")), compress="xz")
 }
