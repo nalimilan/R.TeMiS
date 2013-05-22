@@ -12,6 +12,8 @@ Description: An R interface to the C libstemmer library that implements
   Norwegian, Portuguese, Romanian, Russian, Spanish, Swedish
   and Turkish.
 License: BSD
+Copyright: Dr Martin Porter (2001) for the libstemmer C library,
+  and Milan Bouchet-Valat (2013) for the R package contents
 URL: https://r-forge.r-project.org/projects/r-temis/
 BugReports: https://r-forge.r-project.org/tracker/?group_id=1437
 
