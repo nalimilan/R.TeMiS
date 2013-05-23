@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.temis 0.6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-16 14:22+0200\n"
-"PO-Revision-Date: 2013-04-16 14:22+0200\n"
+"POT-Creation-Date: 2013-05-23 11:53+0200\n"
+"PO-Revision-Date: 2013-05-23 11:53+0200\n"
 "Last-Translator: Milan Bouchet-Valat <nalimilan@club.fr>\n"
 "Language-Team: fr <none>\n"
 "Language: fr\n"
@@ -164,21 +164,6 @@ msgstr ""
 #: R/common.R:131 R/common.R:135 R/common.R:132 R/common.R:136
 msgid "Could not load package"
 msgstr "Impossible de charger le paquet"
-
-#: R/common.R:133
-msgid ""
-"Package Snowball could not be loaded. See errors in the \"Messages\" area.\n"
-"\n"
-"This is usually due to Java problems. Please download the most recent "
-"version of Java, and check that you are using the 32-bit version of R if you "
-"have a 32-bit Java, and the 64-bit version otherwise."
-msgstr ""
-"Le paquet Snowball n'a pas pu être chargé. Lisez les erreurs dans la zone "
-"« Messages ».\n"
-"\n"
-"Ceci est généralement dû à des problèmes avec Java. Téléchargez la dernière "
-"version de Java, et vérifiez que vous utilisez la version 32 bits de R si "
-"vous disposez de Java 32 bits, et la version 64 bits dans le cas contraire."
 
 #: R/common.R:136 R/common.R:137
 #, c-format
@@ -684,14 +669,6 @@ msgstr "Traitement des textes :"
 #: R/importCorpus.R:151 R/importCorpus.R:150
 msgid "Split texts into smaller documents"
 msgstr "Découper les textes en documents plus petits"
-
-#: R/importCorpus.R:197
-msgid ""
-"The Snowball package is needed to perform stemming.\n"
-"Do you want to install it?"
-msgstr ""
-"Le paquet Snowball est nécessaire pour extraire les radicaux des mots.\n"
-"Voulez-vous l'installer ?"
 
 #: R/importCorpus.R:294 R/importCorpus.R:339
 msgid "Language of texts in the corpus:"
@@ -1923,28 +1900,13 @@ msgstr "Titre du graphique :"
 msgid "Apply stemming using:"
 msgstr "Extraire les radicaux (racinisation) en utilisant :"
 
-#: R/importCorpus.R:232
+#: R/importCorpus.R:197
 msgid ""
-"You have chosen to perform stemming using the Rstem package.\n"
-"Do you want to install it?"
+"Package SnowballC is needed to perform stemming. Do you want to install it?\n\n"
+"This requires a working Internet connection."
 msgstr ""
-"Vous avez choisi d'extraire les radicaux des mots en utilisant le paquet Rstem.\n"
-"Voulez-vous l'installer ?"
-
-#: R/importCorpus.R:234
-msgid ""
-"You have chosen to perform stemming using the Snowball package.\n"
-"Do you want to install Snowball? This requires Java to work properly."
-msgstr ""
-"Vous avez choisi d'extraire les radicaux des mots en utilisant le paquet Snowball.\n"
-"Voulez-vous l'installer ? Cette opération exige que Java fonctionne correctement."
-
-#: R/importCorpus.R:244
-#, c-format
-msgid ""
-"Language %s is not supported by Rstem: you need to use the Snowball stemmer."
-msgstr "La langue %s n'est pas prise en charge par Rstem: vous devez utiliser "
-"Snowball pour la racinisation."
+"Le paquet SnowballC est nécessaire pour l'extraction des radicaux des mots."
+"Voulez-vous l'installer ?\n\nCette opération nécessite une connection à Internet."
 
 #: R/importCorpus.R:345
 msgid "Size of new documents:"

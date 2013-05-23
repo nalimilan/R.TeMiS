@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.temis 0.6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-16 15:22+0200\n"
+"POT-Creation-Date: 2013-05-23 11:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -164,15 +164,6 @@ msgstr ""
 
 #: R/common.R:131 R/common.R:135 R/common.R:132 R/common.R:136
 msgid "Could not load package"
-msgstr ""
-
-#: R/common.R:133
-msgid ""
-"Package Snowball could not be loaded. See errors in the \"Messages\" area.\n"
-"\n"
-"This is usually due to Java problems. Please download the most recent "
-"version of Java, and check that you are using the 32-bit version of R if you "
-"have a 32-bit Java, and the 64-bit version otherwise."
 msgstr ""
 
 #: R/common.R:136 R/common.R:137
@@ -647,12 +638,6 @@ msgstr ""
 
 #: R/importCorpus.R:151 R/importCorpus.R:150
 msgid "Split texts into smaller documents"
-msgstr ""
-
-#: R/importCorpus.R:197
-msgid ""
-"The Snowball package is needed to perform stemming.\n"
-"Do you want to install it?"
 msgstr ""
 
 #: R/importCorpus.R:294 R/importCorpus.R:339
@@ -1821,22 +1806,10 @@ msgstr ""
 msgid "Apply stemming using:"
 msgstr ""
 
-#: R/importCorpus.R:232
+#: R/importCorpus.R:197
 msgid ""
-"You have chosen to perform stemming using the Rstem package.\n"
-"Do you want to install it?"
-msgstr ""
-
-#: R/importCorpus.R:234
-msgid ""
-"You have chosen to perform stemming using the Snowball package.\n"
-"Do you want to install Snowball? This requires Java to work properly."
-msgstr ""
-
-#: R/importCorpus.R:244
-#, c-format
-msgid ""
-"Language %s is not supported by Rstem: you need to use the Snowball stemmer."
+"Package SnowballC is needed to perform stemming. Do you want to install it?\n\n"
+"This requires a working Internet connection."
 msgstr ""
 
 #: R/importCorpus.R:345
