@@ -24,8 +24,7 @@ termsDictionary <- function(dtm, order=c("alphabetic", "occurrences")) {
     .setBusyCursor()
     on.exit(.setIdleCursor())
 
-    lang <- tm:::map_IETF_Snowball(attr(dtm, "language"))
-
+    lang <- attr(dtm, "language")
     words <- attr(dtm, "words")
 
     if(is.null(words))
@@ -51,10 +50,7 @@ termsDictionary <- function(dtm, order=c("alphabetic", "occurrences")) {
             dictionary
     }
     else {
-        if(suppressWarnings(require("Rstem", quietly=TRUE)))
-           terms <- Rstem::wordStem(names(words), language=lang)
-        else
-            terms <- SnowballStemmer(names(words), control=RWeka::Weka_control(S=lang))
+        terms <- SnowballC::wordStem(names(words), language=lang)
 
         dictionary <- data.frame(row.names=names(words), words,
                                  terms, col_sums(dtm)[ifelse(terms %in% Terms(dtm), terms, NA)],
