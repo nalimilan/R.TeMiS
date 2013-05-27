@@ -568,9 +568,24 @@ importCorpusFromTwitter <- function(language=NA) {
 
     initializeDialog(title=.gettext("Import Corpus From Twitter"))
 
+    tclReqURL <- tclVar("https://api.twitter.com/oauth/request_token")
+    entryReqURL <- ttkentry(top, width=37, textvariable=tclReqURL)
+
+    tclAuthURL <- tclVar("https://api.twitter.com/oauth/authorize")
+    entryAuthURL <- ttkentry(top, width=37, textvariable=tclAuthURL)
+
+    tclAccessURL <- tclVar("https://api.twitter.com/oauth/access_token")
+    entryAccessURL <- ttkentry(top, width=37, textvariable=tclAccessURL)
+
+    tclConsumerKey <- tclVar("")
+    entryConsumerKey <- ttkentry(top, width=37, textvariable=tclConsumerKey)
+
+    tclConsumerSecret <- tclVar("")
+    entryConsumerSecret <- ttkentry(top, width=37, textvariable=tclConsumerSecret)
+
     # TRANSLATORS: replace 'en' with your language's ISO 639 two-letter code
     tclText <- tclVar("")
-    entryText <- ttkentry(top, width="12", textvariable=tclText)
+    entryText <- ttkentry(top, width=37, textvariable=tclText)
 
     tclNMess <- tclVar(100)
     tclNSlider <- tkscale(top, from=1, to=1500,
@@ -587,10 +602,20 @@ importCorpusFromTwitter <- function(language=NA) {
     result <- tclVar()
 
     onOK <- function() {
+        reqURL <- tclvalue(tclReqURL)
+        authURL <- tclvalue(tclAuthURL)
+        accessURL <- tclvalue(tclAccessURL)
+        consumerKey <- tclvalue(tclConsumerKey)
+        consumerSecret <- tclvalue(tclConsumerSecret)
         text <- tclvalue(tclText)
         nmess <- tclvalue(tclNMess)
         exclRetweets <- tclvalue(exclRetweetsVariable) == 1
 
+        if(reqURL == "" || authURL == "" || accessURL == "" ||
+           consumerKey == "" || consumerSecret == "") {
+            Message(.gettext("Please enter valid authentication settings."), type="error")
+            return(FALSE)
+        }
         if(text == "") {
             Message(.gettext("Please enter valid text to search for."), type="error")
             return(FALSE)
@@ -605,6 +630,18 @@ importCorpusFromTwitter <- function(language=NA) {
         tclvalue(result) <- "error"
 
         doItAndPrint("library(twitteR)")
+
+        doItAndPrint(sprintf('twitCred <- OAuthFactory$new(consumerKey="%s", consumerSecret="%s", requestURL="%s", accessURL="%s", authURL="%s")', consumerKey, consumerSecret, reqURL, accessURL, authURL))
+        doItAndPrint("twitCred$handshake()")
+
+        if(!isTRUE(twitCred$handshakeComplete)) {
+            Message(.gettext("TwitteR authentication failed. Please check the entered credentials or PIN code."),
+                    type="error")
+            return(FALSE)
+        }
+
+        doItAndPrint("registerTwitterOAuth(twitCred)")
+
         doItAndPrint(sprintf('messages <- searchTwitter("%s", %s, %s)', text, nmess, language))
 
         if(length(messages) == 0) {
@@ -661,6 +698,17 @@ importCorpusFromTwitter <- function(language=NA) {
     }
 
     OKCancelHelp(helpSubject="importCorpusDlg")
+    tkgrid(labelRcmdr(top, text=.gettext("Note: Twitter requires you to register a custom application and fill in\nthe details below. See vignette(\"twitteR\") and https://dev.twitter.com/apps/new/.\nYou will need to switch manually to the R console and copy the PIN\ncode you get from the URL printed there.")), sticky="w", pady=6, columnspan=2)
+    tkgrid(labelRcmdr(top, text=.gettext("Request token URL:")),
+           entryReqURL, sticky="w", pady=6)
+    tkgrid(labelRcmdr(top, text=.gettext("Authorize URL:")),
+           entryAuthURL, sticky="w", pady=6)
+    tkgrid(labelRcmdr(top, text=.gettext("Access token URL:")),
+           entryAccessURL, sticky="w", pady=6)
+    tkgrid(labelRcmdr(top, text=.gettext("Consumer key:")),
+           entryConsumerKey, sticky="w", pady=6)
+    tkgrid(labelRcmdr(top, text=.gettext("Consumer secret:")),
+           entryConsumerSecret, sticky="w", pady=6)
     tkgrid(labelRcmdr(top, text=.gettext("Text to search for:")),
            entryText, sticky="w", pady=6)
     tkgrid(labelRcmdr(top, text=.gettext("Maximum number of tweets to download:")),
