@@ -1,1 +1,0 @@
-.TestedLanguages = c("english")
