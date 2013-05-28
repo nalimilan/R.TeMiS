@@ -487,9 +487,15 @@ extractFactivaMetadata <- function(corpus) {
 
     colnames(vars) <- c(.gettext("Origin"), .gettext("Date"), .gettext("Author"), .gettext("Section"))
 
-    tags <- c("Subject", "Coverage")
-    for(tag in tags) {
-        var <- lapply(corpus, meta, tag)
+    tags <- c("Subject", "Coverage", "Company", "Industry", "InfoCode", "InfoDesc")
+    meta <- sapply(corpus, function(x) LocalMetaData(x)[tags])
+    # Tags missing from all documents
+    meta <- meta[!is.na(rownames(meta)),]
+    # Tags missing from some documents
+    meta[] <- sapply(meta, function(x) if(is.null(x)) NA else x)
+
+    for(tag in rownames(meta)) {
+        var <- meta[tag,]
         levs <- unique(unlist(var))
         levs <- levs[!is.na(levs)]
 
