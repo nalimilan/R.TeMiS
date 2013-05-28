@@ -13,11 +13,11 @@ readFactivaHTML <- tm::FunctionGenerator(function(elem, language, id) {
         # Without this, sometimes table ends up being a mere list
         table <- as.data.frame(table)
 
-        vars <- c("AN", "BY", "CY", "ED", "HD", "LA", "LP", "NS",
-                  "PD", "PUB", "RE", "SE", "SN", "TD", "WC")
+        vars <- c("AN", "BY", "CO", "CY", "ED", "HD", "IN", "IPC", "IPD",
+                  "LA", "LP", "NS", "PD", "PUB", "RE", "SE", "SN", "TD", "WC")
 
-        # Only compare first two chars because of trailing spaces
-        data <- as.character(table[match(vars, substr(table[,1], 0, 2)), 2])
+        # Remove trailing spaces when matching
+        data <- as.character(table[match(vars, gsub("[^[A-Z]", "", table[,1])), 2])
         names(data) <- vars
 
         # Encoding is passed explicitly to work around a bug in XML: htmlParse() and xmlParse() do not set it
@@ -70,15 +70,41 @@ readFactivaHTML <- tm::FunctionGenerator(function(elem, language, id) {
         else
             id <- paste(sample(LETTERS, 10), collapse="")
 
-        subject <- if(!is.na(data[["NS"]])) strsplit(data[["NS"]], "( \\| )")[[1]] else character(0)
+        subject <- if(!is.na(data[["NS"]])) strsplit(data[["NS"]], "( \\| )")[[1]]
+                   else character(0)
         # Remove leading code and invisible characters, esp. \n, before matching the pattern
         subject <- gsub("[^[:print:]]", "", subject)
         subject <- gsub(".* : ", "", subject)
 
-        coverage <- if(!is.na(data[["RE"]])) strsplit(data[["RE"]], "( \\| )")[[1]] else character(0)
+        coverage <- if(!is.na(data[["RE"]])) strsplit(data[["RE"]], "( \\| )")[[1]]
+                    else character(0)
         # Remove leading code and invisible characters, esp. \n, before matching the pattern
         coverage <- gsub("[^[:print:]]", "", coverage)
         coverage <- gsub(".* : ", "", coverage)
+
+        company <- if(!is.na(data[["CO"]])) strsplit(data[["CO"]], "( \\| )")[[1]]
+                   else character(0)
+        # Remove leading code and invisible characters, esp. \n, before matching the pattern
+        company <- gsub("[^[:print:]]", "", company)
+        company <- gsub(".* : ", "", company)
+
+        industry <- if(!is.na(data[["IN"]])) strsplit(data[["IN"]], "( \\| )")[[1]]
+                    else character(0)
+        # Remove leading code and invisible characters, esp. \n, before matching the pattern
+        industry <- gsub("[^[:print:]]", "", industry)
+        industry <- gsub(".* : ", "", industry)
+
+        infocode <- if(!is.na(data[["IPC"]])) strsplit(data[["IPC"]], "( \\| )")[[1]]
+                    else character(0)
+        # Remove leading code and invisible characters, esp. \n, before matching the pattern
+        infocode <- gsub("[^[:print:]]", "", infocode)
+        infocode <- gsub(".* : ", "", infocode)
+
+        infodesc <- if(!is.na(data[["IPD"]])) strsplit(data[["IPD"]], "( +\\| +| +-+ +| +--+|--+ +|\\._)")[[1]]
+                    else character(0)
+        # Remove leading code and invisible characters, esp. \n, before matching the pattern
+        infodesc <- gsub("[^[:print:]]", "", infodesc)
+        infodesc <- gsub(".* : ", "", infodesc)
 
         # XMLSource uses character(0) rather than NA, do the same
         doc <- tm::PlainTextDocument(x = content,
@@ -92,6 +118,10 @@ readFactivaHTML <- tm::FunctionGenerator(function(elem, language, id) {
         tm::meta(doc, "Section") <- if(!is.na(data[["SE"]])) data[["SE"]] else character(0)
         tm::meta(doc, "Subject") <- subject
         tm::meta(doc, "Coverage") <- coverage
+        tm::meta(doc, "Company") <- company
+        tm::meta(doc, "Industry") <- industry
+        tm::meta(doc, "InfoCode") <- infocode
+        tm::meta(doc, "InfoDesc") <- infodesc
         tm::meta(doc, "WordCount") <- wc
         tm::meta(doc, "Publisher") <- if(!is.na(data[["PUB"]])) data[["PUB"]] else character(0)
         tm::meta(doc, "Rights") <- if(!is.na(data[["CY"]])) data[["CY"]] else character(0)

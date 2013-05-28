@@ -139,6 +139,8 @@
           <descField code="ipc">MTL</descField>
           <descField code="ipc">GRO</descField>
           <descField code="ipc">SOF</descField>
+          <descField code="ipd">A description</descField>
+          <descField code="ipd">Another description</descField>
           <sourceCode>TEST</sourceCode>
           <tailParagraphs>
             <paragraph display="Proportional" truncation="None">Voici le corps du second article de test. Et un mot accentué.</paragraph>

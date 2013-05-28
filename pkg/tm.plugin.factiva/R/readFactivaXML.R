@@ -29,6 +29,16 @@ readFactivaXML <- tm::readXML(
     Section = list("node", "/article/sectionName"),
     Subject = list("node", "/article/newsSubject/name"),
     Coverage = list("node", "/article/region/name"),
+    Company = list("node", "/article/company/name"),
+    Industry = list("node", "/article/industry/name"),
+    InfoCode = list("node", "/article/descField[@code!='ipd']"),
+    InfoDesc = list("function", function(node) {
+                    str <- sapply(XML::getNodeSet(node, "/article/descField[@code='ipd']"), xmlValue)
+                    if(length(str) > 0)
+                        strsplit(str, "( +\\| +| +-+ +| +--+|--+ +|\\._)")[[1]]
+                    else
+                        character(0)
+    }),
     WordCount = list("function", function(node)
                      as.numeric(sapply(XML::getNodeSet(node, "/article/wordCount"), xmlValue))),
     Publisher = list("node", "/article/publisherName"),
