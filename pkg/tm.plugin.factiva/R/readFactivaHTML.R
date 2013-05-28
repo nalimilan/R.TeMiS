@@ -71,9 +71,13 @@ readFactivaHTML <- tm::FunctionGenerator(function(elem, language, id) {
             id <- paste(sample(LETTERS, 10), collapse="")
 
         subject <- if(!is.na(data[["NS"]])) strsplit(data[["NS"]], "( \\| )")[[1]] else character(0)
+        # Remove leading code and invisible characters, esp. \n, before matching the pattern
+        subject <- gsub("[^[:print:]]", "", subject)
         subject <- gsub(".* : ", "", subject)
 
         coverage <- if(!is.na(data[["RE"]])) strsplit(data[["RE"]], "( \\| )")[[1]] else character(0)
+        # Remove leading code and invisible characters, esp. \n, before matching the pattern
+        coverage <- gsub("[^[:print:]]", "", coverage)
         coverage <- gsub(".* : ", "", coverage)
 
         # XMLSource uses character(0) rather than NA, do the same
