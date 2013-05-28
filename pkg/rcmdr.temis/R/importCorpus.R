@@ -7,7 +7,12 @@
     varBox <- variableListBox(top, vars,
                               selectmode="multiple",
                               title=.gettext("Select the corpus variables that should be imported:"),
-                              initialSelection=seq.int(1, length(vars) - 1))
+                              # Keep in sync with import functions
+                              initialSelection=which(vars %in% c(.gettext("Origin"), .gettext("Date"),
+                                                                 .gettext("Author"), .gettext("Section"),
+                                                                 .gettext("Time"), .gettext("Truncated"),
+                                                                 .gettext("StatusSource"), .gettext("Retweet"))) - 1,
+                              listHeight=min(length(vars), 25))
 
     result <- tclVar()
 
@@ -485,6 +490,7 @@ extractFactivaMetadata <- function(corpus) {
         vars[[tag]] <- unlist(var)
     }
 
+    # Keep in sync with .selectCorpusVariables()
     colnames(vars) <- c(.gettext("Origin"), .gettext("Date"), .gettext("Author"), .gettext("Section"))
 
     tags <- c("Subject", "Coverage", "Company", "Industry", "InfoCode", "InfoDesc")
@@ -682,6 +688,7 @@ importCorpusFromTwitter <- function(language=NA) {
         doItAndPrint('corpusVars <- corpusDataset[c("screenName", "created", "truncated", "statusSource")]')
         doItAndPrint("rm(corpusDataset)")
         doItAndPrint(sprintf('colnames(corpusVars) <- c("%s", "%s", "%s", "%s")',
+                             # Keep in sync with .selectCorpusVariables()
                              .gettext("Author"), .gettext("Time"), .gettext("Truncated"), .gettext("StatusSource")))
 
         doItAndPrint(sprintf('corpusVars[["%s"]] <- grepl("\\\\bRT\\\\b", corpus)', .gettext("Retweet")))
