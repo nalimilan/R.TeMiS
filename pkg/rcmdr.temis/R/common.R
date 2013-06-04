@@ -16,7 +16,7 @@ if (getRversion() >= '2.15.1') globalVariables(c(
     "hapaxVariable", "totalwVariable", "longVariable", "vlongVariable",
     "longavgVariable", "voc", "unitFrame", "digitsVariable",
     "exclRetweetsVariable", "removeNamesVariable", "removeHashtagsVariable",
-    "optionsFrame"
+    "optionsFrame", "twitCred", "odbcDataSources", "sqlTables"
     ))
 
 
