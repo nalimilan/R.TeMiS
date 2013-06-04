@@ -13,7 +13,7 @@
 \arguments{
   \item{x}{A text document or a character vector.}
   \item{language}{A character setting the language to be used for stemming. Must be one of the
-      values returned by \code{\code{\link[SnowballC:getStemLanguages]{getStemLanguages}}},
+      values returned by \code{\link[SnowballC:getStemLanguages]{getStemLanguages}},
       or a corresponding ISO-639 two- or three-letter code.}
 }
 \details{
