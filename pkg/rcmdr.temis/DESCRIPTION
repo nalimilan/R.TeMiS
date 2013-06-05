@@ -1,8 +1,8 @@
 Package: RcmdrPlugin.temis
 Type: Package
-Title: Graphical user interface providing an integrated text mining solution
+Title: Graphical Integrated Text Mining Solution
 Version: 0.6.1
-Date: 2013-06-04
+Date: 2013-06-05
 Authors@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr", role=c("aut", "cre")),
              person("Gilles", "Bastin", email="gilles.bastin@sciencespo-grenoble.fr", role=c("aut")))
 Imports: Rcmdr (>= 1.9-3), tcltk, utils
