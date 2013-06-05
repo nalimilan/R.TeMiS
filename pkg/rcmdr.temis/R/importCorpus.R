@@ -1,17 +1,23 @@
-.selectCorpusVariables <- function() {
+.selectCorpusVariables <- function(source) {
     # Let the user select processing options
     initializeDialog(title=.gettext("Select Variables to Import"))
 
 
     vars <- c(.gettext("No variables"), colnames(corpusVars))
+
+    if(source %in% c("factiva", "twitter"))
+        # Keep in sync with import functions
+        initialSelection <- which(vars %in% c(.gettext("Origin"), .gettext("Date"),
+                                              .gettext("Author"), .gettext("Section"),
+                                              .gettext("Time"), .gettext("Truncated"),
+                                              .gettext("StatusSource"), .gettext("Retweet"))) - 1
+    else
+        initialSelection <- seq.int(1, length(vars) - 1)
+
     varBox <- variableListBox(top, vars,
                               selectmode="multiple",
                               title=.gettext("Select the corpus variables that should be imported:"),
-                              # Keep in sync with import functions
-                              initialSelection=which(vars %in% c(.gettext("Origin"), .gettext("Date"),
-                                                                 .gettext("Author"), .gettext("Section"),
-                                                                 .gettext("Time"), .gettext("Truncated"),
-                                                                 .gettext("StatusSource"), .gettext("Retweet"))) - 1,
+                              initialSelection=initialSelection,
                               listHeight=min(length(vars), 25))
 
     result <- tclVar()
@@ -231,7 +237,7 @@ importCorpusDlg <- function() {
 
         # If source-specific functions load variables, they create corpusVars; else, create an empty data frame
         if(exists("corpusVars")) {
-            if(!.selectCorpusVariables()) return()
+            if(!.selectCorpusVariables(source)) return()
         }
         else {
             # Because of a bug in Rcmdr, filling the first column with NAs prevents entering data in this columns:
