@@ -110,9 +110,9 @@ copyTableToOutput <- function() {
     # zoo objects are printed as plain text by default
     if(inherits(tab, "zoo"))
         doItAndPrint(sprintf('HTML(as.matrix(%s), Border=NULL, align="left", scientific=4)', last.table))
-    # Arrays returned by tapply() (i.e. freqTerms) are not printed correclty by HTML.array
+    # HTML.array already passes Border=0, so Border=NULL generates an error
     else if(class(tab) == "array")
-        doItAndPrint(sprintf('HTML(c(%s), Border=NULL, align="left", scientific=4)', last.table))
+        doItAndPrint(sprintf('HTML(%s, align="left", scientific=4)', last.table))
     else
         doItAndPrint(sprintf('HTML(%s, Border=NULL, align="left", scientific=4)', last.table))
 
