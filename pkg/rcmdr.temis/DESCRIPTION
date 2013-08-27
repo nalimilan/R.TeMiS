@@ -8,7 +8,7 @@ Authors@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr", role=c(
 Imports: Rcmdr (>= 1.9-3), tcltk, utils
 Depends: tm, slam, zoo, ca, R2HTML, lattice, latticeExtra, RColorBrewer
 Suggests: SnowballC, ROpenOffice, RODBC, tm.plugin.factiva, twitteR
-Description: An Rcommander plug-in providing an integrated solution to perform
+Description: An R Commander plug-in providing an integrated solution to perform
     a series of text mining tasks such as importing and cleaning a corpus, and
     analyses like terms and documents counts, vocabulary tables, terms
     co-occurrences and documents similarity measures, time series analysis,
