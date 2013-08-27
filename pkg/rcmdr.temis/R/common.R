@@ -21,6 +21,16 @@ if (getRversion() >= '2.15.1') globalVariables(c(
 
 .titleLabel <- function(...) labelRcmdr(..., font="RcmdrTitleFont")
 
+# Private environment inspired from Rcmdr's
+.env <- new.env(parent=emptyenv())
+
+.putEnv <- function(x, value) assign(x, value, envir=.env)
+
+.getEnv <- function(x, mode="any", fail=TRUE){
+    if ((!fail) && (!exists(x, mode=mode, envir=.env, inherits=FALSE))) return(NULL)
+    get(x, envir=.env, mode=mode, inherits=FALSE)
+}
+
 .setBusyCursor <- function() {
     .commander <- CommanderWindow()
     .menu <- tkcget(.commander, menu=NULL)
@@ -50,11 +60,10 @@ if (getRversion() >= '2.15.1') globalVariables(c(
 }
 
 .getCorpusWindow <- function() {
-    if(exists("corpusTxt", envir=Rcmdr:::RcmdrEnv()) &&
-       !is.null(getRcmdr("corpusTxt"))) {
-        window <- getRcmdr("corpusWindow")
-        txt <- getRcmdr("corpusTxt")
-        listbox <- getRcmdr("corpusList")
+    if(!is.null(.getEnv("corpusTxt", fail=FALSE))) {
+        window <- .getEnv("corpusWindow")
+        txt <- .getEnv("corpusTxt")
+        listbox <- .getEnv("corpusList")
         tkdelete(txt, "0.0", "end")
         tkdelete(listbox, 0, "end")
     }
@@ -88,15 +97,15 @@ if (getRversion() >= '2.15.1') globalVariables(c(
             tkyview(txt, paste("mark", tkcurselection(listbox), sep=""))
         })
 
-        putRcmdr("corpusWindow", window)
-        putRcmdr("corpusTxt", txt)
-        putRcmdr("corpusList", listbox)
+        .putEnv("corpusWindow", window)
+        .putEnv("corpusTxt", txt)
+        .putEnv("corpusList", listbox)
 
 	tkwm.protocol(window, "WM_DELETE_WINDOW", function() {
-            tkdestroy(getRcmdr("corpusWindow"))
-            putRcmdr("corpusWindow", NULL)
-            putRcmdr("corpusTxt", NULL)
-            putRcmdr("corpusList", NULL)
+            tkdestroy(.getEnv("corpusWindow"))
+            .putEnv("corpusWindow", NULL)
+            .putEnv("corpusTxt", NULL)
+            .putEnv("corpusList", NULL)
         })
     }
 
