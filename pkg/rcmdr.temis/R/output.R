@@ -276,7 +276,7 @@ HTML.ca <- function(x, ...) {
 
   names(object$row) <- names(object$col) <- c(.gettext("Mass"), .gettext("Quality"), .gettext("Inertia"),
                                               outer(c(.gettext("Coord"), .gettext("Quality"), .gettext("Contr")),
-                                                    seq(x$nd), paste, sep=""))
+                                                    seq((length(object$row) - 3)/3), paste, sep=""))
 
   HTML(.gettext("Documents and variables:"), ...)
   HTML(object$row, ...)
