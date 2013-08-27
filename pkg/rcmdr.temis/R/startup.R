@@ -47,9 +47,11 @@
   doItAndPrint('options(R2HTML.format.digits=2)')
 
   # Keep in sync with disableBlackAndWhite()
+  # We can stop specifying region when latticeExtra uses RColorBrewer:: for its default value:
+  # https://r-forge.r-project.org/tracker/index.php?func=detail&aid=4853&group_id=232&atid=942
   doItAndPrint("")
   doItAndPrint(.gettext("# Set a nice color palette for plots"))
-  doItAndPrint('lattice.options(default.theme=custom.theme(symbol=brewer.pal(8, "Set1")[c(2:1, 3:5, 7:9)], fill=brewer.pal(8, "Set1")[c(2:1, 3:5, 7:9)]))')
+  doItAndPrint('lattice.options(default.theme=latticeExtra::custom.theme(symbol=RColorBrewer::brewer.pal(8, "Set1")[c(2:1, 3:5, 7:9)], fill=RColorBrewer::brewer.pal(8, "Set1")[c(2:1, 3:5, 7:9)], region=RColorBrewer::brewer.pal(n=11, name="Spectral")))')
 
   doItAndPrint("")
 }

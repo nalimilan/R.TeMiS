@@ -105,16 +105,18 @@ copyTableToOutput <- function() {
     title <- attr(tab, "title")
 
     if(length(title) > 0)
-        doItAndPrint(sprintf("HTML.title('%s', 3)", attr(tab, "title")))
+        doItAndPrint(sprintf("R2HTML::HTML.title('%s', 3)", attr(tab, "title")))
 
     # zoo objects are printed as plain text by default
     if(inherits(tab, "zoo"))
-        doItAndPrint(sprintf('HTML(as.matrix(%s), Border=NULL, align="left", scientific=4)', last.table))
+        doItAndPrint(sprintf('R2HTML::HTML(as.matrix(%s), Border=NULL, align="left", scientific=4)', last.table))
     # HTML.array already passes Border=0, so Border=NULL generates an error
     else if(class(tab) == "array")
-        doItAndPrint(sprintf('HTML(%s, align="left", scientific=4)', last.table))
+        doItAndPrint(sprintf('R2HTML::HTML(%s, align="left", scientific=4)', last.table))
+    else if(class(tab) == "list")
+        doItAndPrint(sprintf('HTML.list(%s, Border=NULL, align="left", scientific=4)', last.table))
     else
-        doItAndPrint(sprintf('HTML(%s, Border=NULL, align="left", scientific=4)', last.table))
+        doItAndPrint(sprintf('R2HTML::HTML(%s, Border=NULL, align="left", scientific=4)', last.table))
 
     # Open file in browser when creating it
     if(!html.on)
@@ -152,7 +154,7 @@ copyPlotToOutput <- function() {
 
     doItAndPrint(sprintf('dev.print(png, width=7, height=7, unit="in", res=200, filename="%s")',
                          paste(dirname(.HTML.file), .Platform$file.sep, file, sep="")))
-    doItAndPrint(sprintf('HTMLInsertGraph("%s", "", 0, "left")', file))
+    doItAndPrint(sprintf('R2HTML::HTMLInsertGraph("%s", "", 0, "left")', file))
 
     # Open file in browser when creating it
     if(!html.on)
@@ -178,7 +180,9 @@ enableBlackAndWhite <- function() {
 
 disableBlackAndWhite <- function() {
     # Keep in sync with .onAttach()
-    doItAndPrint('lattice.options(default.theme=custom.theme(symbol=brewer.pal(8, "Set1")[c(2:1, 3:5, 7:9)], fill=brewer.pal(8, "Set1")[c(2:1, 3:5, 7:9)]))')
+    # We can stop specifying region when latticeExtra uses RColorBrewer:: for its default value:
+    # https://r-forge.r-project.org/tracker/index.php?func=detail&aid=4853&group_id=232&atid=942
+    doItAndPrint('lattice.options(default.theme=latticeExtra::custom.theme(symbol=RColorBrewer::brewer.pal(8, "Set1")[c(2:1, 3:5, 7:9)], fill=RColorBrewer::brewer.pal(8, "Set1")[c(2:1, 3:5, 7:9)], region=RColorBrewer::brewer.pal(n=11, name="Spectral")))')
 
     # Update current plot if there is one
     if(dev.cur() > 1) {
