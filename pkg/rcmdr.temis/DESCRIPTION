@@ -1,11 +1,11 @@
 Package: RcmdrPlugin.temis
 Type: Package
 Title: Graphical Integrated Text Mining Solution
-Version: 0.6.1
-Date: 2013-06-05
+Version: 0.6.2
+Date: 2013-08-27
 Authors@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr", role=c("aut", "cre")),
              person("Gilles", "Bastin", email="gilles.bastin@sciencespo-grenoble.fr", role=c("aut")))
-Imports: Rcmdr (>= 1.9-3), tcltk, utils, ca, R2HTML, RColorBrewer, latticeExtra
+Imports: Rcmdr (>= 2.0-0), tcltk, utils, ca, R2HTML, RColorBrewer, latticeExtra
 Depends: tm, slam, zoo, lattice
 Suggests: SnowballC, ROpenOffice, RODBC, tm.plugin.factiva, twitteR
 Description: An R Commander plug-in providing an integrated solution to perform

@@ -1,3 +1,9 @@
+Version 0.6.2 - 2013-08-27
+    * Use system font for frame titles as Rcmdr 2.0-0.
+    * Move several packages from Depends to Imports to avoid
+      attaching too many packages (and use :: where necessary).
+    * Fix new R CMD check WARNINGS.
+
 Version 0.6.1 - 2013-06-05
     * Use new SnowballC package instead of Snowball or Rstem for
       stemming, to fix issues with rJava and Rstem installation.
