@@ -78,7 +78,7 @@ varTableDlg <- function() {
     OKCancelHelp(helpSubject="varTableDlg")
     tkgrid(getFrame(varBox), sticky="w", pady=6, columnspan=2)
     tkgrid(whatFrame, sticky="w", pady=6, columnspan=2)
-    tkgrid(labelRcmdr(plotFrame, text=.gettext("Plot:"), foreground="blue"),
+    tkgrid(.titleLabel(plotFrame, text=.gettext("Plot:")),
            sticky="w", columnspan=2)
     tkgrid(plotButton, sticky="w", columnspan=2)
     tkgrid(vertButton, sticky="w", columnspan=2)
@@ -210,7 +210,7 @@ varCrossTableDlg <- function() {
     OKCancelHelp(helpSubject="varCrossTableDlg")
     tkgrid(getFrame(varBox1), getFrame(varBox2), sticky="w", pady=6)
     tkgrid(whatFrame, sticky="w", pady=6, columnspan=2)
-    tkgrid(labelRcmdr(plotFrame, text=.gettext("Plot:"), foreground="blue"),
+    tkgrid(.titleLabel(plotFrame, text=.gettext("Plot:")),
            sticky="w", columnspan=2)
     tkgrid(plotButton, sticky="w", columnspan=2)
     tkgrid(vertButton, sticky="w", columnspan=2)

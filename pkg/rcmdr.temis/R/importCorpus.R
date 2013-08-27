@@ -301,7 +301,8 @@ importCorpusDlg <- function() {
     tkgrid(comboLang, sticky="ew", pady=6, row=1, column=1, columnspan=2)
     tkgrid(labelRcmdr(top, text=.gettext("File encoding:")), sticky="w", pady=6)
     tkgrid(comboEnc, sticky="ew", pady=6, row=2, column=1, columnspan=2)
-    tkgrid(labelRcmdr(top, text=.gettext("Text splitting:"), fg="blue"), sticky="ws", pady=c(12, 6))
+    tkgrid(.titleLabel(top, text=.gettext("Text splitting:")),
+           sticky="ws", pady=c(12, 6))
     tkgrid(chunksButton, sticky="w", pady=6, columnspan=3)
     tkgrid(labelRcmdr(top, text=.gettext("Size of new documents:")),
            chunksSlider, labelRcmdr(top, text=.gettext("paragraphs")), sticky="w", pady=6)

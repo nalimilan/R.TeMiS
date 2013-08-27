@@ -449,15 +449,15 @@ createClustersDlg <- function(..., plot=TRUE) {
     }
 
     OKCancelHelp(helpSubject="createClustersDlg")
-    tkgrid(labelRcmdr(top, text=.gettext("Clusters creation:"), foreground="blue"),
+    tkgrid(.titleLabel(top, text=.gettext("Clusters creation:")),
            sticky="sw", pady=0)
     tkgrid(labelRcmdr(top, text=.gettext("Number of clusters to retain:")), sliderNClust,
            sticky="sw", pady=c(0, 6), padx=c(6, 0))
-    tkgrid(labelRcmdr(top, text=.gettext("Documents specific of clusters:"), foreground="blue"),
+    tkgrid(.titleLabel(top, text=.gettext("Documents specific of clusters:")),
            sticky="sw", pady=c(24, 0))
     tkgrid(labelRcmdr(top, text=.gettext("Maximum number of documents to show per cluster:")), sliderNDocs,
            sticky="sw", pady=c(0, 6), padx=c(6, 0))
-    tkgrid(labelRcmdr(top, text=.gettext("Terms specific of clusters:"), foreground="blue"),
+    tkgrid(.titleLabel(top, text=.gettext("Terms specific of clusters:")),
            sticky="sw", pady=c(24, 0))
     tkgrid(labelRcmdr(top, text=.gettext("Show terms with a probability below (%):")), sliderP,
            sticky="sw", pady=6, padx=c(6, 0))

@@ -19,6 +19,7 @@ if (getRversion() >= '2.15.1') globalVariables(c(
     "optionsFrame", "twitCred", "odbcDataSources", "sqlTables"
     ))
 
+.titleLabel <- function(...) labelRcmdr(..., font="RcmdrTitleFont")
 
 .setBusyCursor <- function() {
     .commander <- CommanderWindow()

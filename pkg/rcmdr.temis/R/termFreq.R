@@ -208,7 +208,8 @@ termFreqDlg <- function() {
     tkgrid(entryTerms, sticky="w", columnspan=2)
     tkgrid(getFrame(varBox), sticky="w", columnspan=2, pady=6)
     tkgrid(whatFrame, sticky="w", columnspan=2, pady=6)
-    tkgrid(labelRcmdr(displayFrame, text=.gettext("Display:"), foreground="blue"), sticky="w", columnspan=2)
+    tkgrid(.titleLabel(displayFrame, text=.gettext("Display:")),
+           sticky="w", columnspan=2)
     tkgrid(labelRcmdr(displayFrame, text=.gettext("Title:")), titleEntry, sticky="w", padx=6)
     tkgrid(transButton, sticky="w", columnspan=2)
     tkgrid(plotButton, sticky="w", columnspan=2)

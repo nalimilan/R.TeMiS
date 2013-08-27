@@ -87,7 +87,7 @@ recodeTimeVarDlg <- function() {
            pady=c(6, 0), sticky="ws")
     tkgrid(inFormatEntry, sticky="ws")
     tkgrid(inFrame, sticky="wn", padx=c(6, 0), row=0, column=1, rowspan=2)
-    tkgrid(labelRcmdr(top, text=.gettext("New variable name:"), foreground="blue"),
+    tkgrid(.titleLabel(top, text=.gettext("New variable name:")),
            sticky="ewns", padx=c(0, 6), pady=c(6, 0), row=2, column=0)
     tkgrid(newNameEntry, sticky="ewns", padx=c(0, 6), pady=c(0, 6), row=3, column=0)
     tkgrid(labelRcmdr(top, text=.gettext("Time format of new variable:")),
@@ -316,17 +316,20 @@ varTimeSeriesDlg <- function() {
     tkgrid(formatEntry, sticky="w", padx=c(6, 0), row=1, column=1)
     tkgrid(labelRcmdr(top, text=.gettext("%Y: year - %m: month - %d: day\n%H: hour - %M: minute\nClick the \"Help\" button for more codes.")),
            sticky="w", row=2, column=1, padx=c(6, 0), pady=6)
-    tkgrid(labelRcmdr(varsFrame, text=.gettext("Group by variable:"), foreground="blue"), sticky="w", pady=c(12, 0))
+    tkgrid(.titleLabel(varsFrame, text=.gettext("Group by variable:")),
+           sticky="w", pady=c(12, 0))
     tkgrid(varsBox, varsScrollbar, sticky="ewns", pady=6)
     tkgrid(varsFrame, levelsFrame, sticky="ewns", pady=6)
     tkgrid(labelRcmdr(levelsFrame, text=.gettext("Only plot levels:")), sticky="w", pady=c(12, 0))
     tkgrid(levelsBox, levelsScrollbar, sticky="ewns", pady=6)
     tkgrid(whatFrame, sticky="w", pady=6, columnspan=2)
-    tkgrid(labelRcmdr(top, text=.gettext("Rolling mean:"), foreground="blue"), sticky="w", pady=c(6, 0))
+    tkgrid(.titleLabel(top, text=.gettext("Rolling mean:")),
+           sticky="w", pady=c(6, 0))
     tkgrid(meanButton, sticky="w")
     tkgrid(labelRcmdr(top, text=.gettext("Time window for mean (in time units):")), sliderWindow, sticky="w",
            padx=6, pady=c(0, 6))
-    tkgrid(labelRcmdr(top, text=.gettext("Title:"), foreground="blue"), sticky="w", pady=c(6, 0))
+    tkgrid(.titleLabel(top, text=.gettext("Title:")),
+           sticky="w", pady=c(6, 0))
     tkgrid(titleEntry, sticky="w", padx=6, pady=c(0, 6), columnspan=2)
     tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=2)
     dialogSuffix(rows=13, columns=2, focus=timeVarBox$listbox, onCancel=onClose)
@@ -582,19 +585,23 @@ termTimeSeriesDlg <- function() {
     tkgrid(formatEntry, sticky="w", padx=c(6, 0), row=1, column=1)
     tkgrid(labelRcmdr(top, text=.gettext("%Y: year - %m: month - %d: day\n%H: hour - %M: minute\nClick the \"Help\" button for more codes.")),
            sticky="w", row=2, column=1, pady=6)
-    tkgrid(labelRcmdr(varsFrame, text=.gettext("Group by variable:"), foreground="blue"), sticky="w", pady=c(12, 0))
+    tkgrid(.titleLabel(varsFrame, text=.gettext("Group by variable:")),
+           sticky="w", pady=c(12, 0))
     tkgrid(varsBox, varsScrollbar, sticky="ewns", pady=6)
     tkgrid(varsFrame, levelsFrame, sticky="ewns", pady=6)
     tkgrid(labelRcmdr(levelsFrame, text=.gettext("Only plot levels:")), sticky="w", pady=c(12, 0))
     tkgrid(levelsBox, levelsScrollbar, sticky="ewns", pady=6)
-    tkgrid(labelRcmdr(top, text=.gettext("Terms to show (space-separated):"), foreground="blue"), sticky="w", pady=c(6, 0))
+    tkgrid(.titleLabel(top, text=.gettext("Terms to show (space-separated):")),
+           sticky="w", pady=c(6, 0))
     tkgrid(entryTerms, sticky="w", pady=6, columnspan=2)
     tkgrid(whatFrame, sticky="w", pady=6, columnspan=2)
-    tkgrid(labelRcmdr(top, text=.gettext("Rolling mean:"), foreground="blue"), sticky="w", pady=c(6, 0))
+    tkgrid(.titleLabel(top, text=.gettext("Rolling mean:")),
+           sticky="w", pady=c(6, 0))
     tkgrid(meanButton, sticky="w")
     tkgrid(labelRcmdr(top, text=.gettext("Time window for mean (in time units):")), sliderWindow, sticky="w",
            padx=6, pady=c(0, 6))
-    tkgrid(labelRcmdr(top, text=.gettext("Title:"), foreground="blue"), sticky="w", pady=c(6, 0))
+    tkgrid(.titleLabel(top, text=.gettext("Title:")),
+           sticky="w", pady=c(6, 0))
     tkgrid(titleEntry, sticky="w", padx=6, pady=c(0, 6), columnspan=2)
     tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=2)
     dialogSuffix(rows=15, columns=2, focus=timeVarBox$listbox, onCancel=onClose)

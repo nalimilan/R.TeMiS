@@ -363,7 +363,8 @@ showCorpusCaDlg <- function() {
     actDocs<-length(corpusCa$rowvars) == length(corpusCa$rowsup)
 
     dimFrame <- tkframe(top)
-    tkgrid(labelRcmdr(dimFrame, text=.gettext("Dimensions to plot:"), fg="blue"), sticky="s")
+    tkgrid(.titleLabel(dimFrame, text=.gettext("Dimensions to plot:")),
+           sticky="s")
     tclXDim <- tclVar(1)
     tclYDim <- tclVar(2)
     nd <- min(length(corpusCa$sv), corpusCa$nd)
@@ -428,7 +429,8 @@ showCorpusCaDlg <- function() {
     tkbind(varBox$listbox, "<<ListboxSelect>>", function(...) tclvalue(varLabelsVariable) <- 1)
 
     nFrame <- tkframe(top)
-    tkgrid(labelRcmdr(nFrame, text=.gettext("Number of items to plot:"), fg="blue"), sticky="s")
+    tkgrid(.titleLabel(nFrame, text=.gettext("Number of items to plot:")),
+           sticky="s")
     tclNDocs <- tclVar(25)
     tclNTerms <- tclVar(25)
     docsSlider <- tkscale(nFrame, from=1, to=min(200, nrow(corpusCa$rowcoord)-length(corpusCa$rowsup)),

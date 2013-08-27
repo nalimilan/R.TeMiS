@@ -109,9 +109,11 @@ subsetCorpusByVarDlg <- function() {
     OKCancelHelp(helpSubject="subsetCorpusByVarDlg")
     tkgrid(labelRcmdr(top, text=.gettext("Select a variable and one or more levels to retain:")),
            columnspan=2, sticky="w", pady=6)
-    tkgrid(labelRcmdr(varsFrame, text=.gettext("Variable:"), foreground="blue"), sticky="w")
+    tkgrid(.titleLabel(varsFrame, text=.gettext("Variable:")),
+           sticky="w")
     tkgrid(varsBox, varsScrollbar, sticky="ewns", pady=6)
-    tkgrid(labelRcmdr(levelsFrame, text=.gettext("Levels:"), foreground="blue"), sticky="w")
+    tkgrid(.titleLabel(levelsFrame, text=.gettext("Levels:")),
+           sticky="w")
     tkgrid(levelsBox, levelsScrollbar, sticky="ewns", pady=6)
     tkgrid(varsFrame, levelsFrame, sticky="wns", pady=6)
     tkgrid(checkSave, sticky="w", pady=6)
