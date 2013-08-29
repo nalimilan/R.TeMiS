@@ -1,0 +1,35 @@
+citHeader("To cite the 'RcmdrPlugin.temis' package in publications use:")
+
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
+vers <- paste("R package version", meta$Version)
+
+citEntry(entry="Manual",
+         title = "RcmdrPlugin.temis: Graphical Integrated Text Mining Solution",
+         author = personList(as.person("Milan Bouchet-Valat"),
+                             as.person("Gilles Bastin")),
+         year = year,
+         note = vers,
+
+         textVersion =
+         paste("Milan Bouchet-Valat and Gilles Bastin (",
+               year,
+               "). RcmdrPlugin.temis: Graphical Integrated Text Mining Solution. ",
+               vers, ".", sep=""))
+
+citEntry(entry="Article",
+         title = "RcmdrPlugin.temis, a Graphical Integrated Text Mining Solution in R",
+         author = personList(as.person("Milan Bouchet-Valat"),
+                             as.person("Gilles Bastin")),
+	 journal = "The R Journal",
+         volume   = "5",
+         number   = "1",
+         pages    = "188-196",
+         year     = "2013",
+         note     = "ISSN 2073-4859",
+         url      = "http://journal.r-project.org/archive/2013-1/bouchetvalat-bastin.pdf",
+
+         textVersion =
+         paste("Milan Bouchet-Valat and Gilles Bastin (2013).",
+  	       "RcmdrPlugin.temis, a Graphical Integrated Text Mining Solution in R.",
+               "The R Journal 5(1):188-196.")
+)
