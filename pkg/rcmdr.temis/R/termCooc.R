@@ -108,7 +108,7 @@ termCoocDlg <- function() {
     tkgrid(labelRcmdr(top, text=.gettext("Reference terms (space-separated):")), sticky="w")
     tkgrid(entryTerms, sticky="w", columnspan=2)
     tkgrid(labelRcmdr(top, text=.gettext("Number of terms to show:")), sliderN, sticky="sw", pady=6)
-    tkgrid(getFrame(varBox), columnspan="2", sticky="w", pady=6)
+    tkgrid(getFrame(varBox), columnspan=2, sticky="w", pady=6)
     tkgrid(buttonsFrame, columnspan=2, sticky="ew", pady=6)
     dialogSuffix(focus=entryTerms)
 }

@@ -122,14 +122,14 @@ specificTermsDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="specificTermsDlg")
-    tkgrid(getFrame(varBox), columnspan="2", sticky="w", pady=6)
+    tkgrid(getFrame(varBox), columnspan=2, sticky="w", pady=6)
     tkgrid(labelRcmdr(top, text=.gettext("Show terms with a probability below (%):")), sliderP,
            sticky="sw", pady=6)
     tkgrid(labelRcmdr(top, text=.gettext("Only retain terms with a number of occurrences above:")), sliderOcc,
            sticky="sw", pady=6)
     tkgrid(labelRcmdr(top, text=.gettext("Maximum number of terms to show per level:")), sliderN,
            sticky="sw", pady=6)
-    tkgrid(buttonsFrame, columnspan="2", sticky="ew", pady=6)
+    tkgrid(buttonsFrame, columnspan=2, sticky="ew", pady=6)
     dialogSuffix()
 }
 

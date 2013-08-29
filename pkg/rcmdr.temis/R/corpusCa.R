@@ -205,7 +205,7 @@ corpusCaDlg <- function() {
     tkgrid(labelNDocs, sticky="sw", pady=6, columnspan=2)
     tkgrid(labelRcmdr(top, text=.gettext("Number of dimensions to retain:")),
            sliderDim, sticky="sew", pady=6)
-    tkgrid(buttonsFrame, columnspan="2", sticky="ew", pady=6)
+    tkgrid(buttonsFrame, columnspan=2, sticky="ew", pady=6)
     dialogSuffix()
 }
 
