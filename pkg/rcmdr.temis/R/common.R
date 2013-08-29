@@ -19,7 +19,8 @@ if (getRversion() >= '2.15.1') globalVariables(c(
     "optionsFrame", "twitCred", "odbcDataSources", "sqlTables"
     ))
 
-.titleLabel <- function(...) labelRcmdr(..., font="RcmdrTitleFont")
+.titleLabel <- function(...) labelRcmdr(..., font="RcmdrTitleFont",
+                                        fg=getRcmdr("title.color"))
 
 # Private environment inspired from Rcmdr's
 .env <- new.env(parent=emptyenv())
