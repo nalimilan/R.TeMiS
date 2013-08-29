@@ -130,6 +130,6 @@ specificTermsDlg <- function() {
     tkgrid(labelRcmdr(top, text=.gettext("Maximum number of terms to show per level:")), sliderN,
            sticky="sw", pady=6)
     tkgrid(buttonsFrame, columnspan="2", sticky="ew", pady=6)
-    dialogSuffix(rows=4, columns=2)
+    dialogSuffix()
 }
 

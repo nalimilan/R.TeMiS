@@ -106,6 +106,6 @@ dissimilarityTableDlg <- function() {
     tkgrid(getFrame(varBox1), sticky="w", pady=6, columnspan=3)
     tkgrid(getFrame(varBox2), sticky="w", pady=6, columnspan=3)
     tkgrid(buttonsFrame, sticky="ew", pady=6, columnspan=3)
-    dialogSuffix(rows=3, columns=3, focus=varBox1$listbox)
+    dialogSuffix(focus=varBox1$listbox)
 }
 

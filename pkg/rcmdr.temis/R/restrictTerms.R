@@ -50,5 +50,5 @@ restrictTermsDlg <- function() {
            columnspan=2, sticky="w")
     tkgrid(entryTerms, columnspan=2, sticky="w")
     tkgrid(buttonsFrame, sticky="ew", pady=6)
-    dialogSuffix(rows=3, columns=1, focus=entryTerms)
+    dialogSuffix(focus=entryTerms)
 }

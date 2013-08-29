@@ -58,7 +58,7 @@
     OKCancelHelp(helpSubject=importCorpusDlg)
     tkgrid(getFrame(varBox), sticky="nswe", pady=6)
     tkgrid(buttonsFrame, sticky="ew", pady=6)
-    dialogSuffix(rows=2, columns=1)
+    dialogSuffix()
 
     return(tclvalue(result) == "success")
 }
@@ -311,7 +311,7 @@ importCorpusDlg <- function() {
     tkgrid.columnconfigure(top, 0, pad=12)
     tkgrid.columnconfigure(top, 1, pad=12)
     tkgrid.columnconfigure(top, 2, pad=12)
-    dialogSuffix(rows=7, columns=2, focus=comboLang)
+    dialogSuffix(focus=comboLang)
 }
 
 # Choose a directory to load texts from
@@ -735,7 +735,7 @@ importCorpusFromTwitter <- function(language=NA) {
            tclNSlider, sticky="w", pady=6)
     tkgrid(optionsFrame, sticky="w", pady=6, columnspan=2)
     tkgrid(buttonsFrame, columnspan=2, sticky="ew", pady=6)
-    dialogSuffix(rows=3, columns=2, focus=entryText)
+    dialogSuffix(focus=entryText)
 
     if(tclvalue(result) == "success")
         return(list(source=sprintf(.gettext("Twitter search for %s"), tclvalue(tclText)),

@@ -330,7 +330,7 @@ corpusClustDlg <- function() {
     tkgrid(caButton, sticky="sw", pady=c(12, 0))
     tkgrid(dimLabel, sliderDim, sticky="sw", pady=c(0, 6), padx=c(24, 0))
     tkgrid(buttonsFrame, columnspan="2", sticky="ew", pady=6)
-    dialogSuffix(rows=6, columns=2)
+    dialogSuffix()
 }
 
 createClustersDlg <- function(..., plot=TRUE) {
@@ -466,6 +466,6 @@ createClustersDlg <- function(..., plot=TRUE) {
     tkgrid(labelRcmdr(top, text=.gettext("Maximum number of terms to show per cluster:")), sliderNTerms,
            sticky="sw", pady=6, padx=c(6, 0))
     tkgrid(buttonsFrame, columnspan="2", sticky="ew", pady=6)
-    dialogSuffix(rows=8, columns=2)
+    dialogSuffix()
 }
 

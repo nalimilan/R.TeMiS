@@ -118,7 +118,7 @@ subsetCorpusByVarDlg <- function() {
     tkgrid(varsFrame, levelsFrame, sticky="wns", pady=6)
     tkgrid(checkSave, sticky="w", pady=6)
     tkgrid(buttonsFrame, columnspan=2, sticky="ew", pady=6)
-    dialogSuffix(rows=4, columns=2, focus=varsBox)
+    dialogSuffix(focus=varsBox)
 }
 
 
@@ -240,7 +240,7 @@ subsetCorpusByTermsDlg <- function() {
            sticky="w", pady=6)
     tkgrid(checkSave, sticky="w", pady=c(12, 6))
     tkgrid(buttonsFrame, sticky="ew", pady=6)
-    dialogSuffix(rows=7, focus=entryKeep)
+    dialogSuffix(focus=entryKeep)
 }
 
 restoreCorpus <- function() {
