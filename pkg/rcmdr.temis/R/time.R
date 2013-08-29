@@ -95,7 +95,7 @@ recodeTimeVarDlg <- function() {
     tkgrid(outFormatEntry, sticky="w", padx=c(6, 0), pady=c(0, 6), row=3, column=1)
     tkgrid(labelRcmdr(top, text=.gettext("Useful codes:\n%Y: year - %m: month number - %B: month name\n%W: week number starting on Mondays - %U: starting on Sundays\n%d: day number - %A: week day name\n%H: hour - %M: minute\n\nClick the  \"Help\" button for more codes.")),
            pady=6, sticky="ewns", columnspan=2)
-    tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=2)
+    tkgrid(buttonsFrame, sticky="ew", pady=6, columnspan=2)
     dialogSuffix(rows=6, columns=2, focus=timeVarBox$listbox)
 }
 
@@ -331,7 +331,7 @@ varTimeSeriesDlg <- function() {
     tkgrid(.titleLabel(top, text=.gettext("Title:")),
            sticky="w", pady=c(6, 0))
     tkgrid(titleEntry, sticky="w", padx=6, pady=c(0, 6), columnspan=2)
-    tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=2)
+    tkgrid(buttonsFrame, sticky="ew", pady=6, columnspan=2)
     dialogSuffix(rows=13, columns=2, focus=timeVarBox$listbox, onCancel=onClose)
 }
 
@@ -603,6 +603,6 @@ termTimeSeriesDlg <- function() {
     tkgrid(.titleLabel(top, text=.gettext("Title:")),
            sticky="w", pady=c(6, 0))
     tkgrid(titleEntry, sticky="w", padx=6, pady=c(0, 6), columnspan=2)
-    tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=2)
+    tkgrid(buttonsFrame, sticky="ew", pady=6, columnspan=2)
     dialogSuffix(rows=15, columns=2, focus=timeVarBox$listbox, onCancel=onClose)
 }

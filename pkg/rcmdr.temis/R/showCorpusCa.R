@@ -579,7 +579,7 @@ showCorpusCaDlg <- function() {
     tkgrid(ctrDim1, ctrDim2, ctrDim3, sticky="w", pady=6)
     tkgrid(ctrDimFrame, sticky="w", pady=6, columnspan=2)
     tkgrid.columnconfigure(ctrDimFrame, "all", uniform="a")
-    tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=2)
+    tkgrid(buttonsFrame, sticky="ew", pady=6, columnspan=2)
     nrows <- if(length(corpusCa$rowsup) == 0) 6 else 7
 
     # We don't use dialogSuffix() itself because the dialog should not close,

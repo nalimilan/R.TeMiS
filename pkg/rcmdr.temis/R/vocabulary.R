@@ -275,7 +275,7 @@ vocabularyDlg <- function() {
     tkgrid(vertButton, sticky="w", pady=c(0, 6), columnspan=3)
     tkgrid(labelRcmdr(titleFrame, text=.gettext("Plot title:")), titleEntry, sticky="w", padx=6)
     tkgrid(titleFrame, sticky="w", pady=6, columnspan=3)
-    tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=3)
+    tkgrid(buttonsFrame, sticky="ew", pady=6, columnspan=3)
     dialogSuffix(rows=7, columns=3)
 }
 

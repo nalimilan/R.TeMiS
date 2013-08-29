@@ -57,7 +57,7 @@
 
     OKCancelHelp(helpSubject=importCorpusDlg)
     tkgrid(getFrame(varBox), sticky="nswe", pady=6)
-    tkgrid(buttonsFrame, sticky="w", pady=6)
+    tkgrid(buttonsFrame, sticky="ew", pady=6)
     dialogSuffix(rows=2, columns=1)
 
     return(tclvalue(result) == "success")
@@ -307,7 +307,7 @@ importCorpusDlg <- function() {
     tkgrid(labelRcmdr(top, text=.gettext("Size of new documents:")),
            chunksSlider, labelRcmdr(top, text=.gettext("paragraphs")), sticky="w", pady=6)
     tkgrid(processingFrame, columnspan=3, sticky="w", pady=6)
-    tkgrid(buttonsFrame, columnspan=3, sticky="w", pady=6)
+    tkgrid(buttonsFrame, columnspan=3, sticky="ew", pady=6)
     tkgrid.columnconfigure(top, 0, pad=12)
     tkgrid.columnconfigure(top, 1, pad=12)
     tkgrid.columnconfigure(top, 2, pad=12)
@@ -734,7 +734,7 @@ importCorpusFromTwitter <- function(language=NA) {
     tkgrid(labelRcmdr(top, text=.gettext("Maximum number of tweets to download:")),
            tclNSlider, sticky="w", pady=6)
     tkgrid(optionsFrame, sticky="w", pady=6, columnspan=2)
-    tkgrid(buttonsFrame, columnspan=2, sticky="w", pady=6)
+    tkgrid(buttonsFrame, columnspan=2, sticky="ew", pady=6)
     dialogSuffix(rows=3, columns=2, focus=entryText)
 
     if(tclvalue(result) == "success")

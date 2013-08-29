@@ -216,6 +216,6 @@ termFreqDlg <- function() {
     tkgrid(vertButton, sticky="w", columnspan=2)
     tkgrid(stackButton, sticky="w", columnspan=2)
     tkgrid(displayFrame, sticky="w", pady=6, columnspan=2)
-    tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=2)
+    tkgrid(buttonsFrame, sticky="ew", pady=6, columnspan=2)
     dialogSuffix(rows=5, columns=2, focus=entryTerms)
 }

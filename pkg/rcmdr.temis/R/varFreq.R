@@ -84,7 +84,7 @@ varTableDlg <- function() {
     tkgrid(vertButton, sticky="w", columnspan=2)
     tkgrid(labelRcmdr(plotFrame, text=.gettext("Title:")), titleEntry, sticky="w")
     tkgrid(plotFrame, sticky="w", pady=6, columnspan=2)
-    tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=2)
+    tkgrid(buttonsFrame, sticky="ew", pady=6, columnspan=2)
     dialogSuffix(rows=8, columns=2, focus=varBox$listbox)
 }
 
@@ -217,7 +217,7 @@ varCrossTableDlg <- function() {
     tkgrid(stackButton, sticky="w", columnspan=2)
     tkgrid(labelRcmdr(plotFrame, text=.gettext("Title:")), titleEntry, sticky="w")
     tkgrid(plotFrame, sticky="w", pady=6, columnspan=2)
-    tkgrid(buttonsFrame, sticky="w", pady=6, columnspan=2)
+    tkgrid(buttonsFrame, sticky="ew", pady=6, columnspan=2)
     dialogSuffix(rows=7, columns=2, focus=varBox1$listbox)
 }
 

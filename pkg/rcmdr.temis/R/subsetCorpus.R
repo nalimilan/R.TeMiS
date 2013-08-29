@@ -117,7 +117,7 @@ subsetCorpusByVarDlg <- function() {
     tkgrid(levelsBox, levelsScrollbar, sticky="ewns", pady=6)
     tkgrid(varsFrame, levelsFrame, sticky="wns", pady=6)
     tkgrid(checkSave, sticky="w", pady=6)
-    tkgrid(buttonsFrame, columnspan=2, sticky="w", pady=6)
+    tkgrid(buttonsFrame, columnspan=2, sticky="ew", pady=6)
     dialogSuffix(rows=4, columns=2, focus=varsBox)
 }
 
@@ -239,7 +239,7 @@ subsetCorpusByTermsDlg <- function() {
     tkgrid(labelRcmdr(top, text=.gettext("(Only documents matching both conditions will be retained in the new corpus.)")),
            sticky="w", pady=6)
     tkgrid(checkSave, sticky="w", pady=c(12, 6))
-    tkgrid(buttonsFrame, sticky="w", pady=6)
+    tkgrid(buttonsFrame, sticky="ew", pady=6)
     dialogSuffix(rows=7, focus=entryKeep)
 }
 

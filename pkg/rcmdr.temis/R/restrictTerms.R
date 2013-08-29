@@ -49,6 +49,6 @@ restrictTermsDlg <- function() {
     tkgrid(labelRcmdr(top, text=.gettext("Terms (space-separated):")),
            columnspan=2, sticky="w")
     tkgrid(entryTerms, columnspan=2, sticky="w")
-    tkgrid(buttonsFrame, sticky="w", pady=6)
+    tkgrid(buttonsFrame, sticky="ew", pady=6)
     dialogSuffix(rows=3, columns=1, focus=entryTerms)
 }
