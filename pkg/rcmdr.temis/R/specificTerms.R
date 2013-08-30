@@ -97,8 +97,8 @@ specificTermsDlg <- function() {
 
         closeDialog()
 
-        .setBusyCursor()
-        on.exit(.setIdleCursor())
+        setBusyCursor()
+        on.exit(setIdleCursor())
 
         if(var == .gettext("Document")) {
             doItAndPrint(sprintf('specTerms <- specificTerms(dtm, NULL, p=%s, min.occ=%s, n.max=%s)',

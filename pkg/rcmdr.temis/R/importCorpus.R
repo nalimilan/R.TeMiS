@@ -200,8 +200,8 @@ importCorpusDlg <- function() {
 
         closeDialog()
 
-        .setBusyCursor()
-        on.exit(.setIdleCursor())
+        setBusyCursor()
+        on.exit(setIdleCursor())
 
 	if(stemming) {
             # If we do not close the dialog first, the CRAN mirror chooser will not respond
@@ -229,7 +229,7 @@ importCorpusDlg <- function() {
                       twitter=importCorpusFromTwitter(lang))
 
         # Needed because functions above set it to idle on exit
-        .setBusyCursor()
+        setBusyCursor()
 
         # If loading failed, do not add errors to errors
         if(!(isTRUE(res) || is.list(res)) || length(corpus) == 0)
@@ -320,8 +320,8 @@ importCorpusFromDir <- function(language=NA, encoding="") {
                                       parent=CommanderWindow()))
     if (dir == "") return(FALSE)
 
-    .setBusyCursor()
-    on.exit(.setIdleCursor())
+    setBusyCursor()
+    on.exit(setIdleCursor())
 
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
@@ -356,8 +356,8 @@ importCorpusFromFile <- function(language=NA, encoding="") {
 
     if (file == "") return(FALSE)
 
-    .setBusyCursor()
-    on.exit(.setIdleCursor())
+    setBusyCursor()
+    on.exit(setIdleCursor())
 
     # Code adapted from Rcommander's data-menu.R file
     # The following function was contributed by Matthieu Lesnoff
@@ -539,8 +539,8 @@ importCorpusFromFactiva <- function(language=NA) {
 
     if (filestr == "") return(FALSE)
 
-    .setBusyCursor()
-    on.exit(.setIdleCursor())
+    setBusyCursor()
+    on.exit(setIdleCursor())
 
     # tkgetOpenFile() is terrible: if path contains a space, file paths are surrounded by {}
     # If no spaces are present, they are not, but in both cases the separator is a space
@@ -642,8 +642,8 @@ importCorpusFromTwitter <- function(language=NA) {
 
         closeDialog()
 
-        .setBusyCursor()
-        on.exit(.setIdleCursor())
+        setBusyCursor()
+        on.exit(setIdleCursor())
 
         # In case something goes wrong
         tclvalue(result) <- "error"

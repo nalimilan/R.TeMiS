@@ -66,8 +66,8 @@ termCoocDlg <- function() {
 
         closeDialog()
 
-        .setBusyCursor()
-        on.exit(.setIdleCursor())
+        setBusyCursor()
+        on.exit(setIdleCursor())
 
         if(var == .gettext("None (whole corpus)")) {
             if(length(termsList) == 1)

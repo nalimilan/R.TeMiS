@@ -54,8 +54,8 @@ dissimilarityTableDlg <- function() {
         var2 <- getSelection(varBox2)
 
         closeDialog()
-        .setBusyCursor()
-        on.exit(.setIdleCursor())
+        setBusyCursor()
+        on.exit(setIdleCursor())
 
         if(var1 == var2) {
             if(var1 == .gettext("Document")) {

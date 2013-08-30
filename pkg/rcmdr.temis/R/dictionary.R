@@ -21,8 +21,8 @@ termsDictionaryOcc <- function() {
 termsDictionary <- function(dtm, order=c("alphabetic", "occurrences")) {
     order <- match.arg(order)
 
-    .setBusyCursor()
-    on.exit(.setIdleCursor())
+    setBusyCursor()
+    on.exit(setIdleCursor())
 
     lang <- attr(dtm, "language")
     words <- attr(dtm, "words")

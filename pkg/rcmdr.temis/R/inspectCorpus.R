@@ -1,6 +1,6 @@
 inspectCorpus <- function() {
-    .setBusyCursor()
-    on.exit(.setIdleCursor())
+    setBusyCursor()
+    on.exit(setIdleCursor())
 
     objects <- .getCorpusWindow()
     window <- objects$window

@@ -75,8 +75,8 @@ freqTermsDlg <- function() {
 
         closeDialog()
 
-        .setBusyCursor()
-        on.exit(.setIdleCursor())
+        setBusyCursor()
+        on.exit(setIdleCursor())
 
         if(var == .gettext("None (whole corpus)"))
             doItAndPrint(sprintf('freqTerms <- frequentTerms(dtm, NA, %i)', n))

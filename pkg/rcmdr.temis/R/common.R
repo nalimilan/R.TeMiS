@@ -32,34 +32,6 @@ if (getRversion() >= '2.15.1') globalVariables(c(
     get(x, envir=.env, mode=mode, inherits=FALSE)
 }
 
-.setBusyCursor <- function() {
-    .commander <- CommanderWindow()
-    .menu <- tkcget(.commander, menu=NULL)
-    .log <- LogWindow()
-    .output <- OutputWindow()
-    .messages <- MessagesWindow()
-
-    tkconfigure(.commander, cursor="watch")
-    tkconfigure(.menu, cursor="watch")
-    tkconfigure(.log, cursor="watch")
-    tkconfigure(.output, cursor="watch")
-    tkconfigure(.messages, cursor="watch")
-}
-
-.setIdleCursor <- function() {
-    .commander <- CommanderWindow()
-    .menu <- tkcget(.commander, menu=NULL)
-    .log <- LogWindow()
-    .output <- OutputWindow()
-    .messages <- MessagesWindow()
-
-    tkconfigure(.commander, cursor="")
-    tkconfigure(.menu, cursor="")
-    tkconfigure(.log, cursor="xterm")
-    tkconfigure(.output, cursor="xterm")
-    tkconfigure(.messages, cursor="xterm")
-}
-
 .getCorpusWindow <- function() {
     if(!is.null(.getEnv("corpusTxt", fail=FALSE))) {
         window <- .getEnv("corpusWindow")
@@ -122,8 +94,8 @@ if (getRversion() >= '2.15.1') globalVariables(c(
             if (tclvalue(msgbox()) != "yes")
                 return(FALSE)
 
-            .setBusyCursor()
-            on.exit(.setIdleCursor())
+            setBusyCursor()
+            on.exit(setIdleCursor())
 
             if(package %in% available.packages()[,1]) {
                 install.packages(package)

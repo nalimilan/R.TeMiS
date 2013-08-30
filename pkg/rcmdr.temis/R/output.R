@@ -98,8 +98,8 @@ copyTableToOutput <- function() {
         return()
 
     # Needed when copying CA, HTML.ca() is too late to update the GUI
-    .setBusyCursor()
-    on.exit(.setIdleCursor())
+    setBusyCursor()
+    on.exit(setIdleCursor())
 
     tab <- get(last.table)
     title <- attr(tab, "title")

@@ -172,8 +172,8 @@ corpusCaDlg <- function() {
 
         closeDialog()
 
-        .setBusyCursor()
-        on.exit(.setIdleCursor())
+        setBusyCursor()
+        on.exit(setIdleCursor())
 
         if(ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"]) == 0)
             Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),

@@ -1,6 +1,6 @@
 showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20, p=0.1, min.occ=5) {
-    .setBusyCursor()
-    on.exit(.setIdleCursor())
+    setBusyCursor()
+    on.exit(setIdleCursor())
 
     objects <- .getCorpusWindow()
     window <- objects$window
@@ -242,8 +242,8 @@ corpusClustDlg <- function() {
     onOK <- function() {
         closeDialog()
 
-        .setBusyCursor()
-        on.exit(.setIdleCursor())
+        setBusyCursor()
+        on.exit(setIdleCursor())
 
         type <- tclvalue(tclType)
         sparsity <- as.numeric(tclvalue(tclSparsity))/100
@@ -341,7 +341,7 @@ createClustersDlg <- function(..., plot=TRUE) {
     }
 
     if(plot) {
-        .setBusyCursor()
+        setBusyCursor()
 
         # Do not plot all leafs if there are too many of them (can even crash!)
         if(length(corpusClust$labels) > 500) {
@@ -361,7 +361,7 @@ createClustersDlg <- function(..., plot=TRUE) {
                                  .gettext("Full documents dendrogram")))
         }
 
-        .setIdleCursor()
+        setIdleCursor()
     }
 
     initializeDialog(title=.gettext("Create Clusters"))
@@ -394,8 +394,8 @@ createClustersDlg <- function(..., plot=TRUE) {
     onOK <- function() {
         closeDialog()
 
-        .setBusyCursor()
-        on.exit(.setIdleCursor())
+        setBusyCursor()
+        on.exit(setIdleCursor())
 
         nclust <- as.numeric(tclvalue(tclNClust))
         ndocs <- as.numeric(tclvalue(tclNDocs))
