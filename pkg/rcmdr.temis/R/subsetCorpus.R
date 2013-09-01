@@ -128,8 +128,18 @@ subsetCorpusByTermsDlg <- function() {
     tclKeep <- tclVar("")
     entryKeep <- ttkentry(top, width="40", textvariable=tclKeep)
 
+    tclKeepFreq <- tclVar()
+    keepSlider <- tkscale(top, from=1, to=20,
+                          showvalue=TRUE, variable=tclKeepFreq,
+		          resolution=1, orient="horizontal")
+
     tclExclude <- tclVar("")
     entryExclude <- ttkentry(top, width="40", textvariable=tclExclude)
+
+    tclExcludeFreq <- tclVar()
+    excludeSlider <- tkscale(top, from=1, to=20,
+                             showvalue=TRUE, variable=tclExcludeFreq,
+		             resolution=1, orient="horizontal")
 
     tclSave <- tclVar("1")
     checkSave <- tkcheckbutton(top, text=.gettext("Save original corpus to restore it later"),
@@ -138,6 +148,8 @@ subsetCorpusByTermsDlg <- function() {
     onOK <- function() {
         keepList <- strsplit(tclvalue(tclKeep), " ")[[1]]
         excludeList <- strsplit(tclvalue(tclExclude), " ")[[1]]
+        keepFreq <- as.numeric(tclvalue(tclKeepFreq))
+        excludeFreq <- as.numeric(tclvalue(tclExcludeFreq))
         save <- tclvalue(tclSave) == "1"
 
         if(length(keepList) == 0 && length(excludeList) == 0) {
@@ -157,9 +169,12 @@ subsetCorpusByTermsDlg <- function() {
             return()
         }
         else if((length(keepList) > 0 && length(excludeList) > 0 &&
-                 !any(row_sums(dtm[,keepList]) > 0 & row_sums(dtm[,excludeList]) == 0)) ||
-                (length(keepList) > 0 && length(excludeList) == 0 && !any(row_sums(dtm[,keepList]) > 0)) ||
-                (length(keepList) == 0 && length(excludeList) > 0 && !any(row_sums(dtm[,excludeList]) == 0))) {
+                 !any(row_sums(dtm[, keepList] >= keepFreq) > 0 &
+                      row_sums(dtm[, excludeList] >= excludeFreq) == 0)) ||
+                (length(keepList) > 0 && length(excludeList) == 0 &&
+                 !any(row_sums(dtm[, keepList] >= keepFreq) > 0)) ||
+                (length(keepList) == 0 && length(excludeList) > 0 &&
+                 !any(row_sums(dtm[, excludeList] >= excludeFreq) == 0))) {
             Message(.gettext("Specified conditions would exclude all documents from the corpus."),
                     "error")
 
@@ -169,12 +184,15 @@ subsetCorpusByTermsDlg <- function() {
         closeDialog()
 
         if(length(keepList) > 0 && length(excludeList) > 0)
-            doItAndPrint(sprintf('keep <- row_sums(dtm[,c("%s")]) > 0 & row_sums(dtm[,c("%s")]) == 0',
-                                 paste(keepList, collapse='", "'), paste(excludeList, collapse='", "')))
+            doItAndPrint(sprintf('keep <- row_sums(dtm[, c("%s")] >= %i) > 0 & row_sums(dtm[, c("%s")] >= %i) == 0',
+                                 paste(keepList, collapse='", "'), keepFreq,
+                                 paste(excludeList, collapse='", "'), excludeFreq))
         else if(length(keepList) > 0)
-            doItAndPrint(sprintf('keep <- row_sums(dtm[,c("%s")]) > 0', paste(keepList, collapse='", "')))
+            doItAndPrint(sprintf('keep <- row_sums(dtm[, c("%s")] >= %i) > 0',
+                                 paste(keepList, collapse='", "'), keepFreq))
         else
-            doItAndPrint(sprintf('keep <- row_sums(dtm[,c("%s")]) == 0', paste(excludeList, collapse='", "')))
+            doItAndPrint(sprintf('keep <- row_sums(dtm[, c("%s")] >= %i) == 0',
+                                 paste(excludeList, collapse='", "'), excludeFreq))
 
         if(save)
             doItAndPrint("origCorpus <- corpus")
@@ -230,16 +248,24 @@ subsetCorpusByTermsDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="subsetCorpusByTermsDlg")
-    tkgrid(labelRcmdr(top, text=.gettext("Keep documents with terms (space-separated):")),
-           sticky="w")
-    tkgrid(entryKeep, sticky="w", pady=c(0, 6))
-    tkgrid(labelRcmdr(top, text=.gettext("Exclude documents with terms (space-separated):")),
-           sticky="w", pady=c(6, 0))
-    tkgrid(entryExclude, sticky="w", pady=c(0, 6))
+    tkgrid(labelRcmdr(top, text=.gettext("Keep documents containing one of these terms (space-separated):")),
+           sticky="w", columnspan=4)
+    tkgrid(entryKeep,
+           labelRcmdr(top, text=.gettext("at least")),
+           keepSlider,
+           labelRcmdr(top, text=.gettext("time(s)")),
+           sticky="w", pady=c(0, 6))
+    tkgrid(labelRcmdr(top, text=.gettext("Exclude documents containing one of these terms (space-separated):")),
+           sticky="w", pady=c(6, 0), columnspan=4)
+    tkgrid(entryExclude,
+           labelRcmdr(top, text=.gettext("at least")),
+           excludeSlider,
+           labelRcmdr(top, text=.gettext("time(s)")),
+           sticky="w", pady=c(0, 6))
     tkgrid(labelRcmdr(top, text=.gettext("(Only documents matching both conditions will be retained in the new corpus.)")),
-           sticky="w", pady=6)
-    tkgrid(checkSave, sticky="w", pady=c(12, 6))
-    tkgrid(buttonsFrame, sticky="ew", pady=6)
+           sticky="w", pady=6, columnspan=4)
+    tkgrid(checkSave, sticky="w", pady=c(12, 6), columnspan=4)
+    tkgrid(buttonsFrame, sticky="ew", pady=6, columnspan=4)
     dialogSuffix(focus=entryKeep)
 }
 
