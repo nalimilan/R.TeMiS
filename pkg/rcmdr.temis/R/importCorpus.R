@@ -5,7 +5,7 @@
 
     vars <- c(.gettext("No variables"), colnames(corpusVars))
 
-    if(source %in% c("factiva", "twitter"))
+    if(source %in% c("factiva", "europresse", "twitter"))
         # Keep in sync with import functions
         initialSelection <- which(vars %in% c(.gettext("Origin"), .gettext("Date"),
                                               .gettext("Author"), .gettext("Section"),
@@ -114,7 +114,7 @@ importCorpusDlg <- function() {
     initializeDialog(title=.gettext("Import Corpus"))
 
     setState <- function(...) {
-        if(tclvalue(sourceVariable) %in% c("dir", "file")) {
+        if(tclvalue(sourceVariable) %in% c("dir", "file", "europresse")) {
             tkconfigure(comboEnc, state="normal")
 
             if(tclvalue(tclEnc) == "UTF-8")
@@ -129,10 +129,11 @@ importCorpusDlg <- function() {
     }
 
     radioButtons(name="source",
-                 buttons=c("dir", "file", "factiva", "twitter"),
+                 buttons=c("dir", "file", "factiva", "europresse", "twitter"),
                  labels=c(.gettext("Directory containing plain text files"),
                           .gettext("Spreadsheet file (CSV, XLS, ODS...)"),
                           .gettext("Factiva XML or HTML file(s)"),
+                          .gettext("Europresse HTML file(s)"),
                           .gettext("Twitter search")),
                  title=.gettext("Load corpus from:"),
                  right.buttons=FALSE,
@@ -226,6 +227,7 @@ importCorpusDlg <- function() {
                       dir=importCorpusFromDir(lang, enc),
                       file=importCorpusFromFile(lang, enc),
                       factiva=importCorpusFromFactiva(lang),
+                      europresse=importCorpusFromEuropresse(lang, enc),
                       twitter=importCorpusFromTwitter(lang))
 
         # Needed because functions above set it to idle on exit
@@ -485,7 +487,7 @@ importCorpusFromFile <- function(language=NA, encoding="") {
 }
 
 # Extract local per-document meta-data and return a data frame
-extractFactivaMetadata <- function(corpus) {
+extractMetadata <- function(corpus) {
     dates <- lapply(corpus, meta, "DateTimeStamp")
     dates <- sapply(dates, function(x) if(length(x) > 0) as.character(x) else NA)
     vars <- data.frame(Origin=NA, Date=dates, Author=NA, Section=NA)
@@ -570,9 +572,60 @@ importCorpusFromFactiva <- function(language=NA) {
     # In rare cases, duplicated IDs can happen since Factiva plugin truncates them: ensure they are unique
     doItAndPrint("names(corpus) <- make.unique(sapply(corpus, ID))")
 
-    doItAndPrint("corpusVars <- extractFactivaMetadata(corpus)")
+    doItAndPrint("corpusVars <- extractMetadata(corpus)")
 
     list(source=sprintf(.ngettext(length(files), "Factiva file %s", "Factiva files %s"),
+                        paste(files, collapse=", ")))
+}
+
+# Choose a Europresse HTML file to load texts and variables from
+importCorpusFromEuropresse <- function(language=NA, encoding="UTF-8") {
+    if(!.checkAndInstall("tm.plugin.europresse",
+                         .gettext("The tm.plugin.europresse package is needed to import corpora from Europresse files.\nDo you want to install it?")))
+        return(FALSE)
+
+    filestr <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.htm .html .aspx .HTM .HTML .ASPX}} {{%s} {*}}",
+                                                        .gettext("Europresse HTML files"),
+                                                        .gettext("All files")),
+                                      multiple=TRUE,
+                                      parent=CommanderWindow()))
+
+    if (filestr == "") return(FALSE)
+
+    setBusyCursor()
+    on.exit(setIdleCursor())
+
+    # tkgetOpenFile() is terrible: if path contains a space, file paths are surrounded by {}
+    # If no spaces are present, they are not, but in both cases the separator is a space
+    if(substr(filestr, 0, 1) == "{")
+        files <- gsub("\\{|\\}", "", strsplit(filestr, "\\} \\{")[[1]])
+    else
+        files <- strsplit(filestr, " ")[[1]]
+
+    if(!is.na(language))
+        language <- paste("\"", language, "\"", sep="")
+
+    doItAndPrint(sprintf("corpus <- Corpus(EuropresseSource(\"%s\", encoding=\"%s\"), readerControl=list(language=%s))",
+                         files[1], encoding, language))
+    lapply(files[-1], function(file) doItAndPrint(sprintf(
+        "corpus <- c(corpus, Corpus(EuropresseSource(\"%s\", encoding=\"%s\"), readerControl=list(language=%s)), recursive=TRUE)",
+                                                          file, encoding, language)))
+
+    if(!exists("corpus") || length(corpus) == 0) {
+        Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+                type="error")
+
+        return(FALSE)
+    }
+
+    # Set document names from the IDs since it's not always done by sources (XMLSource...)
+    # We rely on this later e.g. in showCorpusCa() because we cannot use indexes when documents are skipped
+    # In rare cases, duplicated IDs can happen since Europresse plugin truncates them: ensure they are unique
+    doItAndPrint("names(corpus) <- make.unique(sapply(corpus, ID))")
+
+    doItAndPrint("corpusVars <- extractMetadata(corpus)")
+
+    list(source=sprintf(.ngettext(length(files), "Europresse file %s", "Europresse files %s"),
                         paste(files, collapse=", ")))
 }
 
