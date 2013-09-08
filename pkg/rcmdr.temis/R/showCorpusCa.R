@@ -467,6 +467,9 @@ showCorpusCaDlg <- function() {
             return()
         }
 
+        setBusyCursor()
+        on.exit(setIdleCursor())
+
         doItAndPrint(sprintf("showCorpusCa(corpusCa, %s, %s, %s)", ctrDim, nDocs, nTerms))
 
 
