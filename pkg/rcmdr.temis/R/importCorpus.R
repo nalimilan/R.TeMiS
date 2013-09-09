@@ -505,6 +505,9 @@ extractMetadata <- function(corpus) {
     # Keep in sync with .selectCorpusVariables()
     colnames(vars) <- c(.gettext("Origin"), .gettext("Date"), .gettext("Author"), .gettext("Section"))
 
+    # Drop variables with only NAs, which can appear with sources that do not support them
+    vars <- vars[sapply(vars, function(x) sum(!is.na(x))) > 0]
+
     tags <- c("Subject", "Coverage", "Company", "Industry", "InfoCode", "InfoDesc")
     meta <- sapply(corpus, function(x) LocalMetaData(x)[tags])
     # Tags missing from all documents
