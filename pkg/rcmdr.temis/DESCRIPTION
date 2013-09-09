@@ -7,7 +7,8 @@ Authors@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr", role=c(
              person("Gilles", "Bastin", email="gilles.bastin@sciencespo-grenoble.fr", role=c("aut")))
 Imports: Rcmdr (>= 2.0-0), tcltk, utils, ca, R2HTML, RColorBrewer, latticeExtra
 Depends: tm, slam, zoo, lattice
-Suggests: SnowballC, ROpenOffice, RODBC, tm.plugin.factiva, tm.plugin.europresse, twitteR
+Suggests: SnowballC, ROpenOffice, RODBC, tm.plugin.factiva, tm.plugin.europresse,
+    tm.plugin.alceste, twitteR
 Description: An R Commander plug-in providing an integrated solution to perform
     a series of text mining tasks such as importing and cleaning a corpus, and
     analyses like terms and documents counts, vocabulary tables, terms

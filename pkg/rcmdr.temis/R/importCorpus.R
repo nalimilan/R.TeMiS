@@ -5,7 +5,7 @@
 
     vars <- c(.gettext("No variables"), colnames(corpusVars))
 
-    if(source %in% c("factiva", "europresse", "twitter"))
+    if(source %in% c("factiva", "europresse", "alceste", "twitter"))
         # Keep in sync with import functions
         initialSelection <- which(vars %in% c(.gettext("Origin"), .gettext("Date"),
                                               .gettext("Author"), .gettext("Section"),
@@ -114,7 +114,7 @@ importCorpusDlg <- function() {
     initializeDialog(title=.gettext("Import Corpus"))
 
     setState <- function(...) {
-        if(tclvalue(sourceVariable) %in% c("dir", "file", "europresse")) {
+        if(tclvalue(sourceVariable) %in% c("dir", "file", "europresse", "alceste")) {
             tkconfigure(comboEnc, state="normal")
 
             if(tclvalue(tclEnc) == "UTF-8")
@@ -129,11 +129,12 @@ importCorpusDlg <- function() {
     }
 
     radioButtons(name="source",
-                 buttons=c("dir", "file", "factiva", "europresse", "twitter"),
+                 buttons=c("dir", "file", "factiva", "europresse", "alceste", "twitter"),
                  labels=c(.gettext("Directory containing plain text files"),
                           .gettext("Spreadsheet file (CSV, XLS, ODS...)"),
                           .gettext("Factiva XML or HTML file(s)"),
                           .gettext("Europresse HTML file(s)"),
+                          .gettext("Alceste file(s)"),
                           .gettext("Twitter search")),
                  title=.gettext("Load corpus from:"),
                  right.buttons=FALSE,
@@ -228,6 +229,7 @@ importCorpusDlg <- function() {
                       file=importCorpusFromFile(lang, enc),
                       factiva=importCorpusFromFactiva(lang),
                       europresse=importCorpusFromEuropresse(lang, enc),
+                      alceste=importCorpusFromAlceste(lang, enc),
                       twitter=importCorpusFromTwitter(lang))
 
         # If loading failed, do not add errors to errors
@@ -627,6 +629,59 @@ importCorpusFromEuropresse <- function(language=NA, encoding="UTF-8") {
     doItAndPrint("corpusVars <- extractMetadata(corpus)")
 
     list(source=sprintf(.ngettext(length(files), "Europresse file %s", "Europresse files %s"),
+                        paste(files, collapse=", ")))
+}
+
+
+# Choose an Alceste file to load texts and variables from
+importCorpusFromAlceste <- function(language=NA, encoding="UTF-8") {
+    if(!.checkAndInstall("tm.plugin.alceste",
+                         .gettext("The tm.plugin.alceste package is needed to import corpora from Alceste files.\nDo you want to install it?")))
+        return(FALSE)
+
+    filestr <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.txt .TXT}} {{%s} {*}}",
+                                                        .gettext("Alceste files"),
+                                                        .gettext("All files")),
+                                      multiple=TRUE,
+                                      parent=CommanderWindow()))
+
+    if (filestr == "") return(FALSE)
+
+    setBusyCursor()
+    on.exit(setIdleCursor())
+
+    # tkgetOpenFile() is terrible: if path contains a space, file paths are surrounded by {}
+    # If no spaces are present, they are not, but in both cases the separator is a space
+    if(substr(filestr, 0, 1) == "{")
+        files <- gsub("\\{|\\}", "", strsplit(filestr, "\\} \\{")[[1]])
+    else
+        files <- strsplit(filestr, " ")[[1]]
+
+    if(!is.na(language))
+        language <- paste("\"", language, "\"", sep="")
+
+    doItAndPrint(sprintf("corpus <- Corpus(AlcesteSource(\"%s\", encoding=\"%s\"), readerControl=list(language=%s))",
+                         files[1], encoding, language))
+    lapply(files[-1], function(file) doItAndPrint(sprintf(
+        "corpus <- c(corpus, Corpus(AlcesteSource(\"%s\", encoding=\"%s\"), readerControl=list(language=%s)), recursive=TRUE)",
+                                                          file, encoding, language)))
+
+    if(!exists("corpus") || length(corpus) == 0) {
+        Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+                type="error")
+
+        return(FALSE)
+    }
+
+    # Set document names from the IDs since it's not always done by sources (XMLSource...)
+    # We rely on this later e.g. in showCorpusCa() because we cannot use indexes when documents are skipped
+    # Duplicated IDs can happen since they can be specified in the Alceste file, but also set automatically
+    # when missing
+    doItAndPrint("names(corpus) <- make.unique(sapply(corpus, ID))")
+
+    doItAndPrint("corpusVars <- extractMetadata(corpus)")
+
+    list(source=sprintf(.ngettext(length(files), "Alceste file %s", "Alceste files %s"),
                         paste(files, collapse=", ")))
 }
 
