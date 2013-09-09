@@ -1,0 +1,4 @@
+export(AlcesteSource, readAlceste)
+S3method(getElem, AlcesteSource)
+S3method(eoi, AlcesteSource)
+importFrom(tm, PlainTextDocument, meta, getElem, eoi)

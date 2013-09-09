@@ -1,0 +1,8 @@
+**** *var1_1 *var2_levela *boolean1
+-*theme1
+Contents of the first text, first theme.
+-*theme2
+Contents of the second text, second theme. A few accentuated characters: éêàù.
+New line.
+00002 *boolean2 *var1_2 *var2_levelb
+Contents of the second text.
