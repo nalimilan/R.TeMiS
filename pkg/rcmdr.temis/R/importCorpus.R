@@ -5,10 +5,10 @@
 
     vars <- c(.gettext("No variables"), colnames(corpusVars))
 
-    if(source %in% c("factiva", "europresse", "alceste", "twitter"))
+    if(source %in% c("factiva", "lexisnexis", "europresse", "alceste", "twitter"))
         # Keep in sync with import functions
-        initialSelection <- which(vars %in% c(.gettext("Origin"), .gettext("Date"),
-                                              .gettext("Author"), .gettext("Section"),
+        initialSelection <- which(vars %in% c(.gettext("Origin"), .gettext("Date"), .gettext("Author"),
+                                              .gettext("Section"), .gettext("Type"),
                                               .gettext("Time"), .gettext("Truncated"),
                                               .gettext("StatusSource"), .gettext("Retweet"))) - 1
     else
@@ -129,10 +129,11 @@ importCorpusDlg <- function() {
     }
 
     radioButtons(name="source",
-                 buttons=c("dir", "file", "factiva", "europresse", "alceste", "twitter"),
+                 buttons=c("dir", "file", "factiva", "lexisnexis", "europresse", "alceste", "twitter"),
                  labels=c(.gettext("Directory containing plain text files"),
                           .gettext("Spreadsheet file (CSV, XLS, ODS...)"),
                           .gettext("Factiva XML or HTML file(s)"),
+                          .gettext("LexisNexis HTML file(s)"),
                           .gettext("Europresse HTML file(s)"),
                           .gettext("Alceste file(s)"),
                           .gettext("Twitter search")),
@@ -228,6 +229,7 @@ importCorpusDlg <- function() {
                       dir=importCorpusFromDir(lang, enc),
                       file=importCorpusFromFile(lang, enc),
                       factiva=importCorpusFromFactiva(lang),
+                      lexisnexis=importCorpusFromLexisNexis(lang),
                       europresse=importCorpusFromEuropresse(lang, enc),
                       alceste=importCorpusFromAlceste(lang, enc),
                       twitter=importCorpusFromTwitter(lang))
@@ -495,7 +497,7 @@ extractMetadata <- function(corpus) {
     dates <- sapply(dates, function(x) if(length(x) > 0) as.character(x) else NA)
     vars <- data.frame(Origin=NA, Date=dates, Author=NA, Section=NA)
 
-    tags <- c("Origin", "Author", "Section")
+    tags <- c("Origin", "Author", "Section", "Type")
     for(tag in tags) {
         var <- lapply(corpus, meta, tag)
         var <- lapply(var, function(x) if(length(x) > 0) x else NA)
@@ -503,12 +505,13 @@ extractMetadata <- function(corpus) {
     }
 
     # Keep in sync with .selectCorpusVariables()
-    colnames(vars) <- c(.gettext("Origin"), .gettext("Date"), .gettext("Author"), .gettext("Section"))
+    colnames(vars) <- c(.gettext("Origin"), .gettext("Date"), .gettext("Author"),
+                        .gettext("Section"), .gettext("Type"))
 
     # Drop variables with only NAs, which can appear with sources that do not support them
     vars <- vars[sapply(vars, function(x) sum(!is.na(x))) > 0]
 
-    tags <- c("Subject", "Coverage", "Company", "Industry", "InfoCode", "InfoDesc")
+    tags <- c("Subject", "Coverage", "Company", "StockSymbol", "Industry", "InfoCode", "InfoDesc")
     meta <- sapply(corpus, function(x) LocalMetaData(x)[tags])
     # Tags missing from all documents
     meta <- meta[!is.na(rownames(meta)),]
@@ -523,9 +526,9 @@ extractMetadata <- function(corpus) {
         if(length(levs) == 0)
             next
 
-        # We remove the identifier before ":"
+        # We remove the identifier before ":" and abbreviate the names since they can get out of control
         for(lev in levs)
-            vars[[make.names(gsub("^[[:alnum:]]+ : ", "", lev))]] <- sapply(var, function(x) lev %in% x)
+            vars[[make.names(substr(gsub("^[[:alnum:]]+ : ", "", lev), 1, 20))]] <- sapply(var, function(x) lev %in% x)
     }
 
     rownames(vars) <- names(corpus)
@@ -581,6 +584,58 @@ importCorpusFromFactiva <- function(language=NA) {
     doItAndPrint("corpusVars <- extractMetadata(corpus)")
 
     list(source=sprintf(.ngettext(length(files), "Factiva file %s", "Factiva files %s"),
+                        paste(files, collapse=", ")))
+}
+
+# Choose a LexisNexis HTML file to load texts and variables from
+importCorpusFromLexisNexis <- function(language=NA) {
+    if(!.checkAndInstall("tm.plugin.lexisnexis",
+                         .gettext("The tm.plugin.lexisnexis package is needed to import corpora from Factiva files.\nDo you want to install it?")))
+        return(FALSE)
+
+    filestr <- tclvalue(tkgetOpenFile(filetypes=sprintf("{{%s} {.xml .htm .html .aspx .XML .HTM .HTML .ASPX}} {{%s} {*}}",
+                                                        .gettext("LexisNexis HTML files"),
+                                                        .gettext("All files")),
+                                      multiple=TRUE,
+                                      parent=CommanderWindow()))
+
+    if (filestr == "") return(FALSE)
+
+    setBusyCursor()
+    on.exit(setIdleCursor())
+
+    # tkgetOpenFile() is terrible: if path contains a space, file paths are surrounded by {}
+    # If no spaces are present, they are not, but in both cases the separator is a space
+    if(substr(filestr, 0, 1) == "{")
+        files <- gsub("\\{|\\}", "", strsplit(filestr, "\\} \\{")[[1]])
+    else
+        files <- strsplit(filestr, " ")[[1]]
+
+    if(!is.na(language))
+        language <- paste("\"", language, "\"", sep="")
+
+    doItAndPrint(sprintf("corpus <- Corpus(LexisNexisSource(\"%s\"), readerControl=list(language=%s))",
+                         files[1], language))
+    lapply(files[-1], function(file) doItAndPrint(sprintf(
+        "corpus <- c(corpus, Corpus(LexisNexisSource(\"%s\"), readerControl=list(language=%s)), recursive=TRUE)",
+                                                          file, language)))
+
+    if(!exists("corpus") || length(corpus) == 0) {
+        Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+                type="error")
+
+        return(FALSE)
+    }
+
+    # Set document names from the IDs since it's not always done by sources (XMLSource...)
+    # We rely on this later e.g. in showCorpusCa() because we cannot use indexes when documents are skipped
+    # In rare cases, duplicated IDs can happen since LexisNexis does not provide any identifier
+    # this is unlikely, though, since we include in the ID the document number in the corpus
+    doItAndPrint("names(corpus) <- make.unique(sapply(corpus, ID))")
+
+    doItAndPrint("corpusVars <- extractMetadata(corpus)")
+
+    list(source=sprintf(.ngettext(length(files), "LexisNexisfile %s", "LexisNexisfile files %s"),
                         paste(files, collapse=", ")))
 }
 
