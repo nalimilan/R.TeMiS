@@ -68,6 +68,8 @@ readEuropresseHTML <- tm::FunctionGenerator(function(elem, language, id) {
             id <- paste(if(!is.na(date)) strftime(date, format="%Y%m%d") else "",
                         paste(sample(LETTERS, 10), collapse=""), sep="")
 
+        free(tree)
+
         # XMLSource uses character(0) rather than NA, do the same
         doc <- tm::PlainTextDocument(x = content,
                                      author = author,

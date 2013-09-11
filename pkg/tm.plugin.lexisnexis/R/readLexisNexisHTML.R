@@ -71,6 +71,8 @@ readLexisNexisHTML <- tm::FunctionGenerator(function(elem, language, id) {
                     if(!is.na(date)) strftime(date, format="%Y%m%d") else "",
                     id, sep="")
 
+        free(tree)
+
         # XMLSource uses character(0) rather than NA, do the same
         doc <- tm::PlainTextDocument(x = content,
                                      author = if(!is.na(author)) author else character(0),
