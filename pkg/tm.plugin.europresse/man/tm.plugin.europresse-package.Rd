@@ -25,7 +25,7 @@
 
   \preformatted{
     # Import corpus
-    source <- europresseSource("myEuropresseArticles.html")
+    source <- EuropresseSource("myEuropresseArticles.html")
     corpus <- Corpus(source)
 
     # See how many articles were imported

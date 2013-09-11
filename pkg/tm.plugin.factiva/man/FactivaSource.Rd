@@ -35,6 +35,10 @@
     \item \code{Edition}: The (local) variant of the newspaper.
     \item \code{Section}: The part of the newspaper containing the article.
     \item \code{Subject}: One or several keywords defining the subject.
+    \item \code{Company}: One or several keywords identifying the covered companies.
+    \item \code{Industry}: One or several keywords identifying the covered industries.
+    \item \code{InfoCode}: One or several Information Provider Codes (IPC).
+    \item \code{InfoDesc}: One or several Information Provider Descriptions (IPD).
     \item \code{Coverage}: One or several keywords identifying the covered regions.
     \item \code{WordCount}: The number of words in the article.
     \item \code{Publisher}: The publisher of the newspaper.
