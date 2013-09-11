@@ -11,13 +11,6 @@
   \acronym{HTML} files.
 }
 \details{
-\tabular{ll}{
-  Package: \tab tm.plugin.lexisnexis\cr
-  Type: \tab Package\cr
-  Version: \tab 1.0\cr
-  Date: \tab 2013-09-08\cr
-  License: \tab GPL (>= 2)\cr
-}
   Typical usage is to create a corpus from \acronym{HTML} files
   exported from LexisNexis (here called \code{myLexisNexisArticles.html}).
   Setting \code{language=NA} allows the language to be set automatically

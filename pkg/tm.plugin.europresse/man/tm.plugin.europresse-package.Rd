@@ -11,13 +11,6 @@
   \acronym{HTML} files.
 }
 \details{
-\tabular{ll}{
-  Package: \tab tm.plugin.europresse\cr
-  Type: \tab Package\cr
-  Version: \tab 1.0\cr
-  Date: \tab 2013-09-08\cr
-  License: \tab GPL (>= 2)\cr
-}
   Typical usage is to create a corpus from \acronym{HTML} files
   exported from Europresse (here called \code{myEuropresseArticles.html}).
   Frequently, it is necessary to specify the encoding of the texts

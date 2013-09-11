@@ -11,13 +11,6 @@
   \acronym{XML} or \acronym{HTML} files.
 }
 \details{
-\tabular{ll}{
-  Package: \tab tm.plugin.factiva\cr
-  Type: \tab Package\cr
-  Version: \tab 1.0\cr
-  Date: \tab 2012-09-11\cr
-  License: \tab GPL (>= 2)\cr
-}
   Typical usage is to create a corpus from a \acronym{XML} or \acronym{HTML} files
   exported from Factiva (here called \code{myFactivaArticles.xml}). Setting
   \code{language=NA} allows the language to be set automatically from the

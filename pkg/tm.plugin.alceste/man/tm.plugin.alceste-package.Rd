@@ -10,13 +10,6 @@
   files formatted in the format used by the Alceste application.
 }
 \details{
-\tabular{ll}{
-  Package: \tab tm.plugin.alceste\cr
-  Type: \tab Package\cr
-  Version: \tab 1.0\cr
-  Date: \tab 2013-09-08\cr
-  License: \tab GPL (>= 2)\cr
-}
   Typical usage is to create a corpus from an Alceste file
   prepared manually (here called \code{myAlcesteCorpus.txt}).
   Frequently, it is necessary to specify the encoding of the texts
