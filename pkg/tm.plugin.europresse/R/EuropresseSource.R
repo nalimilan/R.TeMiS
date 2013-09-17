@@ -1,7 +1,11 @@
 EuropresseSource <- function(x, encoding = "UTF-8") {
     tree <- htmlParse(x, encoding=encoding)
 
-    content <- getNodeSet(tree, "/html/body/table/tr/td")
+    content <- getNodeSet(tree, "/html/body/table/tbody/tr/td")
+
+    # Some HTML files do not have <tbody> (depending on the browser?)
+    if(length(content) == 0)
+        content <- getNodeSet(tree, "/html/body/table/tr/td")
 
     free(tree)
 
