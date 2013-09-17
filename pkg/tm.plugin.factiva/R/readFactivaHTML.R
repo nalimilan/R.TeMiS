@@ -1,6 +1,9 @@
 readFactivaHTML <- tm::FunctionGenerator(function(elem, language, id) {
     function(elem, language, id) {
-        tree <- XML::xmlParse(elem$content, asText=TRUE)
+        # On Windows 7, document saved with Firefox used \r\n for line breaks
+        # and getNodeSet() escapes them for some reason, which breaks parsing
+        content <- gsub("&#13;", "", elem$content, fixed=TRUE)
+        tree <- XML::xmlParse(content, asText=TRUE)
 
         if(is.na(language)) {
             cl <- XML::xmlAttrs(XML::xmlChildren(tree)[[1]])["class"]
