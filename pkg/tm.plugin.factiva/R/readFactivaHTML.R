@@ -1,17 +1,17 @@
-readFactivaHTML <- tm::FunctionGenerator(function(elem, language, id) {
+readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
     function(elem, language, id) {
         # On Windows 7, document saved with Firefox used \r\n for line breaks
         # and getNodeSet() escapes them for some reason, which breaks parsing
         content <- gsub("&#13;", "", elem$content, fixed=TRUE)
-        tree <- XML::xmlParse(content, asText=TRUE)
+        tree <- xmlParse(content, asText=TRUE)
 
         if(is.na(language)) {
-            cl <- XML::xmlAttrs(XML::xmlChildren(tree)[[1]])["class"]
+            cl <- xmlAttrs(xmlChildren(tree)[[1]])["class"]
             language <- regmatches(cl, regexec("^article ([[:alpha:]]{2})Article$", cl))[[1]][2]
         }
 
-        table <- XML::readHTMLTable(XML::xmlChildren(tree)[[1]])
-        XML::free(tree)
+        table <- readHTMLTable(xmlChildren(tree)[[1]])
+        free(tree)
 
         # Without this, sometimes table ends up being a mere list
         table <- as.data.frame(table)
@@ -110,24 +110,24 @@ readFactivaHTML <- tm::FunctionGenerator(function(elem, language, id) {
         infodesc <- gsub(".* : ", "", infodesc)
 
         # XMLSource uses character(0) rather than NA, do the same
-        doc <- tm::PlainTextDocument(x = content,
+        doc <- PlainTextDocument(x = content,
                                      author = if(!is.na(data[["BY"]])) data[["BY"]] else character(0),
                                      datetimestamp = date,
                                      heading = if(!is.na(data[["HD"]])) data[["HD"]] else character(0),
                                      id = id,
                                      origin = if(!is.na(data[["SN"]])) data[["SN"]] else character(0),
                                      language = language)
-        tm::meta(doc, "Edition") <- if(!is.na(data[["ED"]])) data[["ED"]] else character(0)
-        tm::meta(doc, "Section") <- if(!is.na(data[["SE"]])) data[["SE"]] else character(0)
-        tm::meta(doc, "Subject") <- subject
-        tm::meta(doc, "Coverage") <- coverage
-        tm::meta(doc, "Company") <- company
-        tm::meta(doc, "Industry") <- industry
-        tm::meta(doc, "InfoCode") <- infocode
-        tm::meta(doc, "InfoDesc") <- infodesc
-        tm::meta(doc, "WordCount") <- wc
-        tm::meta(doc, "Publisher") <- if(!is.na(data[["PUB"]])) data[["PUB"]] else character(0)
-        tm::meta(doc, "Rights") <- if(!is.na(data[["CY"]])) data[["CY"]] else character(0)
+        meta(doc, "Edition") <- if(!is.na(data[["ED"]])) data[["ED"]] else character(0)
+        meta(doc, "Section") <- if(!is.na(data[["SE"]])) data[["SE"]] else character(0)
+        meta(doc, "Subject") <- subject
+        meta(doc, "Coverage") <- coverage
+        meta(doc, "Company") <- company
+        meta(doc, "Industry") <- industry
+        meta(doc, "InfoCode") <- infocode
+        meta(doc, "InfoDesc") <- infodesc
+        meta(doc, "WordCount") <- wc
+        meta(doc, "Publisher") <- if(!is.na(data[["PUB"]])) data[["PUB"]] else character(0)
+        meta(doc, "Rights") <- if(!is.na(data[["CY"]])) data[["CY"]] else character(0)
         doc
     }
 })

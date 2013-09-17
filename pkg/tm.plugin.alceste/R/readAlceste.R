@@ -1,4 +1,4 @@
-readAlceste <- tm::FunctionGenerator(function(elem, language, id) {
+readAlceste <- FunctionGenerator(function(elem, language, id) {
     function(elem, language, id) {
         id2 <- regmatches(elem$content[1], regexec("^([[:digit:]]+) \\*", elem$content[1]))[[1]][2]
         # Only override default ID if present
@@ -12,16 +12,16 @@ readAlceste <- tm::FunctionGenerator(function(elem, language, id) {
         # Theme lines, ignored
         skip <- which(grepl("^-\\*", elem$content))
 
-        doc <- tm::PlainTextDocument(x = elem$content[-c(1, skip)],
+        doc <- PlainTextDocument(x = elem$content[-c(1, skip)],
                                      id = id,
                                      language = language)
 
         for(v in vars) {
             # Boolean variable (without value after _)
             if(is.na(v[2]))
-                tm::meta(doc, v[1]) <- TRUE
+                meta(doc, v[1]) <- TRUE
             else
-                tm::meta(doc, v[1]) <- v[2]
+                meta(doc, v[1]) <- v[2]
         }
 
         doc

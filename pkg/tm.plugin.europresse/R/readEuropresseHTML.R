@@ -1,4 +1,4 @@
-readEuropresseHTML <- tm::FunctionGenerator(function(elem, language, id) {
+readEuropresseHTML <- FunctionGenerator(function(elem, language, id) {
     function(elem, language, id) {
         # Remove annoying line breaks, as <p> is already here to separate paragraphs
         elem$content <- gsub("\r|&#13;|\n", "", elem$content)
@@ -95,15 +95,15 @@ readEuropresseHTML <- tm::FunctionGenerator(function(elem, language, id) {
         free(tree)
 
         # XMLSource uses character(0) rather than NA, do the same
-        doc <- tm::PlainTextDocument(x = content,
-                                     author = author,
-                                     datetimestamp = date,
-                                     heading = heading,
-                                     id = id,
-                                     origin = origin,
-                                     language = language)
-        tm::meta(doc, "Section") <- section
-        tm::meta(doc, "Pages") <- pages
+        doc <- PlainTextDocument(x = content,
+                                 author = author,
+                                 datetimestamp = date,
+                                 heading = heading,
+                                 id = id,
+                                 origin = origin,
+                                 language = language)
+        meta(doc, "Section") <- section
+        meta(doc, "Pages") <- pages
         doc
     }
 })

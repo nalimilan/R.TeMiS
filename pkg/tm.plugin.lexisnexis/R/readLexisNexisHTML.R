@@ -1,4 +1,4 @@
-readLexisNexisHTML <- tm::FunctionGenerator(function(elem, language, id) {
+readLexisNexisHTML <- FunctionGenerator(function(elem, language, id) {
     function(elem, language, id) {
         # textConnection() in LexisNexisSource() converts strings to UTF-8
         tree <- htmlParse(elem$content, asText=TRUE, encoding="UTF-8")
@@ -74,24 +74,24 @@ readLexisNexisHTML <- tm::FunctionGenerator(function(elem, language, id) {
         free(tree)
 
         # XMLSource uses character(0) rather than NA, do the same
-        doc <- tm::PlainTextDocument(x = content,
-                                     author = if(!is.na(author)) author else character(0),
-                                     datetimestamp = date,
-                                     heading = if(!is.na(heading)) heading else character(0),,
-                                     id = id,
-                                     origin = if(!is.na(origin)) origin else character(0),,
-                                     language = lang)
-        tm::meta(doc, "Introduction") <- if(!is.na(intro)) intro else character(0)
-        tm::meta(doc, "Section") <- if(!is.na(section)) section else character(0)
-        tm::meta(doc, "Subject") <- if(!all(is.na(subject))) subject else character(0)
-        tm::meta(doc, "Coverage") <- if(!all(is.na(coverage))) coverage else character(0)
-        tm::meta(doc, "Company") <- if(!all(is.na(company))) company else character(0)
-        tm::meta(doc, "StockSymbol") <- if(!all(is.na(stocksymbol))) stocksymbol else character(0)
-        tm::meta(doc, "Industry") <- if(!all(is.na(industry))) industry else character(0)
-        tm::meta(doc, "Type") <- if(!is.na(type)) type else character(0)
-        tm::meta(doc, "WordCount") <- if(!is.na(wc)) wc else character(0)
-        tm::meta(doc, "Pages") <- if(!is.na(page)) page else character(0)
-        tm::meta(doc, "Rights") <- if(!is.na(copyright)) copyright else character(0)
+        doc <- PlainTextDocument(x = content,
+                                 author = if(!is.na(author)) author else character(0),
+                                 datetimestamp = date,
+                                 heading = if(!is.na(heading)) heading else character(0),,
+                                 id = id,
+                                 origin = if(!is.na(origin)) origin else character(0),,
+                                 language = lang)
+        meta(doc, "Introduction") <- if(!is.na(intro)) intro else character(0)
+        meta(doc, "Section") <- if(!is.na(section)) section else character(0)
+        meta(doc, "Subject") <- if(!all(is.na(subject))) subject else character(0)
+        meta(doc, "Coverage") <- if(!all(is.na(coverage))) coverage else character(0)
+        meta(doc, "Company") <- if(!all(is.na(company))) company else character(0)
+        meta(doc, "StockSymbol") <- if(!all(is.na(stocksymbol))) stocksymbol else character(0)
+        meta(doc, "Industry") <- if(!all(is.na(industry))) industry else character(0)
+        meta(doc, "Type") <- if(!is.na(type)) type else character(0)
+        meta(doc, "WordCount") <- if(!is.na(wc)) wc else character(0)
+        meta(doc, "Pages") <- if(!is.na(page)) page else character(0)
+        meta(doc, "Rights") <- if(!is.na(copyright)) copyright else character(0)
         doc
     }
 })
