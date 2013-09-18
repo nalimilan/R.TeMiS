@@ -35,7 +35,7 @@ readFactivaXML <- readXML(
     InfoDesc = list("function", function(node) {
                     str <- sapply(getNodeSet(node, "/article/descField[@code='ipd']"), xmlValue)
                     if(length(str) > 0)
-                        strsplit(str, "( +\\| +| +-+ +| +--+|--+ +|\\._)")[[1]]
+                        strsplit(str, "( +\\| +| +-+ +| +--+|--+ +|\\._ +|\\, +)")[[1]]
                     else
                         character(0)
     }),

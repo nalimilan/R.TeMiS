@@ -76,37 +76,37 @@ readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
         subject <- if(!is.na(data[["NS"]])) strsplit(data[["NS"]], "( \\| )")[[1]]
                    else character(0)
         # Remove leading code and invisible characters, esp. \n, before matching the pattern
-        subject <- gsub("[^[:print:]]", "", subject)
+        subject <- gsub("[^[:print:]]|^ | $", "", subject)
         subject <- gsub(".* : ", "", subject)
 
         coverage <- if(!is.na(data[["RE"]])) strsplit(data[["RE"]], "( \\| )")[[1]]
                     else character(0)
         # Remove leading code and invisible characters, esp. \n, before matching the pattern
-        coverage <- gsub("[^[:print:]]", "", coverage)
+        coverage <- gsub("[^[:print:]]|^ | $", "", coverage)
         coverage <- gsub(".* : ", "", coverage)
 
         company <- if(!is.na(data[["CO"]])) strsplit(data[["CO"]], "( \\| )")[[1]]
                    else character(0)
         # Remove leading code and invisible characters, esp. \n, before matching the pattern
-        company <- gsub("[^[:print:]]", "", company)
+        company <- gsub("[^[:print:]]|^ | $", "", company)
         company <- gsub(".* : ", "", company)
 
         industry <- if(!is.na(data[["IN"]])) strsplit(data[["IN"]], "( \\| )")[[1]]
                     else character(0)
         # Remove leading code and invisible characters, esp. \n, before matching the pattern
-        industry <- gsub("[^[:print:]]", "", industry)
+        industry <- gsub("[^[:print:]]|^ | $", "", industry)
         industry <- gsub(".* : ", "", industry)
 
         infocode <- if(!is.na(data[["IPC"]])) strsplit(data[["IPC"]], "( \\| )")[[1]]
                     else character(0)
         # Remove leading code and invisible characters, esp. \n, before matching the pattern
-        infocode <- gsub("[^[:print:]]", "", infocode)
+        infocode <- gsub("[^[:print:]]|^ | $", "", infocode)
         infocode <- gsub(".* : ", "", infocode)
 
-        infodesc <- if(!is.na(data[["IPD"]])) strsplit(data[["IPD"]], "( +\\| +| +-+ +| +--+|--+ +|\\._)")[[1]]
+        infodesc <- if(!is.na(data[["IPD"]])) strsplit(data[["IPD"]], "( +\\| +| +-+ +| +--+|--+ +|\\._ +|\\, +)")[[1]]
                     else character(0)
         # Remove leading code and invisible characters, esp. \n, before matching the pattern
-        infodesc <- gsub("[^[:print:]]", "", infodesc)
+        infodesc <- gsub("[^[:print:]]|^ | $", "", infodesc)
         infodesc <- gsub(".* : ", "", infodesc)
 
         # XMLSource uses character(0) rather than NA, do the same
