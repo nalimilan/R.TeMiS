@@ -2,6 +2,9 @@ readEuropresseHTML <- FunctionGenerator(function(elem, language, id) {
     function(elem, language, id) {
         # Remove annoying line breaks, as <p> is already here to separate paragraphs
         elem$content <- gsub("\r|&#13;|\n", "", elem$content)
+        # In HTML any repetition of spaces must be handled like one space
+        # (used by Internet Explorer for identation)
+        elem$content <- gsub("  +", " ", elem$content)
         # These markups are used by some sources and create line breaks in the middle
         # of sentences, e.g. with quotations in italics
         elem$content <- gsub("</?(font|b|i).*?>", "", elem$content)
@@ -71,18 +74,23 @@ readEuropresseHTML <- FunctionGenerator(function(elem, language, id) {
 
         # If author is present, skip the corresponding line
         if(length(author) > 0)
-            content <- sapply(getNodeSet(tree, "//span[@class = 'TitreArticleVisu']/following::text()[position() > 1]"),
+            content <- sapply(getNodeSet(tree, "//span[@class = 'TitreArticleVisu']/following-sibling::text()[position() > 1]"),
                               xmlValue)
         else
-            content <- sapply(getNodeSet(tree, "//span[@class = 'TitreArticleVisu']/following::text()"),
+            content <- sapply(getNodeSet(tree, "//span[@class = 'TitreArticleVisu']/following-sibling::text()"),
                               xmlValue)
 
-        # Take last matching line using max() in case the content also matches
-        copyright <- which(grepl("^\uA9 [[:digit:]]{4}", content))
-        if(length(copyright) > 0)
-            content <- content[seq(max(copyright) - 1)]
+        copyright.lines <- which(grepl("^([Cc]opyright \uA9|[Cc]opyright|\uA9) [[:digit:]]{4}", content))
+        # To prevent false detections, only keep matches in the last 4 paragraphs...
+        copyright.lines <- copyright.lines[copyright.lines >= length(content) - 4]
+        copyright <- content[copyright.lines]
+        # ... and short enough to be a good candidate
+        copyright <- copyright[nchar(copyright) < 200]
 
-        content <- content[nchar(content) > 0]
+        if(length(copyright) > 0)
+            content <- content[-copyright.lines]
+
+        content <- head(content[nchar(gsub(" ", "", content, fixed=TRUE)) > 0], -1)
 
         id <- gsub("[^[:alnum:]]|news", "",
                    xmlValue(getNodeSet(tree, "//tr/td[@align = 'center']/text()")[[1]]))
@@ -104,6 +112,7 @@ readEuropresseHTML <- FunctionGenerator(function(elem, language, id) {
                                  language = language)
         meta(doc, "Section") <- section
         meta(doc, "Pages") <- pages
+        meta(doc, "Rights") <- copyright
         doc
     }
 })
