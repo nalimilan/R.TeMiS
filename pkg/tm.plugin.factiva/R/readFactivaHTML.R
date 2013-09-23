@@ -1,9 +1,6 @@
 readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
     function(elem, language, id) {
-        # On Windows 7, document saved with Firefox used \r\n for line breaks
-        # and getNodeSet() escapes them for some reason, which breaks parsing
-        content <- gsub("&#13;", "", elem$content, fixed=TRUE)
-        tree <- xmlParse(content, asText=TRUE)
+        tree <- xmlParse(elem$content, asText=TRUE)
 
         if(is.na(language)) {
             cl <- xmlAttrs(xmlChildren(tree)[[1]])["class"]
@@ -11,6 +8,7 @@ readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
         }
 
         table <- readHTMLTable(xmlChildren(tree)[[1]])
+        text <- sapply(XML::getNodeSet(tree, "//p[starts-with(@class, 'articleParagraph')]"), xmlValue)
         free(tree)
 
         # Without this, sometimes table ends up being a mere list
@@ -50,19 +48,6 @@ readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
         data[["AN"]] <- gsub("Document ", "", data[["AN"]])
 
         wc <- as.integer(regmatches(data[["WC"]], regexpr("^[[:digit:]]+", data[["WC"]])))[[1]]
-
-        # Merge article header and body, splitting vector into paragraphs
-        if(!is.na(data[["LP"]]) && !is.na(data[["TD"]]))
-            content <- c(strsplit(data[["LP"]], "\\n")[[1]], strsplit(data[["TD"]], "\\n")[[1]])
-        else if(!is.na(data[["LP"]]))
-            content <- strsplit(data[["LP"]], "\\n")[[1]]
-        else if(!is.na(data[["TD"]]))
-            content <- strsplit(data[["TD"]], "\\n")[[1]]
-        else
-            content <- character(0)
-
-        # Remove useless escape sequences
-        content <- gsub("\\r", "", content)
 
         # Extract useful information: origin, date, and three last characters to avoid collisions
         m <- regmatches(data[["AN"]], regexec("^([A-Za-z]+)0*[1-9][0-9]([0-9][0-9][0-3][0-9][0-3][0-9]).*([A-Za-z0-9]{3})$",
@@ -110,7 +95,7 @@ readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
         infodesc <- gsub(".* : ", "", infodesc)
 
         # XMLSource uses character(0) rather than NA, do the same
-        doc <- PlainTextDocument(x = content,
+        doc <- PlainTextDocument(x = text,
                                      author = if(!is.na(data[["BY"]])) data[["BY"]] else character(0),
                                      datetimestamp = date,
                                      heading = if(!is.na(data[["HD"]])) data[["HD"]] else character(0),
