@@ -36,6 +36,15 @@
       }
   }
 
+  if (getRcmdr("use.markdown")) {
+      putRcmdr("startNewCommandBlock", FALSE)
+      beginRmdBlock()
+  }
+  if (getRcmdr("use.knitr")) {
+      putRcmdr("startNewKnitrCommandBlock", FALSE)
+      beginRnwBlock()
+  }
+
   # HTML.matrix() does not allow passing scientific separately,
   # and vocabulary summary tables often end up printed in scientific notation
   doItAndPrint(.gettext("# Prefer fixed to scientific notation"))
@@ -54,5 +63,24 @@
   doItAndPrint('lattice.options(default.theme=latticeExtra::custom.theme(symbol=RColorBrewer::brewer.pal(8, "Set1")[c(2:1, 3:5, 7:9)], fill=RColorBrewer::brewer.pal(8, "Set1")[c(2:1, 3:5, 7:9)], region=RColorBrewer::brewer.pal(n=11, name="Spectral")))')
 
   doItAndPrint("")
+
+  if (getRcmdr("use.markdown")){
+      removeNullRmdBlocks()
+      putRcmdr("startNewCommandBlock", TRUE)
+      if (getRcmdr("rmd.generated")) {
+          endRmdBlock()
+          putRcmdr("rmd.generated", FALSE)
+      }
+      removeNullRmdBlocks()
+  }
+  if (getRcmdr("use.knitr")){
+      removeNullRnwBlocks()
+      putRcmdr("startNewKnitrCommandBlock", TRUE)
+      if (getRcmdr("rnw.generated")) {
+         endRnwBlock()
+         putRcmdr("rnw.generated", FALSE)
+      }
+      removeNullRnwBlocks()
+  }
 }
 
