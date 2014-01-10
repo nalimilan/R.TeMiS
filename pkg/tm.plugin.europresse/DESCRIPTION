@@ -5,8 +5,7 @@ Version: 1.0
 Date: 2013-09-08
 Authors@R: person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
                   role=c("aut", "cre"))
-Enhances: tm (>= 0.5)
-Imports: tm (>= 0.5), XML
+Imports: tm (>= 0.5-10), XML
 Description: This package provides a tm Source to create corpora from
   articles exported from the Europresse content provider as
   HTML files. It is able to read both text content and meta-data
