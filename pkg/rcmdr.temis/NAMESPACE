@@ -1,5 +1,5 @@
 import(Rcmdr, stats, utils,
        tm, slam, zoo, ca, R2HTML, lattice, latticeExtra, RColorBrewer)
-importFrom(tcltk, ttkcombobox)
+importFrom(tcltk, addTclPath, ttkcombobox, tkgrid.propagate, tkwidget)
 
 exportPattern("^[^\\.]")

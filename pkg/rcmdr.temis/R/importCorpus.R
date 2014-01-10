@@ -88,9 +88,10 @@
         if(options["digits"])
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removeNumbers)")
 
-        if(options["stopwords"] || options["stemming"]) {
+        if(options["stemming"] && !options["custom.stemming"]) {
             # Get list of words before stemming and stopwords removal
             doItAndPrint("words <- col_sums(DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf))))")
+
             gc()
         }
 
@@ -98,11 +99,7 @@
         if(wordsOnly)
             return()
 
-        if(options["stopwords"])
-            doItAndPrint(paste("dtmCorpus <- tm_map(dtmCorpus, removeWords, stopwords(\"",
-                               lang, "\"))", sep=""))
-
-        if(options["stemming"]) {
+        if(options["stemming"] && !options["custom.stemming"]) {
             doItAndPrint("library(SnowballC)")
             doItAndPrint(sprintf('dtmCorpus <- tm_map(dtmCorpus, stemDocumentSnowballC, language="%s")',
                                  lang))
@@ -159,12 +156,13 @@ importCorpusDlg <- function() {
                             values=c(nativeEnc, iconvlist()))
 
     checkBoxes(frame="processingFrame",
-               boxes=c("lowercase", "punctuation", "digits", "stopwords", "stemming"),
-               initialValues=c(1, 1, 1, 0, 1),
+               boxes=c("lowercase", "punctuation", "digits", "stopwords",
+                       "stemming", "custom.stemming"),
+               initialValues=c(1, 1, 1, 0, 1, 0),
                # Keep in sync with strings in initOutputFile()
                labels=c(.gettext("Ignore case"), .gettext("Remove punctuation"),
                         .gettext("Remove digits"), .gettext("Remove stopwords"),
-                        .gettext("Apply stemming")),
+                        .gettext("Apply stemming"), .gettext("Edit stemming manually")),
                title=.gettext("Text processing:"))
 
     tclChunks <- tclVar(0)
@@ -189,6 +187,7 @@ importCorpusDlg <- function() {
         digits <- tclvalue(digitsVariable) == 1
         stopwords <- tclvalue(stopwordsVariable) == 1
         stemming <- tclvalue(stemmingVariable) == 1
+        custom.stemming <- tclvalue(custom.stemmingVariable) == 1
 
         lang <- names(languages)[tclvalue(tclLang) == languages]
 
@@ -263,17 +262,37 @@ importCorpusDlg <- function() {
 
         # Process texts
         .processTexts(c(twitter=twitter, lowercase=lowercase, punctuation=punctuation,
-                        digits=digits, stopwords=stopwords, stemming=stemming,
+                        digits=digits, stopwords=stopwords,
+                        stemming=stemming, custom.stemming=custom.stemming,
                         removeHashtags=res$removeHashtags, removeNames=res$removeNames),
                       lang, FALSE)
 
-        if(twitter || lowercase || punctuation || digits || stopwords || stemming) {
+        if(twitter || lowercase || punctuation || digits || stopwords || (stemming & !custom.stemming)) {
             doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))")
             doItAndPrint("rm(dtmCorpus)")
         }
         else {
             doItAndPrint("dtm <- DocumentTermMatrix(corpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))")
         }
+
+        if(custom.stemming) {
+            if(stemming) doItAndPrint("terms <- wordStem(Terms(dtm))")
+            if(stopwords) doItAndPrint(sprintf('terms[terms %%in%% stopwords("%s")] <- ""', lang))
+            doItAndPrint(sprintf("stemming.dictionary <- data.frame(%s=Terms(dtm), %s=terms, stringsAsFactors=FALSE)",
+                                 .gettext("Original.Word"), .gettext("Stemmed.Term")))
+
+            doItAndPrint("stemming.dictionary <- editDf(stemming.dictionary)")
+            doItAndPrint("dtm <- rollup(dtm, 2, stemming.dictionary[[2]])")
+            doItAndPrint('dtm <- dtm[, Terms(dtm) != ""]')
+            doItAndPrint('attr(dtm, "words") <- stemming.dictionary[[1]]')
+            doItAndPrint('attr(dtm, "stemming.dictionary") <- stemming.dictionary')
+            doItAndPrint("rm(terms, stemming.dictionary)")
+        }
+        else if(stopwords && !options["stemming"]) {
+            doItAndPrint('attr(dtm, "words") <- col_sums(dtm)')
+            doItAndPrint(sprintf('dtm <- dtm[, !Terms(dtm) %%in%% stopwords("%s")', lang))
+        }
+
         gc()
 
 
@@ -284,13 +303,9 @@ importCorpusDlg <- function() {
         # when splitting commands when more than one pair of quotes is present)
         justDoIt(sprintf('meta(corpus, type="corpus", tag="source") <- "%s"', res$source))
 
-        if(stopwords || stemming) {
-            doItAndPrint('attr(dtm, "words") <- words')
-            doItAndPrint("rm(words)")
-        }
-        doItAndPrint(sprintf('meta(corpus, type="corpus", tag="processing") <- attr(dtm, "processing") <- c(lowercase=%s, punctuation=%s, digits=%s, stopwords=%s, stemming=%s, twitter=%s, removeHashtags=%s, removeNames=%s)',
+        doItAndPrint(sprintf('meta(corpus, type="corpus", tag="processing") <- attr(dtm, "processing") <- c(lowercase=%s, punctuation=%s, digits=%s, stopwords=%s, stemming=%s, custom.stemming=%s, twitter=%s, removeHashtags=%s, removeNames=%s)',
                              lowercase, punctuation,
-                             digits, stopwords, stemming, twitter,
+                             digits, stopwords, stemming, custom.stemming, twitter,
                              ifelse(is.null(res$removeHashtags), NA, res$removeHashtags),
                              ifelse(is.null(res$removeNames), NA, res$removeNames)))
 

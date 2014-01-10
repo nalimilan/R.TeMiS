@@ -32,11 +32,11 @@ termsDictionary <- function(dtm, order=c("alphabetic", "occurrences")) {
 
     processing <- attr(dtm, "processing")
     if(is.null(processing))
-        processing <- c(stemming=TRUE, stopwords=FALSE)
+        processing <- c(stemming=TRUE, custom.stemming=FALSE, stopwords=FALSE)
 
     stopword <- names(words) %in% stopwords(lang)
 
-    if(!processing["stemming"]) {
+    if(!processing["stemming"] && !processing["custom.stemming"]) {
         dictionary <- data.frame(row.names=names(words), words,
                                  ifelse(stopword, .gettext("Stopword"), ""),
                                  ifelse(!names(words) %in% Terms(dtm), .gettext("Removed"), ""))
@@ -50,7 +50,13 @@ termsDictionary <- function(dtm, order=c("alphabetic", "occurrences")) {
             dictionary
     }
     else {
-        terms <- SnowballC::wordStem(names(words), language=lang)
+        if(processing["custom.stemming"]) {
+            stemming.dictionary <- attr(dtm, "stemming.dictionary")
+            terms <- stemming.dictionary[[2]]
+        }
+        else {
+            terms <- SnowballC::wordStem(names(words), language=lang)
+        }
 
         dictionary <- data.frame(row.names=names(words), words,
                                  terms, col_sums(dtm)[ifelse(terms %in% Terms(dtm), terms, NA)],
