@@ -5,8 +5,7 @@ Version: 1.0
 Date: 2013-09-08
 Authors@R: person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
                   role=c("aut", "cre"))
-Enhances: tm (>= 0.5)
-Imports: utils, tm (>= 0.5), XML, ISOcodes
+Imports: utils, tm (>= 0.5-10), XML, ISOcodes
 Description: This package provides a tm Source to create corpora from
   articles exported from the LexisNexis content provider as
   HTML files. It is able to read both text content and meta-data

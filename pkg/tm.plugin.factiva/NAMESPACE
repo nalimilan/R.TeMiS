@@ -1,5 +1,4 @@
 export(FactivaSource, readFactivaXML, readFactivaHTML)
 S3method(getElem, FactivaSource)
-S3method(eoi, FactivaSource)
-importFrom(tm, eoi, getElem, FunctionGenerator, meta, "meta<-", PlainTextDocument, readXML, XMLSource)
+importFrom(tm, eoi, getElem, FunctionGenerator, meta, "meta<-", PlainTextDocument, readXML, Source, XMLSource)
 importFrom(XML, getNodeSet, free, readHTMLTable, xmlAttrs, xmlChildren, xmlParse, xmlRoot, xmlValue)

@@ -5,8 +5,7 @@ Version: 1.0
 Date: 2013-09-08
 Authors@R: person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
                   role=c("aut", "cre"))
-Enhances: tm (>= 0.5)
-Imports: tm (>= 0.5), XML
+Imports: tm (>= 0.5-10)
 Description: This package provides a tm Source to create corpora from
   a corpus prepared in the format used by the Alceste application (i.e.
   a single text file with inline meta-data). It is able to import both
