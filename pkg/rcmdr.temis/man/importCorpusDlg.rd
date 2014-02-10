@@ -3,9 +3,12 @@
 \alias{importCorpusFromDir}
 \alias{importCorpusFromFile}
 \alias{importCorpusFromFactiva}
+\alias{importCorpusFromLexisNexis}
+\alias{importCorpusFromEuropresse}
+\alias{importCorpusFromFactiva}
 \alias{importCorpusFromTwitter}
 \alias{splitTexts}
-\alias{extractFactivaMetadata}
+\alias{extractMetadata}
 \title{Import a corpus and process it}
 \description{Import a corpus, process it and extract a document-term matrix.}
 \details{This dialog allows creating a \pkg{tm} corpus from various sources. Once the
@@ -26,19 +29,23 @@
          \dQuote{,} or \dQuote{;} is used as separator, whichever is the most frequent in the
          50 first lines of the file.
 
-         The third source, \dQuote{Factiva XML file}, loads articles exported from
-         the Dow Jones Factiva website in the \acronym{XML} or \acronym{HTML} formats (the former
-         being recommended if you can choose it). Various meta-data describing the articles are
-         automatically extracted. If the corpus is split into several .xml or .html files, you
-         can put them in the same directory and select them by holding the Ctrl key to concatenate
-         them into a single corpus. Please note that some rticles from Factiva are known to contain
-         invalid character that trigger an error when loading. If this problem happens to you,
-         please try to identify the problematic article, for example by removing half of the
-         documents and retrying, until only one document is left in the corpus; then, report
+         The third, fourth and fifth sources, \dQuote{Factiva XML or HTML file(s)},
+         \dQuote{LexisNexis HTML file(s)} and \dQuote{Europresse HTML file(s)}, load articles
+         exported from the corresponding website in the \acronym{XML} or \acronym{HTML} formats
+         (for Factiva, the former is recommended if you can choose it). Various meta-data variables
+         describing the articles are automatically extracted. If the corpus is split into several .xml
+         or .html files, you  can put them in the same directory and select them by holding the Ctrl
+         key to concatenate them into a single corpus. Please note that some articles from Factiva
+         are known to contain invalid character that trigger an error when loading. If this problem
+         happens to you, please try to identify the problematic article, for example by removing half
+         of the documents and retrying, until only one document is left in the corpus; then, report
          the problem to the Factiva Customer Service, or ask for help to the maintainers of the
          present package.
 
-         The third source, \dQuote{Twitter search}, retrieves most recent tweets matching the search
+         The sixth source, \dQuote{Alceste file(s)}, loads texts and variables from a single file
+         in the Alceste format, which uses asterisks to separate texts and code variables.
+
+         The seventh source, \dQuote{Twitter search}, retrieves most recent tweets matching the search
          query and written in the specified language, up to the chosen maximum number of messages.
          Please note that you need to register a custom application and fill in the needed information
          to authenticate with the Twitter API (see \code{vignette("twitteR")} about OAuth authentication
