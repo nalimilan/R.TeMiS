@@ -699,7 +699,7 @@ importCorpusFromLexisNexis <- function(language=NA) {
 
     doItAndPrint("corpusVars <- extractMetadata(corpus)")
 
-    list(source=sprintf(.ngettext(length(files), "LexisNexisfile %s", "LexisNexisfile files %s"),
+    list(source=sprintf(.ngettext(length(files), "LexisNexis file %s", "LexisNexis files %s"),
                         paste(files, collapse=", ")))
 }
 
