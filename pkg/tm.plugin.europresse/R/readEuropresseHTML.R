@@ -43,7 +43,7 @@ readEuropresseHTML <- FunctionGenerator(function(elem, language, id) {
             # https://stat.ethz.ch/pipermail/r-sig-mac/2012-June/009296.html
             # Add a workaround for French
             if(is.na(datepos) && Sys.info()["sysname"] == "Darwin") {
-                date <- strptime(sub("[jJ]uillet", "07", dat, "%d %m %Y"))
+                date <- strptime(sub("[jJ]uillet", "07", dat), "%d %m %Y")
                 datepos <- which(!is.na(date))[1]
             }
 
