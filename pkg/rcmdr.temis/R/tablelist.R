@@ -368,39 +368,48 @@
 
 # Adapted from Rcmdr's selectActiveDataSet(). Copyright John Fox. License: GPL>=2.
 .loadStemming <- function(){
-	dataSets <- listDataSets()
-	.activeDataSet <- ActiveDataSet()
-	if (length(dataSets) == 0){
-		Message(message=gettextRcmdr("There are no data sets from which to choose."),
-				type="error")
-		tkfocus(CommanderWindow())
-		return()
-	}
-	initializeDialog(title=gettextRcmdr("Select Data Set"))
-	dataSetsBox <- variableListBox(top, dataSets, title=gettextRcmdr("Data Sets (pick one)"))
+    dataSets <- listDataSets()
+    .activeDataSet <- ActiveDataSet()
+    if (length(dataSets) == 0){
+        Message(message=gettextRcmdr("There are no data sets from which to choose."),
+                type="error")
+        tkfocus(CommanderWindow())
+        return()
+    }
+    initializeDialog(title=gettextRcmdr("Select Data Set"))
+    dataSetsBox <- variableListBox(top, dataSets, title=gettextRcmdr("Data Sets (pick one)"),
+                                   initialSelection=0)
 
-	dset <- NULL
+    dset <- NULL
 
-	onOK <- function(){
-		dset <<- getSelection(dataSetsBox)
-		closeDialog()
-	}
-	OKCancelHelp()
-	tkgrid(getFrame(dataSetsBox), sticky="nw")
-	tkgrid(buttonsFrame, sticky="w")
-	dialogSuffix()
+    onOK <- function(){
+        dset <- get(getSelection(dataSetsBox), globalenv())
 
-	dset
+        if(!.gettext("Original.Word") %in% names(dset) ||
+           !.gettext("Stemmed.Term") %in% names(dset)) {
+            Message(sprintf(.gettext("Data set must contain columns named \"%s\" and \"%s\"."),
+                            .gettext("Original.Word"), .gettext("Stemmed.Term")),
+                    type="error")
+            return()
+        }
+
+        dset <<- dset
+        closeDialog()
+    }
+    OKCancelHelp()
+    tkgrid(getFrame(dataSetsBox), sticky="nw")
+    tkgrid(buttonsFrame, sticky="w")
+    dialogSuffix()
+
+    dset
 }
 
-.editStemming <- function(df, row.names=NULL) {
+editStemming <- function(df) {
     top <- tktoplevel()
     tkwm.geometry(top, tkwm.geometry(CommanderWindow()))
 
-    if(!is.null(row.names)) {
-        df <- cbind(rownames(df), df)
-        names(df)[[1]] <- row.names
-    }
+    df <- cbind(rownames(df), df)
+    names(df)[[1]] <- .gettext("Original.Word")
 
     tl <- .GDf(top, df)
     tkgrid(tl$block, sticky="news")
@@ -409,11 +418,76 @@
 
     .env <- environment()
 
-    onLoad <- function() {
+    onImport <- function() {
+        file <- tclvalue(tkgetOpenFile(filetypes=sprintf('{"%s" {".csv" ".CSV"}}',
+                                                         .gettext("Comma-separated values (CSV) file")),
+		                               parent=top))
+
+        if (file == "") {
+            tkfocus(CommanderWindow())
+            return()
+        }
+
+        # Try to guess the separator from the most common character of ; and ,
+        # This should work in all cases where text is not too long
+        excerpt <- readLines(file, 50)
+        n1 <- sum(sapply(gregexpr(",", excerpt), length))
+        n2 <- sum(sapply(gregexpr(";", excerpt), length))
+
+        if(n1 > n2)
+            df2 <- read.csv(file)
+        else
+            df2 <- read.csv2(file)
+
+        if(!.gettext("Original.Word") %in% names(df2) ||
+           !.gettext("Stemmed.Term") %in% names(df2)) {
+            Message(sprintf(.gettext("Data set must contain columns named \"%s\" and \"%s\"."),
+                            .gettext("Original.Word"), .gettext("Stemmed.Term")),
+                    type="error")
+            return()
+        }
+
         tkgrab.release(top)
         tkdestroy(top)
 
-        .loadStemming()
+        # make.names() is needed because "Stopwords" must be translated both with an without space in French
+        df2 <- merge(df[make.names(c(.gettext("Original.Word"), .gettext("Occurrences"), .gettext("Stopword")))],
+                     df2[!names(df2) %in% make.names(c(.gettext("Occurrences"), .gettext("Stopword")))],
+                     by=.gettext("Original.Word"),
+                     all.x=TRUE, all.y=FALSE)
+
+        df2[[.gettext("Stemmed.Term")]] <- as.character(df2[[.gettext("Stemmed.Term")]])
+        df2[is.na(df2[[.gettext("Stemmed.Term")]]), .gettext("Stemmed.Term")] <- ""
+
+        rownames(df2) <- df2[[.gettext("Original.Word")]]
+        df2 <- df2[!names(df2) %in% .gettext("Original.Word")]
+        df2 <- df2[unique(c(make.names(c(.gettext("Occurrences"), .gettext("Stemmed.Term"), .gettext("Stopword"))), names(df2)))]
+
+        df <<- editStemming(df2)
+    }
+
+
+    onExport <- function() {
+        tl$save_data("df", .env)
+        rownames(.env$df) <- .env$df[[1]]
+        .env$df <- .env$df[-1]
+
+        file <- tclvalue(tkgetSaveFile(filetypes=sprintf('{"%s" {".csv" ".CSV"}}',
+                                                         .gettext("Comma-separated values (CSV) file")),
+                                       defaultextension="csv",
+                                       initialfile="dictionary.csv",
+		                               parent=top))
+
+        if (file == "") {
+            tkfocus(CommanderWindow())
+            return()
+        }
+
+        .env$df <- cbind(rownames(.env$df), .env$df)
+        names(.env$df)[[1]] <- .gettext("Original.Word")
+
+        write.csv(.env$df, file=file)
+        Message(.gettext(sprintf("Stemming dictionary saved to \"%s\".", file)))
     }
 
     onOK <- function() {
@@ -423,16 +497,24 @@
 
         tkgrab.release(top)
         tkdestroy(top)
-        
     }
 
-    loadButton <- buttonRcmdr(top, text=.gettext("Load stemming table"), command=onLoad)
-    saveButton <- buttonRcmdr(top, text=.gettext("Save stemming table"), command=onSave)
-    OKbutton <- buttonRcmdr(top, text=gettextRcmdr("OK"), width=12, command=onOK, default="active",
+    buttonsFrame <- tkframe(top)
+    leftButtonsBox <- tkframe(buttonsFrame)
+    rightButtonsBox <- tkframe(buttonsFrame)
+
+    loadButton <- buttonRcmdr(leftButtonsBox, text=.gettext("Import stemming dictionary"), command=onImport)
+    exportButton <- buttonRcmdr(leftButtonsBox, text=.gettext("Export stemming dictionary"), command=onExport)
+    OKbutton <- buttonRcmdr(rightButtonsBox, text=gettextRcmdr("OK"), width=12, command=onOK, default="active",
                             image="::image::okIcon", compound="left")
-    tkgrid(loadButton, sticky="w")
-    tkgrid(saveButton, sticky="w")
-    tkgrid(OKbutton, sticky="e")
+    tkgrid(loadButton, exportButton, sticky="ew", padx=6)
+    tkgrid(OKbutton, sticky="e", padx=6)
+    tkgrid.configure(leftButtonsBox, rightButtonsBox, pady=6, sticky="ew")
+    tkgrid.configure(buttonsFrame, sticky="ew")
+    tkgrid.columnconfigure(buttonsFrame, 0, weight=1)
+    tkgrid.columnconfigure(buttonsFrame, 1, weight=1)
+    tkgrid.configure(leftButtonsBox, sticky="w")
+    tkgrid.configure(rightButtonsBox, sticky="e")
 
     tkgrab.set(top)
     tkwait.window(top)

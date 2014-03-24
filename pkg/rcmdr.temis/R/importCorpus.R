@@ -97,7 +97,7 @@
                              .gettext("Occurrences"), .gettext("Stemmed.Term"), .gettext("Stopword"), lang, .gettext("Stopword")))
     }
     else if(custom.stemming){
-        doItAndPrint(sprintf('dictionary <- data.frame(row.names=colnames(dtm), "%s"=col_sums(dtm), "%s"="", "%s"=ifelse(colnames(dtm) %%in%% stopwords("%s"), "%s", ""), stringsAsFactors=FALSE)',
+        doItAndPrint(sprintf('dictionary <- data.frame(row.names=colnames(dtm), "%s"=col_sums(dtm), "%s"=colnames(dtm), "%s"=ifelse(colnames(dtm) %%in%% stopwords("%s"), "%s", ""), stringsAsFactors=FALSE)',
                              .gettext("Occurrences"), .gettext("Stemmed.Term"), .gettext("Stopword"), lang, .gettext("Stopword")))
     }
     else {
@@ -111,7 +111,7 @@
         if(stopwords) doItAndPrint(sprintf('dictionary[Terms(dtm) %%in%% stopwords("%s"), "%s"] <- ""',
                                            lang, .gettext("Stemmed.Term")))
 
-        doItAndPrint(sprintf('dictionary <- editDf(dictionary, "%s")', .gettext("Original.Word")))
+        doItAndPrint("dictionary <- editStemming(dictionary)")
         doItAndPrint(sprintf('dtm <- rollup(dtm, 2, dictionary[["%s"]])', .gettext("Stemmed.Term")))
         doItAndPrint('dtm <- dtm[, Terms(dtm) != ""]')
     }
