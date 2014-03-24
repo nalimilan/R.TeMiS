@@ -33,7 +33,8 @@ runCorpusCa <- function(corpus, dtm=NULL, variables=NULL, sparsity=0.9, ...) {
                       paste(names(invalid), collapse=", ")),
                 type="note")
 
-        .Message(.gettext("Some documents have been skipped because they do not include any occurrence of the terms retained in the final document-term matrix. Their list is available in the \"Messages\" area.\nIncrease the value of the 'sparsity' parameter if you want to include them."),
+        .Message(sprintf(.gettext("%i documents have been skipped because they do not include any occurrence of the terms retained in the final document-term matrix. Their list is available in the \"Messages\" area.\n\nIncrease the value of the 'sparsity' parameter if you want to include them."),
+                         length(invalid)),
                  type="info")
     }
 
