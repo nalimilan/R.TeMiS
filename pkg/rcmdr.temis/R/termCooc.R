@@ -22,8 +22,8 @@ termChisqDist <- function(term, dtm, n=5, variable=NULL) {
 
 termCoocDlg <- function() {
     if(!(exists("dtm") && class(dtm) == "DocumentTermMatrix")) {
-        Message(message=.gettext("Please import a corpus and create the document-term matrix first."),
-                type="error")
+        .Message(message=.gettext("Please import a corpus and create the document-term matrix first."),
+                 type="error")
         return()
     }
 
@@ -48,18 +48,18 @@ termCoocDlg <- function() {
         var <- getSelection(varBox)
 
         if(length(termsList) == 0) {
-            Message(gettext("Please enter at least one term."), "error")
+            .Message(gettext("Please enter at least one term."), "error", parent=top)
 
             return()
         }
         else if(!all(termsList %in% colnames(dtm))) {
             wrongTerms <- termsList[!(termsList %in% colnames(dtm))]
-            Message(sprintf(.ngettext(length(wrongTerms),
+            .Message(sprintf(.ngettext(length(wrongTerms),
                                       "Term \'%s\' does not exist in the corpus.",
                                       "Terms \'%s\' do not exist in the corpus."),
                                        # TRANSLATORS: this should be opening quote, comma, closing quote
                                        paste(wrongTerms, collapse=.gettext("\', \'"))),
-                    "error")
+                     "error", parent=top)
 
             return()
         }

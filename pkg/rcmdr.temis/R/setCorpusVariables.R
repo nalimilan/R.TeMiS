@@ -2,20 +2,20 @@ doSetCorpusVariables <- function() doItAndPrint("setCorpusVariables()")
 
 setCorpusVariables <- function() {
     if(!exists("corpus") || !("Corpus" %in% class(corpus))) {
-        Message(message=.gettext("Please import a corpus first."),
-                type="error")
+        .Message(message=.gettext("Please import a corpus first."),
+                 type="error")
         return()
     }
 
     if(!activeDataSetP()) {
-        Message(message=.gettext("Please create or import a data set first."),
-                type="error")
+        .Message(message=.gettext("Please create or import a data set first."),
+                 type="error")
         return()
     }
 
     if(!checkVariables()) {
-        Message(message=.gettext("Please create at least one variable (column)."),
-                type="error")
+        .Message(message=.gettext("Please create at least one variable (column)."),
+                 type="error")
         return()
     }
 
@@ -25,8 +25,8 @@ setCorpusVariables <- function() {
     dset <- get(ActiveDataSet())
     len <- if (split) length(unique(meta(corpus, .gettext("Doc N"))[[1]])) else length(corpus)
     if(nrow(dset) != len) {
-        Message(message=sprintf(.gettext("Active data set must contain exactly %d rows."), len),
-                type="error")
+        .Message(message=sprintf(.gettext("Active data set must contain exactly %d rows."), len),
+                 type="error")
         return()
     }
 

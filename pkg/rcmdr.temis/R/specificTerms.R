@@ -57,8 +57,8 @@ specificTerms <- function(dtm, variable=NULL, p=0.1, n.max=25, sparsity=0.95, mi
 
 specificTermsDlg <- function() {
     if(!(exists("dtm") && class(dtm) == "DocumentTermMatrix")) {
-        Message(message=.gettext("Please import a corpus and create the document-term matrix first."),
-                type="error")
+        .Message(message=.gettext("Please import a corpus and create the document-term matrix first."),
+                 type="error")
         return()
     }
 
@@ -91,7 +91,7 @@ specificTermsDlg <- function() {
         n <- as.numeric(tclvalue(tclN))
 
         if(var != .gettext("Document") && length(unique(meta(corpus, var)[[1]])) < 2) {
-            Message(.gettext("Please choose a variable with at least two levels."), "error")
+            .Message(.gettext("Please choose a variable with at least two levels."), "error", parent=top)
             return()
         }
 

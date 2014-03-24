@@ -353,8 +353,8 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 
 showCorpusCaDlg <- function() {
     if(!exists("corpusCa") || !class(corpusCa) == "ca") {
-        Message(message=.gettext("Please run a correspondence analysis on the corpus first."),
-                type="error")
+        .Message(message=.gettext("Please run a correspondence analysis on the corpus first."),
+                 type="error")
         return()
     }
 
@@ -462,7 +462,7 @@ showCorpusCaDlg <- function() {
         ctrDim <- switch(tclvalue(ctrDimVariable), xyDim=paste("c(", x, ", ", y, ")", sep=""), xDim=x, yDim=y)
 
         if(!(docLabels || termLabels || varLabels || docPoints || termPoints || varPoints)) {
-            Message(.gettext("Please select something to plot."), "error")
+            .Message(.gettext("Please select something to plot."), "error", parent=top)
 
             return()
         }
@@ -497,7 +497,7 @@ showCorpusCaDlg <- function() {
 
             if(((docPoints || docLabels) && (varPoints || varLabels)) && docLabels != varLabels)
                 Message(.gettext("Plotting documents and variables at the same time currently forces labels to be drawn for both or none."),
-                        "note")
+                         "note")
 
             rowActivePoints<-if(docPoints) 16 else NA
             rowSupPoints<-if(varPoints) 1 else NA

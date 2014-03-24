@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.temis 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-22 19:11+0100\n"
+"POT-Creation-Date: 2014-03-23 11:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -176,17 +176,18 @@ msgid "All items of 'variables' should be meta-data variables of the corpus."
 msgstr ""
 
 #: R/corpusCa.R:21 R/corpusClustering.R:278
-#, c-format
 msgid ""
-"Document %s has been skipped because it does not include any occurrence of "
-"the terms retained in the final document-term matrix.\n"
-"Increase the value of the 'sparsity' parameter to fix this warning."
-msgid_plural ""
-"Documents %s have been skipped because they do not include any occurrence of "
-"the terms retained in the final document-term matrix.\n"
-"Increase the value of the 'sparsity' parameter to fix this warning."
-msgstr[0] ""
-msgstr[1] ""
+"Some documents have been skipped because they do not include any occurrence "
+"of the terms retained in the final document-term matrix. Their list is "
+"available in the \"Messages\" area.\n"
+"Increase the value of the 'sparsity' parameter if you want to include them."
+msgstr ""
+
+#: R/corpusCa.R:21
+msgid "Documents skipped from correspondence analysis:\n"
+
+#: R/corpusClustering.R:278
+msgid "Documents skipped from hierarchical clustering:\n"
 
 #: R/corpusCa.R:31
 msgid ""
@@ -2005,4 +2006,16 @@ msgstr ""
 
 #: R/tablelist.R:506
 msgid "Export stemming dictionary"
+msgstr ""
+
+#: R/common.R:127
+msgid "Information"
+msgstr ""
+
+#: R/common.R:128
+msgid "Error"
+msgstr ""
+
+#: R/common.R:129
+msgid "Warning"
 msgstr ""

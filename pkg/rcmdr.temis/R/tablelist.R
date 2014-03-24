@@ -371,8 +371,8 @@
     dataSets <- listDataSets()
     .activeDataSet <- ActiveDataSet()
     if (length(dataSets) == 0){
-        Message(message=gettextRcmdr("There are no data sets from which to choose."),
-                type="error")
+        .Message(message=gettextRcmdr("There are no data sets from which to choose."),
+                 type="error")
         tkfocus(CommanderWindow())
         return()
     }
@@ -387,9 +387,9 @@
 
         if(!.gettext("Original.Word") %in% names(dset) ||
            !.gettext("Stemmed.Term") %in% names(dset)) {
-            Message(sprintf(.gettext("Data set must contain columns named \"%s\" and \"%s\"."),
+            .Message(sprintf(.gettext("Data set must contain columns named \"%s\" and \"%s\"."),
                             .gettext("Original.Word"), .gettext("Stemmed.Term")),
-                    type="error")
+                     type="error")
             return()
         }
 
@@ -441,9 +441,9 @@ editStemming <- function(df) {
 
         if(!.gettext("Original.Word") %in% names(df2) ||
            !.gettext("Stemmed.Term") %in% names(df2)) {
-            Message(sprintf(.gettext("Data set must contain columns named \"%s\" and \"%s\"."),
+            .Message(sprintf(.gettext("Data set must contain columns named \"%s\" and \"%s\"."),
                             .gettext("Original.Word"), .gettext("Stemmed.Term")),
-                    type="error")
+                     type="error", parent=top)
             return()
         }
 
@@ -487,7 +487,7 @@ editStemming <- function(df) {
         names(.env$df)[[1]] <- .gettext("Original.Word")
 
         write.csv(.env$df, file=file)
-        Message(.gettext(sprintf("Stemming dictionary saved to \"%s\".", file)))
+        .Message(.gettext(sprintf("Stemming dictionary saved to \"%s\".", file)))
     }
 
     onOK <- function() {

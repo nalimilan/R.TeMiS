@@ -107,18 +107,18 @@ termFreqDlg <- function() {
         byTerm <- tclvalue(tclByTermVar) == 1
 
         if(length(termsList) == 0) {
-            Message(.gettext("Please enter at least one term."), "error")
+            .Message(.gettext("Please enter at least one term."), "error", parent=top)
 
             return()
         }
         else if(!all(termsList %in% colnames(dtm))) {
             wrongTerms <- termsList[!(termsList %in% colnames(dtm))]
-            Message(sprintf(.ngettext(length(wrongTerms),
+            .Message(sprintf(.ngettext(length(wrongTerms),
                                       "Term \'%s\' does not exist in the corpus.",
                                       "Terms \'%s\' do not exist in the corpus."),
                                       # TRANSLATORS: this should be opening quote, comma, closing quote
                                       paste(wrongTerms, collapse=.gettext("\', \'"))),
-                    "error")
+                     "error", parent=top)
 
             return()
         }

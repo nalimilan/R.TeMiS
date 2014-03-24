@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.temis 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-22 19:11+0100\n"
-"PO-Revision-Date: 2014-03-22 19:11+0100\n"
+"POT-Creation-Date: 2014-03-23 11:22+0100\n"
+"PO-Revision-Date: 2014-03-23 11:22+0100\n"
 "Last-Translator: Milan Bouchet-Valat <nalimilan@club.fr>\n"
 "Language-Team: fr <none>\n"
 "Language: fr\n"
@@ -176,23 +176,24 @@ msgstr ""
 "Tous les élements de « variables » doivent être des variables du corpus."
 
 #: R/corpusCa.R:21 R/corpusClustering.R:278
-#, c-format
 msgid ""
-"Document %s has been skipped because it does not include any occurrence of "
-"the terms retained in the final document-term matrix.\n"
-"Increase the value of the 'sparsity' parameter to fix this warning."
-msgid_plural ""
-"Documents %s have been skipped because they do not include any occurrence of "
-"the terms retained in the final document-term matrix.\n"
-"Increase the value of the 'sparsity' parameter to fix this warning."
-msgstr[0] ""
-"Le document %s a été ignoré car il ne contient aucune occurrence des termes "
-"retenus dans le tableau lexical final.\n"
-"Augmentez la limite de rareté des termes pour corriger ce problème."
-msgstr[1] ""
-"Les documents %s ont été ignorés car ils ne contiennent aucune occurrence "
-"des termes retenus dans le tableau lexical final.\n"
-"Augmentez la limite de rareté des termes pour corriger ce problème."
+"Some documents have been skipped because they do not include any occurrence "
+"of the terms retained in the final document-term matrix. Their list is "
+"available in the \"Messages\" area.\n"
+"Increase the value of the 'sparsity' parameter if you want to include them."
+msgstr ""
+"Des documents ont été ignorés car il ne contiennent aucune occurrence des "
+"termes retenus dans le tableau lexical final. Leur liste est disponible "
+"dans la zone \"Messages\".\n"
+"Augmentez la limite de rareté des termes si vous désirez les prendre en compte."
+
+#: R/corpusCa.R:21
+msgid "Documents skipped from correspondence analysis:\n"
+msgstr "Documents ignorés lors de l'analyse des correspondances :\n"
+
+#: R/corpusClustering.R:278
+msgid "Documents skipped from hierarchical clustering:\n"
+msgstr "Documents ignorés lors de la classification ascendante hiérarchique :\n"
 
 # # END OF MENUS
 #: R/corpusCa.R:31
@@ -2119,3 +2120,15 @@ msgstr "Importer un dictionnaire"
 #: R/tablelist.R:506
 msgid "Export stemming dictionary"
 msgstr "Exporter le dictionnaire"
+
+#: R/common.R:127
+msgid "Information"
+msgstr "Information"
+
+#: R/common.R:128
+msgid "Error"
+msgstr "Erreur"
+
+#: R/common.R:129
+msgid "Warning"
+msgstr "Avertissement"

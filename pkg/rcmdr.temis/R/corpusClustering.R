@@ -274,11 +274,12 @@ corpusClustDlg <- function() {
             doItAndPrint(sprintf("clustDtm <- removeSparseTerms(dtm, %s)", sparsity))
 
             if(any(row_sums(clustDtm) == 0)) {
-                msg <- sprintf(.ngettext(sum(row_sums(clustDtm) == 0),
-                             "Document %s has been skipped because it does not include any occurrence of the terms retained in the final document-term matrix.\nIncrease the value of the 'sparsity' parameter to fix this warning.",
-                             "Documents %s have been skipped because they do not include any occurrence of the terms retained in the final document-term matrix.\nIncrease the value of the 'sparsity' parameter to fix this warning."),
-                             paste(rownames(clustDtm)[row_sums(clustDtm) == 0], collapse=", "))
-                Message(msg, type="warning")
+                Message(paste(.gettext("Documents skipped from hierarchical clustering:\n"),
+                              paste(rownames(clustDtm)[row_sums(clustDtm) == 0], collapse=", ")),
+                        type="note")
+
+                .Message(.gettext("Some documents have been skipped because they do not include any occurrence of the terms retained in the final document-term matrix. Their list is available in the \"Messages\" area.\nIncrease the value of the 'sparsity' parameter if you want to include them."),
+                         type="info")
 
                 doItAndPrint('clustDtm <- clustDtm[row_sums(clustDtm) > 0,]')
             }
@@ -335,7 +336,7 @@ corpusClustDlg <- function() {
 
 createClustersDlg <- function(..., plot=TRUE) {
     if(!(exists("corpusClust") && class(corpusClust) == "hclust")) {
-        Message(message=.gettext("Please run a hierarchical clustering on the corpus first."),
+        .Message(message=.gettext("Please run a hierarchical clustering on the corpus first."),
                 type="error")
         return()
     }

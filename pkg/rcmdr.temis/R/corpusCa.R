@@ -17,20 +17,24 @@ runCorpusCa <- function(corpus, dtm=NULL, variables=NULL, sparsity=0.9, ...) {
         dtm<-dtm[-invalid, , drop=FALSE]
         meta<-oldMeta[-invalid, , drop=FALSE]
         corpus<-corpus[-invalid]
-        msg<-sprintf(.ngettext(length(invalid),
-                     "Document %s has been skipped because it does not include any occurrence of the terms retained in the final document-term matrix.\nIncrease the value of the 'sparsity' parameter to fix this warning.",
-                     "Documents %s have been skipped because they do not include any occurrence of the terms retained in the final document-term matrix.\nIncrease the value of the 'sparsity' parameter to fix this warning."),
-                     paste(names(invalid), collapse=", "))
-        Message(msg, type="warning")
     }
 
     ndocs<-nrow(dtm)
     nterms<-ncol(dtm)
 
     if(ndocs <= 1 || nterms <= 1) {
-        Message(.gettext("Please increase the value of the 'sparsity' parameter so that at least two documents and two terms are retained."),
-                type="error")
+        .Message(.gettext("Please increase the value of the 'sparsity' parameter so that at least two documents and two terms are retained."),
+                 type="error")
         return()
+    }
+
+    if(length(invalid) > 0) {
+        Message(paste(.gettext("Documents skipped from correspondence analysis:\n"),
+                      paste(names(invalid), collapse=", ")),
+                type="note")
+
+        .Message(.gettext("Some documents have been skipped because they do not include any occurrence of the terms retained in the final document-term matrix. Their list is available in the \"Messages\" area.\nIncrease the value of the 'sparsity' parameter if you want to include them."),
+                 type="info")
     }
 
     skippedVars<-character()
@@ -83,7 +87,7 @@ runCorpusCa <- function(corpus, dtm=NULL, variables=NULL, sparsity=0.9, ...) {
     }
 
     if(!is.null(variables) && sum(origVars %in% variables) < 2) {
-        Message(.gettext("Please select active variables so that at least two levels are present in the retained documents."),
+        .Message(.gettext("Please select active variables so that at least two levels are present in the retained documents."),
                 type="error")
         return()
     }
@@ -93,15 +97,23 @@ runCorpusCa <- function(corpus, dtm=NULL, variables=NULL, sparsity=0.9, ...) {
             type="note")
 
     if(length(skippedVars) > 0)
-        Message(sprintf(.gettext("Variable(s) %s have been skipped since it contains only missing values for retained documents."),
-                        paste(skippedVars, collapse=", ")),
-                type="note")
+        msg1 <- sprintf(.gettext("Variable(s) %s have been skipped since it contains only missing values for retained documents."),
+                        paste(skippedVars, collapse=", "))
+    else
+        msg1 <- ""
 
     if(length(skippedLevs) > 0)
-        Message(sprintf(.gettext("Some levels of variable(s) %s have been skipped since they contain only missing values for retained documents."),
-                        paste(skippedLevs, collapse=", ")),
-                type="note")
+        msg2 <- sprintf(.gettext("Some levels of variable(s) %s have been skipped since they contain only missing values for retained documents."),
+                        paste(skippedLevs, collapse=", "))
+    else
+        msg2 <- ""
 
+    if(length(skippedVars) > 0 && length(skippedLevs) > 0)
+        .Message(paste(msg1, "\n\n", msg2), "info")
+    else if(length(skippedVars) > 0)
+        .Message(msg1, "info")
+    else if(length(skippedLevs) > 0)
+        .Message(msg2, "info")
 
     newDtm <- as.matrix(rbind(dtm, varDtm))
 
@@ -176,8 +188,8 @@ corpusCaDlg <- function() {
         on.exit(setIdleCursor())
 
         if(ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"]) == 0)
-            Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
-                    type="note")
+            .Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
+                    type="info")
 
         if(length(vars) == 1 && vars[1] == .gettext("None (run analysis on full matrix)"))
             doItAndPrint(sprintf("corpusCa <- runCorpusCa(corpus, dtm, sparsity=%s, nd=%i)", sparsity/100, dim))

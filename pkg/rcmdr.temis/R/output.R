@@ -69,11 +69,11 @@ initOutputFile <- function(file) {
 
 openOutputFile <- function() {
     if(!exists(".HTML.file")) {
-        Message(.gettext("No report file has been created yet."), type="error")
+        .Message(.gettext("No report file has been created yet."), type="error")
         return()
     }
     else if(!file.exists(.HTML.file)) {
-        Message(.gettext("Report file does not exist (it was probably removed)."), type="error")
+        .Message(.gettext("Report file does not exist (it was probably removed)."), type="error")
         return()
     }
 
@@ -89,7 +89,7 @@ setLastTable <- function(name, title=NULL) {
 
 copyTableToOutput <- function() {
     if(!exists("last.table") || !exists(last.table)) {
-        Message(.gettext("No table has been built yet. Please create a table first."), type="error")
+        .Message(.gettext("No table has been built yet. Please create a table first."), type="error")
         return()
     }
 
@@ -128,7 +128,7 @@ copyTableToOutput <- function() {
 
 copyPlotToOutput <- function() {
     if(length(dev.list()) == 0) {
-        Message(.gettext("No plot has been drawn yet. Please create a plot first."), type="error")
+        .Message(.gettext("No plot has been drawn yet. Please create a plot first."), type="error")
         return()
     }
 

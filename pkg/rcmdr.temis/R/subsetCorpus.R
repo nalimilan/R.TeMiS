@@ -57,8 +57,8 @@
 subsetCorpusByVarDlg <- function() {
     nVars <- ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"])
     if(nVars == 0) {
-        Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
-                type="error")
+        .Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
+                 type="error")
         return()
     }
 
@@ -163,18 +163,18 @@ subsetCorpusByTermsDlg <- function() {
         save <- tclvalue(tclSave) == "1"
 
         if(length(keepList) == 0 && length(excludeList) == 0) {
-            Message(.gettext("Please enter at least one term."), "error")
+            .Message(.gettext("Please enter at least one term."), "error", parent=top)
 
             return()
         }
         else if(!all(c(keepList, excludeList) %in% colnames(dtm))) {
             wrongTerms <- c(keepList, excludeList)[!c(keepList, excludeList) %in% colnames(dtm)]
-            Message(sprintf(.ngettext(length(wrongTerms),
+            .Message(sprintf(.ngettext(length(wrongTerms),
                                       "Term \'%s\' does not exist in the corpus.",
                                       "Terms \'%s\' do not exist in the corpus."),
                                       # TRANSLATORS: this should be opening quote, comma, closing quote
                                       paste(wrongTerms, collapse=.gettext("\', \'"))),
-                    "error")
+                     "error", parent=top)
 
             return()
         }
@@ -185,8 +185,8 @@ subsetCorpusByTermsDlg <- function() {
                  !any(row_sums(dtm[, keepList] >= keepFreq) > 0)) ||
                 (length(keepList) == 0 && length(excludeList) > 0 &&
                  !any(row_sums(dtm[, excludeList] >= excludeFreq) == 0))) {
-            Message(.gettext("Specified conditions would exclude all documents from the corpus."),
-                    "error")
+            .Message(.gettext("Specified conditions would exclude all documents from the corpus."),
+                     "error", parent=top)
 
             return()
         }
@@ -234,7 +234,7 @@ subsetCorpusByTermsDlg <- function() {
 
 restoreCorpus <- function() {
     if(!exists("origCorpus"))
-        Message(message=.gettext("No saved corpus to restore was found."), type="error")
+        .Message(message=.gettext("No saved corpus to restore was found."), type="error")
 
     doItAndPrint("corpus <- origCorpus")
 

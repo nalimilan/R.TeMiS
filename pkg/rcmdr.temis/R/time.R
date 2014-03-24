@@ -1,8 +1,8 @@
 recodeTimeVarDlg <- function() {
     nVars <- ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"])
     if(nVars == 0) {
-        Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
-                type="error")
+        .Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
+                 type="error")
         return()
     }
 
@@ -61,13 +61,13 @@ recodeTimeVarDlg <- function() {
         time <- meta(corpus, timeVar)[[1]]
         time <- strptime(unique(time[!is.na(time)]), inFormat)
         if(all(is.na(time))) {
-            Message(message=sprintf(.gettext("Incorrect input time format or variable: no values of \"%s\" could be converted to a time index."), timeVar),
-                    type="error")
+            .Message(message=sprintf(.gettext("Incorrect input time format or variable: no values of \"%s\" could be converted to a time index."), timeVar),
+                     type="error", parent=top)
             return()
         }
         else if(any(is.na(time))) {
-            Message(message=sprintf(.gettext("Some values of \"%s\" could not be converted to a time index and will be missing."), timeVar),
-                    type="warning")
+            .Message(message=sprintf(.gettext("Some values of \"%s\" could not be converted to a time index and will be missing."), timeVar),
+                     type="warning", parent=top)
         }
 
         closeDialog()
@@ -103,8 +103,8 @@ recodeTimeVarDlg <- function() {
 varTimeSeriesDlg <- function() {
     nVars <- ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"])
     if(nVars == 0) {
-        Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
-                type="error")
+        .Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
+                 type="error")
         return()
     }
 
@@ -199,8 +199,8 @@ varTimeSeriesDlg <- function() {
         title <- tclvalue(tclTitle)
 
         if(what == "percent" && nchar(groupVar) == 0) {
-            Message(message=.gettext("Plotting percents of documents with only one curve does not make sense: all points would be 100%."),
-                    type="error")
+            .Message(message=.gettext("Plotting percents of documents with only one curve does not make sense: all points would be 100%."),
+                     type="error", parent=top)
             return()
         }
 
@@ -213,13 +213,13 @@ varTimeSeriesDlg <- function() {
         time <- meta(corpus, timeVar)[[1]]
         time <- strptime(unique(time[!is.na(time)]), format)
         if(all(is.na(time))) {
-            Message(message=sprintf(.gettext("Incorrect time format or variable: no values of \"%s\" could be converted to a time index."), timeVar),
-                    type="error")
+            .Message(message=sprintf(.gettext("Incorrect time format or variable: no values of \"%s\" could be converted to a time index."), timeVar),
+                     type="error", parent=top)
             return()
         }
         else if(any(is.na(time))) {
-            Message(message=sprintf(.gettext("Some values of \"%s\" could not be converted to a time index and will be missing."), timeVar),
-                    type="warning")
+            .Message(message=sprintf(.gettext("Some values of \"%s\" could not be converted to a time index and will be missing."), timeVar),
+                     type="warning", parent=top)
         }
 
         if(nchar(groupVar) == 0) {
@@ -267,8 +267,8 @@ varTimeSeriesDlg <- function() {
 
         if(rollmean) {
             if(window >= NROW(docSeries))
-                Message(message=.gettext("Chosen roll mean window is longer than the range of the time variable, rolling mean was not applied."),
-                        type="warning")
+                .Message(message=.gettext("Chosen roll mean window is longer than the range of the time variable, rolling mean was not applied."),
+                        type="warning", parent=top)
             else
                 # For percents, the days with no observation get 0/0 == NaN, and we need to skip them
                 doItAndPrint(sprintf('docSeries <- rollapply(docSeries, %s, align="left", mean, na.rm=TRUE)', window))
@@ -280,7 +280,7 @@ varTimeSeriesDlg <- function() {
                                  paste(ylab, unit), title,
                                  if(NCOL(docSeries) > 1) 'TRUE' else "NULL"))
         else
-            Message(.gettext("Only one time point present, no plot can be drawn."), "warning")
+            .Message(.gettext("Only one time point present, no plot can be drawn."), "error", parent=top)
 
         doItAndPrint("rm(tab, time)")
 
@@ -338,8 +338,8 @@ varTimeSeriesDlg <- function() {
 termTimeSeriesDlg <- function() {
     nVars <- ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"])
     if(nVars == 0) {
-        Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
-                type="error")
+        .Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
+                 type="error")
         return()
     }
 
@@ -439,28 +439,28 @@ termTimeSeriesDlg <- function() {
         title <- tclvalue(tclTitle)
 
         if(what == "lev.term" && nchar(groupVar) == 0) {
-            Message(message=.gettext("Plotting distribution of occurrences with only one curve does not make sense: all points would be 100%."),
-                    type="error")
+            .Message(message=.gettext("Plotting distribution of occurrences with only one curve does not make sense: all points would be 100%."),
+                     type="error", parent=top)
             return()
         }
 
         if(length(termsList) > 1 && nchar(groupVar) > 0) {
-            Message(message=.gettext("Only one term can be used when a grouping variable is selected."),
-                    type="error")
+            .Message(message=.gettext("Only one term can be used when a grouping variable is selected."),
+                     type="error", parent=top)
             return()
         }
 
         if(length(termsList) == 0) {
-            Message(.gettext("Please enter at least one term."), "error")
+            .Message(.gettext("Please enter at least one term."), "error", parent=top)
             return()
         }
         else if(!all(termsList %in% colnames(dtm))) {
             wrongTerms <- termsList[!(termsList %in% colnames(dtm))]
-            Message(sprintf(.ngettext(length(wrongTerms),
+            .Message(sprintf(.ngettext(length(wrongTerms),
                             "Term \'%s\' does not exist in the corpus.",
                             "Terms \'%s\' do not exist in the corpus."),
                             # TRANSLATORS: this should be opening quote, comma, closing quote
-                            paste(wrongTerms, collapse=.gettext("\', \'"))), type="error")
+                            paste(wrongTerms, collapse=.gettext("\', \'"))), type="error", parent=top)
             return()
         }
 
@@ -473,13 +473,13 @@ termTimeSeriesDlg <- function() {
         time <- meta(corpus, timeVar)[[1]]
         time <- strptime(unique(time[!is.na(time)]), format)
         if(all(is.na(time))) {
-            Message(message=sprintf(.gettext("Incorrect time format or variable: no values of \"%s\" could be converted to a time index."), timeVar),
-                    type="error")
+            .Message(message=sprintf(.gettext("Incorrect time format or variable: no values of \"%s\" could be converted to a time index."), timeVar),
+                     type="error", parent=top)
             return()
         }
         else if(any(is.na(time))) {
-            Message(message=sprintf(.gettext("Some values of \"%s\" could not be converted to a time index and will be missing."), timeVar),
-                    type="warning")
+            .Message(message=sprintf(.gettext("Some values of \"%s\" could not be converted to a time index and will be missing."), timeVar),
+                     type="warning", parent=top)
         }
 
         doItAndPrint(sprintf('time <- as.character(strptime(meta(corpus, "%s")[[1]], "%s"))', timeVar, format))
@@ -536,8 +536,8 @@ termTimeSeriesDlg <- function() {
 
         if(rollmean) {
             if(window >= NROW(termSeries))
-                Message(message=.gettext("Chosen roll mean window is longer than the range of the time variable, rolling mean was not applied."),
-                        type="warning")
+                .Message(message=.gettext("Chosen roll mean window is longer than the range of the time variable, rolling mean was not applied."),
+                         type="warning", parent=top)
             else
                 # For percents, the days with no observation get 0/0 == NaN, and we need to skip them
                 doItAndPrint(sprintf('termSeries <- rollapply(termSeries, %s, align="left", mean, na.rm=TRUE)', window))
@@ -549,7 +549,7 @@ termTimeSeriesDlg <- function() {
                                  paste(ylab, unit), title,
                                  if(NCOL(termSeries) > 1) 'TRUE' else "NULL"))
         else
-            Message(.gettext("Only one time point present, no plot can be drawn."), "warning")
+            .Message(.gettext("Only one time point present, no plot can be drawn."), "error", parent=top)
 
         doItAndPrint("rm(absTermFreqs, time)")
 

@@ -1,8 +1,8 @@
 varTableDlg <- function() {
     nVars <- ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"])
     if(nVars == 0) {
-        Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
-                type="error")
+        .Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
+                 type="error")
         return()
     }
 
@@ -91,13 +91,13 @@ varTableDlg <- function() {
 varCrossTableDlg <- function() {
     nVars <- ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"])
     if(nVars == 0) {
-        Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
-                type="error")
+        .Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
+                 type="error")
         return()
     }
     else if(nVars == 1) {
-        Message(message=.gettext("Corpus has only one variable."),
-                type="error")
+        .Message(message=.gettext("Corpus has only one variable."),
+                 type="error")
         return()
     }
 
@@ -164,7 +164,7 @@ varCrossTableDlg <- function() {
 
         # An empty level leads to NAs when computing %
         if(stack && any(is.na(varFreqs))) {
-            Message(.gettext("Cannot plot stacked bars when the table has a null margin."), "error")
+            .Message(.gettext("Cannot plot stacked bars when the table has a null margin."), "error", parent=top)
             stack <- FALSE
         }
 

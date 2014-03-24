@@ -53,7 +53,7 @@ frequentTerms <- function(dtm, variable=NULL, n=25) {
 
 freqTermsDlg <- function() {
     if(!(exists("dtm") && class(dtm) == "DocumentTermMatrix")) {
-        Message(message=.gettext("Please import a corpus and create the document-term matrix first."),
+        .Message(message=.gettext("Please import a corpus and create the document-term matrix first."),
                 type="error")
         return()
     }

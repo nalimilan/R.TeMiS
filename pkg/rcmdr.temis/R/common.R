@@ -120,3 +120,16 @@ if (getRversion() >= '2.15.1') globalVariables(c(
     return(TRUE)
 }
 
+.Message <- function(message, type=c("info", "error", "warning"), parent=NULL) {
+    type <- match.arg(type)
+
+    caption <- switch(type,
+                      info=.gettext("Information"),
+                      error=.gettext("Error"),
+                      warning=.gettext("Warning"))
+
+    if(is.null(parent))
+        tk_messageBox("ok", message, caption, icon=type)
+    else
+        tk_messageBox("ok", message, caption, icon=type, parent=parent)
+}

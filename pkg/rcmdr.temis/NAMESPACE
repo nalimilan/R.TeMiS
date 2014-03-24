@@ -1,6 +1,6 @@
 import(Rcmdr, stats, utils,
        tm, slam, zoo, ca, R2HTML, lattice, latticeExtra, RColorBrewer)
-importFrom(tcltk, addTclPath, ttkcombobox, tkgrid.propagate, tkwidget)
+importFrom(tcltk, addTclPath, ttkcombobox, tkgrid.propagate, tkwidget, tk_messageBox)
 # We only need the Tcl package tablelist
 importFrom(tcltk2, tk2tablelist)
 

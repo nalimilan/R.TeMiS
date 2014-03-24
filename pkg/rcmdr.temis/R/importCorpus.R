@@ -219,8 +219,8 @@ importCorpusDlg <- function() {
         if(enc == nativeEnc) enc <- ""
 
         if(enc != "" && !enc %in% iconvlist()) {
-            Message(.gettext('Unsupported encoding: please select an encoding from the list.'),
-                    "error")
+            .Message(.gettext('Unsupported encoding: please select an encoding from the list.'),
+                     "error", parent=top)
             return()
         }
 
@@ -425,8 +425,8 @@ importCorpusFromFile <- function(language=NA, encoding="") {
     else if(ext == "ods") {
         # ROpenOffice is not available as binary, thus most likely to fail on Windows and Mac OS
         if(!"ROpenOffice" %in% rownames(available.packages(contrib.url("http://www.omegahat.org/R/")))) {
-	    Message(.gettext("Loading OpenDocument spreadsheets (.ods) is not supported on your system.\nYou should save your data set as a CSV file or as an Excel spreadsheet (.xls)."),
-                    type="error")
+	    .Message(.gettext("Loading OpenDocument spreadsheets (.ods) is not supported on your system.\nYou should save your data set as a CSV file or as an Excel spreadsheet (.xls)."),
+                 type="error")
             return(FALSE)
         }
 	else if(!require(ROpenOffice)) {
@@ -446,16 +446,16 @@ importCorpusFromFile <- function(language=NA, encoding="") {
     }
     else if(ext %in% c("xls", "xlsx", "mdb", "accdb")) {
         if(.Platform$OS.type != "windows") {
-	    Message(.gettext("Loading Excel and Access files is only supported on Windows.\nYou should save your data set as a CSV file or as an OpenDocument spreadsheet (.ods)."),
-                    type="error")
+	    .Message(.gettext("Loading Excel and Access files is only supported on Windows.\nYou should save your data set as a CSV file or as an OpenDocument spreadsheet (.ods)."),
+                 type="error")
             return(FALSE)
         }
 	else if(!.checkAndInstall("RODBC", .gettext("The RODBC package is needed to read Excel and Access files.\nDo you want to install it?"))) {
             return(FALSE)
         }
         else if(!any(grepl(ext, odbcDataSources()))) {
-	    Message(.gettext("No ODBC driver for this file type was found.\nYou probably need to install Excel or Access, or separate ODBC drivers."),
-                    type="error")
+	    .Message(.gettext("No ODBC driver for this file type was found.\nYou probably need to install Excel or Access, or separate ODBC drivers."),
+                 type="error")
             return(FALSE)
         }
 
@@ -487,7 +487,7 @@ importCorpusFromFile <- function(language=NA, encoding="") {
             fil <- tabdat
 
         if(fil == "") {
-            Message(.gettext("No table selected"), type="error")
+            .Message(.gettext("No table selected"), type="error")
             return(FALSE)
         }
 
@@ -500,7 +500,7 @@ importCorpusFromFile <- function(language=NA, encoding="") {
         doItAndPrint("odbcCloseAll()")
     }
     else {
-        Message(.gettext("File has unknown extension, assuming it is in the tab-separated values format."), "warning")
+        .Message(.gettext("File has unknown extension, assuming it is in the tab-separated values format."), "warning")
         doItAndPrint(paste("corpusDataset <- read.delim(\"", file, "\")", sep=""))
     }
 
@@ -598,8 +598,8 @@ importCorpusFromFactiva <- function(language=NA) {
                              files[1], language))
 
 		if(!exists("corpus") || length(corpus) == 0) {
-		    Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
-		            type="error")
+		    .Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+		             type="error")
 
 		    return(FALSE)
 		}
@@ -611,8 +611,8 @@ importCorpusFromFactiva <- function(language=NA) {
                                  i, files[i], language))
 
 			if(length(corpusList[[i]]) == 0) {
-				Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
-				        type="error")
+				.Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+				         type="error")
 
 				return(FALSE)
 			}
@@ -666,8 +666,8 @@ importCorpusFromLexisNexis <- function(language=NA) {
                              files[1], language))
 
 		if(!exists("corpus") || length(corpus) == 0) {
-		    Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
-		            type="error")
+		    .Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+		             type="error")
 
 		    return(FALSE)
 		}
@@ -679,8 +679,8 @@ importCorpusFromLexisNexis <- function(language=NA) {
                                  i, files[i], language))
 
 			if(length(corpusList[[i]]) == 0) {
-				Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
-				        type="error")
+				.Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+				         type="error")
 
 				return(FALSE)
 			}
@@ -735,8 +735,8 @@ importCorpusFromEuropresse <- function(language=NA, encoding="UTF-8") {
                              files[1], language))
 
 		if(!exists("corpus") || length(corpus) == 0) {
-		    Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
-		            type="error")
+		    .Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+		             type="error")
 
 		    return(FALSE)
 		}
@@ -748,8 +748,8 @@ importCorpusFromEuropresse <- function(language=NA, encoding="UTF-8") {
                                  i, files[i], language))
 
 			if(length(corpusList[[i]]) == 0) {
-				Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
-				        type="error")
+				.Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+				         type="error")
 
 				return(FALSE)
 			}
@@ -804,8 +804,8 @@ importCorpusFromAlceste <- function(language=NA, encoding="UTF-8") {
                              files[1], language))
 
 		if(!exists("corpus") || length(corpus) == 0) {
-		    Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
-		            type="error")
+		    .Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+		             type="error")
 
 		    return(FALSE)
 		}
@@ -817,8 +817,8 @@ importCorpusFromAlceste <- function(language=NA, encoding="UTF-8") {
                                  i, files[i], language))
 
 			if(length(corpusList[[i]]) == 0) {
-				Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
-				        type="error")
+				.Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+				         type="error")
 
 				return(FALSE)
 			}
@@ -897,11 +897,11 @@ importCorpusFromTwitter <- function(language=NA) {
 
         if(reqURL == "" || authURL == "" || accessURL == "" ||
            consumerKey == "" || consumerSecret == "") {
-            Message(.gettext("Please enter valid authentication settings."), type="error")
+            .Message(.gettext("Please enter valid authentication settings."), type="error", parent=top)
             return(FALSE)
         }
         if(text == "") {
-            Message(.gettext("Please enter valid text to search for."), type="error")
+            .Message(.gettext("Please enter valid text to search for."), type="error", parent=top)
             return(FALSE)
         }
 
@@ -919,8 +919,8 @@ importCorpusFromTwitter <- function(language=NA) {
         doItAndPrint("twitCred$handshake()")
 
         if(!isTRUE(twitCred$handshakeComplete)) {
-            Message(.gettext("TwitteR authentication failed. Please check the entered credentials or PIN code."),
-                    type="error")
+            .Message(.gettext("TwitteR authentication failed. Please check the entered credentials or PIN code."),
+                     type="error", parent=top)
             return(FALSE)
         }
 
@@ -929,8 +929,8 @@ importCorpusFromTwitter <- function(language=NA) {
         doItAndPrint(sprintf('messages <- searchTwitter("%s", %s, %s)', text, nmess, language))
 
         if(length(messages) == 0) {
-            Message(sprintf(.gettext("No recent tweets match the specified search criteria in the chosen language (%s)."), language),
-                    type="error")
+            .Message(sprintf(.gettext("No recent tweets match the specified search criteria in the chosen language (%s)."), language),
+                     type="error", parent=top)
             return(FALSE)
         }
 
@@ -952,8 +952,8 @@ importCorpusFromTwitter <- function(language=NA) {
         doItAndPrint("rm(messages)")
 
         if(!exists("corpus") || length(corpus) == 0) {
-            Message(.gettext("Retrieving messages from Twitter failed."),
-                    type="error")
+            .Message(.gettext("Retrieving messages from Twitter failed."),
+                     type="error", parent=top)
             return(FALSE)
         }
 
