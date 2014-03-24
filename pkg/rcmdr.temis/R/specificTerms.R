@@ -70,19 +70,19 @@ specificTermsDlg <- function() {
                               initialSelection=0)
 
     tclP <- tclVar(10)
-    sliderP <- tkscale(top, from=1, to=100,
-                       showvalue=TRUE, variable=tclP,
-	               resolution=1, orient="horizontal")
+    spinP <- tkwidget(top, type="spinbox", from=0, to=100,
+                      inc=1, textvariable=tclP,
+                      validate="all", validatecommand=.validate.unum)
 
     tclOcc <- tclVar(2)
-    sliderOcc <- tkscale(top, from=1, to=50,
-                         showvalue=TRUE, variable=tclOcc,
-	                 resolution=1, orient="horizontal")
+    spinOcc <- tkwidget(top, type="spinbox", from=1, to=.Machine$integer.max,
+                        inc=1, textvariable=tclOcc,
+                        validate="all", validatecommand=.validate.uint)
 
     tclN <- tclVar(25)
-    sliderN <- tkscale(top, from=1, to=100,
-                       showvalue=TRUE, variable=tclN,
-	               resolution=1, orient="horizontal")
+    spinN <- tkwidget(top, type="spinbox", from=1, to=.Machine$integer.max,
+                      inc=1, textvariable=tclN,
+                      validate="all", validatecommand=.validate.uint)
 
     onOK <- function() {
         var <- getSelection(varBox)
@@ -123,11 +123,11 @@ specificTermsDlg <- function() {
 
     OKCancelHelp(helpSubject="specificTermsDlg")
     tkgrid(getFrame(varBox), columnspan=2, sticky="w", pady=6)
-    tkgrid(labelRcmdr(top, text=.gettext("Show terms with a probability below (%):")), sliderP,
+    tkgrid(labelRcmdr(top, text=.gettext("Show terms with a probability below (%):")), spinP,
            sticky="sw", pady=6)
-    tkgrid(labelRcmdr(top, text=.gettext("Only retain terms with a number of occurrences above:")), sliderOcc,
+    tkgrid(labelRcmdr(top, text=.gettext("Only retain terms with a number of occurrences above:")), spinOcc,
            sticky="sw", pady=6)
-    tkgrid(labelRcmdr(top, text=.gettext("Maximum number of terms to show per level:")), sliderN,
+    tkgrid(labelRcmdr(top, text=.gettext("Maximum number of terms to show per level:")), spinN,
            sticky="sw", pady=6)
     tkgrid(buttonsFrame, columnspan=2, sticky="ew", pady=6)
     dialogSuffix()

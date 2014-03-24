@@ -33,9 +33,9 @@ termCoocDlg <- function() {
     entryTerms <- ttkentry(top,  width="35", textvariable=tclTerms)
 
     tclN <- tclVar(10)
-    sliderN <- tkscale(top, from=0, to=100,
-                       showvalue=TRUE, variable=tclN,
-	               resolution=1, orient="horizontal")
+    spinN <- tkwidget(top, type="spinbox", from=1, to=.Machine$integer.max,
+                      inc=1, textvariable=tclN,
+                      validate="all", validatecommand=.validate.uint)
 
     vars <- c(.gettext("None (whole corpus)"), colnames(meta(corpus)))
     varBox <- variableListBox(top, vars,
@@ -107,7 +107,7 @@ termCoocDlg <- function() {
     OKCancelHelp(helpSubject="termsCoocDlg")
     tkgrid(labelRcmdr(top, text=.gettext("Reference terms (space-separated):")), sticky="w")
     tkgrid(entryTerms, sticky="w", columnspan=2)
-    tkgrid(labelRcmdr(top, text=.gettext("Number of terms to show:")), sliderN, sticky="sw", pady=6)
+    tkgrid(labelRcmdr(top, text=.gettext("Number of terms to show:")), spinN, sticky="sw", pady=6)
     tkgrid(getFrame(varBox), columnspan=2, sticky="w", pady=6)
     tkgrid(buttonsFrame, columnspan=2, sticky="ew", pady=6)
     dialogSuffix(focus=entryTerms)

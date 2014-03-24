@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.temis 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-23 14:00+0100\n"
+"POT-Creation-Date: 2014-03-23 15:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2018,4 +2018,8 @@ msgstr ""
 
 #: R/common.R:129
 msgid "Warning"
+msgstr ""
+
+#: R/corpusCa:192 R/corpusClustering:261
+msgid "Please specify a sparsity value between 0 (excluded) and 100%."
 msgstr ""

@@ -226,12 +226,13 @@ corpusClustDlg <- function() {
     }
 
     tclSparsity <- tclVar(100 - ceiling(1/nrow(dtm) * 100))
-    sliderSparsity <- tkscale(top, from=1, to=100,
-                              showvalue=TRUE, variable=tclSparsity,
-		              resolution=1, orient="horizontal",
-                              command=updateNDocs)
+    spinSparsity <- tkwidget(top, type="spinbox", from=0, to=100,
+                             inc=0.1, textvariable=tclSparsity,
+                             command=updateNDocs,
+                             validate="all", validatecommand=.validate.unum)
     sparsityLabel <- labelRcmdr(top, text=.gettext("Remove terms missing from more than (% of documents):"))
     updateNDocs()
+
 
     tclDim <- tclVar(2)
     sliderDim <- tkscale(top, from=1, to=if(haveCa) corpusCa$nd else 5,
@@ -242,14 +243,19 @@ corpusClustDlg <- function() {
 
 
     onOK <- function() {
+        type <- tclvalue(tclType)
+        sparsity <- as.numeric(tclvalue(tclSparsity))/100
+        dim <- tclvalue(tclDim)
+
+        if(is.na(sparsity) || sparsity <= 0 || sparsity > 1) {
+            .Message(.gettext("Please specify a sparsity value between 0 (excluded) and 100%."), type="error")
+            return()
+        }
+
         closeDialog()
 
         setBusyCursor()
         on.exit(setIdleCursor())
-
-        type <- tclvalue(tclType)
-        sparsity <- as.numeric(tclvalue(tclSparsity))/100
-        dim <- tclvalue(tclDim)
 
         # removeSparseTerms() does not accept 1
         if(type == "ca") {
@@ -329,7 +335,7 @@ corpusClustDlg <- function() {
 
     OKCancelHelp(helpSubject="corpusClustDlg")
     tkgrid(fullButton, sticky="sw")
-    tkgrid(sparsityLabel, sliderSparsity, sticky="sw", pady=c(0, 6), padx=c(24, 0))
+    tkgrid(sparsityLabel, spinSparsity, sticky="sw", pady=c(0, 6), padx=c(24, 0))
     tkgrid(labelNDocs, sticky="sw", pady=6, columnspan=2, padx=c(24, 0))
     tkgrid(caButton, sticky="sw", pady=c(12, 0))
     tkgrid(dimLabel, sliderDim, sticky="sw", pady=c(0, 6), padx=c(24, 0))
@@ -373,27 +379,27 @@ createClustersDlg <- function(..., plot=TRUE) {
     tclNClust <- tclVar(5)
     sliderNClust <- tkscale(top, from=2, to=min(15, length(corpusClust$order)),
                             showvalue=TRUE, variable=tclNClust,
-		            resolution=1, orient="horizontal")
+		                    resolution=1, orient="horizontal")
 
     tclNDocs <- tclVar(5)
-    sliderNDocs <- tkscale(top, from=0, to=20,
-                           showvalue=TRUE, variable=tclNDocs,
-		           resolution=1, orient="horizontal")
+    spinNDocs <- tkwidget(top, type="spinbox", from=1, to=length(corpus),
+                          inc=1, textvariable=tclNDocs,
+                          validate="all", validatecommand=.validate.uint)
 
     tclNTerms <- tclVar(20)
-    sliderNTerms <- tkscale(top, from=0, to=100,
-                            showvalue=TRUE, variable=tclNTerms,
-		            resolution=1, orient="horizontal")
+    spinNTerms <- tkwidget(top, type="spinbox", from=1, to=ncol(dtm),
+                           inc=1, textvariable=tclNTerms,
+                           validate="all", validatecommand=.validate.uint)
 
     tclP <- tclVar(10)
-    sliderP <- tkscale(top, from=1, to=100,
-                       showvalue=TRUE, variable=tclP,
-	               resolution=1, orient="horizontal")
+    spinP <- tkwidget(top, type="spinbox", from=0, to=100,
+                      inc=1, textvariable=tclP,
+                      validate="all", validatecommand=.validate.unum)
 
     tclOcc <- tclVar(2)
-    sliderOcc <- tkscale(top, from=1, to=100,
-                       showvalue=TRUE, variable=tclOcc,
-	               resolution=1, orient="horizontal")
+    spinOcc <- tkwidget(top, type="spinbox", from=1, to=.Machine$integer.max,
+                        inc=1, textvariable=tclOcc,
+                        validate="all", validatecommand=.validate.uint)
 
     onOK <- function() {
         closeDialog()
@@ -459,15 +465,15 @@ createClustersDlg <- function(..., plot=TRUE) {
            sticky="sw", pady=c(0, 6), padx=c(6, 0))
     tkgrid(.titleLabel(top, text=.gettext("Documents specific of clusters:")),
            sticky="sw", pady=c(24, 0))
-    tkgrid(labelRcmdr(top, text=.gettext("Maximum number of documents to show per cluster:")), sliderNDocs,
+    tkgrid(labelRcmdr(top, text=.gettext("Maximum number of documents to show per cluster:")), spinNDocs,
            sticky="sw", pady=c(0, 6), padx=c(6, 0))
     tkgrid(.titleLabel(top, text=.gettext("Terms specific of clusters:")),
            sticky="sw", pady=c(24, 0))
-    tkgrid(labelRcmdr(top, text=.gettext("Show terms with a probability below (%):")), sliderP,
+    tkgrid(labelRcmdr(top, text=.gettext("Show terms with a probability below (%):")), spinP,
            sticky="sw", pady=6, padx=c(6, 0))
-    tkgrid(labelRcmdr(top, text=.gettext("Only retain terms with a number of occurrences above:")), sliderOcc,
+    tkgrid(labelRcmdr(top, text=.gettext("Only retain terms with a number of occurrences above:")), spinOcc,
            sticky="sw", pady=6, padx=c(6, 0))
-    tkgrid(labelRcmdr(top, text=.gettext("Maximum number of terms to show per cluster:")), sliderNTerms,
+    tkgrid(labelRcmdr(top, text=.gettext("Maximum number of terms to show per cluster:")), spinNTerms,
            sticky="sw", pady=6, padx=c(6, 0))
     tkgrid(buttonsFrame, columnspan=2, sticky="ew", pady=6)
     dialogSuffix()

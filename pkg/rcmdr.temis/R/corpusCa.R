@@ -165,23 +165,28 @@ corpusCaDlg <- function() {
                               initialSelection=0)
 
     tclSparsity <- tclVar(100 - ceiling(1/nrow(dtm) * 100))
-    sliderSparsity <- tkscale(top, from=1, to=100,
-                              showvalue=TRUE, variable=tclSparsity,
-		              resolution=1, orient="horizontal",
-                              command=updateNDocs)
+    spinSparsity <- tkwidget(top, type="spinbox", from=0, to=100,
+                             inc=0.1, textvariable=tclSparsity,
+                             command=updateNDocs,
+                             validate="all", validatecommand=.validate.unum)
     updateNDocs()
 
 
     tclDim <- tclVar(5)
     sliderDim <- tkscale(top, from=1, to=30,
                          showvalue=TRUE, variable=tclDim,
-	                 resolution=1, orient="horizontal")
+	                     resolution=1, orient="horizontal")
 
 
     onOK <- function() {
         sparsity <- as.numeric(tclvalue(tclSparsity))
         vars <- getSelection(varBox)
         dim <- as.numeric(tclvalue(tclDim))
+
+        if(is.na(sparsity) || sparsity <= 0 || sparsity > 100) {
+            .Message(.gettext("Please specify a sparsity value between 0 (excluded) and 100%."), type="error")
+            return()
+        }
 
         closeDialog()
 
@@ -214,7 +219,7 @@ corpusCaDlg <- function() {
     OKCancelHelp(helpSubject=corpusCaDlg)
     tkgrid(getFrame(varBox), columnspan=2, sticky="we", pady=6)
     tkgrid(labelRcmdr(top, text=.gettext("Remove terms missing from more than (% of documents):")),
-           sliderSparsity, sticky="sew", pady=6)
+           spinSparsity, sticky="sew", pady=6)
     tkgrid(labelNDocs, sticky="sw", pady=6, columnspan=2)
     tkgrid(labelRcmdr(top, text=.gettext("Number of dimensions to retain:")),
            sliderDim, sticky="sew", pady=6)

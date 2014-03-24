@@ -60,9 +60,9 @@ freqTermsDlg <- function() {
 
     initializeDialog(title=.gettext("Show Most Frequent Terms"))
     tclN <- tclVar(10)
-    sliderN <- tkscale(top, from=1, to=100,
-                       showvalue=TRUE, variable=tclN,
-	               resolution=1, orient="horizontal")
+    spinN <- tkwidget(top, type="spinbox", from=1, to=.Machine$integer.max,
+                      inc=1, textvariable=tclN,
+                      validate="all", validatecommand=.validate.uint)
 
     vars <- c(.gettext("None (whole corpus)"), .gettext("Document"), colnames(meta(corpus)))
     varBox <- variableListBox(top, vars,
@@ -98,7 +98,7 @@ freqTermsDlg <- function() {
     }
 
     OKCancelHelp(helpSubject="freqTermsDlg")
-    tkgrid(labelRcmdr(top, text=.gettext("Number of terms to show:")), sliderN,
+    tkgrid(labelRcmdr(top, text=.gettext("Number of terms to show:")), spinN,
            sticky="sw", pady=6)
     tkgrid(getFrame(varBox), columnspan=2, sticky="w", pady=6)
     tkgrid(buttonsFrame, columnspan=2, sticky="ew", pady=6)

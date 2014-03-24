@@ -280,3 +280,21 @@ if (getRversion() >= '2.15.1') globalVariables(c(
         tkgrid.configure(leftButtonsBox, sticky="w")
         tkgrid.configure(rightButtonsBox, sticky="e")
     })
+
+.validate.unum <- function(P) {
+    # Empty string must be allowed so that the user can remove
+    # all chars before typing a new value
+    if(P != "" && (suppressWarnings(is.na(as.numeric(P))) || as.numeric(P) <= 0))
+        tcl("expr", "false")
+    else
+        tcl("expr", "true")
+}
+
+.validate.uint <- function(P) {
+    # Empty string must be allowed so that the user can remove
+    # all chars before typing a new value
+    if(P != "" && (suppressWarnings(is.na(as.integer(P))) || as.integer(P) <= 0))
+        tcl("expr", "false")
+    else
+        tcl("expr", "true")
+}

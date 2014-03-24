@@ -433,12 +433,13 @@ showCorpusCaDlg <- function() {
            sticky="s")
     tclNDocs <- tclVar(25)
     tclNTerms <- tclVar(25)
-    docsSlider <- tkscale(nFrame, from=1, to=min(200, nrow(corpusCa$rowcoord)-length(corpusCa$rowsup)),
-                          showvalue=TRUE, variable=tclNDocs,
-		          resolution=1, orient="horizontal")
-    termsSlider <- tkscale(nFrame, from=1, to=min(200, nrow(corpusCa$colcoord)-length(corpusCa$colsup)),
-                           showvalue=TRUE, variable=tclNTerms,
-		           resolution=1, orient="horizontal")
+    spinDocs <- tkwidget(top, type="spinbox", from=1, to=nrow(corpusCa$rowcoord)-length(corpusCa$rowsup),
+                         inc=1, textvariable=tclNDocs,
+                         validate="all", validatecommand=.validate.uint)
+
+    spinTerms <- tkwidget(top, type="spinbox", from=1, to=nrow(corpusCa$colcoord)-length(corpusCa$colsup),
+                          inc=1, textvariable=tclNTerms,
+                          validate="all", validatecommand=.validate.uint)
 
     ctrDimVariable <- tclVar("xyDim")
     ctrDimFrame <- tkframe(top)
@@ -460,6 +461,12 @@ showCorpusCaDlg <- function() {
         nDocs <- tclvalue(tclNDocs)
         nTerms <- tclvalue(tclNTerms)
         ctrDim <- switch(tclvalue(ctrDimVariable), xyDim=paste("c(", x, ", ", y, ")", sep=""), xDim=x, yDim=y)
+
+        if(nDocs > nrow(corpusCa$rowcoord) - length(corpusCa$rowsup))
+            nDocs <- nrow(corpusCa$rowcoord) - length(corpusCa$rowsup)
+
+        if(nTerms > nrow(corpusCa$colcoord) - length(corpusCa$colsup))
+            nTerms <- nrow(corpusCa$colcoord) - length(corpusCa$colsup)
 
         if(!(docLabels || termLabels || varLabels || docPoints || termPoints || varPoints)) {
             .Message(.gettext("Please select something to plot."), "error", parent=top)
@@ -557,8 +564,8 @@ showCorpusCaDlg <- function() {
     if(!actDocs || length(corpusCa$rowsup) > 0)
         tkgrid(getFrame(varBox), columnspan=2, sticky="we", pady=6)
     if(actDocs)
-        tkgrid(labelRcmdr(nFrame, text=.gettext("Documents:")), docsSlider, sticky="w")
-    tkgrid(labelRcmdr(nFrame, text=.gettext("Terms:")), termsSlider, sticky="w")
+        tkgrid(labelRcmdr(nFrame, text=.gettext("Documents:")), spinDocs, sticky="w")
+    tkgrid(labelRcmdr(nFrame, text=.gettext("Terms:")), spinTerms, sticky="w")
     tkgrid(nFrame, sticky="w", pady=6, columnspan=2)
     tkgrid(labelRcmdr(ctrDimFrame, text=.gettext("Most contributive to:")), sticky="w", columnspan=2, pady=6)
     tkgrid(ctrDim1, ctrDim2, ctrDim3, sticky="w", pady=6)

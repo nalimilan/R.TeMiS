@@ -183,9 +183,9 @@ varTimeSeriesDlg <- function() {
     meanButton <- tkcheckbutton(top, text=.gettext("Apply rolling mean"), variable=tclMean)
 
     tclWindow <- tclVar(7)
-    sliderWindow <- tkscale(top, from=1, to=30,
-                            showvalue=TRUE, variable=tclWindow,
-	                    resolution=1, orient="horizontal")
+    spinWindow <- tkwidget(top, type="spinbox", from=1, to=.Machine$integer.max,
+                             inc=1, textvariable=tclWindow,
+                             validate="all", validatecommand=.validate.uint)
 
     tclTitle <- tclVar(.gettext("Temporal evolution of the corpus"))
     titleEntry <- ttkentry(top, width="30", textvariable=tclTitle)
@@ -309,7 +309,7 @@ varTimeSeriesDlg <- function() {
     tkgrid(.titleLabel(top, text=.gettext("Rolling mean:")),
            sticky="w", pady=c(6, 0))
     tkgrid(meanButton, sticky="w")
-    tkgrid(labelRcmdr(top, text=.gettext("Time window for mean (in time units):")), sliderWindow, sticky="w",
+    tkgrid(labelRcmdr(top, text=.gettext("Time window for mean (in time units):")), spinWindow, sticky="w",
            padx=6, pady=c(0, 6))
     tkgrid(.titleLabel(top, text=.gettext("Title:")),
            sticky="w", pady=c(6, 0))
@@ -405,9 +405,9 @@ termTimeSeriesDlg <- function() {
     meanButton <- tkcheckbutton(top, text=.gettext("Apply rolling mean"), variable=tclMean)
 
     tclWindow <- tclVar(7)
-    sliderWindow <- tkscale(top, from=1, to=30,
-                            showvalue=TRUE, variable=tclWindow,
-	                    resolution=1, orient="horizontal")
+    spinWindow <- tkwidget(top, type="spinbox", from=1, to=.Machine$integer.max,
+                             inc=1, textvariable=tclWindow,
+                             validate="all", validatecommand=validate.int)
 
     tclTitle <- tclVar(.gettext("Temporal evolution of occurrences"))
     titleEntry <- ttkentry(top, width="30", textvariable=tclTitle)
@@ -564,7 +564,7 @@ termTimeSeriesDlg <- function() {
     tkgrid(.titleLabel(top, text=.gettext("Rolling mean:")),
            sticky="w", pady=c(6, 0))
     tkgrid(meanButton, sticky="w")
-    tkgrid(labelRcmdr(top, text=.gettext("Time window for mean (in time units):")), sliderWindow, sticky="w",
+    tkgrid(labelRcmdr(top, text=.gettext("Time window for mean (in time units):")), spinWindow, sticky="w",
            padx=6, pady=c(0, 6))
     tkgrid(.titleLabel(top, text=.gettext("Title:")),
            sticky="w", pady=c(6, 0))

@@ -138,18 +138,18 @@ subsetCorpusByTermsDlg <- function() {
     tclKeep <- tclVar("")
     entryKeep <- ttkentry(top, width="40", textvariable=tclKeep)
 
-    tclKeepFreq <- tclVar()
-    keepSlider <- tkscale(top, from=1, to=20,
-                          showvalue=TRUE, variable=tclKeepFreq,
-		          resolution=1, orient="horizontal")
+    tclKeepFreq <- tclVar(1)
+    spinKeep <- tkwidget(top, type="spinbox", from=1, to=.Machine$integer.max,
+                         inc=1, textvariable=tclKeepFreq,
+                         validate="all", validatecommand=.validate.uint)
 
     tclExclude <- tclVar("")
     entryExclude <- ttkentry(top, width="40", textvariable=tclExclude)
 
-    tclExcludeFreq <- tclVar()
-    excludeSlider <- tkscale(top, from=1, to=20,
-                             showvalue=TRUE, variable=tclExcludeFreq,
-		             resolution=1, orient="horizontal")
+    tclExcludeFreq <- tclVar(1)
+    spinExclude <- tkwidget(top, type="spinbox", from=1, to=.Machine$integer.max,
+                            inc=1, textvariable=tclExcludeFreq,
+                            validate="all", validatecommand=.validate.uint)
 
     tclSave <- tclVar("1")
     checkSave <- tkcheckbutton(top, text=.gettext("Save original corpus to restore it later"),
@@ -215,14 +215,14 @@ subsetCorpusByTermsDlg <- function() {
            sticky="w", columnspan=4)
     tkgrid(entryKeep,
            labelRcmdr(top, text=.gettext("at least")),
-           keepSlider,
+           spinKeep,
            labelRcmdr(top, text=.gettext("time(s)")),
            sticky="w", pady=c(0, 6))
     tkgrid(labelRcmdr(top, text=.gettext("Exclude documents containing one of these terms (space-separated):")),
            sticky="w", pady=c(6, 0), columnspan=4)
     tkgrid(entryExclude,
            labelRcmdr(top, text=.gettext("at least")),
-           excludeSlider,
+           spinExclude,
            labelRcmdr(top, text=.gettext("time(s)")),
            sticky="w", pady=c(0, 6))
     tkgrid(labelRcmdr(top, text=.gettext("(Only documents matching both conditions will be retained in the new corpus.)")),
