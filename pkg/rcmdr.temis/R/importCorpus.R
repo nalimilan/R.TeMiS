@@ -593,17 +593,34 @@ importCorpusFromFactiva <- function(language=NA) {
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
 
-    doItAndPrint(sprintf("corpus <- Corpus(FactivaSource(\"%s\"), readerControl=list(language=%s))",
-                         files[1], language))
-    lapply(files[-1], function(file) doItAndPrint(sprintf(
-        "corpus <- c(corpus, Corpus(FactivaSource(\"%s\"), readerControl=list(language=%s)), recursive=TRUE)",
-                                                          file, language)))
+    if(length(files) == 1) {
+        doItAndPrint(sprintf("corpus <- Corpus(FactivaSource(\"%s\"), readerControl=list(language=%s))",
+                             files[1], language))
 
-    if(!exists("corpus") || length(corpus) == 0) {
-        Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
-                type="error")
+		if(!exists("corpus") || length(corpus) == 0) {
+		    Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+		            type="error")
 
-        return(FALSE)
+		    return(FALSE)
+		}
+    }
+    else {
+        doItAndPrint(sprintf('corpusList <- vector(%s, mode="list")', length(files)))
+        for(i in seq(length(files))) {
+            doItAndPrint(sprintf('corpusList[[%s]] <- Corpus(FactivaSource("%s"), readerControl=list(language=%s))',
+                                 i, files[i], language))
+
+			if(length(corpusList[[i]]) == 0) {
+				Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+				        type="error")
+
+				return(FALSE)
+			}
+        }
+
+        doItAndPrint("corpus <- do.call(c, c(corpusList, list(recursive=TRUE)))")
+        doItAndPrint("rm(corpusList)")
+        gc()
     }
 
     # Set document names from the IDs since it's not always done by sources (XMLSource...)
@@ -644,17 +661,34 @@ importCorpusFromLexisNexis <- function(language=NA) {
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
 
-    doItAndPrint(sprintf("corpus <- Corpus(LexisNexisSource(\"%s\"), readerControl=list(language=%s))",
-                         files[1], language))
-    lapply(files[-1], function(file) doItAndPrint(sprintf(
-        "corpus <- c(corpus, Corpus(LexisNexisSource(\"%s\"), readerControl=list(language=%s)), recursive=TRUE)",
-                                                          file, language)))
+    if(length(files) == 1) {
+        doItAndPrint(sprintf("corpus <- Corpus(LexisNexisSource(\"%s\"), readerControl=list(language=%s))",
+                             files[1], language))
 
-    if(!exists("corpus") || length(corpus) == 0) {
-        Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
-                type="error")
+		if(!exists("corpus") || length(corpus) == 0) {
+		    Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+		            type="error")
 
-        return(FALSE)
+		    return(FALSE)
+		}
+    }
+    else {
+        doItAndPrint(sprintf('corpusList <- vector(%s, mode="list")', length(files)))
+        for(i in seq(length(files))) {
+            doItAndPrint(sprintf('corpusList[[%s]] <- Corpus(LexisNexisSource("%s"), readerControl=list(language=%s))',
+                                 i, files[i], language))
+
+			if(length(corpusList[[i]]) == 0) {
+				Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+				        type="error")
+
+				return(FALSE)
+			}
+        }
+
+        doItAndPrint("corpus <- do.call(c, c(corpusList, list(recursive=TRUE)))")
+        doItAndPrint("rm(corpusList)")
+        gc()
     }
 
     # Set document names from the IDs since it's not always done by sources (XMLSource...)
@@ -696,17 +730,34 @@ importCorpusFromEuropresse <- function(language=NA, encoding="UTF-8") {
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
 
-    doItAndPrint(sprintf("corpus <- Corpus(EuropresseSource(\"%s\", encoding=\"%s\"), readerControl=list(language=%s))",
-                         files[1], encoding, language))
-    lapply(files[-1], function(file) doItAndPrint(sprintf(
-        "corpus <- c(corpus, Corpus(EuropresseSource(\"%s\", encoding=\"%s\"), readerControl=list(language=%s)), recursive=TRUE)",
-                                                          file, encoding, language)))
+    if(length(files) == 1) {
+        doItAndPrint(sprintf("corpus <- Corpus(EuropresseSource(\"%s\"), readerControl=list(language=%s))",
+                             files[1], language))
 
-    if(!exists("corpus") || length(corpus) == 0) {
-        Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
-                type="error")
+		if(!exists("corpus") || length(corpus) == 0) {
+		    Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+		            type="error")
 
-        return(FALSE)
+		    return(FALSE)
+		}
+    }
+    else {
+        doItAndPrint(sprintf('corpusList <- vector(%s, mode="list")', length(files)))
+        for(i in seq(length(files))) {
+            doItAndPrint(sprintf('corpusList[[%s]] <- Corpus(EuropresseSource("%s"), readerControl=list(language=%s))',
+                                 i, files[i], language))
+
+			if(length(corpusList[[i]]) == 0) {
+				Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+				        type="error")
+
+				return(FALSE)
+			}
+        }
+
+        doItAndPrint("corpus <- do.call(c, c(corpusList, list(recursive=TRUE)))")
+        doItAndPrint("rm(corpusList)")
+        gc()
     }
 
     # Set document names from the IDs since it's not always done by sources (XMLSource...)
@@ -748,17 +799,34 @@ importCorpusFromAlceste <- function(language=NA, encoding="UTF-8") {
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
 
-    doItAndPrint(sprintf("corpus <- Corpus(AlcesteSource(\"%s\", encoding=\"%s\"), readerControl=list(language=%s))",
-                         files[1], encoding, language))
-    lapply(files[-1], function(file) doItAndPrint(sprintf(
-        "corpus <- c(corpus, Corpus(AlcesteSource(\"%s\", encoding=\"%s\"), readerControl=list(language=%s)), recursive=TRUE)",
-                                                          file, encoding, language)))
+    if(length(files) == 1) {
+        doItAndPrint(sprintf("corpus <- Corpus(AlcesteSource(\"%s\"), readerControl=list(language=%s))",
+                             files[1], language))
 
-    if(!exists("corpus") || length(corpus) == 0) {
-        Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
-                type="error")
+		if(!exists("corpus") || length(corpus) == 0) {
+		    Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+		            type="error")
 
-        return(FALSE)
+		    return(FALSE)
+		}
+    }
+    else {
+        doItAndPrint(sprintf('corpusList <- vector(%s, mode="list")', length(files)))
+        for(i in seq(length(files))) {
+            doItAndPrint(sprintf('corpusList[[%s]] <- Corpus(AlcesteSource("%s"), readerControl=list(language=%s))',
+                                 i, files[i], language))
+
+			if(length(corpusList[[i]]) == 0) {
+				Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
+				        type="error")
+
+				return(FALSE)
+			}
+        }
+
+        doItAndPrint("corpus <- do.call(c, c(corpusList, list(recursive=TRUE)))")
+        doItAndPrint("rm(corpusList)")
+        gc()
     }
 
     # Set document names from the IDs since it's not always done by sources (XMLSource...)
