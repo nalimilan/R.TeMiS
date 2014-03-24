@@ -174,6 +174,8 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20, p=0.1, min
 
     # Only raise the window when we're done, as filling it may take some time
     tkraise(window)
+
+    return()
 }
 
 corpusClustDlg <- function() {
