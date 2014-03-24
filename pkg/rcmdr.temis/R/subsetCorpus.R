@@ -60,27 +60,29 @@ subsetCorpusByVarDlg <- function() {
         doItAndPrint("corpus <- corpus[keep]")
 
         if(exists("dtm")) {
-            .processTexts(meta(corpus, type="corpus", tag="processing"),
-                          meta(corpus, type="corpus", tag="language"),
-                          wordsOnly=TRUE)
-
-            doItAndPrint("dtmAttr <- attributes(dtm)")
-
-            # Not created when stemming is disabled
-            if(exists("words"))
-                doItAndPrint("dtmAttr$words <- words")
+             processing <- meta(corpus, type="corpus", tag="processing")
+             lang <- meta(corpus, type="corpus", tag="language")
 
             if(save)
                 doItAndPrint("origDtm <- dtm")
 
-            doItAndPrint("dtm <- dtm[keep,]")
-            doItAndPrint("dtm <- dtm[,col_sums(dtm) > 0]")
-            doItAndPrint("attributes(dtm) <- dtmAttr")
+            doItAndPrint('origDict <- attr(dtm, "dictionary")')
 
-            if(exists("words"))
-                doItAndPrint("rm(dtmCorpus, dtmAttr, words)")
-            else
-                doItAndPrint("rm(dtmCorpus, dtmAttr)")
+            # stemming=FALSE since we don't need to extract the stems again,
+            # we reuse below those of the old dictionary
+            .buildDictionary(FALSE, processing["custom.stemming"], lang)
+
+            if(processing["stemming"] || processing["custom.stemming"])
+                doItAndPrint('dict[[2]] <- origDict[rownames(dict), 2]')
+
+            # custom.stemming=FALSE since we don't want to ask the user to customize stemming
+            .prepareDtm(processing["stopwords"], processing["stemming"] || processing["custom.stemming"], FALSE, lang)
+            if(processing["custom.stemming"])
+                doItAndPrint('dtm <- dtm[, Terms(dtm) != ""]')
+
+            doItAndPrint('attr(dtm, "dictionary") <- dict')
+
+            doItAndPrint("rm(dtmCorpus, origDict, dict)")
         }
 
         if(exists("wordsDtm")) {

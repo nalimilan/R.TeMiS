@@ -25,53 +25,41 @@ termsDictionary <- function(dtm, order=c("alphabetic", "occurrences")) {
     on.exit(setIdleCursor())
 
     lang <- attr(dtm, "language")
-    words <- attr(dtm, "words")
-
-    if(is.null(words))
-        words <- col_sums(dtm)
-
     processing <- attr(dtm, "processing")
-    if(is.null(processing))
-        processing <- c(stemming=TRUE, custom.stemming=FALSE, stopwords=FALSE)
+    dict <- attr(dtm, "dictionary")
+    stopword <- rownames(dict) %in% stopwords(lang)
 
-    stopword <- names(words) %in% stopwords(lang)
+    if(processing["stemming"] || processing["custom.stemming"]) {
+        dict <- cbind(dict[-3],
+                      col_sums(dtm)[dict[[2]]],
+                      dict[3],
+                      # Some words can be removed as stopwords, but be present because another
+                      # word that has been kept is identical in its stemmed from
+                      ifelse(!dict[[2]] %in% Terms(dtm) |
+                             ((!processing["custom.stemming"] & processing["stopwords"] & stopword) |
+                              (processing["custom.stemming"] & dict[[2]] == "")),
+                             .gettext("Removed"), ""))
 
-    if(!processing["stemming"] && !processing["custom.stemming"]) {
-        dictionary <- data.frame(row.names=names(words), words,
-                                 ifelse(stopword, .gettext("Stopword"), ""),
-                                 ifelse(!names(words) %in% Terms(dtm), .gettext("Removed"), ""))
-
-        names(dictionary) <- c(.gettext("Occurrences"), .gettext("Stopword?"), .gettext("Removed?"))
-
+        colnames(dict)[3:5] <- c(.gettext("Stemmed occ."), .gettext("Stopword"), .gettext("Removed"))
 
         if(order == "occurrences")
-            dictionary[order(dictionary[, 1], decreasing=TRUE),]
+            dict[order(dict[[3]], decreasing=TRUE),]
         else
-            dictionary
+            # When editing stemming manually, words to exclude are set to ""
+            dict[order(ifelse(dict[[2]] == "", rownames(dict), dict[[2]])),]
     }
     else {
-        if(processing["custom.stemming"]) {
-            stemming.dictionary <- attr(dtm, "stemming.dictionary")
-            terms <- stemming.dictionary[[2]]
-        }
-        else {
-            terms <- SnowballC::wordStem(names(words), language=lang)
-        }
-
-        dictionary <- data.frame(row.names=names(words), words,
-                                 terms, col_sums(dtm)[ifelse(terms %in% Terms(dtm), terms, NA)],
-                                 ifelse(stopword, .gettext("Stopword"), ""),
-                                 # Some words can be removed as stopwords, but be present because another
-                                 # word that has been kept is identical in its stemmed from
-                                 ifelse(!terms %in% Terms(dtm) | (stopword & processing["stopwords"]),
-                                        .gettext("Removed"), ""))
-
-        names(dictionary) <- c(.gettext("Occurrences"), .gettext("Stemmed term"), .gettext("Stemmed occ."),
-                               .gettext("Stopword?"), .gettext("Removed?"))
+        dict <- cbind(dict,
+                      # Some words can be removed as stopwords, but be present because another
+                      # word that has been kept is identical in its stemmed from
+                      ifelse(!rownames(dict) %in% Terms(dtm) | (stopword & processing["stopwords"]),
+                             .gettext("Removed"), ""))
+        colnames(dict)[2:3] <- c(.gettext("Stopword"), .gettext("Removed"))
 
         if(order == "occurrences")
-            dictionary[order(dictionary[, 3], decreasing=TRUE),]
+            dict[order(dict[[1]], decreasing=TRUE),]
         else
-            dictionary
+            dict
+
     }
 }

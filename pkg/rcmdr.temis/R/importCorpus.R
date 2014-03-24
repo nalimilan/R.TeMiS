@@ -64,9 +64,8 @@
 }
 
 # Run all processing steps and extract words list
-.processTexts <- function(options, lang, wordsOnly) {
-        if(any(options))
-            doItAndPrint("dtmCorpus <- corpus")
+.processTexts <- function(options, lang) {
+        doItAndPrint("dtmCorpus <- corpus")
 
         if(options["twitter"])
             doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, function(x) gsub("http(s?)://[[:alnum:]/\\\\.\\\\-\\\\?=&#_;,]*|\\\\bRT\\\\b", "", x))')
@@ -88,22 +87,47 @@
         if(options["digits"])
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removeNumbers)")
 
-        if(options["stemming"] && !options["custom.stemming"]) {
-            # Get list of words before stemming and stopwords removal
-            doItAndPrint("words <- col_sums(DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf))))")
+        doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))")
+        doItAndPrint("rm(dtmCorpus)")
+}
 
-            gc()
-        }
+.buildDictionary <- function(stemming, custom.stemming, lang) {
+    if(stemming) {
+        doItAndPrint(sprintf('dictionary <- data.frame(row.names=colnames(dtm), "%s"=col_sums(dtm), "%s"=wordStem(colnames(dtm)), "%s"=ifelse(colnames(dtm) %%in%% stopwords("%s"), "%s", ""), stringsAsFactors=FALSE)',
+                             .gettext("Occurrences"), .gettext("Stemmed.Term"), .gettext("Stopword"), lang, .gettext("Stopword")))
+    }
+    else if(custom.stemming){
+        doItAndPrint(sprintf('dictionary <- data.frame(row.names=colnames(dtm), "%s"=col_sums(dtm), "%s"="", "%s"=ifelse(colnames(dtm) %%in%% stopwords("%s"), "%s", ""), stringsAsFactors=FALSE)',
+                             .gettext("Occurrences"), .gettext("Stemmed.Term"), .gettext("Stopword"), lang, .gettext("Stopword")))
+    }
+    else {
+        doItAndPrint(sprintf('dictionary <- data.frame(row.names=colnames(dtm), "%s"=col_sums(dtm), "%s"=ifelse(colnames(dtm) %%in%% stopwords("%s"), "%s", ""), stringsAsFactors=FALSE)',
+                             .gettext("Occurrences"), .gettext("Stopword"), lang, .gettext("Stopword")))
+    }
+}
 
-        # Used when subsetting corpus, we do not need to recompute the full dtm
-        if(wordsOnly)
-            return()
+.prepareDtm <- function(stopwords, stemming, custom.stemming, lang) {
+    if(custom.stemming) {
+        if(stopwords) doItAndPrint(sprintf('dictionary[Terms(dtm) %%in%% stopwords("%s"), "%s"] <- ""',
+                                           lang, .gettext("Stemmed.Term")))
 
-        if(options["stemming"] && !options["custom.stemming"]) {
-            doItAndPrint("library(SnowballC)")
-            doItAndPrint(sprintf('dtmCorpus <- tm_map(dtmCorpus, stemDocumentSnowballC, language="%s")',
-                                 lang))
-        }
+        doItAndPrint(sprintf('dictionary <- editDf(dictionary, "%s")', .gettext("Original.Word")))
+        doItAndPrint(sprintf('dtm <- rollup(dtm, 2, dictionary[["%s"]])', .gettext("Stemmed.Term")))
+        doItAndPrint('dtm <- dtm[, Terms(dtm) != ""]')
+    }
+    else if(stemming && stopwords) {
+        doItAndPrint(sprintf('dtm <- dtm[, !colnames(dtm) %%in%% stopwords("%s")]', lang))
+        doItAndPrint("dtm <- rollup(dtm, 2, dictionary[colnames(dtm), 2])")
+    }
+    else if(stemming) {
+        doItAndPrint("dtm <- rollup(dtm, 2, dictionary[[2]])")
+    }
+    else if(stopwords) {
+        doItAndPrint(sprintf('dtm <- dtm[, !colnames(dtm) %%in%% stopwords("%s")]', lang))
+    }
+
+    doItAndPrint('attr(dtm, "dictionary") <- dictionary')
+    doItAndPrint("rm(dictionary)")
 }
 
 importCorpusDlg <- function() {
@@ -265,33 +289,10 @@ importCorpusDlg <- function() {
                         digits=digits, stopwords=stopwords,
                         stemming=stemming, custom.stemming=custom.stemming,
                         removeHashtags=res$removeHashtags, removeNames=res$removeNames),
-                      lang, FALSE)
+                      lang)
 
-        if(twitter || lowercase || punctuation || digits || stopwords || (stemming & !custom.stemming)) {
-            doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))")
-            doItAndPrint("rm(dtmCorpus)")
-        }
-        else {
-            doItAndPrint("dtm <- DocumentTermMatrix(corpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))")
-        }
-
-        if(custom.stemming) {
-            if(stemming) doItAndPrint("terms <- wordStem(Terms(dtm))")
-            if(stopwords) doItAndPrint(sprintf('terms[terms %%in%% stopwords("%s")] <- ""', lang))
-            doItAndPrint(sprintf("stemming.dictionary <- data.frame(%s=Terms(dtm), %s=terms, stringsAsFactors=FALSE)",
-                                 .gettext("Original.Word"), .gettext("Stemmed.Term")))
-
-            doItAndPrint("stemming.dictionary <- editDf(stemming.dictionary)")
-            doItAndPrint("dtm <- rollup(dtm, 2, stemming.dictionary[[2]])")
-            doItAndPrint('dtm <- dtm[, Terms(dtm) != ""]')
-            doItAndPrint('attr(dtm, "words") <- stemming.dictionary[[1]]')
-            doItAndPrint('attr(dtm, "stemming.dictionary") <- stemming.dictionary')
-            doItAndPrint("rm(terms, stemming.dictionary)")
-        }
-        else if(stopwords && !options["stemming"]) {
-            doItAndPrint('attr(dtm, "words") <- col_sums(dtm)')
-            doItAndPrint(sprintf('dtm <- dtm[, !Terms(dtm) %%in%% stopwords("%s")', lang))
-        }
+        .buildDictionary(stemming, custom.stemming, lang)
+        .prepareDtm(stopwords, stemming, custom.stemming, lang)
 
         gc()
 
