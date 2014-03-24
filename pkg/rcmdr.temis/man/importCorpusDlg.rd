@@ -84,7 +84,12 @@
          The dialog also provides a few processing options that will most likely be
          all run in order to get a meaningful set of terms from a text corpus.
          Among them, stopwords removal and stemming require you to select the
-         language used in the corpus.
+         language used in the corpus. If you tick \dQuote{Edit stemming manually},
+         enabled processing steps will be applied to the terms before presenting you with
+         a list of all words originally found in the corpus, together with their stemmed forms.
+         Terms with an empty stemmed form will be excluded from the document-term matrix;
+         the \dQuote{Stopword} column is only presented as an indication, it is not taken into
+         account when deciding whether to keep a term.
 
          By default, plain text (usually .txt) and comma/tab-separated values files (.csv, .tsv, .dat...)
          are assumed to be in the native encoding, which is shown in the \dQuote{File encoding:} entry.
