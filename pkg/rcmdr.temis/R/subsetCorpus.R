@@ -1,3 +1,59 @@
+.subsetCorpus <- function(processing, save) {
+    if(save)
+        doItAndPrint("origCorpus <- corpus")
+
+    doItAndPrint("corpus <- corpus[keep]")
+
+    if(exists("dtm")) {
+         processing <- meta(corpus, type="corpus", tag="processing")
+         lang <- meta(corpus, type="corpus", tag="language")
+
+        if(save)
+            doItAndPrint("origDtm <- dtm")
+
+        doItAndPrint('dtmAttr <- attributes(dtm)')
+        doItAndPrint('origDictionary <- attr(dtm, "dictionary")')
+
+        doItAndPrint("dtm <- dtm[keep,]")
+
+        # stemming=FALSE since we don't need to extract the stems again,
+        # we reuse below those of the old dictionary
+        .buildDictionary(FALSE, processing["custom.stemming"], lang)
+
+        if(processing["stemming"] || processing["custom.stemming"])
+            doItAndPrint('dictionary[[2]] <- origDictionary[rownames(dictionary), 2]')
+
+        # custom.stemming=FALSE since we don't want to ask the user to customize stemming
+        .prepareDtm(processing["stopwords"], processing["stemming"] || processing["custom.stemming"], FALSE, lang)
+        if(processing["custom.stemming"])
+            doItAndPrint('dtm <- dtm[, Terms(dtm) != ""]')
+
+        doItAndPrint('attr(dtm, "language") <- dtmAttr$lang')
+        doItAndPrint('attr(dtm, "processing") <- dtmAttr$processing')
+
+        doItAndPrint("rm(dtmAttr, origDictionary)")
+    }
+
+    if(exists("wordsDtm")) {
+        if(save)
+            doItAndPrint("origWordsDtm <- wordsDtm")
+
+        doItAndPrint("wordsDtm <- wordsDtm[keep,]")
+        doItAndPrint("wordsDtm <- wordsDtm[,col_sums(wordsDtm) > 0]")
+    }
+
+    doItAndPrint("corpusVars <- corpusVars[keep,, drop=FALSE]")
+
+    # Remove objects left from a previous analysis on the old corpus to avoid confusion
+    # (we assume later existing objects match the current corpus)
+    objects <- c("keep", "voc", "lengths", "termFreqs", "corpusClust", "corpusSubClust", "corpusCa", "plottingCa")
+    doItAndPrint(paste('rm(list=c("', paste(objects[sapply(objects, exists)], collapse='", "'), '"))', sep=""))
+    gc()
+
+    doItAndPrint("corpus")
+    doItAndPrint("dtm")
+}
+
 subsetCorpusByVarDlg <- function() {
     nVars <- ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"])
     if(nVars == 0) {
@@ -54,57 +110,9 @@ subsetCorpusByVarDlg <- function() {
         doItAndPrint(sprintf('keep <- meta(corpus, "%s")[[1]] %%in%% c("%s")',
                              var, paste(levs, collapse='", "')))
 
-        if(save)
-            doItAndPrint("origCorpus <- corpus")
+        .subsetCorpus(processing, save)
 
-        doItAndPrint("corpus <- corpus[keep]")
-
-        if(exists("dtm")) {
-             processing <- meta(corpus, type="corpus", tag="processing")
-             lang <- meta(corpus, type="corpus", tag="language")
-
-            if(save)
-                doItAndPrint("origDtm <- dtm")
-
-            doItAndPrint('origDict <- attr(dtm, "dictionary")')
-
-            # stemming=FALSE since we don't need to extract the stems again,
-            # we reuse below those of the old dictionary
-            .buildDictionary(FALSE, processing["custom.stemming"], lang)
-
-            if(processing["stemming"] || processing["custom.stemming"])
-                doItAndPrint('dict[[2]] <- origDict[rownames(dict), 2]')
-
-            # custom.stemming=FALSE since we don't want to ask the user to customize stemming
-            .prepareDtm(processing["stopwords"], processing["stemming"] || processing["custom.stemming"], FALSE, lang)
-            if(processing["custom.stemming"])
-                doItAndPrint('dtm <- dtm[, Terms(dtm) != ""]')
-
-            doItAndPrint('attr(dtm, "dictionary") <- dict')
-
-            doItAndPrint("rm(dtmCorpus, origDict, dict)")
-        }
-
-        if(exists("wordsDtm")) {
-            if(save)
-                doItAndPrint("origWordsDtm <- wordsDtm")
-
-            doItAndPrint("wordsDtm <- wordsDtm[keep,]")
-            doItAndPrint("wordsDtm <- wordsDtm[,col_sums(wordsDtm) > 0]")
-        }
-
-        doItAndPrint("corpusVars <- corpusVars[keep,, drop=FALSE]")
-
-        # Remove objects left from a previous analysis on the old corpus to avoid confusion
-        # (we assume later existing objects match the current corpus)
-        objects <- c("keep", "voc", "lengths", "termFreqs", "corpusClust", "corpusSubClust", "corpusCa", "plottingCa")
-        doItAndPrint(paste('rm(list=c("', paste(objects[sapply(objects, exists)], collapse='", "'), '"))', sep=""))
-        gc()
-
-        doItAndPrint("corpus")
-        doItAndPrint("dtm")
-
-        activateMenus()
+	    activateMenus()
         tkfocus(CommanderWindow())
     }
 
@@ -196,56 +204,9 @@ subsetCorpusByTermsDlg <- function() {
             doItAndPrint(sprintf('keep <- row_sums(dtm[, c("%s")] >= %i) == 0',
                                  paste(excludeList, collapse='", "'), excludeFreq))
 
-        if(save)
-            doItAndPrint("origCorpus <- corpus")
+        .subsetCorpus(processing, save)
 
-        doItAndPrint("corpus <- corpus[keep]")
-
-        if(exists("dtm")) {
-            .processTexts(meta(corpus, type="corpus", tag="processing"),
-                          meta(corpus, type="corpus", tag="language"),
-                          wordsOnly=TRUE)
-
-            doItAndPrint("dtmAttr <- attributes(dtm)")
-
-            # Not created when stemming is disabled
-            if(exists("words"))
-                doItAndPrint("dtmAttr$words <- words")
-
-            if(save)
-                doItAndPrint("origDtm <- dtm")
-
-            doItAndPrint("dtm <- dtm[keep,]")
-            doItAndPrint("dtm <- dtm[,col_sums(dtm) > 0]")
-            doItAndPrint("attributes(dtm) <- dtmAttr")
-
-            if(exists("words"))
-                doItAndPrint("rm(dtmCorpus, dtmAttr, words)")
-            else
-                doItAndPrint("rm(dtmCorpus, dtmAttr)")
-        }
-
-        if(exists("wordsDtm")) {
-            if(save)
-                doItAndPrint("origWordsDtm <- wordsDtm")
-
-            doItAndPrint("wordsDtm <- wordsDtm[keep,]")
-            doItAndPrint("wordsDtm <- wordsDtm[,col_sums(wordsDtm) > 0]")
-        }
-
-        doItAndPrint("corpusVars <- corpusVars[keep,, drop=FALSE]")
-
-        # Remove objects left from a previous analysis on the old corpus to avoid confusion
-        # (we assume later existing objects match the current corpus)
-        objects <- c("keep", "voc", "lengths", "termFreqs", "absTermFreqs", "varTermFreqs",
-                     "corpusClust", "corpusSubClust", "corpusCa", "plottingCa")
-        doItAndPrint(paste('rm(list=c("', paste(objects[sapply(objects, exists)], collapse='", "'), '"))', sep=""))
-        gc()
-
-        doItAndPrint("corpus")
-        doItAndPrint("dtm")
-
-        activateMenus()
+	    activateMenus()
         tkfocus(CommanderWindow())
     }
 
