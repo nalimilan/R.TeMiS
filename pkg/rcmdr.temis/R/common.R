@@ -133,3 +133,150 @@ if (getRversion() >= '2.15.1') globalVariables(c(
     else
         tk_messageBox("ok", message, caption, icon=type, parent=parent)
 }
+
+# Adapted from Rcmdr's OKCancelHelp()
+# Copyright John Fox. License: GPL >= 2.
+.customCloseHelp <- defmacro(window=top, helpSubject=NULL, model=FALSE,
+                             reset=NULL, apply=NULL, custom.button="OK",
+    expr={
+        memory <- getRcmdr("retain.selections")
+        button.strings <- c(custom.button, "Close", 
+                            if (!is.null(helpSubject)) "Help", 
+                            if (!is.null(reset) && memory) "Reset", 
+                            if (!is.null(apply)) "Apply")
+        width <- max(nchar(c(gettextRcmdr("Help", "Reset", "Apply"), .gettext("Close"), custom.button)))
+        if (WindowsP()) width <- width + 2
+        buttonsFrame <- tkframe(window)
+        leftButtonsBox <- tkframe(buttonsFrame)
+        rightButtonsBox <- tkframe(buttonsFrame)
+        
+        customButton <- buttonRcmdr(rightButtonsBox, text=custom.button, foreground="darkgreen", width=width, command=onCustom, default="active",
+            image="::image::okIcon", compound="left")
+        
+        onClose <- function() {
+            if (exists(".exit")){
+                result <- .exit()
+                if (result == "abort") return()
+            }
+            putRcmdr("restoreTab", FALSE)
+            if (model) putRcmdr("modelNumber", getRcmdr("modelNumber") - 1)
+            if (GrabFocus()) tkgrab.release(window)
+            tkdestroy(window)
+            tkfocus(CommanderWindow())
+        }
+        
+        closeButton <- buttonRcmdr(rightButtonsBox, text=.gettext("Close"), foreground="red", width=width, command=onClose, # borderwidth=3,
+            image="::image::cancelIcon", compound="left")
+        
+        if (!is.null(helpSubject)){
+            onHelp <- function() {
+                if (GrabFocus() && (!WindowsP())) tkgrab.release(window)
+                if (as.numeric(R.Version()$major) >= 2) print(help(helpSubject))
+                else help(helpSubject)
+            }
+            helpButton <- buttonRcmdr(leftButtonsBox, text=gettextRcmdr("Help"), width=width, command=onHelp, # borderwidth=3,
+                image="::image::helpIcon", compound="left")
+        }
+        
+        if (!is.null(reset) && memory){
+            onReset <- function(){
+                ID <- window$ID
+                putRcmdr("cancelDialogReopen", TRUE)
+                putRcmdr("open.dialog.here", as.character(.Tcl(paste("winfo geometry", ID))))
+                if (model) putRcmdr("modelNumber", getRcmdr("modelNumber") - 1)
+                putDialog(reset, NULL)
+                putDialog(reset, NULL, resettable=FALSE)
+                closeDialog()
+                eval(parse(text=paste(reset, "()")))
+                putRcmdr("open.dialog.here", NULL)
+                putRcmdr("restoreTab", FALSE)
+            }
+            resetButton <- buttonRcmdr(leftButtonsBox, text=gettextRcmdr("Reset"), width=width, command=onReset,
+                image="::image::resetIcon", compound="left")
+        }
+        
+        if (!is.null(apply)){
+            onApply <- function(){
+                putRcmdr("restoreTab", TRUE)
+                putRcmdr("cancelDialogReopen", FALSE)
+                ID <- window$ID
+                putRcmdr("open.dialog.here", as.character(.Tcl(paste("winfo geometry", ID))))
+                if (getRcmdr("use.markdown")) {
+                    putRcmdr("startNewCommandBlock", FALSE)
+                    beginRmdBlock()
+                }
+                if (getRcmdr("use.knitr")) {
+                    putRcmdr("startNewKnitrCommandBlock", FALSE)
+                    beginRnwBlock()
+                }
+                setBusyCursor()
+                on.exit(setIdleCursor())
+                onCustom()
+                if (getRcmdr("use.markdown")){
+                    removeNullRmdBlocks()
+                    putRcmdr("startNewCommandBlock", TRUE)
+                    if (getRcmdr("rmd.generated")) {
+                        endRmdBlock()
+                        putRcmdr("rmd.generated", FALSE)
+                    }
+                    removeNullRmdBlocks()
+                }
+                if (getRcmdr("use.knitr")){
+                    removeNullRnwBlocks()
+                    putRcmdr("startNewKnitrCommandBlock", TRUE)
+                    if (getRcmdr("rnw.generated")) {
+                        endRnwBlock()
+                        putRcmdr("rnw.generated", FALSE)
+                    }
+                    removeNullRnwBlocks()
+                }
+                if (getRcmdr("cancelDialogReopen")){
+                    putRcmdr("cancelDialogReopen", FALSE)
+                }
+                else{
+                    eval(parse(text=paste(apply, "()")))
+                    putRcmdr("open.dialog.here", NULL)
+                }
+            }
+            applyButton <- buttonRcmdr(rightButtonsBox, text=gettextRcmdr("Apply"), foreground="yellow", width=width, command=onApply,
+                image="::image::applyIcon", compound="left")
+        }
+        
+        if(!WindowsP()) {
+            if (!is.null(apply)){
+                tkgrid(applyButton, closeButton, customButton, sticky="w")
+                tkgrid.configure(customButton, padx=c(6, 0))
+            }
+            else{
+                tkgrid(closeButton, customButton, sticky="w")
+            }
+            tkgrid.configure(closeButton, padx=c(6, 6))
+        }
+        else {
+            if (!is.null(apply)){
+                tkgrid(customButton, closeButton, applyButton, sticky="w")
+                tkgrid.configure(applyButton, padx=c(6, 0))
+            }
+            else{
+                tkgrid(customButton, closeButton, sticky="w")
+            }
+            tkgrid.configure(customButton, padx=c(6, 6))
+        }
+        if (!is.null(reset) && memory) {
+            if (! is.null(helpSubject)){
+                tkgrid (helpButton, resetButton, pady=6)
+            }
+            else tkgrid (resetButton, pady=6)
+            if (!WindowsP()) tkgrid.configure(resetButton, padx=c(0, 6))
+        }
+        else if (! is.null(helpSubject)){
+            tkgrid(helpButton, pady=6)
+        }
+        tkgrid(leftButtonsBox, rightButtonsBox, pady=6, sticky="ew")
+        if (!is.null(helpSubject)) tkgrid.configure(helpButton, padx=c(0, 18))
+        else if (!is.null(reset) && memory) tkgrid.configure(resetButton, padx=c(0, 18))
+        tkgrid.columnconfigure(buttonsFrame, 0, weight=1)
+        tkgrid.columnconfigure(buttonsFrame, 1, weight=1)
+        tkgrid.configure(leftButtonsBox, sticky="w")
+        tkgrid.configure(rightButtonsBox, sticky="e")
+    })

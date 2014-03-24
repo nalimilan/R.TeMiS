@@ -190,7 +190,7 @@ varTimeSeriesDlg <- function() {
     tclTitle <- tclVar(.gettext("Temporal evolution of the corpus"))
     titleEntry <- ttkentry(top, width="30", textvariable=tclTitle)
 
-    onOK <- function() {
+    onCustom <- function() {
         timeVar <- getSelection(timeVarBox)
         groupVar <- c("", vars)[as.numeric(tkcurselection(varsBox))+1]
         what <- tclvalue(whatVariable)
@@ -292,24 +292,7 @@ varTimeSeriesDlg <- function() {
         tkfocus(CommanderWindow())
     }
 
-    buttonsFrame <- tkframe(top, borderwidth=5)
-    plotButton <- buttonRcmdr(buttonsFrame, text=.gettext("Draw plot"), foreground="darkgreen",
-                              command=onOK, default="active", borderwidth=3)
-    onClose <- function() {
-        closeDialog()
-        tkfocus(CommanderWindow())
-    }
-    closeButton <- buttonRcmdr(buttonsFrame, text=.gettext("Close"), foreground="red",
-                               command=onClose, borderwidth=3)
-    onHelp <- function() {
-        if (GrabFocus() && .Platform$OS.type != "windows") tkgrab.release(window)
-        print(help("varTimeSeriesDlg"))
-    }
-    helpButton <- buttonRcmdr(buttonsFrame, text=gettextRcmdr("Help"), width="12",
-                              command=onHelp, borderwidth=3)
-    tkgrid(plotButton, labelRcmdr(buttonsFrame, text="  "),
-           closeButton, labelRcmdr(buttonsFrame, text="            "),
-           helpButton, sticky="w")
+    .customCloseHelp(helpSubject="varTimeSeriesDlg", custom.button=.gettext("Draw plot"))
 
     tkgrid(getFrame(timeVarBox), sticky="ewns", padx=c(0, 6), pady=6, row=0, rowspan=3)
     tkgrid(labelRcmdr(top, text=.gettext("Time format:")), padx=c(6, 0), pady=c(6, 0), sticky="w", row=0, column=1)
@@ -332,7 +315,7 @@ varTimeSeriesDlg <- function() {
            sticky="w", pady=c(6, 0))
     tkgrid(titleEntry, sticky="w", padx=6, pady=c(0, 6), columnspan=2)
     tkgrid(buttonsFrame, sticky="ew", pady=6, columnspan=2)
-    dialogSuffix(focus=timeVarBox$listbox, onCancel=onClose)
+    dialogSuffix(focus=timeVarBox$listbox, onOK=onCustom, onCancel=onClose)
 }
 
 termTimeSeriesDlg <- function() {
@@ -429,7 +412,7 @@ termTimeSeriesDlg <- function() {
     tclTitle <- tclVar(.gettext("Temporal evolution of occurrences"))
     titleEntry <- ttkentry(top, width="30", textvariable=tclTitle)
 
-    onOK <- function() {
+    onCustom <- function() {
         timeVar <- getSelection(timeVarBox)
         groupVar <- c("", vars)[as.numeric(tkcurselection(varsBox))+1]
         termsList <- strsplit(tclvalue(tclTerms), " ")[[1]]
@@ -561,24 +544,7 @@ termTimeSeriesDlg <- function() {
         tkfocus(CommanderWindow())
     }
 
-    buttonsFrame <- tkframe(top, borderwidth=5)
-    plotButton <- buttonRcmdr(buttonsFrame, text=.gettext("Draw plot"), foreground="darkgreen",
-                              command=onOK, default="active", borderwidth=3)
-    onClose <- function() {
-        closeDialog()
-        tkfocus(CommanderWindow())
-    }
-    closeButton <- buttonRcmdr(buttonsFrame, text=.gettext("Close"), foreground="red",
-                               command=onClose, borderwidth=3)
-    onHelp <- function() {
-        if (GrabFocus() && .Platform$OS.type != "windows") tkgrab.release(window)
-        print(help("varTimeSeriesDlg"))
-    }
-    helpButton <- buttonRcmdr(buttonsFrame, text=gettextRcmdr("Help"), width="12",
-                              command=onHelp, borderwidth=3)
-    tkgrid(plotButton, labelRcmdr(buttonsFrame, text="  "),
-           closeButton, labelRcmdr(buttonsFrame, text="            "),
-           helpButton, sticky="w")
+    .customCloseHelp(helpSubject="varTimeSeriesDlg", custom.button=.gettext("Draw plot"))
 
     tkgrid(getFrame(timeVarBox), sticky="ewns", padx=c(0, 6), pady=6, row=0, rowspan=3)
     tkgrid(labelRcmdr(top, text=.gettext("Time format:")), padx=c(6, 0), pady=c(6, 0), sticky="w", row=0, column=1)
@@ -604,5 +570,5 @@ termTimeSeriesDlg <- function() {
            sticky="w", pady=c(6, 0))
     tkgrid(titleEntry, sticky="w", padx=6, pady=c(0, 6), columnspan=2)
     tkgrid(buttonsFrame, sticky="ew", pady=6, columnspan=2)
-    dialogSuffix(focus=timeVarBox$listbox, onCancel=onClose)
+    dialogSuffix(focus=timeVarBox$listbox, onOK=onCustom, onCancel=onClose)
 }

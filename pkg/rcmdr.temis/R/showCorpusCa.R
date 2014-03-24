@@ -447,7 +447,7 @@ showCorpusCaDlg <- function() {
     ctrDim3 <- ttkradiobutton(ctrDimFrame, variable=ctrDimVariable, value="yDim", text=.gettext("Vertical axis"))
 
 
-    onShow <- function() {
+    onCustom <- function() {
         x <- tclvalue(tclXDim)
         y <- tclvalue(tclYDim)
         docLabels <- if(!actDocs) FALSE else tclvalue(docLabelsVariable) == 1
@@ -548,25 +548,7 @@ showCorpusCaDlg <- function() {
         activateMenus()
     }
 
-    # Custom buttons, adapted from OKCancelHelp()
-    buttonsFrame <- tkframe(top, borderwidth=5)
-    plotButton <- buttonRcmdr(buttonsFrame, text=.gettext("Show"), foreground="darkgreen",
-                              command=onShow, default="active", borderwidth=3)
-    onClose <- function() {
-        closeDialog()
-        tkfocus(CommanderWindow())
-    }
-    closeButton <- buttonRcmdr(buttonsFrame, text=.gettext("Close"), foreground="red",
-                               command=onClose, borderwidth=3)
-    onHelp <- function() {
-        if (GrabFocus() && .Platform$OS.type != "windows") tkgrab.release(window)
-        print(help("showCorpusCaDlg"))
-    }
-    helpButton <- buttonRcmdr(buttonsFrame, text=gettextRcmdr("Help"), width="12",
-                              command=onHelp, borderwidth=3)
-    tkgrid(plotButton, labelRcmdr(buttonsFrame, text="  "),
-           closeButton, labelRcmdr(buttonsFrame, text="            "),
-           helpButton, sticky="w")
+    .customCloseHelp(helpSubject="showCorpusCaDlg", custom.button=.gettext("Show"))
 
     tkgrid(labelRcmdr(dimFrame, text=.gettext("Horizontal axis:")), xSlider, sticky="w")
     tkgrid(labelRcmdr(dimFrame, text=.gettext("Vertical axis:")), ySlider, sticky="w")
@@ -583,16 +565,15 @@ showCorpusCaDlg <- function() {
     tkgrid(ctrDimFrame, sticky="w", pady=6, columnspan=2)
     tkgrid.columnconfigure(ctrDimFrame, "all", uniform="a")
     tkgrid(buttonsFrame, sticky="ew", pady=6, columnspan=2)
-    nrows <- if(length(corpusCa$rowsup) == 0) 6 else 7
 
     # We don't use dialogSuffix() itself because the dialog should not close,
     # and yet not call tkwait.window(): the plot does not draw correctly on Mac OS if we do.
     # The grab has also been removed since it prevents the user from scrolling the CA text window.
     .Tcl("update idletasks")
     tkwm.resizable(top, 0, 0)
-    tkbind(top, "<Return>", onShow)
+    tkbind(top, "<Return>", onCustom)
     tkbind(top, "<Escape>", onClose)
-    if (getRcmdr("double.click") && (!preventDoubleClick)) tkbind(window, "<Double-ButtonPress-1>", onShow)
+    if (getRcmdr("double.click") && (!preventDoubleClick)) tkbind(window, "<Double-ButtonPress-1>", onCustom)
     tkwm.deiconify(top)
     tkfocus(top)
     if (getRcmdr("crisp.dialogs")) tclServiceMode(on=TRUE)
