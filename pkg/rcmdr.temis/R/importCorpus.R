@@ -241,6 +241,20 @@ importCorpusDlg <- function() {
                      "termFreqs", "absTermFreqs", "varTermFreqs", "freqTerms", "specTerms", "docSeries",
                      ".last.table", ".HTML.file", "corpusClust", "corpusSubClust", "corpusCa", "plottingCa")
         if(any(sapply(objects, exists))) {
+            # Needed to avoid a warning about corpusVars not being available
+            # This should be removed once we can depend on the new version of Rcmdr accepting ActiveDataSet(NULL)
+            if(exists("corpusVars")) {
+                putRcmdr(".activeDataSet", NULL)
+		        Variables(NULL)
+		        Numeric(NULL)
+		        Factors(NULL)
+		        RcmdrTclSet("dataSetName", gettextRcmdr("<No active dataset>"))
+		        putRcmdr(".activeModel", NULL)
+		        RcmdrTclSet("modelName", gettextRcmdr("<No active model>"))
+		        tkconfigure(getRcmdr("dataSetLabel"), foreground="red")
+		        tkconfigure(getRcmdr("modelLabel"), foreground="red")
+            }
+
             doItAndPrint(paste("rm(", paste(objects[sapply(objects, exists)], collapse=", "), ")", sep=""))
             gc()
 
