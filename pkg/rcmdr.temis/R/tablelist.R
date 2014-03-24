@@ -366,44 +366,6 @@
                       }
                       ))
 
-# Adapted from Rcmdr's selectActiveDataSet(). Copyright John Fox. License: GPL>=2.
-.loadStemming <- function(){
-    dataSets <- listDataSets()
-    .activeDataSet <- ActiveDataSet()
-    if (length(dataSets) == 0){
-        .Message(message=gettextRcmdr("There are no data sets from which to choose."),
-                 type="error")
-        tkfocus(CommanderWindow())
-        return()
-    }
-    initializeDialog(title=gettextRcmdr("Select Data Set"))
-    dataSetsBox <- variableListBox(top, dataSets, title=gettextRcmdr("Data Sets (pick one)"),
-                                   initialSelection=0)
-
-    dset <- NULL
-
-    onOK <- function(){
-        dset <- get(getSelection(dataSetsBox), globalenv())
-
-        if(!.gettext("Original.Word") %in% names(dset) ||
-           !.gettext("Stemmed.Term") %in% names(dset)) {
-            .Message(sprintf(.gettext("Data set must contain columns named \"%s\" and \"%s\"."),
-                            .gettext("Original.Word"), .gettext("Stemmed.Term")),
-                     type="error")
-            return()
-        }
-
-        dset <<- dset
-        closeDialog()
-    }
-    OKCancelHelp()
-    tkgrid(getFrame(dataSetsBox), sticky="nw")
-    tkgrid(buttonsFrame, sticky="w")
-    dialogSuffix()
-
-    dset
-}
-
 editStemming <- function(df) {
     top <- tktoplevel()
     tkwm.geometry(top, tkwm.geometry(CommanderWindow()))
@@ -503,11 +465,11 @@ editStemming <- function(df) {
     leftButtonsBox <- tkframe(buttonsFrame)
     rightButtonsBox <- tkframe(buttonsFrame)
 
-    loadButton <- buttonRcmdr(leftButtonsBox, text=.gettext("Import stemming dictionary"), command=onImport)
+    importButton <- buttonRcmdr(leftButtonsBox, text=.gettext("Import stemming dictionary"), command=onImport)
     exportButton <- buttonRcmdr(leftButtonsBox, text=.gettext("Export stemming dictionary"), command=onExport)
     OKbutton <- buttonRcmdr(rightButtonsBox, text=gettextRcmdr("OK"), width=12, command=onOK, default="active",
                             image="::image::okIcon", compound="left")
-    tkgrid(loadButton, exportButton, sticky="ew", padx=6)
+    tkgrid(importButton, exportButton, sticky="ew", padx=6)
     tkgrid(OKbutton, sticky="e", padx=6)
     tkgrid.configure(leftButtonsBox, rightButtonsBox, pady=6, sticky="ew")
     tkgrid.configure(buttonsFrame, sticky="ew")
