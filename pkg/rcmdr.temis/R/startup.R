@@ -1,9 +1,3 @@
-.onLoad <- function(libname, pkgname){
-  # To make tablelist available
-  libdir <- file.path(libname, pkgname, "tklibs")
-  addTclPath(libdir)
-}
-
 .onAttach <- function(libname, pkgname){
   # Work around a bug with Java on Mac OS blocking Snowball and RWeka
   if(Sys.info()["sysname"] == "Darwin")  {
