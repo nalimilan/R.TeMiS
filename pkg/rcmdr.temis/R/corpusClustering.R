@@ -186,10 +186,10 @@ corpusClustDlg <- function() {
     setState <- function(...) {
         if(tclvalue(tclType) == "full") {
             caState <- "disabled"
-            fullState <- "active"
+            fullState <- "normal"
         }
         else {
-            caState <- "active"
+            caState <- "normal"
             fullState <- "disabled"
         }
 
