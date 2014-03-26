@@ -1,12 +1,12 @@
-.subsetCorpus <- function(processing, save) {
+.subsetCorpus <- function(save) {
     if(save)
         doItAndPrint("origCorpus <- corpus")
 
     doItAndPrint("corpus <- corpus[keep]")
 
     if(exists("dtm")) {
-         processing <- meta(corpus, type="corpus", tag="processing")
-         lang <- meta(corpus, type="corpus", tag="language")
+        processing <- meta(corpus, type="corpus", tag="processing")
+        lang <- meta(corpus, type="corpus", tag="language")
 
         if(save)
             doItAndPrint("origDtm <- dtm")
@@ -110,7 +110,7 @@ subsetCorpusByVarDlg <- function() {
         doItAndPrint(sprintf('keep <- meta(corpus, "%s")[[1]] %%in%% c("%s")',
                              var, paste(levs, collapse='", "')))
 
-        .subsetCorpus(processing, save)
+        .subsetCorpus(save)
 
 	    activateMenus()
         tkfocus(CommanderWindow())
@@ -204,7 +204,7 @@ subsetCorpusByTermsDlg <- function() {
             doItAndPrint(sprintf('keep <- row_sums(dtm[, c("%s")] >= %i) == 0',
                                  paste(excludeList, collapse='", "'), excludeFreq))
 
-        .subsetCorpus(processing, save)
+        .subsetCorpus(save)
 
 	    activateMenus()
         tkfocus(CommanderWindow())
