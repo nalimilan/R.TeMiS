@@ -29,15 +29,15 @@ termsDictionary <- function(dtm, order=c("alphabetic", "occurrences")) {
     dict <- attr(dtm, "dictionary")
     stopword <- rownames(dict) %in% stopwords(lang)
 
-    if(processing["stemming"] || processing["custom.stemming"]) {
+    if(processing["stemming"] || processing["customStemming"]) {
         dict <- cbind(dict[-3],
                       col_sums(dtm)[dict[[2]]],
                       dict[3],
                       # Some words can be removed as stopwords, but be present because another
                       # word that has been kept is identical in its stemmed from
                       ifelse(!dict[[2]] %in% Terms(dtm) |
-                             ((!processing["custom.stemming"] & processing["stopwords"] & stopword) |
-                              (processing["custom.stemming"] & dict[[2]] == "")),
+                             ((!processing["customStemming"] & processing["stopwords"] & stopword) |
+                              (processing["customStemming"] & dict[[2]] == "")),
                              .gettext("Removed"), ""))
 
         colnames(dict)[3:5] <- c(.gettext("Stemmed occ."), .gettext("Stopword"), .gettext("Removed"))

@@ -88,12 +88,12 @@
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removeNumbers)")
 }
 
-.buildDictionary <- function(stemming, custom.stemming, lang) {
+.buildDictionary <- function(stemming, customStemming, lang) {
     if(stemming) {
         doItAndPrint(sprintf('dictionary <- data.frame(row.names=colnames(dtm), "%s"=col_sums(dtm), "%s"=wordStem(colnames(dtm)), "%s"=ifelse(colnames(dtm) %%in%% stopwords("%s"), "%s", ""), stringsAsFactors=FALSE)',
                              .gettext("Occurrences"), .gettext("Stemmed.Term"), .gettext("Stopword"), lang, .gettext("Stopword")))
     }
-    else if(custom.stemming){
+    else if(customStemming){
         doItAndPrint(sprintf('dictionary <- data.frame(row.names=colnames(dtm), "%s"=col_sums(dtm), "%s"=colnames(dtm), "%s"=ifelse(colnames(dtm) %%in%% stopwords("%s"), "%s", ""), stringsAsFactors=FALSE)',
                              .gettext("Occurrences"), .gettext("Stemmed.Term"), .gettext("Stopword"), lang, .gettext("Stopword")))
     }
@@ -103,8 +103,8 @@
     }
 }
 
-.prepareDtm <- function(stopwords, stemming, custom.stemming, lang) {
-    if(custom.stemming) {
+.prepareDtm <- function(stopwords, stemming, customStemming, lang) {
+    if(customStemming) {
         if(stopwords) doItAndPrint(sprintf('dictionary[Terms(dtm) %%in%% stopwords("%s"), "%s"] <- ""',
                                            lang, .gettext("Stemmed.Term")))
 
@@ -178,7 +178,7 @@ importCorpusDlg <- function() {
 
     checkBoxes(frame="processingFrame",
                boxes=c("lowercase", "punctuation", "digits", "stopwords",
-                       "stemming", "custom.stemming"),
+                       "stemming", "customStemming"),
                initialValues=c(1, 1, 1, 0, 1, 0),
                # Keep in sync with strings in initOutputFile()
                labels=c(.gettext("Ignore case"), .gettext("Remove punctuation"),
@@ -208,7 +208,7 @@ importCorpusDlg <- function() {
         digits <- tclvalue(digitsVariable) == 1
         stopwords <- tclvalue(stopwordsVariable) == 1
         stemming <- tclvalue(stemmingVariable) == 1
-        custom.stemming <- tclvalue(custom.stemmingVariable) == 1
+        customStemming <- tclvalue(customStemmingVariable) == 1
 
         lang <- names(languages)[tclvalue(tclLang) == languages]
 
@@ -298,15 +298,15 @@ importCorpusDlg <- function() {
         # Process texts
         .processTexts(c(twitter=twitter, lowercase=lowercase, punctuation=punctuation,
                         digits=digits, stopwords=stopwords,
-                        stemming=stemming, custom.stemming=custom.stemming,
+                        stemming=stemming, customStemming=customStemming,
                         removeHashtags=res$removeHashtags, removeNames=res$removeNames),
                       lang)
 
         doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))")
         doItAndPrint("rm(dtmCorpus)")
 
-        .buildDictionary(stemming, custom.stemming, lang)
-        .prepareDtm(stopwords, stemming, custom.stemming, lang)
+        .buildDictionary(stemming, customStemming, lang)
+        .prepareDtm(stopwords, stemming, customStemming, lang)
 
         gc()
 
@@ -318,9 +318,9 @@ importCorpusDlg <- function() {
         # when splitting commands when more than one pair of quotes is present)
         justDoIt(sprintf('meta(corpus, type="corpus", tag="source") <- "%s"', res$source))
 
-        doItAndPrint(sprintf('meta(corpus, type="corpus", tag="processing") <- attr(dtm, "processing") <- c(lowercase=%s, punctuation=%s, digits=%s, stopwords=%s, stemming=%s, custom.stemming=%s, twitter=%s, removeHashtags=%s, removeNames=%s)',
+        doItAndPrint(sprintf('meta(corpus, type="corpus", tag="processing") <- attr(dtm, "processing") <- c(lowercase=%s, punctuation=%s, digits=%s, stopwords=%s, stemming=%s, customStemming=%s, twitter=%s, removeHashtags=%s, removeNames=%s)',
                              lowercase, punctuation,
-                             digits, stopwords, stemming, custom.stemming, twitter,
+                             digits, stopwords, stemming, customStemming, twitter,
                              ifelse(is.null(res$removeHashtags), NA, res$removeHashtags),
                              ifelse(is.null(res$removeNames), NA, res$removeNames)))
 

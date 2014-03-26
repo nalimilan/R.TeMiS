@@ -200,7 +200,7 @@ vocabularyDlg <- function() {
 
         processing <- meta(corpus, type="corpus", tag="processing")
 
-        if(!any(processing[c("stemming", "custom.stemming", "stopwords")])) {
+        if(!any(processing[c("stemming", "customStemming", "stopwords")])) {
 		    if(var == .gettext("Document"))
 		        doItAndPrint("voc <- vocabularyTable(dtm, dtm)")
 		    else
@@ -210,7 +210,7 @@ vocabularyDlg <- function() {
 		    # Only compute the dtm the first time this operation is run
 		    if(!exists("wordsDtm")) {
 		        processing["stemming"] <- FALSE
-		        processing["custom.stemming"] <- FALSE
+		        processing["customStemming"] <- FALSE
 		        processing["stopwords"] <- FALSE
 
 		        .processTexts(processing)

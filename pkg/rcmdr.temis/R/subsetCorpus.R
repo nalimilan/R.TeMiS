@@ -18,14 +18,14 @@
 
         # stemming=FALSE since we don't need to extract the stems again,
         # we reuse below those of the old dictionary
-        .buildDictionary(FALSE, processing["custom.stemming"], lang)
+        .buildDictionary(FALSE, processing["customStemming"], lang)
 
-        if(processing["stemming"] || processing["custom.stemming"])
+        if(processing["stemming"] || processing["customStemming"])
             doItAndPrint('dictionary[[2]] <- origDictionary[rownames(dictionary), 2]')
 
-        # custom.stemming=FALSE since we don't want to ask the user to customize stemming
-        .prepareDtm(processing["stopwords"], processing["stemming"] || processing["custom.stemming"], FALSE, lang)
-        if(processing["custom.stemming"])
+        # customStemming=FALSE since we don't want to ask the user to customize stemming
+        .prepareDtm(processing["stopwords"], processing["stemming"] || processing["customStemming"], FALSE, lang)
+        if(processing["customStemming"])
             doItAndPrint('dtm <- dtm[, Terms(dtm) != ""]')
 
         doItAndPrint('attr(dtm, "language") <- dtmAttr$lang')
