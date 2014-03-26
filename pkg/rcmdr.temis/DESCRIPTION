@@ -5,7 +5,7 @@ Version: 0.7
 Date: 2014-03-24
 Authors@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr", role=c("aut", "cre")),
              person("Gilles", "Bastin", email="gilles.bastin@sciencespo-grenoble.fr", role=c("aut")))
-Imports: Rcmdr (>= 2.0-0), tcltk, tcltk2, utils, ca, R2HTML, RColorBrewer, latticeExtra
+Imports: methods, Rcmdr (>= 2.0-0), tcltk, tcltk2, utils, ca, R2HTML, RColorBrewer, latticeExtra
 Depends: tm, slam, zoo, lattice
 Suggests: SnowballC, ROpenOffice, RODBC, tm.plugin.factiva, tm.plugin.lexisnexis,
     tm.plugin.europresse, tm.plugin.alceste, twitteR
