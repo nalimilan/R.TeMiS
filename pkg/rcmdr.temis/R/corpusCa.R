@@ -206,8 +206,6 @@ corpusCaDlg <- function() {
         if(!is.null(corpusCa)) {
             setLastTable("corpusCa", .gettext("Correspondence analysis"))
 
-            doItAndPrint("corpusCa")
-
             showCorpusCaDlg()
         }
 
