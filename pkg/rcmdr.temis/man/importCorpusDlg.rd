@@ -5,8 +5,9 @@
 \alias{importCorpusFromFactiva}
 \alias{importCorpusFromLexisNexis}
 \alias{importCorpusFromEuropresse}
-\alias{importCorpusFromFactiva}
+\alias{importCorpusFromAlceste}
 \alias{importCorpusFromTwitter}
+\alias{editDictionary}
 \alias{splitTexts}
 \alias{extractMetadata}
 \title{Import a corpus and process it}

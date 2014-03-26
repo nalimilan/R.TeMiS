@@ -555,6 +555,8 @@ showCorpusCaDlg <- function() {
         activateMenus()
     }
 
+    # Shut up R CMD check WARNING
+    onClose <- NULL
     .customCloseHelp(helpSubject="showCorpusCaDlg", custom.button=.gettext("Show"))
 
     tkgrid(labelRcmdr(dimFrame, text=.gettext("Horizontal axis:")), xSlider, sticky="w")

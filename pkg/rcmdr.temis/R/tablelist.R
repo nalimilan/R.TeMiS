@@ -366,7 +366,7 @@
                       }
                       ))
 
-editStemming <- function(df) {
+editDictionary <- function(df) {
     top <- tktoplevel()
     tkwm.geometry(top, tkwm.geometry(CommanderWindow()))
 
@@ -425,7 +425,7 @@ editStemming <- function(df) {
         df2 <- df2[!names(df2) %in% .gettext("Original.Word")]
         df2 <- df2[unique(c(make.names(c(.gettext("Occurrences"), .gettext("Stemmed.Term"), .gettext("Stopword"))), names(df2)))]
 
-        df <<- editStemming(df2)
+        df <<- editDictionary(df2)
     }
 
 

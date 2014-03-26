@@ -193,7 +193,7 @@ corpusClustDlg <- function() {
             fullState <- "disabled"
         }
 
-        tkconfigure(sliderSparsity, state=fullState)
+        tkconfigure(spinSparsity, state=fullState)
         tkconfigure(sparsityLabel, state=fullState)
         tkconfigure(labelNDocs, state=fullState)
 

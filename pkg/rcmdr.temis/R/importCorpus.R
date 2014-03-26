@@ -108,7 +108,7 @@
         if(stopwords) doItAndPrint(sprintf('dictionary[Terms(dtm) %%in%% stopwords("%s"), "%s"] <- ""',
                                            lang, .gettext("Stemmed.Term")))
 
-        doItAndPrint("dictionary <- editStemming(dictionary)")
+        doItAndPrint("dictionary <- editDictionary(dictionary)")
         doItAndPrint(sprintf('dtm <- rollup(dtm, 2, dictionary[["%s"]])', .gettext("Stemmed.Term")))
         doItAndPrint('dtm <- dtm[, Terms(dtm) != ""]')
     }

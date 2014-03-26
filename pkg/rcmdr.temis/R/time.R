@@ -292,6 +292,8 @@ varTimeSeriesDlg <- function() {
         tkfocus(CommanderWindow())
     }
 
+    # Shut up R CMD check WARNING
+    onClose <- NULL
     .customCloseHelp(helpSubject="varTimeSeriesDlg", custom.button=.gettext("Draw plot"))
 
     tkgrid(getFrame(timeVarBox), sticky="ewns", padx=c(0, 6), pady=6, row=0, rowspan=3)
@@ -407,7 +409,7 @@ termTimeSeriesDlg <- function() {
     tclWindow <- tclVar(7)
     spinWindow <- tkwidget(top, type="spinbox", from=1, to=.Machine$integer.max,
                              inc=1, textvariable=tclWindow,
-                             validate="all", validatecommand=validate.int)
+                             validate="all", validatecommand=.validate.uint)
 
     tclTitle <- tclVar(.gettext("Temporal evolution of occurrences"))
     titleEntry <- ttkentry(top, width="30", textvariable=tclTitle)
@@ -544,6 +546,8 @@ termTimeSeriesDlg <- function() {
         tkfocus(CommanderWindow())
     }
 
+    # Shut up R CMD check WARNING
+    onClose <- NULL
     .customCloseHelp(helpSubject="varTimeSeriesDlg", custom.button=.gettext("Draw plot"))
 
     tkgrid(getFrame(timeVarBox), sticky="ewns", padx=c(0, 6), pady=6, row=0, rowspan=3)
