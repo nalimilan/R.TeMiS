@@ -86,9 +86,6 @@
 
         if(options["digits"])
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removeNumbers)")
-
-        doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))")
-        doItAndPrint("rm(dtmCorpus)")
 }
 
 .buildDictionary <- function(stemming, custom.stemming, lang) {
@@ -304,6 +301,9 @@ importCorpusDlg <- function() {
                         stemming=stemming, custom.stemming=custom.stemming,
                         removeHashtags=res$removeHashtags, removeNames=res$removeNames),
                       lang)
+
+        doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))")
+        doItAndPrint("rm(dtmCorpus)")
 
         .buildDictionary(stemming, custom.stemming, lang)
         .prepareDtm(stopwords, stemming, custom.stemming, lang)

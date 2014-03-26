@@ -198,25 +198,32 @@ vocabularyDlg <- function() {
 
         title <- gsub("%V", tolower(var), title)
 
-        # Only compute the dtm the first time this operation is run
-        if(!exists("wordsDtm")) {
-            doItAndPrint("dtmCorpus <- corpus")
+        processing <- meta(corpus, type="corpus", tag="processing")
 
-            # The default tokenizer does not get rid of punctuation *and of line breaks!*, which
-            # get concatenated with surrounding words
-            # This also avoids French articles and dash-linked words from getting concatenated with their noun
-            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, function(x) gsub(\"([\'\U2019\\n]|[[:punct:]])+\", \" \", x))")
+        if(!any(processing[c("stemming", "custom.stemming", "stopwords")])) {
+		    if(var == .gettext("Document"))
+		        doItAndPrint("voc <- vocabularyTable(dtm, dtm)")
+		    else
+		        doItAndPrint(sprintf('voc <- vocabularyTable(dtm, dtm, "%s", "%s")', var, unit))
+	    }
+	    else {
+		    # Only compute the dtm the first time this operation is run
+		    if(!exists("wordsDtm")) {
+		        processing["stemming"] <- FALSE
+		        processing["custom.stemming"] <- FALSE
+		        processing["stopwords"] <- FALSE
 
-            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removePunctuation)")
-            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removeNumbers)")
-            doItAndPrint("wordsDtm <- DocumentTermMatrix(dtmCorpus, control=list(wordLengths=c(2, Inf)))")
-            doItAndPrint("rm(dtmCorpus)")
-        }
+		        .processTexts(processing)
 
-        if(var == .gettext("Document"))
-            doItAndPrint("voc <- vocabularyTable(dtm, wordsDtm)")
-        else
-            doItAndPrint(sprintf('voc <- vocabularyTable(dtm, wordsDtm, "%s", "%s")', var, unit))
+		        doItAndPrint("wordsDtm <- DocumentTermMatrix(dtmCorpus, control=list(wordLengths=c(2, Inf)))")
+		        doItAndPrint("rm(dtmCorpus)")
+		    }
+
+		    if(var == .gettext("Document"))
+		        doItAndPrint("voc <- vocabularyTable(dtm, wordsDtm)")
+		    else
+		        doItAndPrint(sprintf('voc <- vocabularyTable(dtm, wordsDtm, "%s", "%s")', var, unit))
+		}
 
         # Plot
         if(measure == "percent")

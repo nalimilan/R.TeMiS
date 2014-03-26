@@ -28,6 +28,14 @@ vocabularyTable(termsDtm, wordsDtm, variable = NULL, unit = c("document", "globa
              \item{average word length}
          }
 
+         \emph{Words} are defined as the forms of two or more characters present in the texts
+         before stemming and stopword removal. On the contrary, unique \emph{terms} are extracted
+         from the global document-term matrix, which means they do not include words that were
+         removed by treatments ran at the import step, and that words different in the original
+         text might become identical terms if stemming was performed. This can be considered the
+         \dQuote{correct} measure, since the purpose of corpus processing is exactly that: mark
+         different forms of the same term as similar to allow for statistical analyses.
+
          Please note that percentages for \emph{terms} and \emph{words} are computed with regard
          respectively to the total number of terms and of words, so the denominators are not the
          same for all measures. See \code{\link{vocabularyDlg}}.

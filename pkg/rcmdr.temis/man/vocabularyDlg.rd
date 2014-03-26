@@ -16,17 +16,13 @@
              \item{average word length}
          }
 
-         Unique \emph{terms} (as opposed to \emph{words}) are extracted from the global document-term
-         matrix, which means they do not include words that were removed by treatments ran at the
-         import step, and that words different in the original text might become identical terms
-         if stemming was performed. This can be considered the "correct" measures, since the purpose
-         of corpus processing is exactly that: mark different forms of the same term as similar
-         to allow for statistical analyses.
-
-         On the contrary, long words and word length are extracted from a new document-term matrix:
-         they do not depend on the processing options applied to the corpus when importing (e.g.
-         stemming). Thus, \emph{words}, are defined as any text unit of two or more characters;
-         numbers and punctuation are removed, but no other changes are done to the text.
+         \emph{Words} are defined as the forms of two or more characters present in the texts
+         before stemming and stopword removal. On the contrary, unique \emph{terms} are extracted
+         from the global document-term matrix, which means they do not include words that were
+         removed by treatments ran at the import step, and that words different in the original
+         text might become identical terms if stemming was performed. This can be considered the
+         \dQuote{correct} measure, since the purpose of corpus processing is exactly that: mark
+         different forms of the same term as similar to allow for statistical analyses.
 
          Two different units can be selected for the analysis. If \dQuote{Document} is selected, values
          reported for each level correspond to the mean of the values for each of its documents;
