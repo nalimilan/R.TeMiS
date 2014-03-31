@@ -458,8 +458,8 @@ showCorpusCaDlg <- function() {
         termPoints <- tclvalue(termPointsVariable) == 1
         varPoints <- if(actDocs && length(corpusCa$rowsup) == 0) FALSE else tclvalue(varPointsVariable) == 1
         vars <- getSelection(varBox)
-        nDocs <- tclvalue(tclNDocs)
-        nTerms <- tclvalue(tclNTerms)
+        nDocs <- as.integer(tclvalue(tclNDocs))
+        nTerms <- as.integer(tclvalue(tclNTerms))
         ctrDim <- switch(tclvalue(ctrDimVariable), xyDim=paste("c(", x, ", ", y, ")", sep=""), xDim=x, yDim=y)
 
         if(nDocs > nrow(corpusCa$rowcoord) - length(corpusCa$rowsup))
