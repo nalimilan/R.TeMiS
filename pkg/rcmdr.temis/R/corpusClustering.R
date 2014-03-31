@@ -216,8 +216,8 @@ corpusClustDlg <- function() {
 
     tkconfigure(labelNDocs, width=max(nchar(labels)))
 
-    updateNDocs <- function(...) {
-        ndocs <- ceiling((1 - as.numeric(tclvalue(tclSparsity))/100) * nrow(dtm))
+    updateNDocs <- function(value) {
+        ndocs <- ceiling((1 - as.numeric(value)/100) * nrow(dtm))
 
         if(ndocs > 1)
             tkconfigure(labelNDocs, text=sprintf(labels[1], ndocs))
@@ -228,10 +228,10 @@ corpusClustDlg <- function() {
     tclSparsity <- tclVar(100 - ceiling(1/nrow(dtm) * 100))
     spinSparsity <- tkwidget(top, type="spinbox", from=0, to=100,
                              inc=0.1, textvariable=tclSparsity,
-                             command=updateNDocs,
-                             validate="all", validatecommand=.validate.unum)
+                             validate="all", validatecommand=function(P) .validate.unum(P, fun=updateNDocs))
+
     sparsityLabel <- labelRcmdr(top, text=.gettext("Remove terms missing from more than (% of documents):"))
-    updateNDocs()
+    updateNDocs(tclvalue(tclSparsity))
 
 
     tclDim <- tclVar(2)
