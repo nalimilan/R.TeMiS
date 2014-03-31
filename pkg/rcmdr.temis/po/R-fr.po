@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: RcmdrPlugin.temis 0.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-03-23 15:30+0100\n"
-"PO-Revision-Date: 2014-03-23 15:30+0100\n"
+"PO-Revision-Date: 2014-03-31 17:15+0100\n"
 "Last-Translator: Milan Bouchet-Valat <nalimilan@club.fr>\n"
 "Language-Team: fr <none>\n"
 "Language: fr\n"
@@ -634,7 +634,7 @@ msgstr "Tableur (CSV, XLS, ODS...)"
 
 #: R/importCorpus.R:124 R/importCorpus.R:156
 msgid "Factiva XML or HTML file(s)"
-msgstr "Fichier(s) Factiva en XML ou HTML"
+msgstr "Fichier(s) XML ou HTML Factiva"
 
 #: R/importCorpus.R:125 R/importCorpus.R:160
 msgid "Twitter search"
@@ -671,7 +671,7 @@ msgstr "Supprimer les mots vides"
 
 #: R/importCorpus.R:153 R/output.R:63 R/importCorpus.R:189
 msgid "Apply stemming"
-msgstr "Extraire les radicaux (racinisation)"
+msgstr "Extraire les radicaux (lemmatisation)"
 
 #: R/importCorpus.R:154 R/importCorpus.R:190
 msgid "Text processing:"
