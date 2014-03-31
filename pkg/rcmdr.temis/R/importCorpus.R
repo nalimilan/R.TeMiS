@@ -5,7 +5,7 @@
 
     vars <- c(.gettext("No variables"), colnames(corpusVars))
 
-    if(source %in% c("factiva", "lexisnexis", "europresse", "alceste", "twitter"))
+    if(source %in% c("factiva", "lexisnexis", "europresse", "twitter"))
         # Keep in sync with import functions
         initialSelection <- which(vars %in% c(.gettext("Origin"), .gettext("Date"), .gettext("Author"),
                                               .gettext("Section"), .gettext("Type"),
@@ -522,27 +522,45 @@ importCorpusFromFile <- function(language=NA, encoding="") {
 }
 
 # Extract local per-document meta-data and return a data frame
-extractMetadata <- function(corpus) {
-    dates <- lapply(corpus, meta, "DateTimeStamp")
-    dates <- sapply(dates, function(x) if(length(x) > 0) as.character(x) else NA)
-    vars <- data.frame(Origin=NA, Date=dates, Author=NA, Section=NA)
+extractMetadata <- function(corpus, date=TRUE) {
+    if(date) {
+        dates <- lapply(corpus, meta, "DateTimeStamp")
+        dates <- sapply(dates, function(x) if(length(x) > 0) as.character(x) else NA)
+        vars <- data.frame(Origin=rep(NA, length(corpus)),
+                           Date=dates,
+                           Author=rep(NA, length(corpus)),
+                           Section=rep(NA, length(corpus)))
+    }
+    else {
+        vars <- data.frame(Origin=rep(NA, length(corpus)),
+                           Author=rep(NA, length(corpus)),
+                           Section=rep(NA, length(corpus)))
+    }
 
-    tags <- c("Origin", "Author", "Section", "Type")
+    specialTags <- c("Subject", "Coverage", "Company", "StockSymbol", "Industry", "InfoCode", "InfoDesc")
+
+    tags <- setdiff(unique(c("Origin", "Author", "Section", "Type",
+                             unlist(lapply(corpus, function(x) names(LocalMetaData(x)))))),
+                             specialTags)
     for(tag in tags) {
         var <- lapply(corpus, meta, tag)
         var <- lapply(var, function(x) if(length(x) > 0) x else NA)
         vars[[tag]] <- unlist(var)
     }
 
-    # Keep in sync with .selectCorpusVariables()
-    colnames(vars) <- c(.gettext("Origin"), .gettext("Date"), .gettext("Author"),
-                        .gettext("Section"), .gettext("Type"))
+    # Keep in sync with importCorpusFromTwitter()
+    colnames(vars)[colnames(vars) == "Origin"] <- .gettext("Origin")
+    colnames(vars)[colnames(vars) == "Date"] <- .gettext("Date")
+    colnames(vars)[colnames(vars) == "Author"] <- .gettext("Author")
+    colnames(vars)[colnames(vars) == "Section"] <- .gettext("Section")
+    colnames(vars)[colnames(vars) == "Type"] <- .gettext("Type")
 
     # Drop variables with only NAs, which can appear with sources that do not support them
     vars <- vars[sapply(vars, function(x) sum(!is.na(x))) > 0]
 
-    tags <- c("Subject", "Coverage", "Company", "StockSymbol", "Industry", "InfoCode", "InfoDesc")
-    meta <- sapply(corpus, function(x) LocalMetaData(x)[tags])
+
+    # Tags that contain several values and have to be represented using dummies
+    meta <- sapply(corpus, function(x) LocalMetaData(x)[specialTags])
     # Tags missing from all documents
     meta <- meta[!is.na(rownames(meta)),]
     # Tags missing from some documents
@@ -835,7 +853,7 @@ importCorpusFromAlceste <- function(language=NA, encoding="UTF-8") {
     # when missing
     doItAndPrint("names(corpus) <- make.unique(sapply(corpus, ID))")
 
-    doItAndPrint("corpusVars <- extractMetadata(corpus)")
+    doItAndPrint("corpusVars <- extractMetadata(corpus, date=FALSE)")
 
     list(source=sprintf(.ngettext(length(files), "Alceste file %s", "Alceste files %s"),
                         paste(files, collapse=", ")))
@@ -960,7 +978,7 @@ importCorpusFromTwitter <- function(language=NA) {
         doItAndPrint('corpusVars <- corpusDataset[c("screenName", "created", "truncated", "statusSource")]')
         doItAndPrint("rm(corpusDataset)")
         doItAndPrint(sprintf('colnames(corpusVars) <- c("%s", "%s", "%s", "%s")',
-                             # Keep in sync with .selectCorpusVariables()
+                             # Keep in sync with extractMetadata()
                              .gettext("Author"), .gettext("Time"), .gettext("Truncated"), .gettext("StatusSource")))
 
         doItAndPrint(sprintf('corpusVars[["%s"]] <- grepl("\\\\bRT\\\\b", corpus)', .gettext("Retweet")))
