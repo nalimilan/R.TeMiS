@@ -1,5 +1,5 @@
-AlcesteSource <- function(x, encoding = "UTF-8") {
-    file <- file(x, "r", encoding=encoding)
+AlcesteSource <- function(x, fileEncoding = "UTF-8", encoding = "unknown") {
+    file <- file(x, "r", encoding=fileEncoding)
     on.exit(close(file))
 
     lines <- readLines(file)

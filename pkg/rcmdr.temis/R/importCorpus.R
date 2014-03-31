@@ -818,8 +818,8 @@ importCorpusFromAlceste <- function(language=NA, encoding="UTF-8") {
         language <- paste("\"", language, "\"", sep="")
 
     if(length(files) == 1) {
-        doItAndPrint(sprintf("corpus <- Corpus(AlcesteSource(\"%s\"), readerControl=list(language=%s))",
-                             files[1], language))
+        doItAndPrint(sprintf('corpus <- Corpus(AlcesteSource("%s", "%s"), readerControl=list(language=%s))',
+                             files[1], encoding, language))
 
 		if(!exists("corpus") || length(corpus) == 0) {
 		    .Message(.gettext("Reading the specified file failed. Are you sure this file is in the correct format?"),
