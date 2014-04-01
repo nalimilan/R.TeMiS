@@ -8,7 +8,11 @@ readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
         }
 
         table <- readHTMLTable(xmlChildren(tree)[[1]])
-        text <- sapply(XML::getNodeSet(tree, "//p[starts-with(@class, 'articleParagraph')]"), xmlValue)
+
+        # Remove line breaks as paragraphs are used for this
+        # (else, line breaks in the source are propagated to the contents)
+        text <- gsub("[\n\r]", "",
+                     sapply(XML::getNodeSet(tree, "//p[starts-with(@class, 'articleParagraph')]"), xmlValue))
         free(tree)
 
         # Without this, sometimes table ends up being a mere list
