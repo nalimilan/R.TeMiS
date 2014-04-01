@@ -378,6 +378,9 @@ editDictionary <- function(df) {
     tkgrid(tl$block, sticky="news")
     tkgrid.columnconfigure(top, 0, weight=1)
     tkgrid.rowconfigure(top, 0, weight=1)
+    tl$set_editable(1, FALSE)
+    tl$set_editable(2, FALSE)
+    tl$set_editable(4, FALSE)
 
     .env <- environment()
 
