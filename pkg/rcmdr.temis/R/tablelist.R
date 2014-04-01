@@ -335,6 +335,7 @@
                       },
                       save_data=function(nm, where) {
                         "Save data set"
+                        tcl(widget, "finishediting")
                         assign(make.names(nm), .get_items(), where)
                       },
                       .get_items=function(i, j, ...) {
