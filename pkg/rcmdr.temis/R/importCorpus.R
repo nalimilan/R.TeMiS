@@ -305,6 +305,9 @@ importCorpusDlg <- function() {
         doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))")
         doItAndPrint("rm(dtmCorpus)")
 
+        if(!exists("dtm") || is.null(dtm) || nrow(dtm) == 0 || ncol(dtm) == 0)
+            return()
+
         .buildDictionary(stemming, customStemming, lang)
         .prepareDtm(stopwords, stemming, customStemming, lang)
 
