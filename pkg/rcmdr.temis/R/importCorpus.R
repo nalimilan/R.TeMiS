@@ -63,6 +63,25 @@
     return(tclvalue(result) == "success")
 }
 
+.langToEncs <- function(lang) {
+    switch(lang,
+           da="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
+           de="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
+           en="ASCII, ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
+           es="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
+           fi="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
+           fr="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
+           hu="ISO-8859-16, ISO-8859-2, Windows-1250, UTF-8, UTF-16",
+           it="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
+           nl="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
+           no="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
+           pt="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
+           ro="ISO-8859-16, ISO-8859-2, Windows-1250, UTF-8, UTF-16",
+           ru="KOI8-R, Windows-1251, ISO-8859-5, UTF-8, UTF-16",
+           sv="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
+           tr="ISO-8859-9, Windows-1254, UTF-8, UTF-16")
+}
+
 # Run all processing steps and extract words list
 .processTexts <- function(options, lang) {
         # Check that all texts contain valid characters
@@ -71,7 +90,7 @@
         # Since we do not have access to utf8Valid() in R, call nchar() as a way to run a basic validation
         # (a more rigorous check would be to call e.g. grep(), which uses valid_utf8() from PCRE).
         if(inherits(try(for(i in seq(length(corpus))) nchar(corpus[[i]])), "try-error")) {
-            .Message(sprintf(.gettext("Invalid characters found in document %i. Please check the \"Encoding\" value defined in the import dialog.\n\nIf necessary, use a text editor's \"Save As...\" function to save the corpus in a known encoding."), i),
+            .Message(sprintf(.gettext("Invalid characters found in document %i. Please check the \"Encoding\" value defined in the import dialog. Most probable encodings for this language are: %s.\n\nIf necessary, use a text editor's \"Save As...\" function to save the corpus in a known encoding."), i, .langToEncs(lang)),
                      type="error")
              return(FALSE)
         }
@@ -172,6 +191,14 @@ importCorpusDlg <- function() {
                  right.buttons=FALSE,
                  command=setState)
 
+    nativeEnc <- sprintf(.gettext("native (%s)"), localeToCharset()[1])
+    tclEnc <- tclVar(nativeEnc)
+    # Do not use state="readonly" since it may be easier to type the encoding name by hand
+    # than choose it in the long list
+    comboEnc <- ttkcombobox(top, width=20, textvariable=tclEnc,
+                            values=c(nativeEnc, iconvlist()))
+
+    # Keep in sync with .processTexts()
     # TRANSLATORS: replace 'en' with your language's ISO 639 two-letter code
     languages <- c(da="Dansk (da)", de="Deutsch (de)", en="English (en)", es="Espa\u00F1ol (es)",
                    fi="Suomi (fi)", fr="Fran\u00E7ais (fr)", hu="Magyar (hu)", it="Italiano (it)",
@@ -182,12 +209,17 @@ importCorpusDlg <- function() {
     tclLang <- tclVar(languages[.gettext("en")])
     comboLang <- ttkcombobox(top, width=20, textvariable=tclLang, state="readonly", values=languages)
 
-    nativeEnc <- sprintf(.gettext("native (%s)"), localeToCharset()[1])
-    tclEnc <- tclVar(nativeEnc)
-    # Do not use state="readonly" since it may be easier to type the encoding name by hand
-    # than choose it in the long list
-    comboEnc <- ttkcombobox(top, width=20, textvariable=tclEnc,
-                            values=c(nativeEnc, iconvlist()))
+    tk2tip(comboEnc, sprintf(.gettext("Most probable encodings for this language:\n%s"),
+                             .langToEncs(.gettext("en"))))
+    tkbind(comboLang, "<<ComboboxSelected>>", function() {
+        # On Windows when the current locale does not support characters in the language name,
+        # the value retrieved using tclvalue() contains invalid characters
+        # The only way to find the language is to extract the relevant two ASCII letters
+        rawLang <- tclvalue(tclLang)
+        lang <- substring(rawLang, nchar(rawLang) - 2, nchar(rawLang) - 1)
+        tk2tip(comboEnc, sprintf(.gettext("Most probable encodings for this language:\n%s"),
+                                 .langToEncs(lang)))
+    })
 
     checkBoxes(frame="processingFrame",
                boxes=c("lowercase", "punctuation", "digits", "stopwords",
