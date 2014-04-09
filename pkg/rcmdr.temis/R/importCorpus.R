@@ -210,7 +210,11 @@ importCorpusDlg <- function() {
         stemming <- tclvalue(stemmingVariable) == 1
         customStemming <- tclvalue(customStemmingVariable) == 1
 
-        lang <- names(languages)[tclvalue(tclLang) == languages]
+        # On Windows when the current locale does not support characters in the language name,
+        # the value retrieved using tclvalue() contains invalid characters
+        # The only way to find the language is to extract the relevant two ASCII letters
+        rawLang <- tclvalue(tclLang)
+        lang <- substring(rawLang, nchar(rawLang) - 2, nchar(rawLang) - 1)
 
         enc <- tclvalue(tclEnc)
         if(enc == nativeEnc) enc <- ""
