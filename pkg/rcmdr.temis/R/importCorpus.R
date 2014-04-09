@@ -65,6 +65,17 @@
 
 # Run all processing steps and extract words list
 .processTexts <- function(options, lang) {
+        # Check that all texts contain valid characters
+        # tolower() is the first function to fail when conversion to lower case is enabled,
+        # but if it's not DocumentTermMatrix() calls termFrequencies(), which fails when calling nchar()
+        # Since we do not have access to utf8Valid() in R, call nchar() as a way to run a basic validation
+        # (a more rigorous check would be to call e.g. grep(), which uses valid_utf8() from PCRE).
+        if(inherits(try(for(i in seq(length(corpus))) nchar(corpus[[i]])), "try-error")) {
+            .Message(sprintf(.gettext("Invalid characters found in document %i. Please check the \"Encoding\" value defined in the import dialog.\n\nIf necessary, use a text editor's \"Save As...\" function to save the corpus in a known encoding."), i),
+                     type="error")
+             return(FALSE)
+        }
+
         doItAndPrint("dtmCorpus <- corpus")
 
         if(options["twitter"])
@@ -86,6 +97,8 @@
 
         if(options["digits"])
             doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, removeNumbers)")
+
+        return(TRUE)
 }
 
 .buildDictionary <- function(stemming, customStemming, lang) {
@@ -300,11 +313,12 @@ importCorpusDlg <- function() {
         }
 
         # Process texts
-        .processTexts(c(twitter=twitter, lowercase=lowercase, punctuation=punctuation,
-                        digits=digits, stopwords=stopwords,
-                        stemming=stemming, customStemming=customStemming,
-                        removeHashtags=res$removeHashtags, removeNames=res$removeNames),
-                      lang)
+        if(!.processTexts(c(twitter=twitter, lowercase=lowercase, punctuation=punctuation,
+                            digits=digits, stopwords=stopwords,
+                            stemming=stemming, customStemming=customStemming,
+                            removeHashtags=res$removeHashtags, removeNames=res$removeNames),
+                          lang))
+            return()
 
         doItAndPrint("dtm <- DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))")
         doItAndPrint("rm(dtmCorpus)")
@@ -370,15 +384,8 @@ importCorpusFromDir <- function(language=NA, encoding="") {
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
 
-    oldEnc <- getOption("encoding", "")
-
-    if(oldEnc != encoding)
-        doItAndPrint(sprintf('options(encoding="%s")', encoding))
-
-    doItAndPrint(sprintf('corpus <- Corpus(DirSource("%s", encoding=""), readerControl=list(language=%s))', dir, language))
-
-    if(oldEnc != encoding)
-        doItAndPrint(sprintf('options(encoding="%s")', oldEnc))
+    doItAndPrint(sprintf('corpus <- Corpus(DirSource("%s", encoding="%s"), readerControl=list(language=%s))',
+                         dir, encoding, language))
 
     list(source=sprintf(.gettext("directory %s"), dir))
 }

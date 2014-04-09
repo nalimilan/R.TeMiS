@@ -213,7 +213,8 @@ vocabularyDlg <- function() {
 		        processing["customStemming"] <- FALSE
 		        processing["stopwords"] <- FALSE
 
-		        .processTexts(processing)
+		        if(!.processTexts(processing))
+		            return()
 
 		        doItAndPrint("wordsDtm <- DocumentTermMatrix(dtmCorpus, control=list(wordLengths=c(2, Inf)))")
 		        doItAndPrint("rm(dtmCorpus)")
