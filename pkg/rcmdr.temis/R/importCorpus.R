@@ -89,7 +89,7 @@
         # but if it's not DocumentTermMatrix() calls termFrequencies(), which fails when calling nchar()
         # Since we do not have access to utf8Valid() in R, call nchar() as a way to run a basic validation
         # (a more rigorous check would be to call e.g. grep(), which uses valid_utf8() from PCRE).
-        if(inherits(try(for(i in seq(length(corpus))) nchar(corpus[[i]])), "try-error")) {
+        if(inherits(try(for(i in seq(length(corpus))) nchar(corpus[[i]]), silent=TRUE), "try-error")) {
             .Message(sprintf(.gettext("Invalid characters found in document %i. Please check the \"Encoding\" value defined in the import dialog. Most probable encodings for this language are: %s.\n\nIf necessary, use a text editor's \"Save As...\" function to save the corpus in a known encoding."), i, .langToEncs(lang)),
                      type="error")
              return(FALSE)
