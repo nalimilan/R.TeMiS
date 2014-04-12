@@ -554,15 +554,42 @@ importCorpusFromFile <- function(language=NA, encoding="") {
     if(is.null(corpusDataset))
         return(FALSE)
 
+    initializeDialog(title=.gettext("Select Text Variable"))
+    varBox <- variableListBox(top, names(corpusDataset),
+                              selectmode="single",
+                              initialSelection=0,
+                              title=.gettext("Select the variable containing the text of documents"))
+
+    var <- NULL
+
+    onOK <- function() {
+        var <<- getSelection(varBox)
+
+        closeDialog()
+        tkfocus(CommanderWindow())
+    }
+
+    onCancel <- function() {
+        closeDialog()
+        tkfocus(CommanderWindow())
+    }
+
+    OKCancelHelp(helpSubject=importCorpusDlg)
+    tkgrid(getFrame(varBox), sticky="nswe", pady=6)
+    tkgrid(buttonsFrame, sticky="ew", pady=6)
+    dialogSuffix()
+
+    if(is.null(var))
+        return(FALSE)
+
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
 
-    doItAndPrint(sprintf("corpus <- Corpus(DataframeSource(corpusDataset[1]), readerControl=list(language=%s))",
-                         language))
+    doItAndPrint(sprintf('corpus <- Corpus(DataframeSource(corpusDataset["%s"]), readerControl=list(language=%s))',
+                         var, language))
 
     if(ncol(corpusDataset) > 1)
-        doItAndPrint("corpusVars <- corpusDataset[-1]")
-
+        doItAndPrint(sprintf('corpusVars <- corpusDataset[!names(corpusDataset) == "%s"]', var))
 
     list(source=sprintf(.gettext("spreadsheet file %s"), file))
 }

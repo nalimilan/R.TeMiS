@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.temis 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-9 15:00+0100\n"
+"POT-Creation-Date: 2014-04-11 12:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2035,4 +2035,12 @@ msgstr ""
 
 #: R/importCorpus.R:219
 msgid "Most probable encodings for this language:\n%s"
+msgstr ""
+
+#: R/importCorpus.R:557
+msgid "Select Text Variable"
+msgstr ""
+
+#: R/importCorpus.R:561
+msgid "Select the variable containing the text of documents:"
 msgstr ""
