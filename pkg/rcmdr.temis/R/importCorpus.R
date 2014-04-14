@@ -122,8 +122,8 @@
 
 .buildDictionary <- function(stemming, customStemming, lang) {
     if(stemming) {
-        doItAndPrint(sprintf('dictionary <- data.frame(row.names=colnames(dtm), "%s"=col_sums(dtm), "%s"=wordStem(colnames(dtm)), "%s"=ifelse(colnames(dtm) %%in%% stopwords("%s"), "%s", ""), stringsAsFactors=FALSE)',
-                             .gettext("Occurrences"), .gettext("Stemmed.Term"), .gettext("Stopword"), lang, .gettext("Stopword")))
+        doItAndPrint(sprintf('dictionary <- data.frame(row.names=colnames(dtm), "%s"=col_sums(dtm), "%s"=wordStem(colnames(dtm), "%s"), "%s"=ifelse(colnames(dtm) %%in%% stopwords("%s"), "%s", ""), stringsAsFactors=FALSE)',
+                             .gettext("Occurrences"), .gettext("Stemmed.Term"), lang, .gettext("Stopword"), lang, .gettext("Stopword")))
     }
     else if(customStemming){
         doItAndPrint(sprintf('dictionary <- data.frame(row.names=colnames(dtm), "%s"=col_sums(dtm), "%s"=colnames(dtm), "%s"=ifelse(colnames(dtm) %%in%% stopwords("%s"), "%s", ""), stringsAsFactors=FALSE)',
