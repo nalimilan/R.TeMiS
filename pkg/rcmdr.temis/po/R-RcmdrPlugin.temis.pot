@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.temis 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-11 12:30+0100\n"
+"POT-Creation-Date: 2014-04-21 21:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -620,9 +620,8 @@ msgstr ""
 msgid "en"
 msgstr ""
 
-#: R/importCorpus.R:140 R/importCorpus.R:175
-#, c-format
-msgid "native (%s)"
+#: R/importCorpus.R:194
+msgid "detect automatically"
 msgstr ""
 
 #: R/importCorpus.R:151 R/output.R:61 R/importCorpus.R:187

@@ -1,8 +1,12 @@
-AlcesteSource <- function(x, fileEncoding = "UTF-8", encoding = "unknown") {
-    file <- file(x, "r", encoding=fileEncoding)
-    on.exit(close(file))
+AlcesteSource <- function(x, encoding = "auto") {
+    if(encoding == "auto")
+        encoding <- stringi::stri_enc_detect(readBin(x, "raw", 1024))[[1]]$Encoding[1]
 
-    lines <- readLines(file)
+    if(is.null(encoding))
+        encoding <- ""
+
+    lines <- iconv(readLines(x, warn=FALSE),
+                   from=encoding, to="UTF-8", sub="byte")
 
     newdocs <- grepl("^(\\*\\*\\*\\*|[[:digit:]]+ \\*)", lines)
     content <- split(lines, cumsum(newdocs))

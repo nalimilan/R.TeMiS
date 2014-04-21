@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.temis 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-12 12:30+0100\n"
-"PO-Revision-Date: 2014-04-12 15:00+0100\n"
+"POT-Creation-Date: 2014-04-21 21:20+0100\n"
+"PO-Revision-Date: 2014-04-21 21:20+0100\n"
 "Last-Translator: Milan Bouchet-Valat <nalimilan@club.fr>\n"
 "Language-Team: fr <none>\n"
 "Language: fr\n"
@@ -648,10 +648,9 @@ msgstr "Importer un corpus à partir d'un :"
 msgid "en"
 msgstr "fr"
 
-#: R/importCorpus.R:140 R/importCorpus.R:175
-#, c-format
-msgid "native (%s)"
-msgstr "natif (%s)"
+#: R/importCorpus.R:194
+msgid "detect automatically"
+msgstr "détecter automatiquement"
 
 #: R/importCorpus.R:151 R/output.R:61 R/importCorpus.R:187
 msgid "Ignore case"

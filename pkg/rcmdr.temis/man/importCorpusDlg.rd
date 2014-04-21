@@ -92,10 +92,10 @@
          the \dQuote{Stopword} column is only presented as an indication, it is not taken into
          account when deciding whether to keep a term.
 
-         By default, plain text (usually .txt) and comma/tab-separated values files (.csv, .tsv, .dat...)
-         are assumed to be in the native encoding, which is shown in the \dQuote{File encoding:} entry.
-         If you know this is not the case, you can change the value of this field to one of the encodings
-         returned by the \code{iconvlist()} function.
+         By default, the program tries to detect the encoding used by plain text (usually .txt)
+         and comma/tab-separated values files (.csv, .tsv, .dat...). If importation fails or
+         the imported texts contain strange characters, specify the encoding manually (a tooltip
+         gives suggestions based on the selected language).
 
          Once the corpus has been imported, its document-term matrix is extracted.
 }

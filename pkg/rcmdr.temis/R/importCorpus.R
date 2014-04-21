@@ -168,12 +168,12 @@ importCorpusDlg <- function() {
             tkconfigure(comboEnc, state="normal")
 
             if(tclvalue(tclEnc) == "UTF-8")
-                tclvalue(tclEnc) <- nativeEnc
+                tclvalue(tclEnc) <- autoEnc
         }
         else {
             tkconfigure(comboEnc, state="disabled")
 
-            if(tclvalue(tclEnc) == nativeEnc)
+            if(tclvalue(tclEnc) == autoEnc)
                 tclvalue(tclEnc) <- "UTF-8"
         }
     }
@@ -191,12 +191,12 @@ importCorpusDlg <- function() {
                  right.buttons=FALSE,
                  command=setState)
 
-    nativeEnc <- sprintf(.gettext("native (%s)"), localeToCharset()[1])
-    tclEnc <- tclVar(nativeEnc)
+    autoEnc <- .gettext("detect automatically")
+    tclEnc <- tclVar(autoEnc)
     # Do not use state="readonly" since it may be easier to type the encoding name by hand
     # than choose it in the long list
     comboEnc <- ttkcombobox(top, width=20, textvariable=tclEnc,
-                            values=c(nativeEnc, iconvlist()))
+                            values=c(autoEnc, iconvlist()))
 
     # Keep in sync with .processTexts()
     # TRANSLATORS: replace 'en' with your language's ISO 639 two-letter code
@@ -262,7 +262,7 @@ importCorpusDlg <- function() {
         lang <- substring(rawLang, nchar(rawLang) - 2, nchar(rawLang) - 1)
 
         enc <- tclvalue(tclEnc)
-        if(enc == nativeEnc) enc <- ""
+        if(enc == autoEnc) enc <- ""
 
         if(enc != "" && !enc %in% iconvlist()) {
             .Message(.gettext('Unsupported encoding: please select an encoding from the list.'),
@@ -421,6 +421,15 @@ importCorpusFromDir <- function(language=NA, encoding="") {
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
 
+    if(encoding == "") {
+        encs <- table(sapply(list.files(dir, full.names=TRUE),
+                             function(f) stringi::stri_enc_detect(readBin(f, "raw", 1024))[[1]]$Encoding[1]))
+        encoding <- names(encs)[order(encs, decreasing=TRUE)][1]
+    }
+
+    if(is.null(encoding))
+        encoding <- ""
+
     doItAndPrint(sprintf('corpus <- Corpus(DirSource("%s", encoding="%s"), readerControl=list(language=%s))',
                          dir, encoding, language))
 
@@ -460,6 +469,12 @@ importCorpusFromFile <- function(language=NA, encoding="") {
         excerpt <- readLines(file, 50)
         n1 <- sum(sapply(gregexpr(",", excerpt), length))
         n2 <- sum(sapply(gregexpr(";", excerpt), length))
+
+        if(encoding == "")
+            encoding <- stringi::stri_enc_detect(readBin(file, "raw", 1024))[[1]]$Encoding[1]
+
+        if(is.null(encoding))
+            encoding <- ""
 
         if(n1 > n2)
             doItAndPrint(sprintf('corpusDataset <- read.csv("%s", fileEncoding="%s")', file, encoding))
@@ -869,7 +884,7 @@ importCorpusFromEuropresse <- function(language=NA, encoding="UTF-8") {
 
 
 # Choose an Alceste file to load texts and variables from
-importCorpusFromAlceste <- function(language=NA, encoding="UTF-8") {
+importCorpusFromAlceste <- function(language=NA, encoding="") {
     if(!.checkAndInstall("tm.plugin.alceste",
                          .gettext("The tm.plugin.alceste package is needed to import corpora from Alceste files.\nDo you want to install it?")))
         return(FALSE)
@@ -894,6 +909,9 @@ importCorpusFromAlceste <- function(language=NA, encoding="UTF-8") {
 
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
+
+    if(encoding == "")
+        encoding <- "auto"
 
     if(length(files) == 1) {
         doItAndPrint(sprintf('corpus <- Corpus(AlcesteSource("%s", "%s"), readerControl=list(language=%s))',
