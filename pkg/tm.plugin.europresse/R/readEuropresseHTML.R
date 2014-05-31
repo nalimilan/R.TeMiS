@@ -94,7 +94,6 @@ readEuropresseHTML <- FunctionGenerator(function(elem, language, id) {
 
         id <- gsub("[^[:alnum:]]|news", "",
                    xmlValue(getNodeSet(tree, "//tr/td[@align = 'center']/text()")[[1]]))
-        id <- toupper(substr(id, 1, 20))
         # If extraction failed for some reason, make sure we return a unique identifier
         if(is.na(id))
             id <- paste(if(!is.na(date)) strftime(date, format="%Y%m%d") else "",
@@ -110,9 +109,9 @@ readEuropresseHTML <- FunctionGenerator(function(elem, language, id) {
                                  id = id,
                                  origin = origin,
                                  language = language)
-        meta(doc, "Section") <- section
-        meta(doc, "Pages") <- pages
-        meta(doc, "Rights") <- copyright
+        meta(doc, "section") <- section
+        meta(doc, "pages") <- pages
+        meta(doc, "rights") <- copyright
         doc
     }
 })

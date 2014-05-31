@@ -20,12 +20,12 @@
   This function imports the body of the articles, but also sets several
   meta-data variables on individual documents:
   \itemize{
-    \item \code{DateTimeStamp}: The publication date.
-    \item \code{Heading}: The title of the article.
-    \item \code{Origin}: The newspaper the article comes from.
-    \item \code{Section}: If available, the part of the newspaper containing
+    \item \code{datetimestamp}: The publication date.
+    \item \code{heading}: The title of the article.
+    \item \code{origin}: The newspaper the article comes from.
+    \item \code{section}: If available, the part of the newspaper containing
     the article.
-    \item \code{Pages}: If available, the pages where the article appeared.
+    \item \code{pages}: If available, the pages where the article appeared.
   }
 
   Please note that it commonly happens that the encoding specified in

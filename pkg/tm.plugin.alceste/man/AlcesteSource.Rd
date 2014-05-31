@@ -12,9 +12,6 @@
 }
 \arguments{
   \item{x}{Either a character identifying the file or a connection.}
-  \item{encoding}{A character giving the encoding of \code{x}. Files
-      exported from Alceste often specify an incorrect encoding,
-      in which case you will need to find out the correct one.}
   \item{encoding}{A character string: if non-empty declares the encoding
       used when reading the file, so the character data can be
       re-encoded.  See the \sQuote{Encoding} section of the help for

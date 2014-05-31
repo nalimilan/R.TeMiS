@@ -3,15 +3,15 @@ readFactivaXML <- readXML(
                 toupper(gsub("^\\s+|\\s+$", "",
                              gsub("\n|\\s+", " ",
                                   sapply(getNodeSet(node, "/article/byline"), xmlValue))))),
-    Content = list("function", function(node)
+    content = list("function", function(node)
                    c(sapply(getNodeSet(node, "/article/headline"), xmlValue),
                          sapply(getNodeSet(node, "/article/leadParagraph"), xmlValue),
                          sapply(getNodeSet(node, "/article/tailParagraphs/paragraph"), xmlValue))),
-    DateTimeStamp = list("function", function(node)
+    datetimestamp = list("function", function(node)
                          strptime(sapply(getNodeSet(node, "/article/publicationDate/date"), xmlValue),
                                   format="%Y-%m-%d")),
-    Heading = list("node", "/article/headline"),
-    ID = list("function", function(node) {
+    heading = list("node", "/article/headline"),
+    id = list("function", function(node) {
               str <- gsub("^distdoc:archive/ArchiveDoc::Article/", "",
                            sapply(getNodeSet(node, "/article/reference"), xmlValue))
               # Extract useful information: origin, date, and two last characters to avoid collisions
@@ -22,27 +22,27 @@ readFactivaXML <- readXML(
               else
                   paste(sample(LETTERS, 10), collapse="")
     }),
-    Origin = list("node", "/article/sourceName"),
-    Language = list("function", function(node)
+    origin = list("node", "/article/sourceName"),
+    language = list("function", function(node)
                     tolower(sapply(getNodeSet(node, "/article/baseLanguage"), xmlValue))),
-    Edition = list("node", "/article/edition"),
-    Section = list("node", "/article/sectionName"),
-    Subject = list("node", "/article/newsSubject/name"),
-    Coverage = list("node", "/article/region/name"),
-    Company = list("node", "/article/company/name"),
-    Industry = list("node", "/article/industry/name"),
-    InfoCode = list("node", "/article/descField[@code!='ipd']"),
-    InfoDesc = list("function", function(node) {
+    edition = list("node", "/article/edition"),
+    section = list("node", "/article/sectionName"),
+    subject = list("node", "/article/newsSubject/name"),
+    coverage = list("node", "/article/region/name"),
+    company = list("node", "/article/company/name"),
+    industry = list("node", "/article/industry/name"),
+    infocode = list("node", "/article/descField[@code!='ipd']"),
+    infodesc = list("function", function(node) {
                     str <- sapply(getNodeSet(node, "/article/descField[@code='ipd']"), xmlValue)
                     if(length(str) > 0)
                         strsplit(str, "( +\\| +| +-+ +| +--+|--+ +|\\._)")[[1]]
                     else
                         character(0)
     }),
-    WordCount = list("function", function(node)
+    wordcount = list("function", function(node)
                      as.numeric(sapply(getNodeSet(node, "/article/wordCount"), xmlValue))),
-    Publisher = list("node", "/article/publisherName"),
-    Rights = list("function", function(node)
+    publisher = list("node", "/article/publisherName"),
+    rights = list("function", function(node)
                   gsub("^\\s+|\\s+$", "",
                        gsub("\n|\\s+", " ",
                             sapply(getNodeSet(node, "/article/copyright"), xmlValue))))),

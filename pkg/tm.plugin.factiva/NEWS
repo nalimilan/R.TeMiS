@@ -1,3 +1,11 @@
+Version 1.4 - 2014-05-31
+    * Adapt to tm 0.6.
+    * Remove the 'encoding' argument to FactivaSource()
+      as it is not supported by tm 0.6 (normally not needed).
+    * Change all tags to lowercase (for consistency with tm).
+    * Ensure meta-data variables which are supposed to contain
+      only one value always do so.
+
 Version 1.3 - 2014-01-10
     * Extract Company, Industry, Information Provider Code (IPC) and
       Information Provider Description (IPD) meta-data (based on a

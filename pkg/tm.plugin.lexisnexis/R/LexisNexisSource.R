@@ -16,11 +16,9 @@ LexisNexisSource <- function(x, encoding = "UTF-8") {
     # Call as.character() to remove useless names and get a vector instead of a 1d array
     content <- as.character(tapply(lines, cumsum(newdocs), paste, collapse="\n"))[-1]
 
-    s <- Source(readLexisNexisHTML, encoding, length(content), NULL, 0, FALSE, "LexisNexisSource")
-    s$Content <- content
-    s$URI <- x
-    s
+    SimpleSource(encoding, length(content),
+                 content=content, uri=x,
+                 reader=readLexisNexisHTML, class="LexisNexisSource")
 }
 
-# This function is the same as that for XMLSource
-getElem.LexisNexisSource <- function(x) list(content = x$Content[[x$Position]], uri = x$URI)
+getElem.LexisNexisSource <- function(x) list(content = x$content[[x$position]], uri = x$URI)

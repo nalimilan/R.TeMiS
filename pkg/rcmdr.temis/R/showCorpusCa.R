@@ -209,8 +209,8 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
                 mark <- mark + 1
                 tkinsert(listbox, "end", id)
 
-                origin <- meta(corpus[[id]], "Origin")
-                date <- meta(corpus[[id]], "DateTimeStamp")
+                origin <- meta(corpus[[id]], "origin")
+                date <- meta(corpus[[id]], "datetimestamp")
                 if(length(origin) > 0 && length(date) > 0)
                     tkinsert(txt, "end", paste(origin, " - ", date, "\n", sep=""), "details")
                 else if(length(origin) > 0)
@@ -311,8 +311,8 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
                 mark <- mark + 1
                 tkinsert(listbox, "end", id)
 
-                origin <- meta(corpus[[id]], "Origin")
-                date <- meta(corpus[[id]], "DateTimeStamp")
+                origin <- meta(corpus[[id]], "origin")
+                date <- meta(corpus[[id]], "datetimestamp")
                 if(length(origin) > 0 && length(date) > 0)
                     tkinsert(txt, "end", paste(origin, " - ", date, "\n", sep=""), "details")
                 else if(length(origin) > 0)

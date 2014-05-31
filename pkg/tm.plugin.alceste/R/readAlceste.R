@@ -13,8 +13,8 @@ readAlceste <- FunctionGenerator(function(elem, language, id) {
         skip <- which(grepl("^-\\*", elem$content))
 
         doc <- PlainTextDocument(x = elem$content[-c(1, skip)],
-                                     id = id,
-                                     language = language)
+                                 id = id,
+                                 language = language)
 
         for(v in vars) {
             # Boolean variable (without value after _)

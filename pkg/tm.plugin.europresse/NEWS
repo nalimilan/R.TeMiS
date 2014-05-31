@@ -1,3 +1,8 @@
+Version 1.1 - 2014-05-25
+    * Adapt to tm 0.6.
+    * Change all tags to lowercase (for consistency with tm).
+    * Stop truncating document IDs.
+
 Version 1.0.1 - 2014-02-11
     * Fix small bug when parsing dates on Mac OS X.
 

@@ -12,7 +12,7 @@ readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
         # Remove line breaks as paragraphs are used for this
         # (else, line breaks in the source are propagated to the contents)
         text <- gsub("[\n\r]", "",
-                     sapply(XML::getNodeSet(tree, "//p[starts-with(@class, 'articleParagraph')]"), xmlValue))
+                     sapply(getNodeSet(tree, "//p[starts-with(@class, 'articleParagraph')]"), xmlValue))
         free(tree)
 
         # Without this, sometimes table ends up being a mere list
@@ -53,8 +53,8 @@ readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
 
         wc <- as.integer(regmatches(data[["WC"]], regexpr("^[[:digit:]]+", data[["WC"]])))[[1]]
 
-        # Extract useful information: origin, date, and three last characters to avoid collisions
-        m <- regmatches(data[["AN"]], regexec("^([A-Za-z]+)0*[1-9][0-9]([0-9][0-9][0-3][0-9][0-3][0-9]).*([A-Za-z0-9]{3})$",
+        # Extract useful information: origin, date, and code
+        m <- regmatches(data[["AN"]], regexec("^([A-Za-z]+)0*[1-9][0-9]([0-9][0-9][0-3][0-9][0-3][0-9])([A-Za-z0-9])",
                                               data[["AN"]]))[[1]]
         # If extraction failed for some reason, make sure we return a unique identifier
         if(length(m) == 4)
@@ -100,23 +100,23 @@ readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
 
         # XMLSource uses character(0) rather than NA, do the same
         doc <- PlainTextDocument(x = text,
-                                     author = if(!is.na(data[["BY"]])) data[["BY"]] else character(0),
-                                     datetimestamp = date,
-                                     heading = if(!is.na(data[["HD"]])) data[["HD"]] else character(0),
-                                     id = id,
-                                     origin = if(!is.na(data[["SN"]])) data[["SN"]] else character(0),
-                                     language = language)
-        meta(doc, "Edition") <- if(!is.na(data[["ED"]])) data[["ED"]] else character(0)
-        meta(doc, "Section") <- if(!is.na(data[["SE"]])) data[["SE"]] else character(0)
-        meta(doc, "Subject") <- subject
-        meta(doc, "Coverage") <- coverage
-        meta(doc, "Company") <- company
-        meta(doc, "Industry") <- industry
-        meta(doc, "InfoCode") <- infocode
-        meta(doc, "InfoDesc") <- infodesc
-        meta(doc, "WordCount") <- wc
-        meta(doc, "Publisher") <- if(!is.na(data[["PUB"]])) data[["PUB"]] else character(0)
-        meta(doc, "Rights") <- if(!is.na(data[["CY"]])) data[["CY"]] else character(0)
+                                 author = if(!is.na(data[["BY"]])) data[["BY"]] else character(0),
+                                 datetimestamp = date,
+                                 heading = if(!is.na(data[["HD"]])) data[["HD"]] else character(0),
+                                 id = id,
+                                 origin = if(!is.na(data[["SN"]])) data[["SN"]] else character(0),
+                                 language = language)
+        meta(doc, "edition") <- if(!is.na(data[["ED"]])) data[["ED"]] else character(0)
+        meta(doc, "section") <- if(!is.na(data[["SE"]])) data[["SE"]] else character(0)
+        meta(doc, "subject") <- subject
+        meta(doc, "coverage") <- coverage
+        meta(doc, "company") <- company
+        meta(doc, "industry") <- industry
+        meta(doc, "infocode") <- infocode
+        meta(doc, "infodesc") <- infodesc
+        meta(doc, "wordcount") <- wc
+        meta(doc, "publisher") <- if(!is.na(data[["PUB"]])) data[["PUB"]] else character(0)
+        meta(doc, "rights") <- if(!is.na(data[["CY"]])) data[["CY"]] else character(0)
         doc
     }
 })

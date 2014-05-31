@@ -21,25 +21,22 @@
   This function imports the body of the articles, but also sets several
   meta-data variables on individual documents:
   \itemize{
-    \item \code{DateTimeStamp}: The publication date.
-    \item \code{Heading}: The title of the article.
-    \item \code{Origin}: The newspaper the article comes from.
-    \item \code{Introduction}: The short introduction accompanying the article.
-    \item \code{Section}: The part of the newspaper containing the article.
-    \item \code{Subject}: One or several keywords defining the subject.
-    \item \code{Coverage}: One or several keywords identifying the covered regions.
-    \item \code{Company}: One or several keywords identifying the covered companies.
-    \item \code{StockSymbol}: One or several keywords identifying the stock exchange
+    \item \code{datetimestamp}: The publication date.
+    \item \code{heading}: The title of the article.
+    \item \code{origin}: The newspaper the article comes from.
+    \item \code{intro}: The short introduction accompanying the article.
+    \item \code{section}: The part of the newspaper containing the article.
+    \item \code{subject}: One or several keywords defining the subject.
+    \item \code{coverage}: One or several keywords identifying the covered regions.
+    \item \code{company}: One or several keywords identifying the covered companies.
+    \item \code{stocksymbol}: One or several keywords identifying the stock exchange
       symbols of the covered companies.
-    \item \code{Industry}: One or several keywords identifying the covered industries.
-    \item \code{Type}: The type of source from which the document originates.
-    \item \code{WordCount}: The number of words in the article.
-    \item \code{Publisher}: The publisher of the newspaper.
-    \item \code{Rights}: The copyright information associated with the article.
-  }
-
-  \itemize{
-    \item \code{Language}: This information is set automatically if
+    \item \code{industry}: One or several keywords identifying the covered industries.
+    \item \code{type}: The type of source from which the document originates.
+    \item \code{wordcount}: The number of words in the article.
+    \item \code{publisher}: The publisher of the newspaper.
+    \item \code{rights}: The copyright information associated with the article.
+    \item \code{language}: This information is set automatically if
       \code{readerControl = list(language = NA)} is passed (see the example below).
       Else, the language specified manually is set for all articles. If omitted,
       the default, "en", is used.

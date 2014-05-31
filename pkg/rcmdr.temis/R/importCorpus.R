@@ -98,20 +98,20 @@
         doItAndPrint("dtmCorpus <- corpus")
 
         if(options["twitter"])
-            doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, function(x) gsub("http(s?)://[[:alnum:]/\\\\.\\\\-\\\\?=&#_;,]*|\\\\bRT\\\\b", "", x))')
+            doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, content_transformer(function(x) gsub("http(s?)://[[:alnum:]/\\\\.\\\\-\\\\?=&#_;,]*|\\\\bRT\\\\b", "", x)))')
         if(options["twitter"] && options["removeNames"])
-            doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, function(x) gsub("@.+?\\\\b", "", x))')
+            doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, content_transformer(function(x) gsub("@.+?\\\\b", "", x)))')
         if(options["twitter"] && options["removeHashtags"])
-            doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, function(x) gsub("#.+?\\\\b", "", x))')
+            doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, content_transformer(function(x) gsub("#.+?\\\\b", "", x)))')
 
         if(options["lowercase"])
-            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, tolower)")
+            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, content_transformer(tolower))")
 
         if(options["punctuation"]) {
             # The default tokenizer does not get rid of punctuation *and of line breaks!*, which
             # get concatenated with surrounding words
             # This also avoids French articles and dash-linked words from getting concatenated with their noun
-            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, function(x) gsub(\"([\'\U2019\\n\U202F\U2009]|[[:punct:]]|[[:space:]]|[[:cntrl:]])+\", \" \", x))")
+            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, content_transformer(function(x) gsub(\"([\'\U2019\\n\U202F\U2009]|[[:punct:]]|[[:space:]]|[[:cntrl:]])+\", \" \", x)))")
         }
 
         if(options["digits"])
@@ -617,43 +617,49 @@ importCorpusFromFile <- function(language=NA, encoding="") {
 # Extract local per-document meta-data and return a data frame
 extractMetadata <- function(corpus, date=TRUE) {
     if(date) {
-        dates <- lapply(corpus, meta, "DateTimeStamp")
+        dates <- lapply(corpus, meta, "datetimestamp")
         dates <- sapply(dates, function(x) if(length(x) > 0) as.character(x) else NA)
-        vars <- data.frame(Origin=rep(NA, length(corpus)),
-                           Date=dates,
-                           Author=rep(NA, length(corpus)),
-                           Section=rep(NA, length(corpus)))
+        vars <- data.frame(origin=rep(NA, length(corpus)),
+                           date=dates,
+                           author=rep(NA, length(corpus)),
+                           section=rep(NA, length(corpus)))
     }
     else {
-        vars <- data.frame(Origin=rep(NA, length(corpus)),
-                           Author=rep(NA, length(corpus)),
-                           Section=rep(NA, length(corpus)))
+        vars <- data.frame(origin=rep(NA, length(corpus)),
+                           author=rep(NA, length(corpus)),
+                           section=rep(NA, length(corpus)))
     }
 
-    specialTags <- c("Subject", "Coverage", "Company", "StockSymbol", "Industry", "InfoCode", "InfoDesc")
+    specialTags <- c("subject", "coverage", "company", "stocksymbol", "industry", "infocode", "infodesc")
 
-    tags <- setdiff(unique(c("Origin", "Author", "Section", "Type",
-                             unlist(lapply(corpus, function(x) names(LocalMetaData(x)))))),
-                             specialTags)
+    tags <- setdiff(unique(unlist(lapply(corpus, function(x) names(meta(x))))),
+                    c("datetimestamp", "heading", "id", "language", specialTags))
     for(tag in tags) {
         var <- lapply(corpus, meta, tag)
-        var <- lapply(var, function(x) if(length(x) > 0) x else NA)
+        # paste() is here to prevent an error in case x contains more than one elemen
+        # This typically happens with Rights
+        var <- lapply(var, function(x) if(length(x) > 0) paste(x, collapse=" ") else NA)
         vars[[tag]] <- unlist(var)
     }
 
     # Keep in sync with importCorpusFromTwitter()
-    colnames(vars)[colnames(vars) == "Origin"] <- .gettext("Origin")
-    colnames(vars)[colnames(vars) == "Date"] <- .gettext("Date")
-    colnames(vars)[colnames(vars) == "Author"] <- .gettext("Author")
-    colnames(vars)[colnames(vars) == "Section"] <- .gettext("Section")
-    colnames(vars)[colnames(vars) == "Type"] <- .gettext("Type")
+    colnames(vars)[colnames(vars) == "origin"] <- .gettext("Origin")
+    colnames(vars)[colnames(vars) == "date"] <- .gettext("Date")
+    colnames(vars)[colnames(vars) == "author"] <- .gettext("Author")
+    colnames(vars)[colnames(vars) == "section"] <- .gettext("Section")
+    colnames(vars)[colnames(vars) == "type"] <- .gettext("Type")
+    colnames(vars)[colnames(vars) == "edition"] <- .gettext("Edition")
+    colnames(vars)[colnames(vars) == "wordcount"] <- .gettext("Word.Count")
+    colnames(vars)[colnames(vars) == "pages"] <- .gettext("Pages")
+    colnames(vars)[colnames(vars) == "publisher"] <- .gettext("Publisher")
+    colnames(vars)[colnames(vars) == "rights"] <- .gettext("Rights")
 
     # Drop variables with only NAs, which can appear with sources that do not support them
     vars <- vars[sapply(vars, function(x) sum(!is.na(x))) > 0]
 
 
     # Tags that contain several values and have to be represented using dummies
-    meta <- sapply(corpus, function(x) LocalMetaData(x)[specialTags])
+    meta <- sapply(corpus, function(x) meta(x)[specialTags])
     # Tags missing from all documents
     meta <- meta[!is.na(rownames(meta)),]
     # Tags missing from some documents
@@ -734,10 +740,9 @@ importCorpusFromFactiva <- function(language=NA) {
         gc()
     }
 
-    # Set document names from the IDs since it's not always done by sources (XMLSource...)
-    # We rely on this later e.g. in showCorpusCa() because we cannot use indexes when documents are skipped
+    # We rely on names/IDs later e.g. in showCorpusCa() because we cannot use indexes when documents are skipped
     # In rare cases, duplicated IDs can happen since Factiva plugin truncates them: ensure they are unique
-    doItAndPrint("names(corpus) <- make.unique(sapply(corpus, ID))")
+    doItAndPrint("names(corpus) <- make.unique(names(corpus))")
 
     doItAndPrint("corpusVars <- extractMetadata(corpus)")
 
@@ -802,11 +807,10 @@ importCorpusFromLexisNexis <- function(language=NA) {
         gc()
     }
 
-    # Set document names from the IDs since it's not always done by sources (XMLSource...)
-    # We rely on this later e.g. in showCorpusCa() because we cannot use indexes when documents are skipped
+    # We rely names/IDs this later e.g. in showCorpusCa() because we cannot use indexes when documents are skipped
     # In rare cases, duplicated IDs can happen since LexisNexis does not provide any identifier
     # this is unlikely, though, since we include in the ID the document number in the corpus
-    doItAndPrint("names(corpus) <- make.unique(sapply(corpus, ID))")
+    doItAndPrint("names(corpus) <- make.unique(names(corpus))")
 
     doItAndPrint("corpusVars <- extractMetadata(corpus)")
 
@@ -871,10 +875,9 @@ importCorpusFromEuropresse <- function(language=NA, encoding="UTF-8") {
         gc()
     }
 
-    # Set document names from the IDs since it's not always done by sources (XMLSource...)
-    # We rely on this later e.g. in showCorpusCa() because we cannot use indexes when documents are skipped
+    # We rely names/IDs this later e.g. in showCorpusCa() because we cannot use indexes when documents are skipped
     # In rare cases, duplicated IDs can happen since Europresse plugin truncates them: ensure they are unique
-    doItAndPrint("names(corpus) <- make.unique(sapply(corpus, ID))")
+    doItAndPrint("names(corpus) <- make.unique(substr(names(corpus), 1, 20))")
 
     doItAndPrint("corpusVars <- extractMetadata(corpus)")
 
@@ -943,11 +946,10 @@ importCorpusFromAlceste <- function(language=NA, encoding="") {
         gc()
     }
 
-    # Set document names from the IDs since it's not always done by sources (XMLSource...)
-    # We rely on this later e.g. in showCorpusCa() because we cannot use indexes when documents are skipped
+    # We rely on names/IDs later e.g. in showCorpusCa() because we cannot use indexes when documents are skipped
     # Duplicated IDs can happen since they can be specified in the Alceste file, but also set automatically
     # when missing
-    doItAndPrint("names(corpus) <- make.unique(sapply(corpus, ID))")
+    doItAndPrint("names(corpus) <- make.unique(names(corpus))")
 
     doItAndPrint("corpusVars <- extractMetadata(corpus, date=FALSE)")
 
@@ -1134,8 +1136,9 @@ splitTexts <- function (corpus, chunksize, preserveMetadata=TRUE)
     origins <- list(length(corpus))
 
     for (k in seq_along(corpus)) {
-        chunks_k <- tapply(corpus[[k]], rep(seq(1, length(corpus[[k]])),
-                                            each=chunksize, length.out=length(corpus[[k]])), c)
+        chunks_k <- tapply(content(corpus[[k]]),
+                           rep(seq(1, length(content(corpus[[k]]))),
+                               each=chunksize, length.out=length(content(corpus[[k]]))), c)
 
         # Skeep empty chunks
         keep <- nchar(gsub("[\n[:space:][:punct:]]+", "", sapply(chunks_k, paste, collapse=""))) > 0
@@ -1155,30 +1158,19 @@ splitTexts <- function (corpus, chunksize, preserveMetadata=TRUE)
 
     # Copy meta data from old documents
     if(preserveMetadata) {
-        DMetaData(newCorpus) <- DMetaData(corpus)[origins,, drop=FALSE]
-        docs <- list(length(newCorpus))
+        newCorpus$dmeta <- meta(corpus)[origins,, drop=FALSE]
 
         for(i in seq_along(corpus)) {
-            attrs <- attributes(corpus[[i]])
+            attrs <- meta(corpus[[i]])
 
             for(j in which(origins == i)) {
                 doc <- newCorpus[[j]]
-                attr(doc, "ID") <- names2[j]
-                attr(doc, "Document") <- names1[i]
-                attr(doc, "Author") <- attrs$Author
-                attr(doc, "DateTimeStamp") <- attrs$DateTimeStamp
-                attr(doc, "Description") <- attrs$Description
-                attr(doc, "Heading") <- attrs$Heading
-                attr(doc, "Language") <- attrs$Language
-                attr(doc, "LocalMetaData") <- attrs$LocalMetaData
-                attr(doc, "Origin") <- attrs$Origin
-                docs[[j]] <- doc
+                doc$meta <- attrs
+                meta(doc, "id") <- names2[j]
+                meta(doc, "document") <- names1[i]
+                newCorpus[[j]] <- doc
             }
         }
-
-        # [[<-.VCorpus is terribly slow: it is incredibly faster to work on a list of documents,
-        # and only assign them in one shot at the end
-        newCorpus[] <- docs
     }
 
     meta(newCorpus, .gettext("Doc ID")) <- names1[origins]

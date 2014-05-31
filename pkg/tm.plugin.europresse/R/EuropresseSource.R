@@ -9,11 +9,10 @@ EuropresseSource <- function(x, encoding = "UTF-8") {
 
     free(tree)
 
-    s <- Source(readEuropresseHTML, encoding, length(content), NULL, 0, FALSE, "EuropresseSource")
-    s$Content <- content
-    s$URI <- x
-    s
+    SimpleSource(encoding, length(content),
+                 content=content, uri=x,
+                 reader=readEuropresseHTML, class="EuropresseSource")
 }
 
 # This functions is the same as that for XMLSource
-getElem.EuropresseSource <- function(x) list(content = saveXML(x$Content[[x$Position]]), uri = x$URI)
+getElem.EuropresseSource <- function(x) list(content = saveXML(x$content[[x$position]]), uri = x$URI)

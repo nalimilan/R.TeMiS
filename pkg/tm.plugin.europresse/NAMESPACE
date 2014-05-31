@@ -1,4 +1,5 @@
 export(EuropresseSource, readEuropresseHTML)
 S3method(getElem, EuropresseSource)
-importFrom(tm, getElem, FunctionGenerator, meta, "meta<-", PlainTextDocument, Source)
+importFrom(NLP, meta, "meta<-")
+importFrom(tm, getElem, FunctionGenerator, PlainTextDocument, SimpleSource)
 importFrom(XML, free, getNodeSet, htmlParse, saveXML, xmlParse, xmlValue)

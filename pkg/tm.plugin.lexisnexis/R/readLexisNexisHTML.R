@@ -77,21 +77,21 @@ readLexisNexisHTML <- FunctionGenerator(function(elem, language, id) {
         doc <- PlainTextDocument(x = content,
                                  author = if(!is.na(author)) author else character(0),
                                  datetimestamp = date,
-                                 heading = if(!is.na(heading)) heading else character(0),,
+                                 heading = if(!is.na(heading)) heading else character(0),
                                  id = id,
-                                 origin = if(!is.na(origin)) origin else character(0),,
+                                 origin = if(!is.na(origin)) origin else character(0),
                                  language = lang)
-        meta(doc, "Introduction") <- if(!is.na(intro)) intro else character(0)
-        meta(doc, "Section") <- if(!is.na(section)) section else character(0)
-        meta(doc, "Subject") <- if(!all(is.na(subject))) subject else character(0)
-        meta(doc, "Coverage") <- if(!all(is.na(coverage))) coverage else character(0)
-        meta(doc, "Company") <- if(!all(is.na(company))) company else character(0)
-        meta(doc, "StockSymbol") <- if(!all(is.na(stocksymbol))) stocksymbol else character(0)
-        meta(doc, "Industry") <- if(!all(is.na(industry))) industry else character(0)
-        meta(doc, "Type") <- if(!is.na(type)) type else character(0)
-        meta(doc, "WordCount") <- if(!is.na(wc)) wc else character(0)
-        meta(doc, "Pages") <- if(!is.na(page)) page else character(0)
-        meta(doc, "Rights") <- if(!is.na(copyright)) copyright else character(0)
+        meta(doc, "intro") <- if(!is.na(intro)) intro else character(0)
+        meta(doc, "section") <- if(!is.na(section)) section else character(0)
+        meta(doc, "subject") <- if(!all(is.na(subject))) subject else character(0)
+        meta(doc, "coverage") <- if(!all(is.na(coverage))) coverage else character(0)
+        meta(doc, "company") <- if(!all(is.na(company))) company else character(0)
+        meta(doc, "stocksymbol") <- if(!all(is.na(stocksymbol))) stocksymbol else character(0)
+        meta(doc, "industry") <- if(!all(is.na(industry))) industry else character(0)
+        meta(doc, "type") <- if(!is.na(type)) type else character(0)
+        meta(doc, "wordcount") <- if(!is.na(wc)) wc else character(0)
+        meta(doc, "pages") <- if(!is.na(page)) page else character(0)
+        meta(doc, "rights") <- if(!is.na(copyright)) copyright else character(0)
         doc
     }
 })
