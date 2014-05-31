@@ -423,7 +423,7 @@ importCorpusFromDir <- function(language=NA, encoding="") {
 
     if(encoding == "") {
         encs <- table(sapply(list.files(dir, full.names=TRUE),
-                             function(f) stringi::stri_enc_detect(readBin(f, "raw", 1024))[[1]]$Encoding[1]))
+                             function(f) stri_enc_detect(readBin(f, "raw", 1024))[[1]]$Encoding[1]))
         encoding <- names(encs)[order(encs, decreasing=TRUE)][1]
     }
 
@@ -471,7 +471,7 @@ importCorpusFromFile <- function(language=NA, encoding="") {
         n2 <- sum(sapply(gregexpr(";", excerpt), length))
 
         if(encoding == "")
-            encoding <- stringi::stri_enc_detect(readBin(file, "raw", 1024))[[1]]$Encoding[1]
+            encoding <- stri_enc_detect(readBin(file, "raw", 1024))[[1]]$Encoding[1]
 
         if(is.null(encoding))
             encoding <- ""
