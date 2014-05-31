@@ -242,7 +242,7 @@
 
 .get_dim <- function(widget) c(.tl_no_rows(widget), .tl_no_cols(widget))
 
-..get_items <- function(widget, i, j, ...) {
+.get_items <- function(widget, i, j, ...) {
     opar <- options("warn"); on.exit(options(opar))
     options(list(warn=-1)) # quiet for .coerce_raw
     d <- .get_dim(widget)
