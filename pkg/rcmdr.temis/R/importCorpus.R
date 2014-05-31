@@ -164,7 +164,7 @@ importCorpusDlg <- function() {
     initializeDialog(title=.gettext("Import Corpus"))
 
     setState <- function(...) {
-        if(tclvalue(sourceVariable) %in% c("dir", "file", "europresse", "alceste")) {
+        if(tclvalue(sourceVariable) %in% c("dir", "file", "alceste")) {
             tkconfigure(comboEnc, state="normal")
 
             if(tclvalue(tclEnc) == "UTF-8")
@@ -313,7 +313,7 @@ importCorpusDlg <- function() {
                       file=importCorpusFromFile(lang, enc),
                       factiva=importCorpusFromFactiva(lang),
                       lexisnexis=importCorpusFromLexisNexis(lang),
-                      europresse=importCorpusFromEuropresse(lang, enc),
+                      europresse=importCorpusFromEuropresse(lang),
                       alceste=importCorpusFromAlceste(lang, enc),
                       twitter=importCorpusFromTwitter(lang))
 
@@ -819,7 +819,7 @@ importCorpusFromLexisNexis <- function(language=NA) {
 }
 
 # Choose a Europresse HTML file to load texts and variables from
-importCorpusFromEuropresse <- function(language=NA, encoding="UTF-8") {
+importCorpusFromEuropresse <- function(language=NA) {
     if(!.checkAndInstall("tm.plugin.europresse",
                          .gettext("The tm.plugin.europresse package is needed to import corpora from Europresse files.\nDo you want to install it?")))
         return(FALSE)
