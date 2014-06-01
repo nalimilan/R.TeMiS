@@ -1,3 +1,21 @@
+Version 0.7 - 2014-06-01
+    * Port to tm 0.6. No changes should be visible to the user,
+      except that saved workspaces and generated code will not
+      work with this version.
+    * Support LexisNexis, Europresse and Alceste importation.
+    * Allow customizing the stemming dictionary before processing texts.
+    * Automatically detect character encoding when importing corpora.
+    * Replace sliders with spin boxes to allow more precise selection of parameters.
+    * Add Select All and Copy menu and key bindings to text results window.
+    * Allow manual selection of the column containing text when importing from
+      spreadsheet-like files.
+    * Improve performance when importing many Factiva, Europresse or LexisNexis files.
+    * Allow selecting a language whose encoding is not supported by OS on Windows.
+    * Allow choosing an occurrence threshold when subsetting corpus.
+    * Print errors in dialogs rather than in the Messages pane.
+    * Fix off-by-one number of occurrences in term frequencies.
+    * Various fixes and improvements.
+
 Version 0.6.2 - 2013-08-27
     * Use system font for frame titles as Rcmdr 2.0-0.
     * Move several packages from Depends to Imports to avoid
