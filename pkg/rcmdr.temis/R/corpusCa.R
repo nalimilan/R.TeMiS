@@ -193,7 +193,7 @@ corpusCaDlg <- function() {
         on.exit(setIdleCursor())
 
         if(ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"]) == 0)
-            .Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
+            Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
                     type="info")
 
         if(length(vars) == 1 && vars[1] == .gettext("None (run analysis on full matrix)"))
