@@ -56,6 +56,19 @@ if (getRversion() >= '2.15.1') globalVariables(c(
         tktag.configure(txt, "small", font="sans 5")
         tktag.configure(txt, "fixed", font="courier 11")
 
+        menu <- tkmenu(txt, tearoff=FALSE)
+        tkadd(menu, "command", label=.gettext("Select All"),
+              command=function() tktag.add(txt, "sel", "1.0", "end"))
+        # "break" is needed to prevent default bindings from being fired
+        tkbind(txt, "<Control-Key-a>", expression(tktag.add(txt, "sel", "1.0", "end"), break))
+        tkadd(menu, "command", label=.gettext("Copy"),
+              command=function() tkevent.generate(txt, "<<Copy>>"))
+        tkbind(txt, "<Control-Key-c>", function() tkevent.generate(txt, "<<Copy>>"))
+        tkbind(txt, "<Button-3>", function(x, y)
+               tkpopup(menu,
+                       as.integer(x) + as.integer(tkwinfo("rootx", txt)),
+                       as.integer(y) + as.integer(tkwinfo("rooty", txt))))
+
         tkpack(txt, side="left", fill="both", expand=TRUE)
         tkpack(scr1, side="left", fill="y")
 
