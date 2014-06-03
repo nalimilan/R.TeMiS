@@ -122,6 +122,7 @@
 
 .buildDictionary <- function(stemming, customStemming, lang) {
     if(stemming) {
+        doItAndPrint("library(SnowballC)")
         doItAndPrint(sprintf('dictionary <- data.frame(row.names=colnames(dtm), "%s"=col_sums(dtm), "%s"=wordStem(colnames(dtm), "%s"), "%s"=ifelse(colnames(dtm) %%in%% stopwords("%s"), "%s", ""), stringsAsFactors=FALSE)',
                              .gettext("Occurrences"), .gettext("Stemmed.Term"), lang, .gettext("Stopword"), lang, .gettext("Stopword")))
     }
@@ -525,6 +526,8 @@ importCorpusFromFile <- function(language=NA, encoding="") {
             return(FALSE)
         }
 
+        doItAndPrint("library(RODBC)")
+
         channelStr <- switch(EXPR = ext,
         	             xls = "odbcConnectExcel",
         	             xlsx = "odbcConnectExcel2007",
@@ -700,6 +703,8 @@ importCorpusFromFactiva <- function(language=NA) {
     setBusyCursor()
     on.exit(setIdleCursor())
 
+    doItAndPrint("library(tm.plugin.factiva)")
+
     # tkgetOpenFile() is terrible: if path contains a space, file paths are surrounded by {}
     # If no spaces are present, they are not, but in both cases the separator is a space
     if(substr(filestr, 0, 1) == "{")
@@ -766,6 +771,8 @@ importCorpusFromLexisNexis <- function(language=NA) {
 
     setBusyCursor()
     on.exit(setIdleCursor())
+
+    doItAndPrint("library(tm.plugin.lexisnexis)")
 
     # tkgetOpenFile() is terrible: if path contains a space, file paths are surrounded by {}
     # If no spaces are present, they are not, but in both cases the separator is a space
@@ -835,6 +842,8 @@ importCorpusFromEuropresse <- function(language=NA) {
     setBusyCursor()
     on.exit(setIdleCursor())
 
+    doItAndPrint("library(tm.plugin.europresse)")
+
     # tkgetOpenFile() is terrible: if path contains a space, file paths are surrounded by {}
     # If no spaces are present, they are not, but in both cases the separator is a space
     if(substr(filestr, 0, 1) == "{")
@@ -902,6 +911,8 @@ importCorpusFromAlceste <- function(language=NA, encoding="") {
 
     setBusyCursor()
     on.exit(setIdleCursor())
+
+    doItAndPrint("library(tm.plugin.alceste)")
 
     # tkgetOpenFile() is terrible: if path contains a space, file paths are surrounded by {}
     # If no spaces are present, they are not, but in both cases the separator is a space
