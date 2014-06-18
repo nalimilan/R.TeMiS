@@ -9,6 +9,7 @@ Imports: methods, Rcmdr (>= 2.0-0), tcltk, tcltk2, utils, ca, R2HTML, RColorBrew
 Depends: tm (>= 0.6), NLP, slam, zoo, lattice
 Suggests: SnowballC, ROpenOffice, RODBC, tm.plugin.factiva (>= 1.4), tm.plugin.lexisnexis (>= 1.1),
     tm.plugin.europresse (>= 1.1), tm.plugin.alceste (>= 1.1), twitteR
+Additional_repositories: http://www.omegahat.org/R
 Description: An R Commander plug-in providing an integrated solution to perform
     a series of text mining tasks such as importing and cleaning a corpus, and
     analyses like terms and documents counts, vocabulary tables, terms
