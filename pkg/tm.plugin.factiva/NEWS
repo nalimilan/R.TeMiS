@@ -1,3 +1,7 @@
+Version 1.5 - 2014-07-05
+    * Fix encoding issues on non-UTF-8 systems, adding back the
+      'encoding' argument to work around a bug in package XML.
+
 Version 1.4 - 2014-05-31
     * Adapt to tm 0.6.
     * Remove the 'encoding' argument to FactivaSource()

@@ -1,6 +1,8 @@
 readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
     function(elem, language, id) {
-        tree <- xmlParse(elem$content, asText=TRUE)
+        encoding <- if(Encoding(elem$content) == "unknown") character(0)
+                    else Encoding(elem$content)
+        tree <- xmlParse(elem$content, asText=TRUE, encoding=encoding)
 
         if(is.na(language)) {
             cl <- xmlAttrs(xmlChildren(tree)[[1]])["class"]

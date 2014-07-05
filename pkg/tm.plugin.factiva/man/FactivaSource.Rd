@@ -8,10 +8,15 @@
   exported from Factiva in the \acronym{XML} or \acronym{HTML} formats.
 }
 \usage{
-  FactivaSource(x, format = c("auto", "XML", "HTML"))
+  FactivaSource(x, encoding = "UTF-8",
+                format = c("auto", "XML", "HTML"))
 }
 \arguments{
   \item{x}{Either a character identifying the file or a connection.}
+  \item{encoding}{A character giving the encoding of \code{x}, only used
+    for \acronym{HTML} files. It will be ignored unless the \acronym{HTML}
+    input does not include this information, which should normally not happen
+    with files exported from Factiva.}
   \item{format}{The format of the file or connection identified by \code{x}
     (see \dQuote{Details}).}
 }
@@ -100,6 +105,12 @@
 
     # See meta-data associated with first article
     meta(corpus[[1]])
+
+    \dontshow{
+    # Check that texts with non-ASCII characters are properly marked as UTF-8,
+    # as bugs in XML have created issues in the past
+    stopifnot(all(Encoding(content(corpus[[1]])[1]) == "UTF-8"))
+    }
 }
 \seealso{
   \code{\link{readFactivaXML}} and \code{\link{readFactivaHTML}} for the functions

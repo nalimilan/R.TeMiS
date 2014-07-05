@@ -1,4 +1,4 @@
-FactivaSource <- function(x, format = c("auto", "XML", "HTML")) {
+FactivaSource <- function(x, encoding = "UTF-8", format = c("auto", "XML", "HTML")) {
     format <- match.arg(format)
 
     # XML format
@@ -12,13 +12,13 @@ FactivaSource <- function(x, format = c("auto", "XML", "HTML")) {
     }
     # HTML format
     else {
-        tree <- htmlParse(x)
+        tree <- htmlParse(x, encoding=encoding)
 
         # The full class is "article XXArticle", with XX the language code
         content <- getNodeSet(tree, "//div[starts-with(@class, 'article')]")
         free(tree)
 
-        SimpleSource(length=length(content),
+        SimpleSource(encoding, length=length(content),
                      content=content, uri=x,
                      reader=readFactivaHTML, class="FactivaSource")
     }
