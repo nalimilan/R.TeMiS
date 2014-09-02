@@ -1,6 +1,8 @@
-setOutputFile <- function(browse=TRUE) {
-    if(exists(".HTML.file"))
-        dir <- dirname(.HTML.file)
+setOutputFile <- function(..., browse=TRUE) {
+    file <- NULL
+    try(file <- HTMLGetFile(), silent=TRUE)
+    if(!is.null(file))
+        dir <- dirname(file)
     else
         dir <- "."
 
@@ -22,7 +24,7 @@ setOutputFile <- function(browse=TRUE) {
     activateMenus()
 
     if(browse)
-        doItAndPrint("browseURL(.HTML.file)")
+        doItAndPrint("browseURL(R2HTML::HTMLGetFile())")
 
     return(TRUE)
 }
@@ -45,7 +47,7 @@ initOutputFile <- function(file) {
                       enc, title)
     writeLines(header, file)
 
-    justDoIt(sprintf('.HTML.file <- "%s"', file))
+    HTMLSetFile(file)
     HTML.title(title, 1, append=TRUE)
 
     HTML(sprintf(.gettext("Corpus imported on %s. Language: %s."),
@@ -55,7 +57,7 @@ initOutputFile <- function(file) {
     HTML(sprintf(.gettext("Source: %s."), meta(corpus, type="corpus", tag="source")))
     HTML(sprintf(.gettext("%i documents and %i terms."), nrow(dtm), ncol(dtm)))
 
-    cat(.gettext("Processing options:"), "\n", sep="", file=.HTML.file, append=TRUE)
+    cat(.gettext("Processing options:"), "\n", sep="", file=file, append=TRUE)
     processing <- meta(corpus, type="corpus", tag="processing")
     # Keep in sync with strings in importCorpusDlg()
     HTMLli(paste(c(.gettext("Ignore case"), .gettext("Remove punctuation"),
@@ -68,16 +70,18 @@ initOutputFile <- function(file) {
 }
 
 openOutputFile <- function() {
-    if(!exists(".HTML.file")) {
+    file <- NULL
+    try(file <- HTMLGetFile(), silent=TRUE)
+    if(is.null(file)) {
         .Message(.gettext("No report file has been created yet."), type="error")
         return()
     }
-    else if(!file.exists(.HTML.file)) {
+    else if(!file.exists(file)) {
         .Message(.gettext("Report file does not exist (it was probably removed)."), type="error")
         return()
     }
 
-    doItAndPrint("browseURL(.HTML.file)")
+    doItAndPrint("browseURL(R2HTML::HTMLGetFile())")
 }
 
 setLastTable <- function(name, title=NULL) {
@@ -93,7 +97,9 @@ copyTableToOutput <- function() {
         return()
     }
 
-    html.on <- exists(".HTML.file") && file.exists(.HTML.file)
+    file <- NULL
+    try(file <- HTMLGetFile(), silent=TRUE)
+    html.on <- file.exists(file)
     if(!(html.on || setOutputFile(browse=FALSE)))
         return()
 
@@ -111,16 +117,16 @@ copyTableToOutput <- function() {
     if(inherits(tab, "zoo"))
         doItAndPrint(sprintf('R2HTML::HTML(as.matrix(%s), Border=NULL, align="left", scientific=4)', last.table))
     # HTML.array already passes Border=0, so Border=NULL generates an error
-    else if(class(tab) == "array")
+    else if(inherits(tab, "array"))
         doItAndPrint(sprintf('R2HTML::HTML(%s, align="left", scientific=4)', last.table))
-    else if(class(tab) == "list")
+    else if(inherits(tab, "list"))
         doItAndPrint(sprintf('HTML.list(%s, Border=NULL, align="left", scientific=4)', last.table))
     else
         doItAndPrint(sprintf('R2HTML::HTML(%s, Border=NULL, align="left", scientific=4)', last.table))
 
     # Open file in browser when creating it
     if(!html.on)
-        doItAndPrint("browseURL(.HTML.file)")
+        doItAndPrint("browseURL(R2HTML::HTMLGetFile())")
 
     # If output file was removed, we recreate it, and the openOutputFile menu needs to notice it
     activateMenus()
@@ -132,12 +138,13 @@ copyPlotToOutput <- function() {
         return()
     }
 
-    html.on <- exists(".HTML.file") && file.exists(.HTML.file)
-    if(!(html.on || setOutputFile(browse=FALSE)))
+    file <- NULL
+    try(file <- HTMLGetFile(), silent=TRUE)
+    if(!(file.exists(file) || setOutputFile(browse=FALSE)))
         return()
 
     # Only the filename within the folder is needed, this allows moving HTML and PNG files to another folder
-    filename <- gsub(".html$", "", basename(.HTML.file))
+    filename <- gsub(".html$", "", basename(file))
 
     file <- paste(filename, format(Sys.time(), .gettext(" - plot %Y-%m-%d %H-%M")), ".png", sep="")
 
@@ -153,12 +160,12 @@ copyPlotToOutput <- function() {
         file <- testfile
 
     doItAndPrint(sprintf('dev.print(png, width=7, height=7, unit="in", res=200, filename="%s")',
-                         paste(dirname(.HTML.file), .Platform$file.sep, file, sep="")))
+                         paste(dirname(file), .Platform$file.sep, file, sep="")))
     doItAndPrint(sprintf('R2HTML::HTMLInsertGraph("%s", "", 0, "left")', file))
 
     # Open file in browser when creating it
     if(!html.on)
-        doItAndPrint("browseURL(.HTML.file)")
+        doItAndPrint("browseURL(R2HTML::HTMLGetFile())")
 
     # If output file was removed, we recreate it, and the openOutputFile menu needs to notice it
     activateMenus()
@@ -197,7 +204,7 @@ disableBlackAndWhite <- function() {
 
 # The default HTML.list function does not print element names,
 # and redirects align="left" to cat(), which prints it to the file
-HTML.list <- function (x, file = get(".HTML.file"), first = TRUE, append = TRUE, ...) 
+HTML.list <- function (x, file = HTMLGetFile(), first = TRUE, append = TRUE, ...) 
 {
     cat("\n", file = file, append = append)
     if (first)

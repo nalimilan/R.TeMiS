@@ -74,7 +74,7 @@
     item        outputMenu      command           "Copy current plot to report"      copyPlotToOutput            "length(dev.list()) > 0"                   ""
     item        outputMenu      command           "Draw black and white plots"       enableBlackAndWhite         "!isTRUE(options('bw.plots')[[1]])"                   ""
     item        outputMenu      command           "Draw colored plots"               disableBlackAndWhite        "isTRUE(options('bw.plots')[[1]])"                   ""
-    item        outputMenu      command           "Open report file"                 openOutputFile              "exists('.HTML.file') && file.exists(.HTML.file)"                   ""
+    item        outputMenu      command           "Open report file"                 openOutputFile              "!is.null(file <- tryCatch(R2HTML::HTMLGetFile(), error=function(e) NULL)) && file.exists(file)"                   ""
     item        outputMenu      command           "Select a new report file..."      setOutputFile               ""                   ""
     item        tmMenu	        cascade           "Export results to report"         outputMenu                  ""                   ""
 

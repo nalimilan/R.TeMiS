@@ -1,6 +1,5 @@
 if (getRversion() >= '2.15.1') globalVariables(c(
-    "tl", ".HTML.file",
-    "last.table", "top", "dtm", "corpus", "corpusList", "corpusCa", "buttonsFrame",
+    "tl", "last.table", "top", "dtm", "corpus", "corpusList", "corpusCa", "buttonsFrame",
     "clustDtm", "corpusClust", "clusters", "corpusVars", "diss",
     "freqTerms", "sourceVariable", "lowercaseVariable",
     "punctuationVariable", "numbersVariable", "stopwordsVariable",
