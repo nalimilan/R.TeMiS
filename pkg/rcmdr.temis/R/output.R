@@ -140,7 +140,8 @@ copyPlotToOutput <- function() {
 
     file <- NULL
     try(file <- HTMLGetFile(), silent=TRUE)
-    if(!(file.exists(file) || setOutputFile(browse=FALSE)))
+    html.on <- file.exists(file)
+    if(!(html.on || setOutputFile(browse=FALSE)))
         return()
 
     # Only the filename within the folder is needed, this allows moving HTML and PNG files to another folder
