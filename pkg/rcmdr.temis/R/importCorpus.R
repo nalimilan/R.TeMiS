@@ -1129,7 +1129,7 @@ importCorpusFromTwitter <- function(language=NA) {
            tclNSlider, sticky="w", pady=6)
     tkgrid(optionsFrame, sticky="w", pady=6, columnspan=2)
     tkgrid(buttonsFrame, columnspan=2, sticky="ew", pady=6)
-    dialogSuffix(focus=entryText)
+    dialogSuffix(focus=entryText, force.wait=TRUE)
 
     if(tclvalue(result) == "success")
         return(list(source=sprintf(.gettext("Twitter search for %s"), tclvalue(tclText)),
