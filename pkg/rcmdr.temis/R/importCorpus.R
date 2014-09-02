@@ -58,7 +58,8 @@
     OKCancelHelp(helpSubject=importCorpusDlg)
     tkgrid(getFrame(varBox), sticky="nswe", pady=6)
     tkgrid(buttonsFrame, sticky="ew", pady=6)
-    dialogSuffix()
+    # force.wait is required to get checking result to work
+    dialogSuffix(force.wait=TRUE)
 
     return(tclvalue(result) == "success")
 }
@@ -286,7 +287,7 @@ importCorpusDlg <- function() {
         # (we assume later existing objects match the current corpus)
         objects <- c("corpus", "corpusVars", "dtm", "wordsDtm", "lengthsDtm", "voc", "lengths", "coocs",
                      "termFreqs", "absTermFreqs", "varTermFreqs", "freqTerms", "specTerms", "docSeries",
-                     ".last.table", ".HTML.file", "corpusClust", "corpusSubClust", "corpusCa", "plottingCa")
+                     ".last.table", "corpusClust", "corpusSubClust", "corpusCa", "plottingCa")
         if(any(sapply(objects, exists))) {
             # Needed to avoid a warning about corpusVars not being available
             # This should be removed once we can depend on the new version of Rcmdr accepting ActiveDataSet(NULL)
@@ -304,9 +305,10 @@ importCorpusDlg <- function() {
 
             doItAndPrint(paste("rm(", paste(objects[sapply(objects, exists)], collapse=", "), ")", sep=""))
             gc()
-
-            activateMenus()
         }
+
+        HTMLSetFile(NULL)
+        activateMenus()
 
         # Import corpus
         res <- switch(source,
