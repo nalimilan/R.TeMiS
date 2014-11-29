@@ -1,3 +1,6 @@
+Version 0.7.2 - 2014-09-06
+    * Fix importing corpus from spreasheet-like files.
+
 Version 0.7.1 - 2014-09-06
     * Minor release to support Rcmdr 2.1 and R2HTML 2.3.
     * Fix custom stemming when used from the Windows desktop shortcut.
