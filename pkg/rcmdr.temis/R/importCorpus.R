@@ -426,7 +426,7 @@ importCorpusFromDir <- function(language=NA, encoding="") {
 
     if(encoding == "") {
         encs <- table(sapply(list.files(dir, full.names=TRUE),
-                             function(f) stri_enc_detect(readBin(f, "raw", 1024))[[1]]$Encoding[1]))
+                             function(f) stri_enc_detect(readBin(f, "raw", 50000))[[1]]$Encoding[1]))
         encoding <- names(encs)[order(encs, decreasing=TRUE)][1]
     }
 
