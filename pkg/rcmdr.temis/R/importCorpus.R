@@ -602,7 +602,7 @@ importCorpusFromFile <- function(language=NA, encoding="") {
     OKCancelHelp(helpSubject=importCorpusDlg)
     tkgrid(getFrame(varBox), sticky="nswe", pady=6)
     tkgrid(buttonsFrame, sticky="ew", pady=6)
-    dialogSuffix()
+    dialogSuffix(force.wait=TRUE)
 
     if(is.null(var))
         return(FALSE)
