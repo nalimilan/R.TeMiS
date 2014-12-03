@@ -1,6 +1,6 @@
 Package: tm.plugin.factiva
 Type: Package
-Title: Import articles from Factiva using the tm text mining framework
+Title: Import Articles from Factiva Using the tm Text Mining Framework
 Version: 1.5
 Date: 2014-06-05
 Authors@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
@@ -9,7 +9,7 @@ Authors@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
                     email="g.ljubownikow@auckland.ac.nz",
                     role="ctb"))
 Imports: NLP, tm (>= 0.6), XML
-Description: This package provides a tm Source to create corpora from
+Description: Provides a tm Source to create corpora from
   articles exported from the Dow Jones Factiva content provider as
   XML or HTML files. It is able to read both text content and meta-data
   information (including source, date, title, author, subject,

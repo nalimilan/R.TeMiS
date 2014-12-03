@@ -1,13 +1,13 @@
 Package: tm.plugin.alceste
 Type: Package
-Title: Import texts from files in the Alceste format using the tm text mining framework
+Title: Import Texts From Files in the Alceste Format Using the tm Text Mining Framework
 Version: 1.1
 Date: 2014-05-31
 Authors@R: person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
                   role=c("aut", "cre"))
 Imports: NLP, tm (>= 0.6)
 Suggests: stringi
-Description: This package provides a tm Source to create corpora from
+Description: Provides a tm Source to create corpora from
   a corpus prepared in the format used by the Alceste application (i.e.
   a single text file with inline meta-data). It is able to import both
   text contents and meta-data (starred) variables.
