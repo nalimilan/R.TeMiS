@@ -498,19 +498,17 @@ importCorpusFromFile <- function(language=NA, encoding="") {
                  type="error")
             return(FALSE)
         }
-	else if(!require(ROpenOffice)) {
+	    else if(!requireNamespace("ROpenOffice")) {
             response <- tkmessageBox(message=.gettext("Loading OpenDocument spreadsheets (.ods) requires the ROpenOffice package.\nDo you want to install it?"),
                                      icon="question", type="yesno")
 
-            if (tclvalue(response) == "yes") {
-	        install.packages("ROpenOffice", repos="http://www.omegahat.org/R", type="source")
-                library("ROpenOffice")
-            }
-            else {
+            if (tclvalue(response) == "yes")
+	            install.packages("ROpenOffice", repos="http://www.omegahat.org/R", type="source")
+            else
                 return(FALSE)
-            }
         }
 
+        doItAndPrint("library(ROpenOffice)")
         doItAndPrint(paste("corpusDataset <- read.ods(\"", file, "\")", sep=""))
     }
     else if(ext %in% c("xls", "xlsx", "mdb", "accdb")) {
