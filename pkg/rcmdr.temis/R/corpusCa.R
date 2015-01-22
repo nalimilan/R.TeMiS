@@ -194,7 +194,7 @@ corpusCaDlg <- function() {
 
         if(ncol(meta(corpus)[colnames(meta(corpus)) != "MetaID"]) == 0)
             Message(message=.gettext("No corpus variables have been set. Use Text mining->Manage corpus->Set corpus variables to add them."),
-                    type="info")
+                    type="note")
 
         if(length(vars) == 1 && vars[1] == .gettext("None (run analysis on full matrix)"))
             doItAndPrint(sprintf("corpusCa <- runCorpusCa(corpus, dtm, sparsity=%s, nd=%i)", sparsity/100, dim))
