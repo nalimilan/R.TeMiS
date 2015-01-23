@@ -99,7 +99,11 @@ copyTableToOutput <- function() {
 
     file <- NULL
     try(file <- HTMLGetFile(), silent=TRUE)
-    html.on <- file.exists(file)
+    if(!is.null(file))
+        html.on <- file.exists(file)
+    else
+        html.on <- FALSE
+
     if(!(html.on || setOutputFile(browse=FALSE)))
         return()
 
@@ -140,7 +144,11 @@ copyPlotToOutput <- function() {
 
     file <- NULL
     try(file <- HTMLGetFile(), silent=TRUE)
-    html.on <- file.exists(file)
+    if(!is.null(file))
+        html.on <- file.exists(file)
+    else
+        html.on <- FALSE
+
     if(!(html.on || setOutputFile(browse=FALSE)))
         return()
 
