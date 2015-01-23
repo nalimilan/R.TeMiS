@@ -5,5 +5,6 @@ importFrom(tcltk, addTclPath, ttkcombobox, tkgrid.propagate, tkwidget, tk_messag
            tkmenu, tkpopup, tkadd, tkwinfo, tktag.add, tkevent.generate)
 # We only need the Tcl package tablelist
 importFrom(tcltk2, tk2tablelist, tk2tip)
+S3method(summary, ca)
 
 exportPattern("^[^\\.]")
