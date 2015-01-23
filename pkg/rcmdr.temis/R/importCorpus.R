@@ -462,7 +462,7 @@ importCorpusFromFile <- function(language=NA, encoding="") {
     # Code adapted from Rcommander's data-menu.R file
     # The following function was contributed by Matthieu Lesnoff
     # (added with small changes by J. Fox, 20 July 06 & 30 July 08)
-    # Licensed under GNU GPL (version ≥ 2) 
+    # Licensed under GNU GPL (version >= 2)
     sop <- match(".", rev(strsplit(file, NULL)[[1]]))[1]
     ext <- tolower(substring(file, nchar(file) - sop + 2, nchar(file)))
 
@@ -1139,7 +1139,7 @@ importCorpusFromTwitter <- function(language=NA) {
 
 # Adapted version of tm's makeChunks() remembering which chunk comes from which document,
 # preserving corpus meta-data, and skipping empty chunks.
-# Copyright Ingo Feinerer, Licence: GPL (≥ 2).
+# Copyright Ingo Feinerer, Licence: GPL (>= 2).
 # http://tm.r-forge.r-project.org/
 splitTexts <- function (corpus, chunksize, preserveMetadata=TRUE) 
 {

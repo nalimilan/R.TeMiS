@@ -1,6 +1,6 @@
 # Adapted from gWidgets2tcltk::tablelist.R
 # https://github.com/jverzani/gWidgets2tcltk/blob/master/R/tablelist.R
-# Copyright  2013 John Verzani. License: GPL ≥ 2.
+# Copyright 2013 John Verzani. License: GPL >= 2.
 
 
 ## Events are: <<TablelistCellUpdated>> <<TablelistSelect>>
