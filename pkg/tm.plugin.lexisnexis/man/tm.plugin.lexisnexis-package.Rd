@@ -29,7 +29,7 @@
     meta(corpus[[1]])
   }
 
-  Currently, only \acronym{HTML} files saved in French are supported.
+  Currently, only \acronym{HTML} files saved in English and French are supported.
   Please send the maintainer examples of LexisNexis files in your
   language if you want it to be supported.
 

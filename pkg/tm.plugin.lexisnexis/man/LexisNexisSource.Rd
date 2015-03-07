@@ -46,7 +46,7 @@
   if the machine from which the \acronym{HTML} file was exported
   uses a locale different from that of the machine where it is read.
 
-  Currently, only \acronym{HTML} files saved in French are supported.
+  Currently, only \acronym{HTML} files saved in English and French are supported.
   Please send the maintainer examples of LexisNexis files in your
   language if you want it to be supported.
 }
@@ -59,7 +59,7 @@
 }
 \examples{
     library(tm)
-    file <- system.file("texts", "lexisnexis_test.html", 
+    file <- system.file("texts", "lexisnexis_test_en.html",
                         package = "tm.plugin.lexisnexis")
     corpus <- Corpus(LexisNexisSource(file))
 

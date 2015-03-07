@@ -1,3 +1,25 @@
+# Known translation of field names
+fields <- list(section=c("section", "rubrique"),
+               length=c("length", "longueur"),
+               author=c("byline", "auteur"),
+               typepub=c("type", "publication-type", "type-publication"),
+               subject=c("subject", "sujet"),
+               language=c("language", "langue"),
+               # The English translation is uncertain for these
+               insert=c("insert", "encart"),
+               geo=c("geo-localization", "localisation-geo"),
+               company=c("company", "societe"),
+               stocksymbol=c("stock-symbol", "symbole-boursier"),
+               sector=c("activity-sector", "secteur-activite"))
+
+getfield <- function(nodes, field) {
+    ind <- which(names(nodes) %in% paste0(toupper(fields[[field]]), ": "))
+    if(length(ind) > 0)
+        nodes[[ind]]
+    else
+        NULL
+}
+
 readLexisNexisHTML <- FunctionGenerator(function(elem, language, id) {
     function(elem, language, id) {
         # textConnection() in LexisNexisSource() converts strings to UTF-8
@@ -6,50 +28,61 @@ readLexisNexisHTML <- FunctionGenerator(function(elem, language, id) {
         dat <- sapply(getNodeSet(tree, "//div[@class = 'c0']/p[@class = 'c1']/span[@class = 'c2']"),
                       xmlValue)
 
-        # First item of dat is the document number
-        origin <- dat[2]
-        copyright <- dat[3]
+        # First type of document
+        if(length(dat) == 3) {
+            # First item of dat is the document number
+            origin <- dat[2]
+            copyright <- dat[3]
 
-        heading <- xmlValue(getNodeSet(tree, "//div[@class = 'c5']/p[@class = 'c6']/span[@class = 'c7']")[[1]])
+            date1 <- xmlValue(getNodeSet(tree, "//div[@class = 'c3']/p[@class = 'c1']/span[@class = 'c4']")[[1]])
+            date2 <- xmlValue(getNodeSet(tree, "//div[@class = 'c3']/p[@class = 'c1']/span[@class = 'c2']")[[1]])
+        }
+        else {
+            dat <- sapply(getNodeSet(tree, "//div[@class = 'c3']/p[@class = 'c1']/span[@class = 'c2']"),
+                          xmlValue)
+
+            # First item of dat is the document number
+            origin <- dat[1]
+            copyright <- dat[3]
+
+            date1 <- xmlValue(getNodeSet(tree, "//div[@class = 'c3']/p[@class = 'c1']/span[@class = 'c4']")[[1]])
+            date2 <- dat[[2]]
+        }
+
+        headingnodes <- getNodeSet(tree, "//div[@class = 'c5']/p[@class = 'c6']/span[@class = 'c7']")
+        heading <- ifelse(length(headingnodes) > 0, xmlValue(headingnodes[[1]]), "")
 
         nodes <- getNodeSet(tree, "//div[@class = 'c5']/p[@class = 'c6']")
         names(nodes) <- sapply(nodes, function(x) xmlValue(x[[1]]))
 
-        section.page <- xmlValue(nodes[["RUBRIQUE: "]][[2]])
-        section.page <- strsplit("; Pg.", section.page)[[1]]
-        section <- section.page[2]
-        page <- section.page[3]
 
-        wc <- xmlValue(nodes[["LONGUEUR: "]][[2]])
-        author <- xmlValue(nodes[["AUTEUR: "]][[2]])
-        type <- xmlValue(nodes[["TYPE-PUBLICATION: "]][[2]])
-        intro <- gsub(" \n?\\([[:digit:]]{2}%)|\n", "", strsplit(xmlValue(nodes[["ENCART: "]][[2]]), "; ")[[1]])
-        subject <- gsub(" \n?\\([[:digit:]]{2}%)|\n", "", strsplit(xmlValue(nodes[["SUJET: "]][[2]]), "; ")[[1]])
-        coverage <- gsub(" \n?\\([[:digit:]]{2}%)|\n", "", strsplit(xmlValue(nodes[["LOCALISATION-GEO: "]][[2]]), "; ")[[1]])
-        company <- gsub(" \n?\\([[:digit:]]{2}%)|\n", "", strsplit(xmlValue(nodes[["SOCIETE: "]][[2]]), "; ")[[1]])
-        stocksymbol <- gsub(" \n?\\([[:digit:]]{2}%)|\n", "", strsplit(xmlValue(nodes[["SYMBOLE-BOURSIER: "]][[2]]), "; ")[[1]])
-        industry <- gsub(" \n?\\([[:digit:]]{2}%)|\n", "", strsplit(xmlValue(nodes[["SECTEUR-ACTIVITE: "]][[2]]), "; ")[[1]])
+        wc <- xmlValue(getfield(nodes, "length")[[2]])
+        author <- xmlValue(getfield(nodes, "author")[[2]])
+        type <- xmlValue(getfield(nodes, "typepub")[[2]])
+        section <- xmlValue(getfield(nodes, "section")[[2]])
+        intro <- gsub(" \n?\\([[:digit:]]{2}%)|\n", "", strsplit(xmlValue(getfield(nodes, "insert")[[2]]), "; ")[[1]])
+        subject <- gsub(" \n?\\([[:digit:]]{2}%)|\n", "", strsplit(xmlValue(getfield(nodes, "subject")[[2]]), "; ")[[1]])
+        coverage <- gsub(" \n?\\([[:digit:]]{2}%)|\n", "", strsplit(xmlValue(getfield(nodes, "geo")), "; ")[[1]])
+        company <- gsub(" \n?\\([[:digit:]]{2}%)|\n", "", strsplit(xmlValue(getfield(nodes, "company")[[2]]), "; ")[[1]])
+        stocksymbol <- gsub(" \n?\\([[:digit:]]{2}%)|\n", "", strsplit(xmlValue(getfield(nodes, "stocksymbol")[[2]]), "; ")[[1]])
+        industry <- gsub(" \n?\\([[:digit:]]{2}%)|\n", "", strsplit(xmlValue(getfield(nodes, "sector")[[2]]), "; ")[[1]])
 
-        language <- strsplit(xmlValue(nodes[["LANGUE: "]][[2]]), "; ")[[1]][1]
+        language <- strsplit(xmlValue(getfield(nodes, "language")[[2]]), "; ")[[1]][1]
         lang <- ISO_639_2[match(tolower(language), tolower(ISO_639_2[["Name"]])), "Alpha_2"]
         if(is.na(lang))
             lang <- tolower(language)
 
-        day <- xmlValue(getNodeSet(tree, "//div[@class = 'c3']/p[@class = 'c1']/span[@class = 'c4']")[[1]])
-        monthyear <- xmlValue(getNodeSet(tree, "//div[@class = 'c3']/p[@class = 'c1']/span[@class = 'c2']")[[1]])
-        monthyear.split <- strsplit(monthyear, " ")[[1]][-1]
-        month <- monthyear.split[1]
-        year <- monthyear.split[2]
-        # Thid part of monthyear.split is the weekday
-
-        strdate <- paste(day, month, year)
-        date <- strptime(strdate, "%d %B %Y")
+        date2.split <- strsplit(date2, " ")[[1]][-1]
+        strdate <- paste(date1, gsub(",| ", "", date2.split[1]), gsub(",| ", "", date2.split[2]))
+        # English uses the first format, French the second one
+        date <- strptime(strdate, "%B %d %Y")
+        if(is.na(date)) date <- strptime(strdate, "%d %B %Y")
 
         if(is.na(date) && strdate != "") {
             # Try C locale, just in case
             old.locale <- Sys.getlocale("LC_TIME")
             Sys.setlocale("LC_TIME", "C")
-            date <- strptime(paste(day, month, year), "%d %B %Y")
+            date <- strptime(strdate, "%B %d %Y")
             Sys.setlocale("LC_TIME", old.locale)
 
             # A bug in Mac OS gives NA when start of month name matches an abbreviated name:
@@ -90,7 +123,6 @@ readLexisNexisHTML <- FunctionGenerator(function(elem, language, id) {
         meta(doc, "industry") <- if(!all(is.na(industry))) industry else character(0)
         meta(doc, "type") <- if(!is.na(type)) type else character(0)
         meta(doc, "wordcount") <- if(!is.na(wc)) wc else character(0)
-        meta(doc, "pages") <- if(!is.na(page)) page else character(0)
         meta(doc, "rights") <- if(!is.na(copyright)) copyright else character(0)
         doc
     }

@@ -1,3 +1,6 @@
+Version 1.2 - 2015-02-22
+    * Support importation of English HTML files (thanks to Oriol Mirosa for sending an example file).
+
 Version 1.1 - 2014-05-31
     * Adapt to tm 0.6.
     * Change all tags to lowercase (for consistency with tm).
