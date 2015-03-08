@@ -1,6 +1,6 @@
 Package: tm.plugin.europresse
 Type: Package
-Title: Import Articles from Europresse Using the tm Text Mining Framework
+Title: Import Articles from 'Europresse' Using the 'tm' Text Mining Framework
 Version: 1.1
 Date: 2014-05-31
 Authors@R: person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
