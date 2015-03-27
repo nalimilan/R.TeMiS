@@ -1,3 +1,6 @@
+Version 1.2 - 2014-03-26
+    * Fix removal of search terms higlighted in red (reported by Patrick Lâm Lê).
+
 Version 1.1 - 2014-05-25
     * Adapt to tm 0.6.
     * Change all tags to lowercase (for consistency with tm).

@@ -12,7 +12,7 @@ readEuropresseHTML <- FunctionGenerator(function(elem, language, id) {
         # Warning: </span> can also close a <span class="DocPublicationName"> tag,
         # within which a <span style=...> tag is sometimes nested:
         # this is why we need such a convoluted regexp
-        elem$content <- gsub("<span style=[^>]*>(.*?)</span>", "\\1", elem$content)
+        elem$content <- gsub("<span (style=[^>]*|class=\"occurr?ence\")>(.*?)</span>", "\\2", elem$content)
 
         encoding <- if(Encoding(elem$content) == "unknown") character(0)
                     else Encoding(elem$content)
