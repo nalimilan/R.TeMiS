@@ -9,8 +9,8 @@ Authors@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
                     email="g.ljubownikow@auckland.ac.nz",
                     role="ctb"))
 Imports: NLP, tm (>= 0.6), XML
-Description: Provides a tm Source to create corpora from
-  articles exported from the Dow Jones Factiva content provider as
+Description: Provides a 'tm' Source to create corpora from
+  articles exported from the Dow Jones 'Factiva' content provider as
   XML or HTML files. It is able to read both text content and meta-data
   information (including source, date, title, author, subject,
   geographical coverage, company, industry, and various

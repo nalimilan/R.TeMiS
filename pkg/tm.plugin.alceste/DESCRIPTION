@@ -7,8 +7,8 @@ Authors@R: person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
                   role=c("aut", "cre"))
 Imports: NLP, tm (>= 0.6)
 Suggests: stringi
-Description: Provides a tm Source to create corpora from
-  a corpus prepared in the format used by the Alceste application (i.e.
+Description: Provides a 'tm' Source to create corpora from
+  a corpus prepared in the format used by the 'Alceste' application (i.e.
   a single text file with inline meta-data). It is able to import both
   text contents and meta-data (starred) variables.
 License: GPL (>= 2)

@@ -6,8 +6,8 @@ Date: 2015-02-22
 Authors@R: person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
                   role=c("aut", "cre"))
 Imports: utils, NLP, tm (>= 0.6), XML, ISOcodes
-Description: Provides a tm Source to create corpora from
-  articles exported from the LexisNexis content provider as
+Description: Provides a 'tm' Source to create corpora from
+  articles exported from the 'LexisNexis' content provider as
   HTML files. It is able to read both text content and meta-data
   information (including source, date, title, author and pages).
 License: GPL (>= 2)
