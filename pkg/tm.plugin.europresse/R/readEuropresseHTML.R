@@ -19,7 +19,7 @@ readEuropresseHTML <- FunctionGenerator(function(elem, language, id) {
         tree <- htmlParse(elem$content, asText=TRUE, encoding=encoding)
 
         origin <- xmlValue(getNodeSet(tree, "//span[@class = 'DocPublicationName']")[[1]])
-        # Issue n° is sometimes included in the publication name
+        # Issue number is sometimes included in the publication name
         origin <- gsub(", no\\..*$", "", origin)
 
         dat <- sapply(getNodeSet(tree, "//span[@class = 'DocHeader']"), xmlValue)
