@@ -42,7 +42,7 @@
 }
 \examples{
     library(tm)
-    file <- system.file("texts", "europresse_test.html", 
+    file <- system.file("texts", "europresse_test2.html",
                         package = "tm.plugin.europresse")
     corpus <- Corpus(EuropresseSource(file))
 
@@ -51,9 +51,15 @@
 
     # See meta-data associated with first article
     meta(corpus[[1]])
+
+    \dontshow{
+    file <- system.file("texts", "europresse_test1.html",
+                        package = "tm.plugin.europresse")
+    corpus <- Corpus(EuropresseSource(file))
+    }
 }
 \seealso{
-  \code{\link{readEuropresseHTML}} for the function actually parsing
+  \code{\link{readEuropresseHTML2}} for the function actually parsing
   individual articles.
 
   \code{\link{getSources}} to list available sources.
