@@ -1,3 +1,6 @@
+Version 0.7.5 - 2016-03-02
+    * Update Omegahat domain name (for ROpenOffice suggested package).
+
 Version 0.7.4 - 2015-08-19
     * Fix warning when loading package with Rcmdr 2.2.
 

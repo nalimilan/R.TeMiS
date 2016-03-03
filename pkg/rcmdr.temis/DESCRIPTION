@@ -1,22 +1,22 @@
 Package: RcmdrPlugin.temis
 Type: Package
 Title: Graphical Integrated Text Mining Solution
-Version: 0.7.4
-Date: 2015-08-19
+Version: 0.7.5
+Date: 2016-03-02
 Authors@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr", role=c("aut", "cre")),
              person("Gilles", "Bastin", email="gilles.bastin@sciencespo-grenoble.fr", role=c("aut")))
 Imports: Rcmdr (>= 2.1-1), tcltk, tcltk2, utils, ca, R2HTML (>= 2.3.0), RColorBrewer, latticeExtra, stringi
 Depends: methods, tm (>= 0.6), NLP, slam, zoo, lattice
 Suggests: SnowballC, ROpenOffice, RODBC, tm.plugin.factiva (>= 1.4), tm.plugin.lexisnexis (>= 1.1),
     tm.plugin.europresse (>= 1.1), tm.plugin.alceste (>= 1.1), twitteR
-Additional_repositories: http://www.omegahat.org/R
-Description: An R Commander plug-in providing an integrated solution to perform
+Additional_repositories: http://www.omegahat.net/R
+Description: An 'R Commander' plug-in providing an integrated solution to perform
     a series of text mining tasks such as importing and cleaning a corpus, and
     analyses like terms and documents counts, vocabulary tables, terms
     co-occurrences and documents similarity measures, time series analysis,
     correspondence analysis and hierarchical clustering. Corpora can be imported
-    from spreadsheet-like files, directories of raw text files, Twitter queries,
-    as well as from Dow Jones Factiva, LexisNexis, Europresse and Alceste files.
+    from spreadsheet-like files, directories of raw text files, 'Twitter' queries,
+    as well as from 'Dow Jones Factiva', 'LexisNexis', 'Europresse' and 'Alceste' files.
 License: GPL (>= 2)
 URL: https://r-forge.r-project.org/projects/r-temis/
 BugReports: https://r-forge.r-project.org/tracker/?group_id=1437
