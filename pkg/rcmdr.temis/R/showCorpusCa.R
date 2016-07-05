@@ -436,7 +436,7 @@ showCorpusCaDlg <- function() {
     tkbind(varBox$listbox, "<<ListboxSelect>>", function(...) tclvalue(varLabelsVariable) <- 1)
 
     nFrame <- tkframe(top)
-    tkgrid(.titleLabel(nFrame, text=.gettext("Number of items to plot:")),
+    tkgrid(.titleLabel(nFrame, text=.gettext("Number of items to show:")),
            sticky="s")
     tclNDocs <- tclVar(25)
     tclNTerms <- tclVar(25)
@@ -572,8 +572,7 @@ showCorpusCaDlg <- function() {
     tkgrid(labelsFrame, pointsFrame, sticky="w", pady=6, padx=c(0, 6))
     if(!actDocs || length(corpusCa$rowsup) > 0)
         tkgrid(getFrame(varBox), columnspan=2, sticky="we", pady=6)
-    if(actDocs)
-        tkgrid(labelRcmdr(nFrame, text=.gettext("Documents:")), spinDocs, sticky="w")
+    tkgrid(labelRcmdr(nFrame, text=.gettext("Documents:")), spinDocs, sticky="w")
     tkgrid(labelRcmdr(nFrame, text=.gettext("Terms:")), spinTerms, sticky="w")
     tkgrid(nFrame, sticky="w", pady=6, columnspan=2)
     tkgrid(labelRcmdr(ctrDimFrame, text=.gettext("Most contributive to:")), sticky="w", columnspan=2, pady=6)
