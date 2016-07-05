@@ -38,7 +38,8 @@ runCorpusCa <- function(corpus, dtm=NULL, variables=NULL, sparsity=0.9, ...) {
                  type="info")
     }
 
-    skippedVars<-character()
+    skippedVars1<-character()
+    skippedVars2<-character()
     skippedLevs<-character()
     origVars<-character()
 
@@ -62,7 +63,11 @@ runCorpusCa <- function(corpus, dtm=NULL, variables=NULL, sparsity=0.9, ...) {
             totNLevels<-nlevels(factor(oldMeta[,i]))
 
             if(length(levs) == 0) {
-                skippedVars<-c(skippedVars, var)
+                skippedVars1<-c(skippedVars1, var)
+                next
+            }
+            else if(length(levs) > 100) {
+                skippedVars2<-c(skippedVars2, var)
                 next
             }
             else if(length(levs) < totNLevels) {
@@ -97,24 +102,34 @@ runCorpusCa <- function(corpus, dtm=NULL, variables=NULL, sparsity=0.9, ...) {
                     ndocs, nterms, ncol(meta)),
             type="note")
 
-    if(length(skippedVars) > 0)
-        msg1 <- sprintf(.gettext("Variable(s) %s have been skipped since it contains only missing values for retained documents."),
-                        paste(skippedVars, collapse=", "))
-    else
-        msg1 <- ""
+    msg <- ""
 
-    if(length(skippedLevs) > 0)
+    if(length(skippedVars1) > 0)
+        msg <- sprintf(.gettext("Variable(s) %s has been skipped since it contains only missing values for retained documents."),
+                       paste(skippedVars1, collapse=", "))
+
+    if(length(skippedVars2) > 0) {
+        msg2 <- sprintf(.gettext("Variable(s) %s has been skipped since it contains more than 100 levels."),
+                        paste(skippedVars2, collapse=", "))
+        if(msg != "")
+            msg <- paste0(msg, "\n\n", msg2)
+        else
+            msg <- msg2
+    }
+
+    skippedVars <- unique(c(skippedVars1, skippedVars2))
+
+    if(length(skippedLevs) > 0) {
         msg2 <- sprintf(.gettext("Some levels of variable(s) %s have been skipped since they contain only missing values for retained documents."),
                         paste(skippedLevs, collapse=", "))
-    else
-        msg2 <- ""
+        if(msg != "")
+            msg <- paste0(msg, "\n\n", msg2)
+        else
+            msg <- msg2
+    }
 
-    if(length(skippedVars) > 0 && length(skippedLevs) > 0)
-        .Message(paste(msg1, "\n\n", msg2), "info")
-    else if(length(skippedVars) > 0)
-        .Message(msg1, "info")
-    else if(length(skippedLevs) > 0)
-        .Message(msg2, "info")
+    if(msg != "")
+        .Message(msg, "info")
 
     newDtm <- as.matrix(rbind(dtm, varDtm))
 
