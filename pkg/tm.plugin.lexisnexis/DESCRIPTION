@@ -1,8 +1,8 @@
 Package: tm.plugin.lexisnexis
 Type: Package
 Title: Import Articles from 'LexisNexis' Using the 'tm' Text Mining Framework
-Version: 1.2
-Date: 2015-02-22
+Version: 1.3
+Date: 2016-06-29
 Authors@R: person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
                   role=c("aut", "cre"))
 Imports: utils, NLP, tm (>= 0.6), XML, ISOcodes
@@ -10,6 +10,9 @@ Description: Provides a 'tm' Source to create corpora from
   articles exported from the 'LexisNexis' content provider as
   HTML files. It is able to read both text content and meta-data
   information (including source, date, title, author and pages).
+  Note that the file format is highly unstable: there is no warranty
+  that this package will work for your corpus, and you may have
+  to adjust the code to adapt it to your particular format.
 License: GPL (>= 2)
 URL: https://r-forge.r-project.org/projects/r-temis/
 BugReports: https://r-forge.r-project.org/tracker/?group_id=1437

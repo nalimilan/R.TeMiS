@@ -9,12 +9,20 @@ LexisNexisSource <- function(x, encoding = "UTF-8") {
     lines <- readLines(con, encoding="UTF-8")
     close(con)
 
-    # Note that "<a" does not always appears at the beginning of a line
+    # Skip tables at the top of the file, if any
+    tables <- grep('<table class="c1"', lines, fixed=TRUE, value=FALSE)
+    if(length(tables) > 0)
+        lines <- lines[-seq(max(tables))]
+
+    # Note that "<a" does not always appear at the beginning of a line
     # in the HTML produced by saveXML()
-    newdocs <- grepl("<a name=", lines, fixed=TRUE)
+    newdocs <- grepl('<a name="doc', lines, ignore.case=TRUE)
 
     # Call as.character() to remove useless names and get a vector instead of a 1d array
     content <- as.character(tapply(lines, cumsum(newdocs), paste, collapse="\n"))[-1]
+
+    # Get rid of short empty sections
+    content <- content[nchar(content) > 200]
 
     SimpleSource(encoding, length(content),
                  content=content, uri=x,
