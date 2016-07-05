@@ -285,7 +285,7 @@ importCorpusDlg <- function() {
 
         # Remove objects left from a previous analysis to avoid confusion
         # (we assume later existing objects match the current corpus)
-        objects <- c("corpus", "corpusVars", "dtm", "wordsDtm", "lengthsDtm", "voc", "lengths", "coocs",
+        objects <- c("corpus", "corpusVars", "dtm", "wordsDtm", "lengthsDtm", "voc", "coocs",
                      "termFreqs", "absTermFreqs", "varTermFreqs", "freqTerms", "specTerms", "docSeries",
                      ".last.table", "corpusClust", "corpusSubClust", "corpusCa", "plottingCa")
         if(any(sapply(objects, exists))) {
