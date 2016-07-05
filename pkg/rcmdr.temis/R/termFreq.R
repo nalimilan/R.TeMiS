@@ -172,15 +172,15 @@ termFreqDlg <- function() {
 
             if(vert) {
                 if(length(termsList) > 1)
-                    doItAndPrint(sprintf('barchart(t(termFreqs[, "%s",]), horizontal=%s, stack=%s, %s="%s", main="%s", auto.key=TRUE, scales=list(rot=90))',
-                                         col, !vert, stack, if(vert) "ylab" else "xlab", lab, title))
+                    doItAndPrint(sprintf('barchart(t(termFreqs[, "%s",]), horizontal=FALSE, stack=%s, %s="%s", main="%s", auto.key=TRUE, scales=list(rot=90))',
+                                         col, stack, if(vert) "ylab" else "xlab", lab, title))
                 else
-                    doItAndPrint(sprintf('barchart(cbind(termFreqs[, "%s",]), horizontal=%s, %s="%s", main="%s", scales=list(rot=90))',
-                                         col, !vert, if(vert) "ylab" else "xlab", lab, title))
+                    doItAndPrint(sprintf('barchart(cbind(termFreqs[, "%s",]), horizontal=FALSE, %s="%s", main="%s", scales=list(rot=90))',
+                                         col, if(vert) "ylab" else "xlab", lab, title))
             }
             else {
                 if(length(termsList) > 1)
-                    doItAndPrint(sprintf('barchart(t(termFreqs[, "%s",]), stack=%s, xlab="%s", main="%s", auto.key=TRUE)',
+                    doItAndPrint(sprintf('barchart(t(termFreqs[, "%s",]), stack=%s, xlab="%s", main="%s", auto.key=list(rev=TRUE))',
                                          col, stack, lab, title))
                 else
                     doItAndPrint(sprintf('barchart(termFreqs[, "%s",], xlab="%s", main="%s")',

@@ -252,7 +252,7 @@ vocabularyDlg <- function() {
              }
              else {
                 if(sum(measures) > 1)
-                    doItAndPrint(sprintf('barchart(t(voc[c(%s),%s, drop=FALSE]), stack=FALSE, xlab="", main="%s", auto.key=TRUE)',
+                    doItAndPrint(sprintf('barchart(t(voc[c(%s),%s, drop=FALSE]), stack=FALSE, xlab="", main="%s", auto.key=list(rev=TRUE))',
                                          indexes, exclude, title, indexes, exclude))
                 else
                     doItAndPrint(sprintf('barchart(t(voc[c(%s),%s, drop=FALSE]), stack=FALSE, xlab="%s", main="%s")',

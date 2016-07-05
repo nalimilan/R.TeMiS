@@ -58,7 +58,7 @@ varTableDlg <- function() {
                 doItAndPrint(sprintf('barchart(varFreqs, horizontal=FALSE, scales=list(rot=90), ylab="%s", main="%s", auto.key=TRUE)',
                                      ylab, title))
             else
-                doItAndPrint(sprintf('barchart(varFreqs, xlab="%s", main="%s", auto.key=TRUE)',
+                doItAndPrint(sprintf('barchart(varFreqs, xlab="%s", main="%s", auto.key=list(rev=TRUE))',
                                      ylab, title))
         }
 
@@ -179,10 +179,10 @@ varCrossTableDlg <- function() {
             }
             else {
                 if(what == "col")
-                    doItAndPrint(sprintf('barchart(t(varFreqs), stack=%s, xlab="%s", main="%s", auto.key=TRUE)',
+                    doItAndPrint(sprintf('barchart(t(varFreqs), stack=%s, xlab="%s", main="%s", auto.key=list(rev=TRUE))',
                                          stack, ylab, title))
                  else
-                    doItAndPrint(sprintf('barchart(varFreqs, stack=%s, xlab="%s", main="%s", auto.key=TRUE)',
+                    doItAndPrint(sprintf('barchart(varFreqs, stack=%s, xlab="%s", main="%s", auto.key=list(rev=TRUE))',
                                          stack, ylab, title))
             }
         }
