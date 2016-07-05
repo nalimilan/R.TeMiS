@@ -59,6 +59,9 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20, p=0.1, min
         specTerms <- specificTerms(dtm, clusters, p, nterms, sparsity, min.occ)
     }
 
+    # Extracting document IDs is very slow: only do it once
+    ids <- names(corpus)
+
     for(j in 1:ncol(val)) {
         if(nterms > 0) {
             tkinsert(txt, "end",
@@ -105,8 +108,10 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20, p=0.1, min
                 mark <- mark + 1
                 tkinsert(listbox, "end", id)
 
-                origin <- meta(corpus[[id]], "Origin")
-                date <- meta(corpus[[id]], "DateTimeStamp")
+                # Indexing document by ID is very slow: compute the index only once
+                doc <- corpus[[match(id, ids)]]
+                origin <- meta(doc, "Origin")
+                date <- meta(doc, "DateTimeStamp")
                 if(length(origin) > 0 && length(date) > 0)
                     tkinsert(txt, "end", paste(origin, " - ", date, "\n", sep=""), "details")
                 else if(length(origin) > 0)
@@ -117,7 +122,7 @@ showCorpusClustering <- function(corpusSubClust, ndocs=10, nterms=20, p=0.1, min
                 if(length(origin) > 0 || length(date) > 0)
                     tkinsert(txt, "end", "\n", "small")
 
-                tkinsert(txt, "end", paste(paste(corpus[[id]], collapse="\n"), "\n"), "body")
+                tkinsert(txt, "end", paste(paste(doc, collapse="\n"), "\n"), "body")
             }
         }
     }
