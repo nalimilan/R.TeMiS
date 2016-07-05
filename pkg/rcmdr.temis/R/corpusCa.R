@@ -105,11 +105,11 @@ runCorpusCa <- function(corpus, dtm=NULL, variables=NULL, sparsity=0.9, ...) {
     msg <- ""
 
     if(length(skippedVars1) > 0)
-        msg <- sprintf(.gettext("Variable(s) %s has been skipped since it contains only missing values for retained documents."),
+        msg <- sprintf(.gettext("Variable(s) %s have been skipped since they contain only missing values for retained documents."),
                        paste(skippedVars1, collapse=", "))
 
     if(length(skippedVars2) > 0) {
-        msg2 <- sprintf(.gettext("Variable(s) %s has been skipped since it contains more than 100 levels."),
+        msg2 <- sprintf(.gettext("Variable(s) %s have been skipped since they contain more than 100 levels."),
                         paste(skippedVars2, collapse=", "))
         if(msg != "")
             msg <- paste0(msg, "\n\n", msg2)

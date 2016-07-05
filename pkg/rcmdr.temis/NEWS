@@ -1,3 +1,12 @@
+Version 0.7.6 - 2016-07-04
+    * Improve speed when showing CA results for large corpora.
+    * Skip variables with more than 100 levels from CA to improve output.
+    * Sort frequent terms by number of occurrences rather than by specificity.
+    * Fix order of levels in legend for horizontal bar charts.
+    * Make it easier to enter a custom number in fields.
+    * Stop adding pseudo-shadows by repeating white text in CA plots.
+    * Fix harmless error about removing 'lengths' object on import.
+
 Version 0.7.5 - 2016-03-02
     * Update Omegahat domain name (for ROpenOffice suggested package).
 
