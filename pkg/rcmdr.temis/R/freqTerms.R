@@ -46,7 +46,12 @@ frequentTerms <- function(dtm, variable=NULL, n=25) {
         colnames(ret) <- c(.gettext("% Term/Level"), .gettext("% Level/Term"), .gettext("Global %"),
                            .gettext("Level"), .gettext("Global"),
                            .gettext("t value"), .gettext("Prob."))
-        ret[order(-sign(ret[, 6]), ret[, 7]),]
+
+        ret <- ret[order(ret[, 6], decreasing=TRUE),]
+        n <- which(ret[,6] < 0)[1]
+        ret <- rbind(ret[1:(n-1),], NaN, ret[n:nrow(ret),])
+        rownames(ret)[n] <- strrep("-", max(nchar(rownames(ret), type="width")))
+        ret
     })
 }
 
