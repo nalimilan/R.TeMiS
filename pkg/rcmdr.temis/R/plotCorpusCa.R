@@ -424,22 +424,8 @@ plotCorpusCa <- function (x, dim = c(1, 2), map = "symmetric",
 
   xy = SANN()
 
-  # Taken from http://article.gmane.org/gmane.comp.lang.r.general/147787
-  shadowtext <- function(xy, labels, col='black', bg='white',
-                          theta=seq(pi/4, 2*pi, length.out=8), r=0.1, ... ) {
-      
-          xy <- xy.coords(xy)
-          xo <- r*strwidth('A')
-          yo <- r*strheight('A')
-
-          for (i in theta)
-              text(xy$x + cos(i)*xo, xy$y + sin(i)*yo, labels, col=bg, ...)
-
-          text(xy$x, xy$y, labels, col=col, ... )
-  }
-
   if (doPlot)
-    shadowtext(xy, labels, cex = cex, ...)
+    text(xy, labels, cex = cex, ...)
 
   invisible(xy)
 }
