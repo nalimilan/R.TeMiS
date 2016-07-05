@@ -294,13 +294,13 @@ if (getRversion() >= '2.15.1') globalVariables(c(
     })
 
 .validate.unum <- function(P, ..., fun=NULL) {
-    # Empty string must be allowed so that the user can remove
+    # Empty string and zeros must be allowed so that the user can remove
     # all chars before typing a new value
     if(P == "") {
         tcl("expr", "true")
     }
-    else if(suppressWarnings(!is.na(as.numeric(P))) && as.numeric(P) > 0) {
-        if(!is.null(fun)) fun(as.numeric(P))
+    else if(suppressWarnings(!is.na(as.numeric(P))) && as.numeric(P) >= 0) {
+        if(!is.null(fun) && as.numeric(P) != 0) fun(as.numeric(P))
         tcl("expr", "true")
     }
     else {
@@ -309,13 +309,13 @@ if (getRversion() >= '2.15.1') globalVariables(c(
 }
 
 .validate.uint <- function(P, ..., fun=NULL) {
-    # Empty string must be allowed so that the user can remove
+    # Empty string and zeros must be allowed so that the user can remove
     # all chars before typing a new value
     if(P == "") {
         tcl("expr", "true")
     }
-    else if(suppressWarnings(!is.na(as.integer(P))) && as.integer(P) > 0) {
-        if(!is.null(fun)) fun(as.integer(P))
+    else if(suppressWarnings(!is.na(as.integer(P))) && as.integer(P) >= 0) {
+        if(!is.null(fun) && as.numeric(P) != 0) fun(as.integer(P))
         tcl("expr", "true")
     }
     else {
