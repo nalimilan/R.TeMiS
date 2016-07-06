@@ -53,8 +53,10 @@ specificTerms <- function(dtm, variable=NULL, p=0.1, n.max=25, sparsity=0.95, mi
 
         ret <- ret[order(ret[, 6], decreasing=TRUE),]
         n <- which(ret[,6] < 0)[1]
-        ret <- rbind(ret[1:(n-1),], NA, ret[n:nrow(ret),])
-        rownames(ret)[n] <- strrep("-", max(nchar(rownames(ret), type="width")))
+        if(!is.na(n)) {
+            ret <- rbind(ret[1:(n-1),, drop=FALSE], NA, ret[n:nrow(ret),, drop=FALSE])
+            rownames(ret)[n] <- strrep("-", max(nchar(rownames(ret), type="width")))
+        }
         ret
     })
 }
