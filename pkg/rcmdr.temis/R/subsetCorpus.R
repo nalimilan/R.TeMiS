@@ -242,7 +242,7 @@ restoreCorpus <- function() {
         doItAndPrint("dtm <- origDtm")
 
     if(exists("origWordsDtm"))
-        doItAndPrint("dtm <- origWordsDtm")
+        doItAndPrint("wordsDtm <- origWordsDtm")
 
 
     # Remove objects left from a previous analysis on the subset corpus to avoid confusion
