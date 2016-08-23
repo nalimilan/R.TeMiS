@@ -1,3 +1,8 @@
+Version 0.7.7 - 2016-07-08
+    * Improve speed when showing contents of large corpora.
+    * Fix bug when restricting and then restoring corpus.
+    * Support R versions before 3.3 again.
+
 Version 0.7.6 - 2016-07-04
     * Improve speed when showing CA results for large corpora.
     * Skip variables with more than 100 levels from CA to improve output.
