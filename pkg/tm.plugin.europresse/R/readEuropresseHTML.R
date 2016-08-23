@@ -68,10 +68,9 @@ readEuropresseHTML2 <- FunctionGenerator(function(elem, language, id) {
         author <- sapply(getNodeSet(tree, "//p[@class = 'titreArticleVisu']/following-sibling::div[1]"), xmlValue)
         if(length(author) == 0) author <- character(0)
 
-        copyright <- xmlValue(getNodeSet(tree, "/html/body/article/footer/small")[[1]])
-
-        id <- gsub("[^[:alnum:]]|Num\ue9ro de document : news", "",
-                   xmlValue(getNodeSet(tree, "/html/body/article/footer/small/following-sibling::p[1]")[[1]]))
+        footer <- sapply(getNodeSet(tree, "/html/body/article/footer/*"), xmlValue)
+        copyright <- gsub("^ | $", "", footer[[2]])
+        id <- gsub("[^[:alnum:]]|Num\ue9ro de document : news", "", footer[[3]])
 
         # If extraction failed for some reason, make sure we return a unique identifier
         if(is.na(id))
