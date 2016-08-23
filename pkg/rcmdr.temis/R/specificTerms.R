@@ -55,7 +55,7 @@ specificTerms <- function(dtm, variable=NULL, p=0.1, n.max=25, sparsity=0.95, mi
         n <- which(ret[,6] < 0)[1]
         if(!is.na(n)) {
             ret <- rbind(ret[1:(n-1),, drop=FALSE], NA, ret[n:nrow(ret),, drop=FALSE])
-            rownames(ret)[n] <- strrep("-", max(nchar(rownames(ret), type="width")))
+            rownames(ret)[n] <- stri_dup("-", max(nchar(rownames(ret), type="width")))
         }
         ret
     })
