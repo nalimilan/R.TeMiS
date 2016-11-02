@@ -493,7 +493,7 @@ importCorpusFromFile <- function(language=NA, encoding="") {
     }
     else if(ext == "ods") {
         # ROpenOffice is not available as binary, thus most likely to fail on Windows and Mac OS
-        if(!"ROpenOffice" %in% rownames(available.packages(contrib.url("http://www.omegahat.org/R/")))) {
+        if(!"ROpenOffice" %in% rownames(available.packages(contrib.url("http://www.omegahat.net/R/")))) {
 	    .Message(.gettext("Loading OpenDocument spreadsheets (.ods) is not supported on your system.\nYou should save your data set as a CSV file or as an Excel spreadsheet (.xls)."),
                  type="error")
             return(FALSE)
@@ -503,7 +503,7 @@ importCorpusFromFile <- function(language=NA, encoding="") {
                                      icon="question", type="yesno")
 
             if (tclvalue(response) == "yes")
-	            install.packages("ROpenOffice", repos="http://www.omegahat.org/R", type="source")
+	            install.packages("ROpenOffice", repos="http://www.omegahat.net/R", type="source")
             else
                 return(FALSE)
         }

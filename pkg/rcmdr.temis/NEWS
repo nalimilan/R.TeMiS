@@ -1,3 +1,6 @@
+Version 0.7.8 - 2016-11-02
+    * Fix installing ROpenOffice by updating Omegahat URL.
+
 Version 0.7.7 - 2016-07-08
     * Improve speed when showing contents of large corpora.
     * Fix bug when restricting and then restoring corpus.
