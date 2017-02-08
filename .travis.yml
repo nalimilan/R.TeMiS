@@ -1,0 +1,42 @@
+language: r
+cache: packages
+r:
+  - release
+  - devel
+warnings_are_errors: true
+notifications:
+  email: false
+
+r_github_packages:
+  - jimhester/covr
+
+after_success:
+  - Rscript -e 'covr::coveralls(type="all", combine_types=TRUE)'
+
+env:
+  - TEST_DIR=rcmdr.temis
+  - TEST_DIR=SnowballC
+  - TEST_DIR=tm.plugin.alceste
+  - TEST_DIR=tm.plugin.europresse
+  - TEST_DIR=tm.plugin.factiva
+  - TEST_DIR=tm.plugin.lexisnexis
+
+before_install:
+  - cd $TEST_DIR
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+
+addons:
+  apt:
+    packages:
+      - tcl8.5-dev
+      - tk8.5-dev
+      - unixodbc-dev
+
+repos:
+  omegahat: http://www.omegahat.net/R
+
+# Needed because the Ubuntu package can be too old
+# https://github.com/travis-ci/travis-ci/issues/6850
+r_github_packages:
+  - cran/survival
