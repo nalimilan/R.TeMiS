@@ -26,6 +26,18 @@
   to guess the format: if the file name ends with \dQuote{.xml} or \dQuote{.XML}, 
   \acronym{XML} is assumed; else, the file is assumed to be in the \acronym{HTML} format.
 
+  It is advised to export articles from Factiva in the \acronym{XML} format rather
+  than in \acronym{HTML} when possible, since the latter does not provide completely
+  clean information. In particular, dates are not guaranteed to be parsed correctly
+  if the machine from which the \acronym{HTML} file was exported uses a locale different
+  from that of the machine where it is read.
+
+  The following screencast illustrates how to export articles in the correct \acronym{HTML}
+  format from the Factiva website:
+  \url{http://rtemis.hypotheses.org/files/2017/02/Factiva-animated-tutorial.gif}.
+  \bold{Do note that by not following this procedure, you will
+  obtain a \acronym{HTML} file which cannot be imported by this package.}
+
   This function imports the body of the articles, but also sets several
   meta-data variables on individual documents:
   \itemize{
@@ -48,12 +60,6 @@
       Else, the language specified manually is set for all articles. If omitted,
       the default, "en", is used.
   }
-
-  It is advised to export articles from Factiva in the \acronym{XML} format rather
-  than in \acronym{HTML} when possible, since the latter does not provide completely
-  clean information. In particular, dates are not guaranteed to be parsed correctly
-  if the machine from which the \acronym{HTML} file was exported uses a locale different
-  from that of the machine where it is read.
 }
 \note{
   It has been found that some Factiva articles contain unescaped characters
