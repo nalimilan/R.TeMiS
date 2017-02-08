@@ -15,7 +15,7 @@ FactivaSource <- function(x, encoding = "UTF-8", format = c("auto", "XML", "HTML
         tree <- htmlParse(x, encoding=encoding)
 
         # The full class is "article XXArticle", with XX the language code
-        content <- getNodeSet(tree, "//div[starts-with(@class, 'article')]")
+        content <- getNodeSet(tree, "//div[starts-with(@class, 'article ')]")
         free(tree)
 
         SimpleSource(encoding, length=length(content),
