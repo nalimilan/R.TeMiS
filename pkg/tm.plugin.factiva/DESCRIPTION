@@ -16,5 +16,5 @@ Description: Provides a 'tm' Source to create corpora from
   geographical coverage, company, industry, and various
   provider-specific fields).
 License: GPL (>= 2)
-URL: https://r-forge.r-project.org/projects/r-temis/
-BugReports: https://r-forge.r-project.org/tracker/?group_id=1437
+URL: https://github.com/nalimilan/R.TeMiS
+BugReports: https://github.com/nalimilan/R.TeMiS/issues

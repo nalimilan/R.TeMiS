@@ -18,5 +18,5 @@ Description: An 'R Commander' plug-in providing an integrated solution to perfor
     from spreadsheet-like files, directories of raw text files, 'Twitter' queries,
     as well as from 'Dow Jones Factiva', 'LexisNexis', 'Europresse' and 'Alceste' files.
 License: GPL (>= 2)
-URL: https://r-forge.r-project.org/projects/r-temis/
-BugReports: https://r-forge.r-project.org/tracker/?group_id=1437
+URL: https://github.com/nalimilan/R.TeMiS
+BugReports: https://github.com/nalimilan/R.TeMiS/issues
