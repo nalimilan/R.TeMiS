@@ -66,21 +66,21 @@
 
 .langToEncs <- function(lang) {
     switch(lang,
-           da="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
-           de="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
-           en="ASCII, ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
-           es="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
-           fi="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
-           fr="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
-           hu="ISO-8859-16, ISO-8859-2, Windows-1250, UTF-8, UTF-16",
-           it="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
-           nl="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
-           no="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
-           pt="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
-           ro="ISO-8859-16, ISO-8859-2, Windows-1250, UTF-8, UTF-16",
-           ru="KOI8-R, Windows-1251, ISO-8859-5, UTF-8, UTF-16",
-           sv="ISO-8859-1, Windows-1252, ISO-8859-15, UTF-8, UTF-16",
-           tr="ISO-8859-9, Windows-1254, UTF-8, UTF-16")
+           da="ISO-8859-1, WINDOWS-1252, ISO-8859-15, UTF-8, UTF-16",
+           de="ISO-8859-1, WINDOWS-1252, ISO-8859-15, UTF-8, UTF-16",
+           en="ASCII, ISO-8859-1, WINDOWS-1252, ISO-8859-15, UTF-8, UTF-16",
+           es="ISO-8859-1, WINDOWS-1252, ISO-8859-15, UTF-8, UTF-16",
+           fi="ISO-8859-1, WINDOWS-1252, ISO-8859-15, UTF-8, UTF-16",
+           fr="ISO-8859-1, WINDOWS-1252, ISO-8859-15, UTF-8, UTF-16",
+           hu="ISO-8859-16, ISO-8859-2, WINDOWS-1250, UTF-8, UTF-16",
+           it="ISO-8859-1, WINDOWS-1252, ISO-8859-15, UTF-8, UTF-16",
+           nl="ISO-8859-1, WINDOWS-1252, ISO-8859-15, UTF-8, UTF-16",
+           no="ISO-8859-1, WINDOWS-1252, ISO-8859-15, UTF-8, UTF-16",
+           pt="ISO-8859-1, WINDOWS-1252, ISO-8859-15, UTF-8, UTF-16",
+           ro="ISO-8859-16, ISO-8859-2, WINDOWS-1250, UTF-8, UTF-16",
+           ru="KOI8-R, WINDOWS-1251, ISO-8859-5, UTF-8, UTF-16",
+           sv="ISO-8859-1, WINDOWS-1252, ISO-8859-15, UTF-8, UTF-16",
+           tr="ISO-8859-9, WINDOWS-1254, UTF-8, UTF-16")
 }
 
 # Run all processing steps and extract words list
