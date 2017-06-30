@@ -56,10 +56,12 @@ setCorpusVariables <- function() {
     corpusNames <- names(corpus)
     if(!identical(oldDocNames, row.names(dset))) {
         if(split) {
+            # Note: does not work for SimpleCorpus
             names(corpus) <<- make.unique(row.names(dset)[meta(corpus, .gettext("Doc N"))[[1]]])
             meta(corpus, .gettext("Doc ID")) <<- row.names(dset)[meta(corpus, .gettext("Doc N"))[[1]]]
         }
         else {
+            # Note: does not work for SimpleCorpus
             names(corpus) <- row.names(dset)
         }
 
