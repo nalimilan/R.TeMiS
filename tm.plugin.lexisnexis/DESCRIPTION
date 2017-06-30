@@ -1,8 +1,8 @@
 Package: tm.plugin.lexisnexis
 Type: Package
 Title: Import Articles from 'LexisNexis' Using the 'tm' Text Mining Framework
-Version: 1.3
-Date: 2016-06-29
+Version: 1.3.1
+Date: 2017-06-30
 Authors@R: person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
                   role=c("aut", "cre"))
 Imports: utils, NLP, tm (>= 0.6), XML, ISOcodes

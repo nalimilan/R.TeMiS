@@ -1,3 +1,6 @@
+Version 1.3.1 - 2017-06-30
+    * Fix date parsing on Mac (thanks to Simon Naitram for signalling this).
+
 Version 1.3 - 2016-06-29
     * Support more variants of the format (though many likely remain unsupported).
 
