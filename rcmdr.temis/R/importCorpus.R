@@ -608,8 +608,13 @@ importCorpusFromFile <- function(language=NA, encoding="") {
     if(!is.na(language))
         language <- paste("\"", language, "\"", sep="")
 
-    doItAndPrint(sprintf('corpus <- VCorpus(DataframeSource(corpusDataset["%s"]), readerControl=list(language=%s))',
-                         var, language))
+    if(packageVersion("tm") >= "0.7.2")
+        doItAndPrint(sprintf('corpus <- VCorpus(DataframeSource(data.frame(doc_id=rownames(corpusDataset), text=corpusDataset[["%s"]])), readerControl=list(language=%s))',
+                             var, language))
+    else
+        doItAndPrint(sprintf('corpus <- VCorpus(DataframeSource(corpusDataset["%s"]), readerControl=list(language=%s))',
+                             var, language))
+
 
     if(ncol(corpusDataset) > 1)
         doItAndPrint(sprintf('corpusVars <- corpusDataset[!names(corpusDataset) == "%s"]', var))
