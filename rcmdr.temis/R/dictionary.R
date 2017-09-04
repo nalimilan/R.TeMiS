@@ -30,14 +30,15 @@ termsDictionary <- function(dtm, order=c("alphabetic", "occurrences")) {
     stopword <- rownames(dict) %in% stopwords(lang)
 
     if(processing["stemming"] || processing["customStemming"]) {
-        dict <- cbind(dict[-3],
-                      col_sums(dtm)[dict[[2]]],
-                      dict[3],
+        # make.names() is needed because "Stopwords" must be translated both with an without space in French
+        dict <- cbind(dict[make.names(c(.gettext("Occurrences"), .gettext("Stemmed.Term")))],
+                      col_sums(dtm)[dict[[.gettext("Stemmed.Term")]]],
+                      dict[make.names(.gettext("Stopword"))],
                       # Some words can be removed as stopwords, but be present because another
                       # word that has been kept is identical in its stemmed from
-                      ifelse(!dict[[2]] %in% Terms(dtm) |
+                      ifelse(!dict[[.gettext("Stemmed.Term")]] %in% Terms(dtm) |
                              ((!processing["customStemming"] & processing["stopwords"] & stopword) |
-                              (processing["customStemming"] & dict[[2]] == "")),
+                              (processing["customStemming"] & dict[[.gettext("Stemmed.Term")]] == "")),
                              .gettext("Removed"), ""))
 
         colnames(dict)[3:5] <- c(.gettext("Stemmed occ."), .gettext("Stopword"), .gettext("Removed"))

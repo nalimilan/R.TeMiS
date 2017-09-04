@@ -401,9 +401,9 @@ editDictionary <- function(df) {
         n2 <- sum(sapply(gregexpr(";", excerpt), length))
 
         if(n1 > n2)
-            df2 <- read.csv(file)
+            df2 <- read.csv(file, stringsAsFactors=FALSE)
         else
-            df2 <- read.csv2(file)
+            df2 <- read.csv2(file, stringsAsFactors=FALSE)
 
         if(!.gettext("Original.Word") %in% names(df2) ||
            !.gettext("Stemmed.Term") %in% names(df2)) {
@@ -418,7 +418,7 @@ editDictionary <- function(df) {
 
         # make.names() is needed because "Stopwords" must be translated both with an without space in French
         df2 <- merge(df[make.names(c(.gettext("Original.Word"), .gettext("Occurrences"), .gettext("Stopword")))],
-                     df2[!names(df2) %in% make.names(c(.gettext("Occurrences"), .gettext("Stopword")))],
+                     df2[make.names(c(.gettext("Original.Word"), .gettext("Stemmed.Term")))],
                      by=.gettext("Original.Word"),
                      all.x=TRUE, all.y=FALSE)
 
@@ -426,8 +426,8 @@ editDictionary <- function(df) {
         df2[is.na(df2[[.gettext("Stemmed.Term")]]), .gettext("Stemmed.Term")] <- ""
 
         rownames(df2) <- df2[[.gettext("Original.Word")]]
-        df2 <- df2[!names(df2) %in% .gettext("Original.Word")]
-        df2 <- df2[unique(c(make.names(c(.gettext("Occurrences"), .gettext("Stemmed.Term"), .gettext("Stopword"))), names(df2)))]
+        # Match order of columns when not importing dictionary
+        df2 <- df2[make.names(c(.gettext("Stemmed.Term"), .gettext("Occurrences"), .gettext("Stopword")))]
 
         df <<- editDictionary(df2)
     }
@@ -452,7 +452,7 @@ editDictionary <- function(df) {
         .env$df <- cbind(rownames(.env$df), .env$df)
         names(.env$df)[[1]] <- .gettext("Original.Word")
 
-        write.csv(.env$df, file=file)
+        write.csv(.env$df, file=file, row.names=FALSE)
         .Message(.gettext(sprintf("Stemming dictionary saved to \"%s\".", file)))
     }
 
