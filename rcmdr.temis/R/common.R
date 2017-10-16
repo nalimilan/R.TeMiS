@@ -38,6 +38,7 @@ if (getRversion() >= '2.15.1') globalVariables(c(
         listbox <- .getEnv("corpusList")
         tkdelete(txt, "0.0", "end")
         tkdelete(listbox, 0, "end")
+        tcl(txt, "mark", "unset", tcl(txt, "mark", "names"))
     }
     else {
         window <- tktoplevel(class="Rcommander")
@@ -79,7 +80,8 @@ if (getRversion() >= '2.15.1') globalVariables(c(
         tkpack(scr2, side="left", fill="y")
 
         tkbind(listbox, "<<ListboxSelect>>", function() {
-            tkyview(txt, paste("mark", tkcurselection(listbox), sep=""))
+            if(tclvalue(tkcurselection(listbox)) != "")
+                tkyview(txt, paste("mark", tkcurselection(listbox), sep=""))
         })
 
         .putEnv("corpusWindow", window)
