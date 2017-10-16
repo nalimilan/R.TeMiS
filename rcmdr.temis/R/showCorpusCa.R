@@ -382,6 +382,12 @@ showCorpusCaDlg <- function() {
                       showvalue=TRUE, variable=tclYDim,
 		      resolution=1, orient="horizontal")
 
+    tnterms <- nrow(corpusCa$colcoord) - length(corpusCa$colsup)
+    if(actDocs)
+        tndocs <- nrow(corpusCa$rowcoord) - length(corpusCa$rowsup)
+    else
+        tndocs <- nrow(corpusCa$rowcoord) - length(corpusCa$rowvars)
+
     if(!actDocs) {
         checkBoxes(frame="labelsFrame",
                    boxes=c("varLabels", "termLabels"),
@@ -440,11 +446,11 @@ showCorpusCaDlg <- function() {
            sticky="s")
     tclNDocs <- tclVar(25)
     tclNTerms <- tclVar(25)
-    spinDocs <- tkwidget(top, type="spinbox", from=1, to=nrow(corpusCa$rowcoord)-length(corpusCa$rowsup),
+    spinDocs <- tkwidget(top, type="spinbox", from=1, to=tndocs,
                          inc=1, textvariable=tclNDocs,
                          validate="all", validatecommand=.validate.uint)
 
-    spinTerms <- tkwidget(top, type="spinbox", from=1, to=nrow(corpusCa$colcoord)-length(corpusCa$colsup),
+    spinTerms <- tkwidget(top, type="spinbox", from=1, to=tnterms,
                           inc=1, textvariable=tclNTerms,
                           validate="all", validatecommand=.validate.uint)
 
@@ -469,11 +475,11 @@ showCorpusCaDlg <- function() {
         nTerms <- as.integer(tclvalue(tclNTerms))
         ctrDim <- switch(tclvalue(ctrDimVariable), xyDim=paste("c(", x, ", ", y, ")", sep=""), xDim=x, yDim=y)
 
-        if(nDocs > nrow(corpusCa$rowcoord) - length(corpusCa$rowsup))
-            nDocs <- nrow(corpusCa$rowcoord) - length(corpusCa$rowsup)
+        if(nDocs > tndocs)
+            nDocs <- tndocs
 
-        if(nTerms > nrow(corpusCa$colcoord) - length(corpusCa$colsup))
-            nTerms <- nrow(corpusCa$colcoord) - length(corpusCa$colsup)
+        if(nTerms > tnterms)
+            nTerms <- tnterms
 
         if(!(docLabels || termLabels || varLabels || docPoints || termPoints || varPoints)) {
             .Message(.gettext("Please select something to plot."), "error", parent=top)
