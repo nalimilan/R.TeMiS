@@ -1,24 +1,16 @@
 readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
     function(elem, language, id) {
-        encoding <- if(Encoding(elem$content) == "unknown") character(0)
-                    else Encoding(elem$content)
-        tree <- xmlParse(elem$content, asText=TRUE, encoding=encoding)
-
         if(is.na(language)) {
-            cl <- xmlAttrs(xmlChildren(tree)[[1]])["class"]
+            cl <- xml_attr(elem$content, "class")
             language <- regmatches(cl, regexec("^article ([[:alpha:]]{2})Article$", cl))[[1]][2]
         }
 
-        table <- readHTMLTable(xmlChildren(tree)[[1]])
+        table <- as.data.frame(html_table(xml_children(elem$content)[[1]]))
 
         # Remove line breaks as paragraphs are used for this
         # (else, line breaks in the source are propagated to the contents)
         text <- gsub("[\n\r]", "",
-                     sapply(getNodeSet(tree, "//p[starts-with(@class, 'articleParagraph')]"), xmlValue))
-        free(tree)
-
-        # Without this, sometimes table ends up being a mere list
-        table <- as.data.frame(table)
+                     xml_text(xml_find_all(elem$content, ".//p[starts-with(@class, 'articleParagraph')]")))
 
         vars <- c("AN", "BY", "CO", "CY", "ED", "HD", "IN", "IPC", "IPD",
                   "LA", "LP", "NS", "PD", "PUB", "RE", "SE", "SN", "TD", "WC")
@@ -26,11 +18,6 @@ readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
         # Remove trailing spaces when matching
         data <- as.character(table[match(vars, gsub("[^[A-Z]", "", table[,1])), 2])
         names(data) <- vars
-
-        # Encoding is passed explicitly to work around a bug in XML: htmlParse() and xmlParse() do not set it
-        # as they should when asText=TRUE for now
-        if(any(Encoding(data) == "unknown"))
-            Encoding(data) <- Encoding(elem$content)
 
         date <- strptime(data[["PD"]], "%d %B %Y")
         if(is.na(date) && isTRUE(data[["PD"]] != "")) {
