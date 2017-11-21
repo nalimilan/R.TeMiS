@@ -15,7 +15,7 @@
          can often have a low probability but are too rare to be of interest). The last slider allows limiting
          the number of terms that will be shown for each level.
 
-         The result is a list of matrices, one for each level of the chosen variable, with five columns:
+         The result is a list of matrices, one for each level of the chosen variable, with seven columns:
          \describe{
          \item{\dQuote{\% Term/Level}:}{the percent of the term's occurrences in all terms occurrences in the level.}
          \item{\dQuote{\% Level/Term}:}{the percent of the term's occurrences that appear in the level

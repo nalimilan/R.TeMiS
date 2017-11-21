@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.temis 0.7.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-04 18:00+0200\n"
-"PO-Revision-Date: 2016-07-04 18:00+0200\n"
+"POT-Creation-Date: 2017-11-23 18:00+0200\n"
+"PO-Revision-Date: 2017-11-23 18:00+0200\n"
 "Last-Translator: Milan Bouchet-Valat <nalimilan@club.fr>\n"
 "Language-Team: fr <none>\n"
 "Language: fr\n"
@@ -567,6 +567,10 @@ msgstr "Occ. globales"
 msgid "Global %"
 msgstr "% global"
 
+#: R/termCooc.R:7 R/termCooc.R:19
+msgid "Level %"
+msgstr "% mod."
+
 #: R/freqTerms.R:10 R/specificTerms.R:3 R/termFreq.R:17
 msgid "Please provide a variable with at least two levels."
 msgstr "Veuillez fournir une variable avec au moins deux modalités."
@@ -575,9 +579,17 @@ msgstr "Veuillez fournir une variable avec au moins deux modalités."
 msgid "% Term/Level"
 msgstr "% terme/mod."
 
+#: R/termCooc.R:7 R/termCooc.R:19
+msgid "% Term/Cooc."
+msgstr "% terme/cooc."
+
 #: R/freqTerms.R:46 R/specificTerms.R:50 R/termFreq.R:51 R/termFreq.R:171
 msgid "% Level/Term"
 msgstr "% mod./terme"
+
+#: R/termCooc.R:7 R/termCooc.R:19
+msgid "% Cooc./Term"
+msgstr "% cooc./terme"
 
 #: R/freqTerms.R:47 R/specificTerms.R:51 R/termFreq.R:52 R/termFreq.R:171
 msgid "Level"
@@ -586,6 +598,10 @@ msgstr "Modalité"
 #: R/freqTerms.R:47 R/specificTerms.R:51 R/termFreq.R:12 R/termFreq.R:52
 msgid "Global"
 msgstr "Global"
+
+#: R/termCooc.R:7 R/termCooc.R:19
+msgid "Cooc."
+msgstr "Cooc."
 
 #: R/freqTerms.R:48 R/specificTerms.R:52 R/termFreq.R:53
 msgid "t value"
@@ -1707,11 +1723,11 @@ msgstr "Termes co-occurrents de termes choisis"
 
 #: R/termCooc.R:89
 #, c-format
-msgid "Terms associated with term \"%s\" according to Chi-squared distance"
+msgid "Terms associated with term \"%s\""
 msgid_plural ""
-"Terms associated with terms \"%s\" according to Chi-squared distance"
-msgstr[0] "Termes associés avec le terme « %s » d'après la distance du Khi2"
-msgstr[1] "Termes associés avec les termes « %s » d'après la distance du Khi2"
+"Terms associated with terms \"%s\""
+msgstr[0] "Termes associés avec le terme « %s »"
+msgstr[1] "Termes associés avec les termes « %s »"
 
 #: R/termCooc.R:92
 msgid "\", \""

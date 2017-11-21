@@ -87,7 +87,7 @@ dtmCorpus <- tm_map(dtmCorpus, content_transformer(tolower))
 dtmCorpus <- tm_map(dtmCorpus, content_transformer(function(x) 
   gsub("(['<U+2019>\n<U+202F><U+2009>]|[[:punct:]]|[[:space:]]|[[:cntrl:]])+", " ", x)))
 customRemoveNumbers <- function(x) gsub("[[:digit:]]+", "", x)
-dtmCorpus <- tm_map(dtmCorpus, customRemoveNumbers)
+dtmCorpus <- tm_map(dtmCorpus, content_transformer(customRemoveNumbers))
 dtm <- DocumentTermMatrix(dtmCorpus, control=list(tolower=FALSE, wordLengths=c(2, Inf)))
 rm(dtmCorpus)
 dictionary <- data.frame(row.names=colnames(dtm), "Occurrences"=col_sums(dtm), 

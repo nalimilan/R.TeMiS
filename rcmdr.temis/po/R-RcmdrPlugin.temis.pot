@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RcmdrPlugin.temis 0.7.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-04 18:00+0200\n"
+"POT-Creation-Date: 2017-11-23 18:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -534,6 +534,10 @@ msgstr ""
 msgid "Global %"
 msgstr ""
 
+#: R/termCooc.R:7 R/termCooc.R:19
+msgid "Level %"
+msgstr ""
+
 #: R/freqTerms.R:10 R/specificTerms.R:3 R/termFreq.R:17
 msgid "Please provide a variable with at least two levels."
 msgstr ""
@@ -542,8 +546,16 @@ msgstr ""
 msgid "% Term/Level"
 msgstr ""
 
+#: R/termCooc.R:7 R/termCooc.R:19
+msgid "% Term/Cooc."
+msgstr ""
+
 #: R/freqTerms.R:46 R/specificTerms.R:50 R/termFreq.R:51 R/termFreq.R:171
 msgid "% Level/Term"
+msgstr ""
+
+#: R/termCooc.R:7 R/termCooc.R:19
+msgid "% Cooc./Term"
 msgstr ""
 
 #: R/freqTerms.R:47 R/specificTerms.R:51 R/termFreq.R:52 R/termFreq.R:171
@@ -552,6 +564,10 @@ msgstr ""
 
 #: R/freqTerms.R:47 R/specificTerms.R:51 R/termFreq.R:12 R/termFreq.R:52
 msgid "Global"
+msgstr ""
+
+#: R/termCooc.R:7 R/termCooc.R:19
+msgid "Cooc."
 msgstr ""
 
 #: R/freqTerms.R:48 R/specificTerms.R:52 R/termFreq.R:53
@@ -1603,9 +1619,9 @@ msgstr ""
 
 #: R/termCooc.R:89
 #, c-format
-msgid "Terms associated with term \"%s\" according to Chi-squared distance"
+msgid "Terms associated with term \"%s\""
 msgid_plural ""
-"Terms associated with terms \"%s\" according to Chi-squared distance"
+"Terms associated with terms \"%s\""
 msgstr[0] ""
 msgstr[1] ""
 
