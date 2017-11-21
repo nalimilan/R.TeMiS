@@ -54,8 +54,8 @@
          Due to limitations imposed by Twitter, only tweets published up to 6 or 9 days ago can be
          downloaded, and up to a maximum number of 1500 tweets. Search queries can notably include
          one or more terms that must be present together for a tweet to match the query, and/or of
-         hashtags  starting with \dQuote{#}; see \url{https://dev.twitter.com/docs/using-search} if
-         you need more complex search strings. User names, hashtags, URLs and \dQuote{RT} (re-tweet)
+         hashtags  starting with \dQuote{#}; see \url{https://developer.twitter.com/en/docs/tweets/search/overview/premium}
+         if you need more complex search strings. User names, hashtags, URLs and \dQuote{RT} (re-tweet)
          mentions are automatically removed from the corpus when computing the document-term matrix
          as they generally disturb the analysis. If the option to remove user names and hashtags is
          disabled, they will be included as standard text, i.e. \dQuote{#} and \dQuote{@} will be
