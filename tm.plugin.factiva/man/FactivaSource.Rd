@@ -52,6 +52,7 @@
     \item \code{infocode}: One or several Information Provider Codes (IPC).
     \item \code{infodesc}: One or several Information Provider Descriptions (IPD).
     \item \code{coverage}: One or several keywords identifying the covered regions.
+    \item \code{page}: The number of the page on which the article appears (if applicable).
     \item \code{wordcount}: The number of words in the article.
     \item \code{publisher}: The publisher of the newspaper.
     \item \code{rights}: The copyright information associated with the article.

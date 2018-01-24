@@ -39,6 +39,13 @@ readFactivaXML <- readXML(spec = list(
                     else
                         character(0)
     }),
+    page = list("function", function(node) {
+                str <- xml_text(xml_find_all(node, ".//page"))
+                if(length(str) > 0)
+                    as.numeric(str)
+                else
+                    NA
+    }),
     wordcount = list("function", function(node)
                      as.numeric(xml_text(xml_find_all(node, ".//wordCount")))),
     publisher = list("node", ".//publisherName"),

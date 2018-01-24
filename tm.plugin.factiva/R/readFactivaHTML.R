@@ -13,7 +13,7 @@ readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
                      xml_text(xml_find_all(elem$content, ".//p[starts-with(@class, 'articleParagraph')]")))
 
         vars <- c("AN", "BY", "CO", "CY", "ED", "HD", "IN", "IPC", "IPD",
-                  "LA", "LP", "NS", "PD", "PUB", "RE", "SE", "SN", "TD", "WC")
+                  "LA", "LP", "NS", "PD", "PG", "PUB", "RE", "SE", "SN", "TD", "WC")
 
         # Remove trailing spaces when matching
         data <- as.character(table[match(vars, gsub("[^[A-Z]", "", table[,1])), 2])
@@ -39,6 +39,9 @@ readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
         }
 
         data[["AN"]] <- gsub("Document ", "", data[["AN"]])
+
+        pg <- if(is.na(data[["PG"]][[1]])) NA
+              else as.integer(regmatches(data[["PG"]], regexpr("^[[:digit:]]+", data[["PG"]])))[[1]]
 
         wc <- as.integer(regmatches(data[["WC"]], regexpr("^[[:digit:]]+", data[["WC"]])))[[1]]
 
@@ -103,6 +106,7 @@ readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
         meta(doc, "industry") <- industry
         meta(doc, "infocode") <- infocode
         meta(doc, "infodesc") <- infodesc
+        meta(doc, "page") <- pg
         meta(doc, "wordcount") <- wc
         meta(doc, "publisher") <- if(!is.na(data[["PUB"]])) data[["PUB"]] else character(0)
         meta(doc, "rights") <- if(!is.na(data[["CY"]])) data[["CY"]] else character(0)

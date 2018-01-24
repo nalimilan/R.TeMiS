@@ -163,7 +163,9 @@
           <leadParagraph>
             <paragraph display="Proportional" truncation="None">This is the lead paragraph of the third test article.</paragraph>
           </leadParagraph>
-          <pages />
+          <pages>
+            <page>85</page>
+          </pages>
           <publicationDate>
             <dateTime>2012-05-06T01:07:06Z</dateTime>
           </publicationDate>

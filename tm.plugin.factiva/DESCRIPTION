@@ -7,6 +7,9 @@ Authors@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
                     role=c("aut", "cre")),
              person("Grigorij", "Ljubownikow",
                     email="g.ljubownikow@auckland.ac.nz",
+                    role="ctb"),
+             person("Juliane", "Krueger",
+                    email="julianek@umich.edu",
                     role="ctb"))
 Imports: NLP, tm (>= 0.7-2), xml2, rvest
 Description: Provides a 'tm' Source to create corpora from
