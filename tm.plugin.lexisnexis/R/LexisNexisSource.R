@@ -3,11 +3,8 @@ LexisNexisSource <- function(x, encoding = "UTF-8") {
     # since documents are not a node but a sequence of unrelated nodes.
     # Parsing HTML before writing it in text again is inefficient but
     # is better than custom hacks to find out the correct encoding.
-    tree <- htmlParse(x, encoding=encoding)
-    con <- textConnection(saveXML(tree), encoding="UTF-8")
-    free(tree)
-    lines <- readLines(con, encoding="UTF-8")
-    close(con)
+    tree <- read_html(x, encoding=encoding)
+    lines <- readLines(textConnection(as.character(tree), encoding="UTF-8"), encoding="UTF-8")
 
     # Skip tables at the top of the file, if any
     tables <- grep('<table class="c1"', lines, fixed=TRUE, value=FALSE)
