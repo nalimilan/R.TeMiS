@@ -112,7 +112,7 @@
             # The default tokenizer does not get rid of punctuation *and of line breaks!*, which
             # get concatenated with surrounding words
             # This also avoids French articles and dash-linked words from getting concatenated with their noun
-            doItAndPrint("dtmCorpus <- tm_map(dtmCorpus, content_transformer(function(x) gsub(\"([\'\U2019\\n\U202F\U2009]|[[:punct:]]|[[:space:]]|[[:cntrl:]])+\", \" \", x)))")
+            doItAndPrint('dtmCorpus <- tm_map(dtmCorpus, content_transformer(function(x) gsub("\\\\p{P}|\\\\p{S}|\\\\p{Z}|\\\\p{C}", " ", x, perl=TRUE)))')
         }
 
         if(options["digits"])
