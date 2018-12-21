@@ -1,0 +1,15 @@
+Package: functiontest
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Author: Who wrote it
+Imports: wordcloud, igraph, SnowballC, lattice, FactoMineR, graphics, stats, utils, topicmodels, tidytext, tidyr, ggplot2, dplyr
+Suggests: explor,tm.plugin.alceste
+Depends: methods, tm (>= 0.6), NLP, slam, zoo
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: GPL (>= 2)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
