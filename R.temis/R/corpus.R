@@ -68,7 +68,7 @@ import_corpus <- function(paths, format, language, textcolumn=1, encoding=NULL) 
 
     corpus <- VCorpus(DataframeSource(data.frame(doc_id=rownames(corpusDataset),
                                                  text=corpusDataset[[textcolumn]])),
-                      readerControl=list(language))
+                      readerControl=list(language=language))
 
     for(i in names(corpusDataset)[-textcolumn])
       meta(corpus,i) <- corpusDataset[[i]]
