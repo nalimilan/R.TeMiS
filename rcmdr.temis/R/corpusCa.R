@@ -2,7 +2,7 @@ runCorpusCa <- function(corpus, dtm=NULL, variables=NULL, sparsity=0.9, ...) {
     if(is.null(dtm))
         dtm<-DocumentTermMatrix(corpus)
 
-    if(!all(variables %in% colnames(meta(corpus))))
+    if(!is.null(variables) && !all(variables %in% colnames(meta(corpus))))
         stop("All items of 'variables' should be meta-data variables of the corpus.")
 
     # Save old meta-data now to check what is lost when skipping documents

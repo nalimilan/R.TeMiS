@@ -8,9 +8,8 @@ vocabularyTable(termsDtm, wordsDtm, variable = NULL, unit = c("document", "globa
 \arguments{
   \item{termsDtm}{A document-term matrix containing terms (i.e. extracted from a possibly stemmed corpus).}
   \item{wordsDtm}{A document-term matrix contaning words (i.e. extracted from a plain corpus).}
-  \item{variable}{A vector of the same length as \code{lengthDtm} giving indexes according
-                  to which categories should be defined. If \code{NULL}, per-document measures
-                  are returned.}
+  \item{variable}{A vector with one element per document indicating to which category it belongs.
+                  If \code{NULL}, per-document measures are returned.}
   \item{unit}{When \code{variable} is not \code{NULL}, defines the way measures are aggregated
               (see below).}
 }
