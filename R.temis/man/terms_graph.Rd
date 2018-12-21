@@ -4,7 +4,8 @@
 \alias{terms_graph}
 \title{terms_graph}
 \usage{
-terms_graph(dtm, n = 100, min_occ = 0)
+terms_graph(dtm, n = 100, min_occ = 0,
+  interactive = base::interactive(), vertex.label.cex = 1, ...)
 }
 \arguments{
 \item{dtm}{A \code{DocumentTermMatrix} object.}
@@ -12,9 +13,18 @@ terms_graph(dtm, n = 100, min_occ = 0)
 \item{n}{The maximum number of terms to represent.}
 
 \item{min_occ}{The minimum number of occurrences for a term to be retained.}
+
+\item{interactive}{If \code{TRUE}, show an interactive plot using \code{\link{tkplot}}. This
+is the case by default for interactive sessions.}
+
+\item{vertex.label.cex}{The font size for vertex labels.
+It is interpreted as a multiplication factor of some device-dependent base font size.}
+
+\item{...}{Optional arguments passed to \code{\link{plot.igraph}} or \code{\link{tkplot}}.}
 }
 \value{
-The ID of the plot returned by \code{\link{tkplot}}.
+The ID of the plot returned by \code{\link{tkplot}} if \code{interactive=TRUE},
+or \code{NULL} invisibly otherwise.
 }
 \description{
 Plot a graph of terms.
