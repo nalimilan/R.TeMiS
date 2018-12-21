@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/nalimilan/R.TeMiS.svg)](https://travis-ci.org/nalimilan/R.TeMiS)
 
-The R.TeMiS project consists in several R packages:
+The R.TeMiS (R Text Mining Solution) project consists in several R packages:
+* a text mining package, R.temis [![R.temis on CRAN](http://www.r-pkg.org/badges/version/R.temis)](https://cran.r-project.org/package=R.temis)
 * a graphical user interface, RcmdrPlugin.temis [![RcmdrPlugin.temis on CRAN](http://www.r-pkg.org/badges/version/RcmdrPlugin.temis)](https://cran.r-project.org/package=RcmdrPlugin.temis)
 * a wrapper around Martin Porter's Snowball stemming library, SnowballC [![SnowballC on CRAN](http://www.r-pkg.org/badges/version/SnowballC)](https://cran.r-project.org/package=SnowballC)
 * a series of tm plugins to import corpora from various sources:
