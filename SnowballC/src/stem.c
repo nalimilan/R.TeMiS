@@ -26,7 +26,7 @@ R_stemWords(SEXP words, SEXP language)
     unsigned int i, n;
     const sb_symbol * s;
     struct sb_stemmer * stemmer;
-    SEXP result;
+    SEXP el, result;
 
     stemmer = sb_stemmer_new(CHAR(STRING_ELT(language, 0)), NULL);
     if (stemmer == 0) {
@@ -38,8 +38,14 @@ R_stemWords(SEXP words, SEXP language)
     result = PROTECT(NEW_CHARACTER(n));
 
     for(i = 0; i < n; i++) {
-        s = stemString(stemmer, translateCharUTF8(STRING_ELT(words, i)));
-        SET_STRING_ELT(result, i, mkCharCE((char *) s, CE_UTF8));
+        el = STRING_ELT(words, i);
+        if(el == NA_STRING) {
+            SET_STRING_ELT(result, i, NA_STRING);
+        }
+        else {
+            s = stemString(stemmer, translateCharUTF8(el));
+            SET_STRING_ELT(result, i, mkCharCE((char *) s, CE_UTF8));
+        }
     }
 
     sb_stemmer_delete(stemmer);

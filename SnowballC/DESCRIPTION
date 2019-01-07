@@ -1,7 +1,7 @@
 Package: SnowballC
 Type: Package
-Version: 0.5.1
-Date: 2014-08-08
+Version: 0.6.0
+Date: 2019-01-07
 Title: Snowball stemmers based on the C libstemmer UTF-8 library
 Authors@R: person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
                   role=c("aut", "cre"))

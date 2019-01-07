@@ -1,3 +1,6 @@
+Version 0.6.0 - 2018-01-07
+    * Fix wordStem(NA) to return NA instead of "NA".
+
 Version 0.5.1 - 2014-08-08
     * Clarify license.
 

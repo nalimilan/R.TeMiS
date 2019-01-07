@@ -44,4 +44,6 @@ wordStem(words, language = "porter")
 
       stopifnot(all(wordStem(voc[[1]], lang) == voc[[2]]))
   }
+
+  stopifnot(is.na(wordStem(NA)))
 }
