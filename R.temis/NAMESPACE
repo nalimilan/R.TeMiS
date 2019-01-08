@@ -2,6 +2,7 @@
 
 export(add_clusters)
 export(build_dtm)
+export(characteristic_docs)
 export(combine_terms)
 export(concordances)
 export(contributive_docs)

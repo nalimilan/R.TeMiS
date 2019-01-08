@@ -25,6 +25,7 @@
 #' corpus <- import_corpus(file, "factiva", language="en")
 #' dtm <- build_dtm(corpus)
 #' frequent_terms(dtm)
+#' frequent_terms(dtm, meta(corpus)$Date)
 #'
 #' @export
 frequent_terms <- function(dtm, variable=NULL, n=25) {
@@ -120,6 +121,7 @@ frequent_terms <- function(dtm, variable=NULL, n=25) {
 #' corpus <- import_corpus(file, "factiva", language="en")
 #' dtm <- build_dtm(corpus)
 #' specific_terms(dtm)
+#' specific_terms(dtm, meta(corpus)$Date)
 #'
 #' @export
 specific_terms <- function(dtm, variable=NULL, p=0.1, n=25, sparsity=1, min_occ=2) {

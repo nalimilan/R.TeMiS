@@ -376,6 +376,97 @@ concordances <- function(corpus, dtm, terms, all=FALSE) {
   invisible(corpus)
 }
 
+#' characteristic_docs
+#'
+#' Print documents which are the most characteristic of each level of a variable,
+#' i.e. those with the lowest Chi-squared distance to the average vocabulary
+#' of documents belonging to that level.
+#'
+#' Occurrences of the `nterms` most specific terms for each level are highlighted.
+#' If stemming or other transformations have been applied to original words
+#' using [`combine_terms`], all original words which have been transformed
+#' to the specified terms are highlighted.
+#'
+#' @param corpus A `Corpus` object.
+#' @param dtm A `DocumentTermMatrix` object corresponding to `corpus`.
+#' @param variable A vector of values giving the groups for which most frequent
+#'   terms should be reported.
+#' @param ndocs The number of (most characteristic) documents to print.
+#' @param nterms The number of terms to highlight in documents.
+#' @param p The maximum p-value up to which specific terms should be hightlighted.
+#'
+#' @return A list with one `Corpus` object for each level (invisibly).
+#'
+#' @examples
+#'
+#' file <- system.file("texts", "reut21578-factiva.xml", package="tm.plugin.factiva")
+#' corpus <- import_corpus(file, "factiva", language="en")
+#' dtm <- build_dtm(corpus)
+#' characteristic_docs(corpus, dtm, meta(corpus)$Date)
+#'
+#' # Also works when terms have been combined
+#' dict <- dictionary(dtm)
+#' dtm2 <- combine_terms(dtm, dict)
+#' characteristic_docs(corpus, dtm2, meta(corpus)$Date)
+#'
+#' @export
+characteristic_docs <- function(corpus, dtm, variable, ndocs=10, nterms=25, p=0.1) {
+    if(!inherits(corpus, "Corpus"))
+        stop(.gettext("`corpus` must be a `Corpus` object"))
+
+    if(!isTRUE(all.equal(names(corpus), rownames(dtm))))
+        stop(.gettext("`dtm` must have one row per document in `corpus`, with the same names and in the same order."))
+
+    levs <- levels(factor(variable))
+
+    corpora <- vector("list", length(levs))
+    names(corpora) <- levs
+    dists <- c()
+    for(i in seq_along(levs)) {
+        subdtm <- dtm[variable %in% levs[i],]
+
+        # Remove terms that do not appear in the group
+        counts <- col_sums(subdtm)
+        keep <- as.matrix(counts > 0)
+        subdtm <- subdtm[, keep]
+        dev <- sweep(as.matrix(subdtm)/row_sums(subdtm), 2,
+                     prop.table(counts[keep]), "-")
+        chisq <- rowSums(sweep(dev^2, 2, col_sums(dtm[,keep])/sum(dtm), "/"))
+        chisq <- head(sort(chisq), ndocs)
+        corpora[[i]] <- corpus[match(names(chisq), names(corpus))]
+        dists <- c(dists, chisq)
+    }
+
+    specTerms <- specific_terms(dtm, variable, n=nterms, p=p)
+
+    # Used mostly to benefit from detection of terminal support
+    color <- crayon::red(crayon::bold("X"))
+    for(i in seq_along(corpora)) {
+        terms <- rownames(specTerms[[i]])
+
+        dict <- attr(dtm, "dict")
+        if(is.null(dict))
+            words <- terms
+        else
+            words <- rownames(dict)[dict[[.gettext("Term")]] %in% terms]
+
+        cat(crayon::underline(crayon::bold(paste(.gettext("Documents characteristic of:"), levs[i]))), "\n")
+
+        subCorpus <- corpora[[i]]
+        for(j in seq_along(subCorpus)) {
+            name <- names(subCorpus)[j]
+            cat(sprintf(.gettext("%s: distance %s"), crayon::bold(name), formatC(dists[name])), "\n")
+            cat(gsub(sprintf("\\b(%s)\\b",
+                             paste(words, collapse="|")),
+                     sub("X", "\\\\1", color),
+                     as.character(subCorpus[[j]]),
+                     ignore.case=TRUE))
+            cat("\n\n")
+        }
+    }
+    invisible(corpora)
+}
+
 #' subset_corpus
 #'
 #' Select documents containing (or not containing) one or more terms.
