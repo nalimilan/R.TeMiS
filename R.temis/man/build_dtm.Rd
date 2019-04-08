@@ -6,7 +6,7 @@
 \usage{
 build_dtm(corpus, sparsity = 1, dictionary = NULL,
   remove_stopwords = FALSE, tolower = TRUE,
-  remove_punctuation = TRUE, remove_numbers = TRUE)
+  remove_punctuation = TRUE, remove_numbers = TRUE, min_length = 2)
 }
 \arguments{
 \item{corpus}{A \code{Corpus} object.}
@@ -15,8 +15,8 @@ build_dtm(corpus, sparsity = 1, dictionary = NULL,
 with no occurrences of a term above which that term should be dropped. By default
 all terms are kept (\code{sparsity=1}).}
 
-\item{dictionary}{A vector of terms. to which the matrix should be restricted.
-By default, all words with more than one character are considered.}
+\item{dictionary}{A vector of terms to which the matrix should be restricted.
+By default, all words with more than \code{min_length} characters are considered.}
 
 \item{remove_stopwords}{Whether to remove stopwords appearing in a language-specific list
 (see \code{\link[tm:stopwords]{tm::stopwords}}).}
@@ -28,6 +28,8 @@ tokenizing terms.}
 
 \item{remove_numbers}{Whether to remove all numbers from text before
 tokenizing terms.}
+
+\item{min_length}{The minimal number of characters for a word to be retained.}
 }
 \value{
 A \code{DocumentTermMatrix} object.

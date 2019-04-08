@@ -6,8 +6,8 @@
 #' @param sparsity Value between 0 and 1 indicating the proportion of documents
 #'   with no occurrences of a term above which that term should be dropped. By default
 #'   all terms are kept (`sparsity=1`).
-#' @param dictionary A vector of terms. to which the matrix should be restricted.
-#'   By default, all words with more than one character are considered.
+#' @param dictionary A vector of terms to which the matrix should be restricted.
+#'   By default, all words with more than `min_length` characters are considered.
 #' @param remove_stopwords Whether to remove stopwords appearing in a language-specific list
 #'   (see [`tm::stopwords`]).
 #' @param tolower Whether to convert all text to lower case.
@@ -15,6 +15,7 @@
 #'   tokenizing terms.
 #' @param remove_numbers Whether to remove all numbers from text before
 #'   tokenizing terms.
+#' @param min_length The minimal number of characters for a word to be retained.
 #'
 #' @return A `DocumentTermMatrix` object.
 #'
@@ -28,7 +29,8 @@
 #' @export
 build_dtm <- function(corpus, sparsity=1, dictionary=NULL,
                       remove_stopwords=FALSE,
-                      tolower=TRUE, remove_punctuation=TRUE, remove_numbers=TRUE) {
+                      tolower=TRUE, remove_punctuation=TRUE, remove_numbers=TRUE,
+                      min_length=2) {
   # The default tokenizer does not get rid of punctuation *and of line breaks!*, which
   # get concatenated with surrounding words
   # This also avoids French articles and dash-linked words from getting concatenated with their noun
@@ -42,7 +44,7 @@ build_dtm <- function(corpus, sparsity=1, dictionary=NULL,
                                          stopwords=remove_stopwords,
                                          tolower=tolower, removeNumbers=remove_numbers,
                                          removePunctuation=remove_punctuation,
-                                         wordLengths=c(2, Inf)))
+                                         wordLengths=c(min_length, Inf)))
 
   if(sparsity < 1)
     dtm <- removeSparseTerms(dtm, sparsity)
