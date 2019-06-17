@@ -1,0 +1,10 @@
+Version 0.1.2 - 2019-06-17
+    * Add characteristic_docs function
+    * Add min_length argument to build_dtm function
+
+Version 0.1.1 - 2019-01-07
+    * Support non-interactive plot for terms graph
+    * Fix setting language during CSV import
+
+Version 0.1.0 - 2018-11-19
+    * Initial release

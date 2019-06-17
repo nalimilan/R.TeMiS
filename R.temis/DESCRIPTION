@@ -1,7 +1,7 @@
 Package: R.temis
 Type: Package
 Title: Integrated Text Mining Solution
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr", role=c("aut", "cre")),
              person("Gilles", "Bastin", email="gilles.bastin@sciencespo-grenoble.fr", role="aut"),
              person("Antoine", "Chollet", email="antoine.chollet@eleve.ensai.fr", role="aut"))
