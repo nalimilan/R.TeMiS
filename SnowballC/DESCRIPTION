@@ -15,6 +15,5 @@ License: BSD_3_clause + file LICENSE
 Copyright: Dr Martin Porter (2001) and Richard Boulton (2004, 2005)
   for the 'libstemmer' C library,
   and Milan Bouchet-Valat (2013) for the R package contents.
-URL: https://r-forge.r-project.org/projects/r-temis/
-BugReports: https://r-forge.r-project.org/tracker/?group_id=1437
-
+URL: https://github.com/nalimilan/R.TeMiS
+BugReports: https://github.com/nalimilan/R.TeMiS/issues
