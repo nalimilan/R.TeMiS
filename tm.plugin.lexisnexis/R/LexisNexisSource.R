@@ -21,6 +21,15 @@ LexisNexisSource <- function(x, encoding = "UTF-8") {
     # Get rid of short empty sections
     content <- content[nchar(content) > 200]
 
+    # If LexisNexis has generated an error 'document' then we won't be able to handle it; warn and drop
+    errtexts <- grepl("We are sorry but there is an error in this document and it is not possible to display it.",
+                      content,
+                      fixed=TRUE)
+    if(any(errtexts)) {
+        warning(paste0(x, ": LexisNexis failed to provide some documents; skipping number(s)", as.character(which(errtexts)), "\n", collapse=""))
+        content <- content[!errtexts]
+    }
+
     SimpleSource(encoding, length(content),
                  content=content, uri=x,
                  reader=readLexisNexisHTML, class="LexisNexisSource")
