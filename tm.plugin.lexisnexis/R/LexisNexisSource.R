@@ -26,10 +26,10 @@ LexisNexisSource <- function(x, encoding = "UTF-8") {
                       content,
                       fixed=TRUE)
     if(any(errtexts)) {
-        warning(paste0(x, ": LexisNexis failed to provide some documents; skipping number(s)", as.character(which(errtexts)), "\n", collapse=""))
+        warning(paste0(x, ": LexisNexis failed to provide some documents; skipping number(s) ", paste0(which(errtexts), collapse=" "), "\n", collapse=""))
         content <- content[!errtexts]
     }
-
+    
     SimpleSource(encoding, length(content),
                  content=content, uri=x,
                  reader=readLexisNexisHTML, class="LexisNexisSource")

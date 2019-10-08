@@ -56,7 +56,13 @@ readLexisNexisHTML <- FunctionGenerator(function(elem, language, id) {
         names(nodes) <- sapply(nodes, function(x) xml_text(xml_children(xml_children(x)[[1]])[1], trim=TRUE))
         vals <- sapply(nodes, xml_text, trim=TRUE)
 
-        copyright <- vals[[max(which(grepl("^Copyright", vals)))]]
+        cr <- which(grepl("^Copyright", vals))
+        if (any(cr)) {
+            copyright <- vals[[max(cr)]]
+        } else {
+            warning(sprintf("Could not parse copyright notice for article %s. This may indicate a problem with the source data, as LexisNexis copyright notices are nearly universal.\n", id))
+            copyright=NULL
+        }
 
         # First item is the document number
         publication <- vals[2]
