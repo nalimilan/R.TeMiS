@@ -40,9 +40,6 @@ readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
 
         data[["AN"]] <- gsub("Document ", "", data[["AN"]])
 
-        pg <- if(is.na(data[["PG"]][[1]])) NA
-              else as.integer(regmatches(data[["PG"]], regexpr("^[[:digit:]]+", data[["PG"]])))[[1]]
-
         wc <- as.integer(regmatches(data[["WC"]], regexpr("^[[:digit:]]+", data[["WC"]])))[[1]]
 
         # Extract useful information: origin, date, and code
@@ -106,7 +103,7 @@ readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
         meta(doc, "industry") <- industry
         meta(doc, "infocode") <- infocode
         meta(doc, "infodesc") <- infodesc
-        meta(doc, "page") <- pg
+        meta(doc, "page") <- if(!is.na(data[["PG"]])) data[["PG"]] else character(0)
         meta(doc, "wordcount") <- wc
         meta(doc, "publisher") <- if(!is.na(data[["PUB"]])) data[["PUB"]] else character(0)
         meta(doc, "rights") <- if(!is.na(data[["CY"]])) data[["CY"]] else character(0)
