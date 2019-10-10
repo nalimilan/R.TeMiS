@@ -39,17 +39,9 @@ readFactivaHTML <- FunctionGenerator(function(elem, language, id) {
         }
 
         data[["AN"]] <- gsub("Document ", "", data[["AN"]])
+        id <- if(!is.na(data[["AN"]])) data[["AN"]] else paste(sample(LETTERS, 10), collapse="")
 
         wc <- as.integer(regmatches(data[["WC"]], regexpr("^[[:digit:]]+", data[["WC"]])))[[1]]
-
-        # Extract useful information: origin, date, and code
-        m <- regmatches(data[["AN"]], regexec("^([A-Za-z]+)0*[1-9][0-9]([0-9][0-9][0-3][0-9][0-3][0-9])([A-Za-z0-9])",
-                                              data[["AN"]]))[[1]]
-        # If extraction failed for some reason, make sure we return a unique identifier
-        if(length(m) == 4)
-            id <- paste(toupper(m[2]), "-", m[3], "-", m[4], sep="")
-        else
-            id <- paste(sample(LETTERS, 10), collapse="")
 
         subject <- if(!is.na(data[["NS"]])) strsplit(data[["NS"]], "( \\| )")[[1]]
                    else character(0)
