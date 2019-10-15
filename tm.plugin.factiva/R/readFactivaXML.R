@@ -14,11 +14,9 @@ readFactivaXML <- readXML(spec = list(
     id = list("function", function(node) {
               str <- gsub("^distdoc:archive/ArchiveDoc::Article/", "",
                           xml_text(xml_find_all(node, ".//reference")))
-              # Extract useful information: origin, date, and two last characters to avoid collisions
-              m <- regmatches(str, regexec("^([A-Za-z]+)0*[1-9][0-9]([0-9][0-9][0-3][0-9][0-3][0-9]).*([A-Za-z0-9]{2})$", str))[[1]]
               # If extraction failed for some reason, make sure we return a unique identifier
-              if(length(m) == 4)
-                  paste(toupper(m[2]), "-", m[3], "-", m[4], sep="")
+              if(nchar(str) > 0)
+                  str
               else
                   paste(sample(LETTERS, 10), collapse="")
     }),
@@ -42,7 +40,7 @@ readFactivaXML <- readXML(spec = list(
     page = list("function", function(node) {
                 str <- xml_text(xml_find_all(node, ".//page"))
                 if(length(str) > 0)
-                    as.numeric(str)
+                    str
                 else
                     NA
     }),
