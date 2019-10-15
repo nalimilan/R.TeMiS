@@ -1,3 +1,9 @@
+Version 1.8 - 2019-10-18
+    * Stop truncating article IDs to avoid duplicates
+      (thanks to Tom Nicholls).
+    * Handle non-numeric 'page' metadata entries
+      (thanks to Tom Nicholls).
+
 Version 1.7 - 2017-11-06
     * Port from XML to xml2 package to support tm 0.8.
 

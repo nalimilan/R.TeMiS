@@ -1,8 +1,8 @@
 Package: tm.plugin.factiva
 Type: Package
 Title: Import Articles from 'Factiva' Using the 'tm' Text Mining Framework
-Version: 1.7
-Date: 2017-11-20
+Version: 1.8
+Date: 2019-10-18
 Authors@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
                     role=c("aut", "cre")),
              person("Grigorij", "Ljubownikow",
@@ -10,6 +10,9 @@ Authors@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
                     role="ctb"),
              person("Juliane", "Krueger",
                     email="julianek@umich.edu",
+                    role="ctb"),
+             person("Tom", "Nicholls",
+                    email="tom.nicholls@politics.ox.ac.uk",
                     role="ctb"))
 Imports: NLP, tm (>= 0.7-2), xml2, rvest
 Description: Provides a 'tm' Source to create corpora from
