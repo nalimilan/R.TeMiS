@@ -61,7 +61,7 @@ readLexisNexisHTML <- FunctionGenerator(function(elem, language, id) {
             copyright <- vals[[max(cr)]]
         } else {
             warning(sprintf("Could not parse copyright notice for article %s. This may indicate a problem with the source data, as LexisNexis copyright notices are nearly universal.\n", id))
-            copyright=NULL
+            copyright <- NULL
         }
 
         # First item is the document number
