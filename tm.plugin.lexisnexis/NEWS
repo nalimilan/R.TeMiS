@@ -1,3 +1,7 @@
+Version 1.4.1 - 2019-10-18
+    * Handle LexisNexis giving an error 'document' instead of an article
+      or omitting copyright field (thanks to Tom Nicholls).
+
 Version 1.4.0 - 2018-06-05
     * Rework parsing code to make it more robust to variations in HTML format.
 
