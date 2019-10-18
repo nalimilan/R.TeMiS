@@ -15,7 +15,7 @@ readFactivaXML <- readXML(spec = list(
               str <- gsub("^distdoc:archive/ArchiveDoc::Article/", "",
                           xml_text(xml_find_all(node, ".//reference")))
               # If extraction failed for some reason, make sure we return a unique identifier
-              if(nchar(str) > 0)
+              if(length(str) > 0 && nchar(str) > 0)
                   str
               else
                   paste(sample(LETTERS, 10), collapse="")
