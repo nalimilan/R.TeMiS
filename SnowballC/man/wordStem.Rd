@@ -38,11 +38,11 @@ wordStem(words, language = "porter")
   # Simple example
   wordStem(c("win", "winning", "winner"))
 
-  # Test the supplied vocabulary
+  # Test some of the vocabulary supplied at https://github.com/snowballstem/snowball-data
   for(lang in getStemLanguages()) {
       load(system.file("words", paste0(lang, ".RData"), package="SnowballC"))
 
-      stopifnot(all(wordStem(voc[[1]], lang) == voc[[2]]))
+      stopifnot(all(wordStem(dat$words, lang) == dat$stem))
   }
 
   stopifnot(is.na(wordStem(NA)))
