@@ -1,7 +1,7 @@
 Package: SnowballC
 Type: Package
-Version: 0.6.0
-Date: 2019-01-07
+Version: 0.7.0
+Date: 2020-04-01
 Title: Snowball Stemmers Based on the C 'libstemmer' UTF-8 Library
 Authors@R: person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
                   role=c("aut", "cre"))
