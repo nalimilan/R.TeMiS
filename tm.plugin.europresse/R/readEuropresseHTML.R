@@ -28,7 +28,7 @@ readEuropresseHTML2 <- FunctionGenerator(function(elem, language, id) {
         # We do not know what is the order of the fields, so try to find the date first
         # Fall back to the third field in case of failure
         # Remove week day name at the start
-        strdate <- gsub("^[[:alpha:]]+ ", "", dat)
+        strdate <- gsub("^[ [:alpha:]]+ ", "", dat)
         date <- strptime(strdate, "%d %B %Y")
         datepos <- which(!is.na(date))[1]
 
@@ -63,14 +63,17 @@ readEuropresseHTML2 <- FunctionGenerator(function(elem, language, id) {
         # Pages are not always present, and sometimes time replaces this field
         pages <- if(is.na(dat[datepos + 1]) || grepl("UTC", dat[datepos + 1])) character(0) else gsub("p. ", "", dat[datepos + 1])
 
-        heading <- xmlValue(getNodeSet(tree, "//p[@class = 'titreArticleVisu']")[[1]])
+        heading <- xmlValue(getNodeSet(tree, "//p[starts-with(@class, 'titreArticleVisu')] | //div[starts-with(@class, 'titreArticleVisu')]")[[1]])
 
-        author <- sapply(getNodeSet(tree, "//p[@class = 'titreArticleVisu']/following-sibling::div[1]"), xmlValue)
-        if(length(author) == 0) author <- character(0)
+        author <- sapply(getNodeSet(tree, "//div[@class = 'docAuthors']"), xmlValue)
+        if(length(author) == 0) {
+            author <- sapply(getNodeSet(tree, "//p[starts-with(@class, 'titreArticleVisu')]/following-sibling::div[1]"), xmlValue)
+            if(length(author) == 0) author <- character(0)
+        }
 
         footer <- sapply(getNodeSet(tree, "/html/body/article/footer/*"), xmlValue)
-        copyright <- gsub("^ | $", "", footer[[2]])
-        id <- gsub("[^[:alnum:]]|Num\ue9ro de document : news", "", footer[[3]])
+        copyright <- gsub("^ | $", "", footer[which(grepl("©", footer))[1]])
+        id <- gsub(".*news·| $|·", "", footer[which(grepl("news·", footer))[1]])
 
         # If extraction failed for some reason, make sure we return a unique identifier
         if(is.na(id))
