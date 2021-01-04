@@ -57,7 +57,8 @@ dictionary <- function(dtm, remove_stopwords=FALSE) {
 #' @export
 combine_terms <- function(dtm, dict) {
   if(!all(rownames(dict) %in% colnames(dtm)))
-    stop(.gettext("all rows of `dict` must correspond to terms in `dtm`"))
+    stop(sprintf(.gettext("some rows of `dict` do not correspond to terms in `dtm`: %s"),
+                 paste(setdiff(rownames(dict), colnames(dtm)), collapse=", ")))
   else if(!.gettext("Term") %in% colnames(dict))
     stop(.gettext("`dict` must contain a \"Term\" column"))
 
