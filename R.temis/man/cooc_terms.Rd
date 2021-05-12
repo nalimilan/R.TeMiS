@@ -4,8 +4,15 @@
 \alias{cooc_terms}
 \title{cooc_terms}
 \usage{
-cooc_terms(dtm, term, variable = NULL, p = 0.1, n = 25,
-  sparsity = 1, min_occ = 2)
+cooc_terms(
+  dtm,
+  term,
+  variable = NULL,
+  p = 0.1,
+  n = 25,
+  sparsity = 1,
+  min_occ = 2
+)
 }
 \arguments{
 \item{dtm}{A \code{DocumentTermMatrix}.}
@@ -29,12 +36,12 @@ terms should be skipped.}
 \value{
 A list of matrices, one for each level of the variable, with columns:
 \itemize{
-\item "\% Term/Level": the percent of the term's occurrences in all terms occurrences
+\item "\\% Term/Level": the percent of the term's occurrences in all terms occurrences
 in documents where the chosen term is also present.
-\item "\% Level/Term": the percent of the term's occurrences that appear in documents
+\item "\\% Level/Term": the percent of the term's occurrences that appear in documents
 where the chosen term is also present (rather than in documents where it does not appear),
 i.e. the percent of cooccurrences for the term..
-\item "Global \%": the percent of the term's occurrences in all terms occurrences
+\item "Global \\%": the percent of the term's occurrences in all terms occurrences
 in the corpus (or in the subset of the corpus corresponding to the variable level).
 \item "Level": the number of cooccurrences of the term.
 \item "Global": the number of occurrences of the term in the corpus

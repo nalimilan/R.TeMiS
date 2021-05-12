@@ -17,10 +17,10 @@ terms should be reported.}
 \value{
 A list of matrices, one for each level of the variable, with columns:
 \itemize{
-\item "\% Term/Level": the percent of the term's occurrences in all terms occurrences in the level.
-\item "\% Level/Term": the percent of the term's occurrences that appear in the level
+\item "\\% Term/Level": the percent of the term's occurrences in all terms occurrences in the level.
+\item "\\% Level/Term": the percent of the term's occurrences that appear in the level
 (rather than in other levels).
-\item "Global \%": the percent of the term's occurrences in all terms occurrences in the corpus.
+\item "Global \\%": the percent of the term's occurrences in all terms occurrences in the corpus.
 \item "Level": the number of occurrences of the term in the level ("internal").
 \item "Global": the number of occurrences of the term in the corpus.
 \item "t value": the quantile of a normal distribution corresponding the probability "Prob.".

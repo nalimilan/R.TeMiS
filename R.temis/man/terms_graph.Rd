@@ -4,8 +4,14 @@
 \alias{terms_graph}
 \title{terms_graph}
 \usage{
-terms_graph(dtm, n = 100, min_occ = 0,
-  interactive = base::interactive(), vertex.label.cex = 1, ...)
+terms_graph(
+  dtm,
+  n = 100,
+  min_occ = 0,
+  interactive = base::interactive(),
+  vertex.label.cex = 1,
+  ...
+)
 }
 \arguments{
 \item{dtm}{A \code{DocumentTermMatrix} object.}

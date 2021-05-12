@@ -1,7 +1,7 @@
 Package: R.temis
 Type: Package
 Title: Integrated Text Mining Solution
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: c(person("Milan", "Bouchet-Valat", email="nalimilan@club.fr", role=c("aut", "cre")),
              person("Gilles", "Bastin", email="gilles.bastin@sciencespo-grenoble.fr", role="aut"),
              person("Antoine", "Chollet", email="antoine.chollet@eleve.ensai.fr", role="aut"))
@@ -19,7 +19,7 @@ Description: An integrated solution to perform
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.0
+RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/nalimilan/R.TeMiS
 BugReports: https://github.com/nalimilan/R.TeMiS/issues

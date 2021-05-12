@@ -4,8 +4,7 @@
 \alias{lexical_summary}
 \title{lexical_summary}
 \usage{
-lexical_summary(dtm, corpus, variable = NULL, unit = c("document",
-  "global"))
+lexical_summary(dtm, corpus, variable = NULL, unit = c("document", "global"))
 }
 \arguments{
 \item{dtm}{A \code{DocumentTermMatrix} containing the terms to summarize,

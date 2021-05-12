@@ -4,8 +4,14 @@
 \alias{specific_terms}
 \title{specific_terms}
 \usage{
-specific_terms(dtm, variable = NULL, p = 0.1, n = 25, sparsity = 1,
-  min_occ = 2)
+specific_terms(
+  dtm,
+  variable = NULL,
+  p = 0.1,
+  n = 25,
+  sparsity = 1,
+  min_occ = 2
+)
 }
 \arguments{
 \item{dtm}{A \code{DocumentTermMatrix}.}
@@ -27,10 +33,10 @@ terms should be skipped.}
 \value{
 A list of matrices, one for each level of the variable, with columns:
 \itemize{
-\item "\% Term/Level": the percent of the term's occurrences in all terms occurrences in the level.
-\item "\% Level/Term": the percent of the term's occurrences that appear in the level
+\item "\\% Term/Level": the percent of the term's occurrences in all terms occurrences in the level.
+\item "\\% Level/Term": the percent of the term's occurrences that appear in the level
 (rather than in other levels).
-\item "Global \%": the percent of the term's occurrences in all terms occurrences in the corpus.
+\item "Global \\%": the percent of the term's occurrences in all terms occurrences in the corpus.
 \item "Level": the number of occurrences of the term in the level ("internal").
 \item "Global": the number of occurrences of the term in the corpus.
 \item "t value": the quantile of a normal distribution corresponding the probability "Prob.".
@@ -47,7 +53,7 @@ Specific terms reported here are those whose observed frequency in the document 
 the lowest probability under an hypergeometric distribution, based on their global frequencies
 in the corpus and on the number of occurrences of all terms in the document or variable level considered.
 The positive or negative character of the association is visible from the sign of the t value,
-or by comparing the value of the "\% Term/Level" column with that of the "Global \%"
+or by comparing the value of the "\\% Term/Level" column with that of the "Global \\%"
 column.
 }
 \examples{

@@ -1,3 +1,6 @@
+Version 0.1.3 - 2021-05-12
+    * Use more useful combine_terms error message
+
 Version 0.1.2 - 2019-06-17
     * Add characteristic_docs function
     * Add min_length argument to build_dtm function

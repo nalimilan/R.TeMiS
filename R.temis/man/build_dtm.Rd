@@ -4,9 +4,16 @@
 \alias{build_dtm}
 \title{build_dtm}
 \usage{
-build_dtm(corpus, sparsity = 1, dictionary = NULL,
-  remove_stopwords = FALSE, tolower = TRUE,
-  remove_punctuation = TRUE, remove_numbers = TRUE, min_length = 2)
+build_dtm(
+  corpus,
+  sparsity = 1,
+  dictionary = NULL,
+  remove_stopwords = FALSE,
+  tolower = TRUE,
+  remove_punctuation = TRUE,
+  remove_numbers = TRUE,
+  min_length = 2
+)
 }
 \arguments{
 \item{corpus}{A \code{Corpus} object.}
