@@ -14,6 +14,7 @@ after_success:
   - Rscript -e 'covr::coveralls(type="all", combine_types=TRUE)'
 
 env:
+  - TEST_DIR=R.temis
   - TEST_DIR=rcmdr.temis
   - TEST_DIR=SnowballC
   - TEST_DIR=tm.plugin.alceste
