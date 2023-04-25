@@ -1,3 +1,6 @@
+Version 0.7.1 - 2023-04-25
+    * Fix C compiler warnings as per CRAN policy.
+
 Version 0.7.0 - 2020-04-01
     * Update Snowball library to version 2.0. This adds support
       for Arabic, Basque, Catalan, Greek, Hindi, Indonesian, Irish,

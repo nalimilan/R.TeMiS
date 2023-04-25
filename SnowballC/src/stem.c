@@ -56,7 +56,7 @@ R_stemWords(SEXP words, SEXP language)
 }
 
 SEXP
-R_getStemLanguages()
+R_getStemLanguages(void)
 {
     unsigned int i, n;
     const char ** list = sb_stemmer_list();

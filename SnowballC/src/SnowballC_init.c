@@ -4,7 +4,7 @@
 #include <R_ext/Rdynload.h>
 
 /* .Call calls */
-extern SEXP R_getStemLanguages();
+extern SEXP R_getStemLanguages(void);
 extern SEXP R_stemWords(SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
