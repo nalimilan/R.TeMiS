@@ -62,7 +62,7 @@ specificTerms <- function(dtm, variable=NULL, p=0.1, n.max=25, sparsity=0.95, mi
 }
 
 specificTermsDlg <- function() {
-    if(!(exists("dtm") && class(dtm) == "DocumentTermMatrix")) {
+    if(!(exists("dtm") && inherits(dtm, "DocumentTermMatrix"))) {
         .Message(message=.gettext("Please import a corpus and create the document-term matrix first."),
                  type="error")
         return()

@@ -11,8 +11,8 @@
     menu        dictMenu        tmMenu            ""                                 ""                          ""                    ""
     item        tmMenu          cascade           "Terms dictionary"                 dictMenu                    ""                    ""
 
-    item        dictMenu        command           "Sorted alphabetically"            termsDictionaryAlpha        "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"          ""
-    item        dictMenu        command           "Sorted by number of occurrences"  termsDictionaryOcc          "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"          ""
+    item        dictMenu        command           "Sorted alphabetically"            termsDictionaryAlpha        "exists('dtm') && inherits(dtm, 'DocumentTermMatrix')"          ""
+    item        dictMenu        command           "Sorted by number of occurrences"  termsDictionaryOcc          "exists('dtm') && inherits(dtm, 'DocumentTermMatrix')"          ""
 
 
 ### Manage corpus menu ###
@@ -28,7 +28,7 @@
     # Main items
     item        corpusMenu      command           "Set corpus variables"             doSetCorpusVariables        "exists('corpus') && 'Corpus' %in% class(corpus) && activeDataSetP() && checkVariables()"          ""
     item        corpusMenu      cascade           "Subset corpus"                    subsetMenu                    ""                    ""
-    item        corpusMenu      command           "Select or exclude terms..."       restrictTermsDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
+    item        corpusMenu      command           "Select or exclude terms..."       restrictTermsDlg            "exists('dtm') && inherits(dtm, 'DocumentTermMatrix')"                    ""
     item        corpusMenu      command           "Recode time variable..."          recodeTimeVarDlg            "exists('corpus') && 'Corpus' %in% class(corpus) && activeDataSetP() && checkVariables()"          ""
 
 
@@ -45,13 +45,13 @@
     menu        vocMenu         tmMenu            ""                                 ""                          ""                    ""
     item        tmMenu          cascade           "Descriptive analysis of vocabulary" vocMenu                    ""                    ""
 
-    item        vocMenu         command           "Vocabulary summary..."            vocabularyDlg               "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        vocMenu         command           "Dissimilarity table..."           dissimilarityTableDlg       "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        vocMenu         command           "Most frequent terms..."           freqTermsDlg                "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        vocMenu         command           "Terms specific of levels..."      specificTermsDlg            "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        vocMenu         command           "Analysis of chosen terms..."      termFreqDlg                 "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        vocMenu         command           "Terms co-occurring with chosen terms..." termCoocDlg          "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                    ""
-    item        vocMenu         command           "Temporal evolution of chosen terms..." termTimeSeriesDlg      "exists('dtm') && class(dtm) == 'DocumentTermMatrix'"                       ""
+    item        vocMenu         command           "Vocabulary summary..."            vocabularyDlg               "exists('dtm') && inherits(dtm, 'DocumentTermMatrix')"                    ""
+    item        vocMenu         command           "Dissimilarity table..."           dissimilarityTableDlg       "exists('dtm') && inherits(dtm, 'DocumentTermMatrix')"                    ""
+    item        vocMenu         command           "Most frequent terms..."           freqTermsDlg                "exists('dtm') && inherits(dtm, 'DocumentTermMatrix')"                    ""
+    item        vocMenu         command           "Terms specific of levels..."      specificTermsDlg            "exists('dtm') && inherits(dtm, 'DocumentTermMatrix')"                    ""
+    item        vocMenu         command           "Analysis of chosen terms..."      termFreqDlg                 "exists('dtm') && inherits(dtm, 'DocumentTermMatrix')"                    ""
+    item        vocMenu         command           "Terms co-occurring with chosen terms..." termCoocDlg          "exists('dtm') && inherits(dtm, 'DocumentTermMatrix')"                    ""
+    item        vocMenu         command           "Temporal evolution of chosen terms..." termTimeSeriesDlg      "exists('dtm') && inherits(dtm, 'DocumentTermMatrix')"                       ""
 
 
 ### Correspondence analysis menu ###

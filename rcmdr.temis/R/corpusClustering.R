@@ -349,7 +349,7 @@ corpusClustDlg <- function() {
 }
 
 createClustersDlg <- function(..., plot=TRUE) {
-    if(!(exists("corpusClust") && class(corpusClust) == "hclust")) {
+    if(!(exists("corpusClust") && inherits(corpusClust, "hclust"))) {
         .Message(message=.gettext("Please run a hierarchical clustering on the corpus first."),
                 type="error")
         return()

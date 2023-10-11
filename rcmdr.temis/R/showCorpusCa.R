@@ -359,7 +359,7 @@ showCorpusCa <- function(corpusCa, dim=1, ndocs=10, nterms=10) {
 }
 
 showCorpusCaDlg <- function() {
-    if(!exists("corpusCa") || !class(corpusCa) == "ca") {
+    if(!exists("corpusCa") || !inherits(corpusCa, "ca")) {
         .Message(message=.gettext("Please run a correspondence analysis on the corpus first."),
                  type="error")
         return()
