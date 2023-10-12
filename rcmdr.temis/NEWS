@@ -1,3 +1,7 @@
+Version 0.7.11 - 2023-10-11
+    * Fix error when checking DTM class on R 4.3.
+    * Fix R CMD check warnings.
+
 Version 0.7.10 - 2018-06-22
     * Fix terms dictionary when importing it from CSV.
     * Fix number of documents limitation when showing CA on aggregate DTM.
