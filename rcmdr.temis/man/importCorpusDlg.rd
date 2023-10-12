@@ -50,11 +50,11 @@
          query and written in the specified language, up to the chosen maximum number of messages.
          Please note that you need to register a custom application and fill in the needed information
          to authenticate with the Twitter API (see \code{vignette("twitteR")} about OAuth authentication
-         and \url{https://apps.twitter.com} to register a new application).
+         and \url{https://developer.twitter.com/apps} to register a new application).
          Due to limitations imposed by Twitter, only tweets published up to 6 or 9 days ago can be
          downloaded, and up to a maximum number of 1500 tweets. Search queries can notably include
          one or more terms that must be present together for a tweet to match the query, and/or of
-         hashtags  starting with \dQuote{#}; see \url{https://developer.twitter.com/en/docs/tweets/search/overview/premium}
+         hashtags  starting with \dQuote{#}; see \url{https://developer.twitter.com/en/docs}
          if you need more complex search strings. User names, hashtags, URLs and \dQuote{RT} (re-tweet)
          mentions are automatically removed from the corpus when computing the document-term matrix
          as they generally disturb the analysis. If the option to remove user names and hashtags is
