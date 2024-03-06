@@ -1,6 +1,6 @@
-\name{tm.plugin.europresse-package}
-\alias{tm.plugin.europresse-package}
-\alias{tm.plugin.europresse}
+\name{tm.plugin.alceste-package}
+\alias{tm.plugin.alceste-package}
+\alias{tm.plugin.alceste}
 \docType{package}
 \title{
   A plug-in for the tm text mining framework to import corpora from Alceste files
@@ -34,5 +34,5 @@
   Milan Bouchet-Valat <nalimilan@club.fr>
 }
 \references{
-  \url{http://www.image-zafar.com/en/alceste-software}
+  \url{https://image-zafar.com/Logicieluk.html}
 }

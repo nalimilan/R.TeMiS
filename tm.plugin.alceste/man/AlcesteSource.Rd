@@ -47,7 +47,7 @@
     meta(corpus[[1]])
 }
 \seealso{
-  \url{http://www.image-zafar.com/sites/default/files/telechargements/formatage_alceste.pdf}
+  \url{https://image-zafar.com/sites/default/files/telechargements/formatage_alceste.pdf}
   (in French) about the Alceste format
 
   \code{\link{readAlceste}} for the function actually parsing
