@@ -41,7 +41,7 @@ vocabularyTable(termsDtm, wordsDtm, variable = NULL, unit = c("document", "globa
 
          When \code{variable} is not \code{NULL}, \code{unit} defines two different ways of
          aggregating per-document statistics into per-category measures:
-         \itemize{
+         \describe{
              \item{\code{document}: }{Values computed for each document are simply averaged for
                                       each category.}
              \item{\code{global}: }{Values are computed for each category taken as a whole: word
@@ -51,4 +51,4 @@ vocabularyTable(termsDtm, wordsDtm, variable = NULL, unit = c("document", "globa
          In both cases, the \dQuote{Corpus} column follows the above definition.
 }
 
-\seealso{\code{\link{vocabularyDlg}}, code{\link{DocumentTermMatrix}}, \code{\link{table}}, }
+\seealso{\code{\link{vocabularyDlg}}, \code{\link{DocumentTermMatrix}}, \code{\link{table}}, }

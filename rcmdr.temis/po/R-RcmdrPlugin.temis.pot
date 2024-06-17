@@ -1053,7 +1053,7 @@ msgstr ""
 #: R/importCorpus.R:1113
 msgid ""
 "Note: Twitter requires you to register a custom application and fill in\n"
-"the details below. See vignette(\"twitteR\") and https://dev.twitter.com/"
+"the details below. See vignette(\"twitteR\") and https://dev.x.com/"
 "apps/new/.\n"
 "You will need to switch manually to the R console and copy the PIN\n"
 "code you get from the URL printed there."

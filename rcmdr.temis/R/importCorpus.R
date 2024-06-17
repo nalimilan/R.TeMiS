@@ -987,13 +987,13 @@ importCorpusFromTwitter <- function(language=NA) {
 
     initializeDialog(title=.gettext("Import Corpus From Twitter"))
 
-    tclReqURL <- tclVar("https://api.twitter.com/oauth/request_token")
+    tclReqURL <- tclVar("https://api.x.com/oauth/request_token")
     entryReqURL <- ttkentry(top, width=37, textvariable=tclReqURL)
 
-    tclAuthURL <- tclVar("https://api.twitter.com/oauth/authorize")
+    tclAuthURL <- tclVar("https://api.x.com/oauth/authorize")
     entryAuthURL <- ttkentry(top, width=37, textvariable=tclAuthURL)
 
-    tclAccessURL <- tclVar("https://api.twitter.com/oauth/access_token")
+    tclAccessURL <- tclVar("https://api.x.com/oauth/access_token")
     entryAccessURL <- ttkentry(top, width=37, textvariable=tclAccessURL)
 
     tclConsumerKey <- tclVar("")
@@ -1118,7 +1118,7 @@ importCorpusFromTwitter <- function(language=NA) {
     }
 
     OKCancelHelp(helpSubject="importCorpusDlg")
-    tkgrid(labelRcmdr(top, text=.gettext("Note: Twitter requires you to register a custom application and fill in\nthe details below. See vignette(\"twitteR\") and https://dev.twitter.com/apps/new/.\nYou will need to switch manually to the R console and copy the PIN\ncode you get from the URL printed there.")), sticky="w", pady=6, columnspan=2)
+    tkgrid(labelRcmdr(top, text=.gettext("Note: Twitter requires you to register a custom application and fill in\nthe details below. See vignette(\"twitteR\") and https://dev.x.com/apps/new/.\nYou will need to switch manually to the R console and copy the PIN\ncode you get from the URL printed there.")), sticky="w", pady=6, columnspan=2)
     tkgrid(labelRcmdr(top, text=.gettext("Request token URL:")),
            entryReqURL, sticky="w", pady=6)
     tkgrid(labelRcmdr(top, text=.gettext("Authorize URL:")),

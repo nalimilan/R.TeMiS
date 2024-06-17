@@ -50,16 +50,10 @@
 \details{
 The function \code{plotCorpusCa} makes a two-dimensional map of the object created by \code{runCorpusCa} with respect to two selected dimensions.  By default the scaling option of the map is \kbd{"symmetric"}, that is the so-called \emph{symmetric map}. In this map both the row and column points are scaled to have inertias (weighted variances) equal to the principal inertia (eigenvalue or squared singular value) along the principal axes, that is both rows and columns are in pricipal coordinates. Other options are as follows:  
 \itemize{
-  \item{-}{\kbd{"rowprincipal"} or \kbd{"colprincipal"} - these are the so-called \emph{asymmetric maps}, with either rows in principal coordinates and columns in standard coordinates, or vice versa (also known as row-metric-preserving or column-metric-preserving respectively). These maps are biplots;}
-}
-\itemize{
-  \item{-}{\kbd{"symbiplot"} - this scales both rows and columns to have variances equal to the singular values (square roots of eigenvalues), which gives a symmetric biplot but does not preserve row or column metrics;}
-}
-\itemize{
-  \item{-}{\kbd{"rowgab"} or \kbd{"colgab"} - these are asymmetric maps (see above) with rows (respectively, columns) in principal coordinates and columns (respectively, rows) in standard coordinates multiplied by the mass of the corresponding point. These are also biplots and were proposed by Gabriel & Odoroff (1990);}
-}
-\itemize{
-  \item{-}{\kbd{"rowgreen"} or \kbd{"colgreen"} - these are similar to \kbd{"rowgab"} and \kbd{"colgab"} except that the points in standard coordinates are multiplied by the square root of the corresponding masses, giving reconstructions of the standardized residuals.}
+  \item \kbd{"rowprincipal"} or \kbd{"colprincipal"}: these are the so-called \emph{asymmetric maps}, with either rows in principal coordinates and columns in standard coordinates, or vice versa (also known as row-metric-preserving or column-metric-preserving respectively). These maps are biplots;
+  \item \kbd{"symbiplot"}: this scales both rows and columns to have variances equal to the singular values (square roots of eigenvalues), which gives a symmetric biplot but does not preserve row or column metrics;
+  \item \kbd{"rowgab"} or \kbd{"colgab"}: these are asymmetric maps (see above) with rows (respectively, columns) in principal coordinates and columns (respectively, rows) in standard coordinates multiplied by the mass of the corresponding point. These are also biplots and were proposed by Gabriel & Odoroff (1990);
+  \item \kbd{"rowgreen"} or \kbd{"colgreen"}: these are similar to \kbd{"rowgab"} and \kbd{"colgab"} except that the points in standard coordinates are multiplied by the square root of the corresponding masses, giving reconstructions of the standardized residuals.
 }
 This function has options for sizing and shading the points.  If the option \code{mass} is \kbd{TRUE} for a set of points, the size of the point symbol is proportional to the relative frequency (mass) of each point.  If the option \code{contrib} is \kbd{"absolute"} or \kbd{"relative"} for a set of points, the colour intensity of the point symbol is proportional  to the absolute contribution of the points to the planar display or, respectively, the quality of representation of the points in the display.
 }

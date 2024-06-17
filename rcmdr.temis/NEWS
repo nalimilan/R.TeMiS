@@ -1,4 +1,4 @@
-Version 0.7.11 - 2023-10-11
+Version 0.7.11 - 2024-06-17
     * Fix error when checking DTM class on R 4.3.
     * Fix R CMD check warnings.
 

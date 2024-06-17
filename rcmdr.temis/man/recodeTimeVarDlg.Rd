@@ -7,7 +7,7 @@
          a new time format in which the values of the new variable will be expressed.
 
          Typical use cases include:
-         \itemize{
+         \describe{
              \item{Create a month variable from a full date: }{Use format \dQuote{\%Y-\%m} to get
                    four-digit year and two-digit month; or \dQuote{\%y \%B} to get two-digits
                    year and full month name.}
