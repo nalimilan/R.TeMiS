@@ -8,13 +8,18 @@ Authors@R: person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
 Description: An R interface to the C 'libstemmer' library that implements
   Porter's word stemming algorithm for collapsing words to a common
   root to aid comparison of vocabulary. Currently supported languages are
-  Arabic, Basque, Catalan, Danish, Dutch, English, Finnish, French, German, Greek,
-  Hindi, Hungarian, Indonesian, Irish, Italian, Lithuanian, Nepali,
-  Norwegian, Portuguese, Romanian, Russian, Spanish, Swedish, Tamil
+  Danish, Dutch, English, Finnish, French, German, Hungarian, Italian,
+  Norwegian, Portuguese, Romanian, Russian, Spanish, Swedish
   and Turkish.
 License: BSD_3_clause + file LICENSE
-Copyright: Dr Martin Porter (2001) and Richard Boulton (2004, 2005)
-  for the 'libstemmer' C library,
-  and Milan Bouchet-Valat (2013) for the R package contents.
+Copyright: Dr Martin Porter (2001) and Richard Boulton (2004, 2005) for
+        the 'libstemmer' C library, and Milan Bouchet-Valat (2013) for
+        the R package contents.
 URL: https://github.com/nalimilan/R.TeMiS
 BugReports: https://github.com/nalimilan/R.TeMiS/issues
+NeedsCompilation: yes
+Packaged: 2020-04-01 16:24:55 UTC; milan
+Author: Milan Bouchet-Valat [aut, cre]
+Maintainer: Milan Bouchet-Valat <nalimilan@club.fr>
+Repository: CRAN
+Date/Publication: 2020-04-01 16:50:02 UTC

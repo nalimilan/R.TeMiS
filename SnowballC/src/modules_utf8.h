@@ -12,6 +12,7 @@
 #include "stem_UTF_8_arabic.h"
 #include "stem_UTF_8_basque.h"
 #include "stem_UTF_8_catalan.h"
+#include "stem_UTF_8_czech.h"
 #include "stem_UTF_8_danish.h"
 #include "stem_UTF_8_dutch.h"
 #include "stem_UTF_8_english.h"
@@ -66,6 +67,9 @@ static const struct stemmer_modules modules[] = {
   {"ca", ENC_UTF_8, catalan_UTF_8_create_env, catalan_UTF_8_close_env, catalan_UTF_8_stem},
   {"cat", ENC_UTF_8, catalan_UTF_8_create_env, catalan_UTF_8_close_env, catalan_UTF_8_stem},
   {"catalan", ENC_UTF_8, catalan_UTF_8_create_env, catalan_UTF_8_close_env, catalan_UTF_8_stem},
+  {"cz", ENC_UTF_8, czech_UTF_8_create_env, czech_UTF_8_close_env, czech_UTF_8_stem},
+  {"cze", ENC_UTF_8, czech_UTF_8_create_env, czech_UTF_8_close_env, czech_UTF_8_stem},
+  {"czech", ENC_UTF_8, czech_UTF_8_create_env, czech_UTF_8_close_env, czech_UTF_8_stem},
   {"da", ENC_UTF_8, danish_UTF_8_create_env, danish_UTF_8_close_env, danish_UTF_8_stem},
   {"dan", ENC_UTF_8, danish_UTF_8_create_env, danish_UTF_8_close_env, danish_UTF_8_stem},
   {"danish", ENC_UTF_8, danish_UTF_8_create_env, danish_UTF_8_close_env, danish_UTF_8_stem},
@@ -147,6 +151,7 @@ static const char * algorithm_names[] = {
   "arabic", 
   "basque", 
   "catalan", 
+  "czech", 
   "danish", 
   "dutch", 
   "english", 
