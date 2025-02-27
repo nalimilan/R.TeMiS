@@ -1,3 +1,6 @@
+Version 1.1.2 - 2025-02-27
+    * Fix CRAN ERROR and NOTEs.
+
 Version 1.1.1 - 2024-03-06
     * Fix alias and URL in documentation.
 

@@ -6,7 +6,7 @@ readAlceste <- FunctionGenerator(function(elem, language, id) {
             id <- id2
 
         starred <- sub("^(\\*\\*\\*\\* +|[[:digit:]]+ \\*)", "", elem$content[1])
-        varexpr <- gsub(" ", "", strsplit(starred, "*", starred, fixed=TRUE)[[1]], fixed=TRUE)
+        varexpr <- gsub(" ", "", strsplit(starred, "*", fixed=TRUE)[[1]], fixed=TRUE)
         vars <- strsplit(varexpr[nchar(varexpr) > 0], "_", fixed=TRUE)
 
         # Theme lines, ignored

@@ -1,8 +1,8 @@
 Package: tm.plugin.alceste
 Type: Package
 Title: Import Texts from Files in the 'Alceste' Format Using the 'tm' Text Mining Framework
-Version: 1.1.1
-Date: 2024-03-06
+Version: 1.1.2
+Date: 2025-02-27
 Authors@R: person("Milan", "Bouchet-Valat", email="nalimilan@club.fr",
                   role=c("aut", "cre"))
 Imports: NLP, tm (>= 0.6)

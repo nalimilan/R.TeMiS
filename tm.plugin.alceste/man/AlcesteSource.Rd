@@ -23,7 +23,7 @@
   Several texts are saved in a single Alceste-formatted file, separated
   by lines starting with \dQuote{***} or digits, followed by starred
   variables (see links below). These variables are set as document
-  meta-data that can be accessed via the \code{\link{meta}} function.
+  meta-data that can be accessed via the \code{\link[tm:meta]{meta}} function.
 
   Currently, \dQuote{theme} lines starting with \dQuote{-*} are ignored.
 }
@@ -53,5 +53,5 @@
   \code{\link{readAlceste}} for the function actually parsing
   individual articles.
 
-  \code{\link{getSources}} to list available sources.
+  \code{\link[tm:getSources]{getSources}} to list available sources.
 }
