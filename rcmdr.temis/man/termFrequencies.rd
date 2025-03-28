@@ -34,5 +34,5 @@ termFrequencies(dtm, terms, variable = NULL, n = 25, by.term = FALSE)
              term in the level, under an hypergeometric distribution.}
 }
 \author{Milan Bouchet-Valat}
-\seealso{\code{\link{specificTerms}}, \code{\link{DocumentTermMatrix}}}
+\seealso{\code{\link{specificTerms}}, \code{\link[tm]{DocumentTermMatrix}}}
 

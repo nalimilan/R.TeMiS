@@ -20,5 +20,5 @@
          dimensions that will be printed, but has no effect on the computation of the correspondance analysis.
 }
 
-\seealso{\code{\link{runCorpusCa}}, \code{\link{ca}}, \code{\link{meta}}, \code{\link{removeSparseTerms}},
-         \code{\link{DocumentTermMatrix}} }
+\seealso{\code{\link{runCorpusCa}}, \code{\link{ca}}, \code{\link[tm]{meta}}, \code{\link[tm]{removeSparseTerms}},
+         \code{\link[tm]{DocumentTermMatrix}} }

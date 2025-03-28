@@ -34,7 +34,7 @@
 
   The following screencast illustrates how to export articles in the correct \acronym{HTML}
   format from the Factiva website:
-  \url{http://rtemis.hypotheses.org/files/2017/02/Factiva-animated-tutorial.gif}.
+  \url{https://rtemis.hypotheses.org/files/2017/02/Factiva-animated-tutorial.gif}.
   \bold{Do note that by not following this procedure, you will
   obtain a \acronym{HTML} file which cannot be imported by this package.}
 
@@ -123,5 +123,5 @@
   \code{\link{readFactivaXML}} and \code{\link{readFactivaHTML}} for the functions
   actually parsing individual articles.
 
-  \code{\link{getSources}} to list available sources.
+  \code{\link[tm]{getSources}} to list available sources.
 }

@@ -39,5 +39,5 @@
   Milan Bouchet-Valat <nalimilan@club.fr>
 }
 \references{
-  \url{http://www.lexisnexis.com/}
+  \url{https://www.lexisnexis.com/}
 }

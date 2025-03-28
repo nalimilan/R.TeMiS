@@ -5,17 +5,17 @@
 \usage{runCorpusCa(corpus, dtm = NULL, variables = NULL, sparsity = 0.9, ...)}
 \arguments{
   \item{corpus  }{A \pkg{tm} corpus.}
-  \item{dtm}{an optional document-term matrix to use; if missing, \code{\link{DocumentTermMatrix}}
+  \item{dtm}{an optional document-term matrix to use; if missing, \code{\link[tm]{DocumentTermMatrix}}
              will be called on \code{corpus} to create it.}
   \item{variables}{a character vector giving the names of meta-data variables to aggregate the
                    document-term matrix (see \dQuote{Details} below).}
   \item{sparsity}{Optional sparsity threshold (between 0 and 1) below which terms should be
-                  skipped. See \code{\link{removeSparseTerms}} from tm.}
+                  skipped. See \code{\link[tm]{removeSparseTerms}} from tm.}
   \item{...     }{Additional parameters passed to \code{\link{ca}}.}
 }
 \details{The function \code{runCorpusCa} runs a correspondence analysis (CA) on the
          document-term matrix that can be extracted from a \pkg{tm} corpus by calling
-         the \code{\link{DocumentTermMatrix}} function, or directly from the \code{dtm}
+         the \code{\link[tm]{DocumentTermMatrix}} function, or directly from the \code{dtm}
          object if present.
 
          If no variable is passed via the \code{variables} argument, a CA is run on the
@@ -28,11 +28,11 @@
          In all cases, variables that have not been selected are added as supplementary rows. If at least
          one variable is passed, documents are also supplementary rows, while they are active otherwise.
 
-         The \code{sparsity} argument is passed to \code{\link{removeSparseTerms}}
+         The \code{sparsity} argument is passed to \code{\link[tm]{removeSparseTerms}}
          to remove less significant terms from the document-term matrix. This is
          especially useful for big corpora, which matrices can grow very large, prompting
          \code{ca} to take up too much memory.}
 \value{A \code{ca} object as returned by the \code{\link{ca}} function.}
 
-\seealso{\code{\link{ca}}, \code{\link{meta}}, \code{\link{removeSparseTerms}},
-         \code{\link{DocumentTermMatrix}} }
+\seealso{\code{\link{ca}}, \code{\link[tm]{meta}}, \code{\link[tm]{removeSparseTerms}},
+         \code{\link[tm]{DocumentTermMatrix}} }

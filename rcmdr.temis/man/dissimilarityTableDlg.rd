@@ -13,5 +13,5 @@
          variable levels, computed from the total document-term matrix (aggregated for variables).
 }
 
-\seealso{\code{\link{corpusDissimilarity}}, \code{\link{setCorpusVariables}}, \code{\link{meta}},
-         \code{\link{DocumentTermMatrix}}, \code{\link{dist}} }
+\seealso{\code{\link{corpusDissimilarity}}, \code{\link{setCorpusVariables}}, \code{\link[tm]{meta}},
+         \code{\link[tm]{DocumentTermMatrix}}, \code{\link{dist}} }

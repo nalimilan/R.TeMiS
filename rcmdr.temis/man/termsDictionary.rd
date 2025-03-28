@@ -22,5 +22,5 @@ termsDictionary(dtm, order = c("alphabetic", "occurrences"))
          menu, are signalled in the \dQuote{Removed?} column. All other words are present in the final
          document-term matrix, in their original or in their stemmed form.
 }
-\seealso{\code{\link{DocumentTermMatrix}}, \code{\link{restrictTermsDlg}}, \code{\link{freqTermsDlg}},
+\seealso{\code{\link[tm]{DocumentTermMatrix}}, \code{\link{restrictTermsDlg}}, \code{\link{freqTermsDlg}},
          \code{\link{termCoocDlg}} }

@@ -32,5 +32,5 @@ frequentTerms(dtm, variable = NULL, n = 25)
         term in the level, under an hypergeometric distribution.}
 }
 \author{Milan Bouchet-Valat}
-\seealso{\code{\link{specificTerms}}, \code{\link{DocumentTermMatrix}}}
+\seealso{\code{\link{specificTerms}}, \code{\link[tm]{DocumentTermMatrix}}}
 

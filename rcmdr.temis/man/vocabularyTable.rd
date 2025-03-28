@@ -51,4 +51,4 @@ vocabularyTable(termsDtm, wordsDtm, variable = NULL, unit = c("document", "globa
          In both cases, the \dQuote{Corpus} column follows the above definition.
 }
 
-\seealso{\code{\link{vocabularyDlg}}, \code{\link{DocumentTermMatrix}}, \code{\link{table}}, }
+\seealso{\code{\link{vocabularyDlg}}, \code{\link[tm]{DocumentTermMatrix}}, \code{\link{table}} }

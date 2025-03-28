@@ -102,7 +102,7 @@
 \references{Ingo Feinerer, Kurt Hornik, and David Meyer. Text mining infrastructure in R. Journal of Statistical Software, 25(5):1-54, March 2008. Available at \url{https://www.jstatsoft.org/v25/i05}.\cr\cr
             Ingo Feinerer. An introduction to text mining in R. R News, 8(2):19-22, October 2008. Available at \url{https://cran.r-project.org/doc/Rnews/Rnews_2008-2.pdf}}
 
-\seealso{\code{\link{Corpus}}, \code{\link{DocumentTermMatrix}}, \code{\link{restrictTermsDlg}},
-         \code{\link{setCorpusVariables}}, \code{\link{tolower}}, \code{\link{removePunctuation}},
-         \code{\link{removeNumbers}}, \code{\link{stopwords}},  \code{\link{stemDocument}},
-         \code{\link{tm_map}} }
+\seealso{\code{\link[tm]{Corpus}}, \code{\link[tm]{DocumentTermMatrix}}, \code{\link{restrictTermsDlg}},
+         \code{\link{setCorpusVariables}}, \code{\link{tolower}}, \code{\link[tm]{removePunctuation}},
+         \code{\link[tm]{removeNumbers}}, \code{link[tm]{stopwords}},  \code{link[tm]{stemDocument}},
+         \code{link[tm]{tm_map}} }

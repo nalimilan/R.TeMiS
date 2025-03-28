@@ -35,6 +35,6 @@
          }
 }
 
-\seealso{\code{\link{specificTermsDlg}}, \code{\link{DocumentTermMatrix}},
+\seealso{\code{\link{specificTermsDlg}}, \code{\link[tm]{DocumentTermMatrix}},
          \code{\link{restrictTermsDlg}}, \code{\link{termsDictionary}},
          \code{\link{freqTermsDlg}} }

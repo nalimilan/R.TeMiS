@@ -30,14 +30,14 @@
   }
 
   Currently, only \acronym{HTML} files saved in French are supported.
-  Please send the maintainer examples of LexisNexis files in your
+  Please send the maintainer examples of Factiva files in your
   language if you want it to be supported.
 
-  See \code{link{FactivaSource}} for more details and real examples.
+  See \code{\link{FactivaSource}} for more details and real examples.
 }
 \author{
   Milan Bouchet-Valat <nalimilan@club.fr>
 }
 \references{
-  \url{http://global.factiva.com/}
+  \url{https://global.factiva.com/}
 }

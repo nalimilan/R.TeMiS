@@ -62,5 +62,5 @@
   \code{\link{readEuropresseHTML2}} for the function actually parsing
   individual articles.
 
-  \code{\link{getSources}} to list available sources.
+  \code{\link[tm]{getSources}} to list available sources.
 }

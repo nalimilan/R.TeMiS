@@ -43,5 +43,5 @@
 }
 
 \seealso{\code{\link{vocabularyTable}}, \code{\link{setCorpusVariables}},
-         \code{\link{meta}}, \code{\link{DocumentTermMatrix}}, \code{\link{table}},
-         \code{\link{barchart}} }
+         \code{\link[tm]{meta}}, \code{\link[tm]{DocumentTermMatrix}}, \code{\link{table}},
+         \code{link[lattice]{barchart}} }

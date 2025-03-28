@@ -38,5 +38,5 @@
          In all cases, the string \dQuote{\%V} will be replaced with the name of the selected variable.
 }
 
-\seealso{\code{\link{termFrequencies}}, \code{\link{setCorpusVariables}}, \code{\link{meta}},
-         \code{\link{DocumentTermMatrix}}, \code{\link{barchart}}, \code{\link{pie}} }
+\seealso{\code{\link{termFrequencies}}, \code{\link{setCorpusVariables}}, \code{\link[tm]{meta}},
+         \code{\link[tm]{DocumentTermMatrix}}, \code{link[lattice]{barchart}}, \code{\link{pie}} }

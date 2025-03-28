@@ -21,4 +21,4 @@
          you want to take into account changes made to the data set.
 }
 
-\seealso{\code{\link{meta}}, \code{\link{importCorpusDlg}}}
+\seealso{\code{\link[tm]{meta}}, \code{\link{importCorpusDlg}}}

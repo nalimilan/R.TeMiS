@@ -24,5 +24,5 @@
          Mining->Hierarchical clustering->Create clusters... dialog.
         }
 
-\seealso{\code{\link{hclust}}, \code{\link{dist}}, \code{\link{corpusCaDlg}}, \code{\link{removeSparseTerms}},
-         \code{\link{DocumentTermMatrix}}, \code{\link{createClustersDlg}} }
+\seealso{\code{\link{hclust}}, \code{\link{dist}}, \code{\link{corpusCaDlg}}, \code{\link[tm]{removeSparseTerms}},
+         \code{\link[tm]{DocumentTermMatrix}}, \code{\link{createClustersDlg}} }

@@ -16,4 +16,4 @@ corpusDissimilarity(x, y)
          the resulting table has rows of \code{x} for rows, and rows of \code{y} for columns.
 }
 
-\seealso{\code{\link{dissimilarityTableDlg}}, \code{\link{DocumentTermMatrix}}, \code{\link{dist}} }
+\seealso{\code{\link{dissimilarityTableDlg}}, \code{\link[tm]{DocumentTermMatrix}}, \code{\link{dist}} }

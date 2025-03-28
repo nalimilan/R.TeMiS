@@ -13,7 +13,7 @@ specificTerms(dtm, variable, p = 0.1, n.max = 25, sparsity = 0.95, min.occ = 2)
   \item{p}{the maximum probability up to which terms should be reported.}
   \item{n.max}{the maximum number of terms to report for each level.}
   \item{sparsity}{Optional sparsity threshold (between 0 and 1) below which terms should be
-                  skipped. See \code{\link{removeSparseTerms}} from tm.}
+                  skipped. See \code{\link[tm]{removeSparseTerms}} from tm.}
   \item{min.occ}{the minimum number of occurrences in the whole \code{dtm} below which
         terms should be skipped.}
 }
@@ -38,5 +38,5 @@ specificTerms(dtm, variable, p = 0.1, n.max = 25, sparsity = 0.95, min.occ = 2)
         term in the level, under an hypergeometric distribution.}
 }
 \author{Milan Bouchet-Valat}
-\seealso{\code{\link{frequentTerms}}, \code{\link{DocumentTermMatrix}}, \code{\link{removeSparseTerms}}}
+\seealso{\code{\link{frequentTerms}}, \code{\link[tm]{DocumentTermMatrix}}, \code{\link[tm]{removeSparseTerms}}}
 

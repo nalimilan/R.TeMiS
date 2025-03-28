@@ -20,7 +20,7 @@
    A \code{PlainTextDocument} with the contents of the article and the available meta-data set.
 }
 \seealso{
-  \code{\link{getReaders}} to list available reader functions.
+  \code{\link[tm]{getReaders}} to list available reader functions.
 }
 \author{
   Milan Bouchet-Valat

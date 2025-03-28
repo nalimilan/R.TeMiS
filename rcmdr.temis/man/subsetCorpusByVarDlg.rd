@@ -14,4 +14,4 @@
          removes existing correspondence analysis and hierarchical clustering objects.
 }
 
-\seealso{\code{\link{setCorpusVariables}}, \code{\link{meta}}, \code{\link{DocumentTermMatrix}}}
+\seealso{\code{\link{setCorpusVariables}}, \code{\link[tm]{meta}}, \code{\link[tm]{DocumentTermMatrix}}}

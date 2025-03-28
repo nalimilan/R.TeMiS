@@ -1,3 +1,6 @@
+Version 1.8.1 - 2025-03-28
+    * Fix R CMD check NOTE about links in docs.
+
 Version 1.8 - 2019-10-18
     * Stop truncating article IDs to avoid duplicates
       (thanks to Tom Nicholls).

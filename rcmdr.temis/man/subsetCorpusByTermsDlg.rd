@@ -22,4 +22,4 @@
          in which case an error is produced before subsetting the corpus.
 }
 
-\seealso{\code{\link{setCorpusVariables}}, \code{\link{meta}}, \code{\link{DocumentTermMatrix}}}
+\seealso{\code{\link{setCorpusVariables}}, \code{\link[tm]{meta}}, \code{\link[tm]{DocumentTermMatrix}}}

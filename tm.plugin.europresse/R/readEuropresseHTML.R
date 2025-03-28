@@ -72,8 +72,8 @@ readEuropresseHTML2 <- FunctionGenerator(function(elem, language, id) {
         }
 
         footer <- sapply(getNodeSet(tree, "/html/body/article/footer/*"), xmlValue)
-        copyright <- gsub("^ | $", "", footer[which(grepl("©", footer))[1]])
-        id <- gsub(".*news·| $|·", "", footer[which(grepl("news·", footer))[1]])
+        copyright <- gsub("^ | $", "", footer[which(grepl("\uA9", footer))[1]])
+        id <- gsub(".*news\uB7| $|\uB7", "", footer[which(grepl("news\uB7", footer))[1]])
 
         # If extraction failed for some reason, make sure we return a unique identifier
         if(is.na(id))

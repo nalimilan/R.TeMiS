@@ -1,3 +1,6 @@
+Version 1.4.1 - 2025-03-28
+    * Fix R CMD check NOTE about links in docs.
+
 Version 1.4 - 2016-08-23
     * Fix failures with a new variant of the Europresse HTML file format
       (reported by Tristan Guerra).

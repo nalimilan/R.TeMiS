@@ -14,7 +14,7 @@ cooccurrentTerms(term, dtm, variable = NULL, p = 0.1, n.max = 25,
   \item{p}{the maximum probability up to which terms should be reported.}
   \item{n.max}{the maximum number of terms to report for each level.}
   \item{sparsity}{Optional sparsity threshold (between 0 and 1) below which terms should be
-                  skipped. See \code{\link{removeSparseTerms}} from tm.}
+                  skipped. See \code{\link[tm]{removeSparseTerms}} from tm.}
   \item{min.occ}{the minimum number of occurrences in the whole \code{dtm} below which
         terms should be skipped.}
 }
@@ -50,5 +50,5 @@ cooccurrentTerms(term, dtm, variable = NULL, p = 0.1, n.max = 25,
          }
 }
 
-\seealso{\code{\link{termCoocDlg}}, \code{\link{specificTerms}}, \code{\link{DocumentTermMatrix}},
+\seealso{\code{\link{termCoocDlg}}, \code{\link{specificTerms}}, \code{\link[tm]{DocumentTermMatrix}},
          \code{\link{restrictTermsDlg}}, \code{\link{termsDictionary}}, \code{\link{freqTermsDlg}} }

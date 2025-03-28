@@ -35,5 +35,5 @@
   Milan Bouchet-Valat <nalimilan@club.fr>
 }
 \references{
-  \url{http://www.europresse.com/}
+  \url{https://www.europresse.com/}
 }
